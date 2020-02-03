@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <Itf Name="I_LogBuilder" Id="{7cc70285-5d0d-45bd-9ca5-5fc75d169d66}">
+    <Declaration><![CDATA[INTERFACE I_LogBuilder
+]]></Declaration>
+    <Method Name="CreateLog" Id="{d4566474-f2a6-454e-aec0-dcc53c0a7142}">
+      <Declaration><![CDATA[METHOD CreateLog 
+]]></Declaration>
+    </Method>
+    <Method Name="WithContextInt" Id="{afc2f3dd-7c7d-4dac-b12b-9815415ba0cf}">
+      <Declaration><![CDATA[METHOD WithContextInt : I_LogBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: INT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="WithIntArg" Id="{f92f2c8f-a7cf-4fc5-88d4-0a0f0c6c46ad}">
+      <Declaration><![CDATA[METHOD WithIntArg : I_LogBuilder
+VAR_INPUT
+	nValue		: INT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="WithLogger" Id="{16cc3ca7-f012-48b3-9f1b-77ccafb03fbc}">
+      <Declaration><![CDATA[METHOD WithLogger : I_LogBuilder
+VAR_INPUT
+	sLogger		: T_MaxString;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="WithStringArg" Id="{8e3c58b9-db8c-4af2-b60b-bf29d4e372e6}">
+      <Declaration><![CDATA[METHOD WithStringArg : I_LogBuilder
+VAR_INPUT
+	sValue		: T_MaxString;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

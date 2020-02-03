@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_Logger" Id="{50b11db4-e622-4fbf-aac9-873d9c447954}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Logger
+VAR_INPUT
+	eLogLevel		: E_LogLevel;
+	sMessage		: T_MaxString;
+	stArg1			: T_Arg;
+	stArg2			: T_Arg;
+	stArg3			: T_Arg;	
+	iContextBuilder	: I_ContextBuilder;	
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{4f993583-02a7-4efe-804b-13cea4cdd5af}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	sLogger		: T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Logger">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Logger.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

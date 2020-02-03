@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="Test" Id="{d28d37df-7237-480f-92a3-f93252c88566}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Test
+VAR
+	fbLogger		: FB_Logger('mbc4Log.Test');
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Einfaches Logging
+F_Log3(
+	E_LogLevel.eInfo, 
+	'Log Message Arg={structuredArg} Arg={1} Arg=%s', 
+	F_StringEx('Arg 1'),
+	F_StringEx('Arg 2'),
+	F_StringEx('Arg 3')
+);
+
+// Einfaches Logging mit expliziten Logger
+F_Log3L(
+	E_LogLevel.eInfo, 
+	'mbc4Log.Test',
+	'Log Message Arg={structuredArg} Arg={1} Arg=%s', 
+	F_StringEx('Arg 1'),
+	F_StringEx('Arg 2'),
+	F_StringEx('Arg 3')
+);
+
+// Einfaches Logging mit Builder
+F_LogBuilder(E_LogLevel.eError, 'Log Message Arg={structuredArg} Arg={1} Arg=%s')
+	.WithIntArg(42).WithStringArg('Arg 2').WithStringArg('Arg 3')
+	.WithLogger('mbc4Log.Test')
+	.WithContextInt('id', 42)
+	.CreateLog();
+
+fbLogger(
+	eLogLevel 		:= E_LogLevel.eInfo, 
+	sMessage 		:='Log Message Arg={structuredArg} Arg={1} Arg=%s', 
+	stArg1 			:= F_StringEx('Arg 1'),
+	stArg2 			:= F_StringEx('Arg 2'),
+	stArg3 			:= F_StringEx('Arg 3'),
+	iContextBuilder	:= F_LogContext().WithContextInt('id', 42)
+);
+	
+]]></ST>
+    </Implementation>
+    <LineIds Name="Test">
+      <LineId Id="5" Count="7" />
+      <LineId Id="15" Count="3" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="19" Count="4" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="26" Count="4" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="36" Count="3" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
