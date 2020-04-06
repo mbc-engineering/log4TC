@@ -7,13 +7,76 @@ VAR_INPUT
 	sMessage		: T_MaxString;
 	stArg1			: T_Arg;
 	stArg2			: T_Arg;
-	stArg3			: T_Arg;	
+	stArg3			: T_Arg;
+	stArg4			: T_Arg;
+	stArg5			: T_Arg;	
+	stArg6			: T_Arg;	
+	stArg7			: T_Arg;	
+	stArg8			: T_Arg;	
+	stArg9			: T_Arg;	
+	stArg10			: T_Arg;	
 	iContextBuilder	: I_ContextBuilder;	
 END_VAR
-
+VAR CONSTANT
+	nLogEntryVersion	: BYTE := 1;
+END_VAR
+VAR
+	sLogger			: T_MaxString;
+END_VAR
+VAR_TEMP
+	fbLogEntry		: FB_LogEntry();
+	fbSysTime		: Tc2_System.GETSYSTEMTIME;
+	nTimestamp		: LINT;
+	pBuffer			: PVOID;
+	nBufferCount	: UINT;
+END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Timestamp PLC
+fbSysTime();
+nTimestamp := ULINT_TO_LINT(SHL(UDINT_TO_ULINT(fbSysTime.timeHiDW), 32) OR fbSysTime.timeLoDW);
+
+fbLogEntry.Start(
+	refMessage 	:= sMessage,
+	refLogger	:= sLogger,
+	eLogLevel	:= eLogLevel,
+	nTimeStampPlc := nTimestamp,
+	nTimeStampClock := 0
+);
+
+fbLogEntry.AddArg(1, stArg1);
+fbLogEntry.AddArg(2, stArg2);
+fbLogEntry.AddArg(3, stArg3);
+fbLogEntry.AddArg(4, stArg4);
+fbLogEntry.AddArg(5, stArg5);
+fbLogEntry.AddArg(6, stArg6);
+fbLogEntry.AddArg(7, stArg7);
+fbLogEntry.AddArg(8, stArg8);
+fbLogEntry.AddArg(9, stArg9);
+fbLogEntry.AddArg(10, stArg10);
+
+fbLogEntry.End();
+
+// Add to buffer
+fbLogEntry.GetBuffer(
+	pBuffer			=> pBuffer,
+	nBufferCount	=> nBufferCount
+);
+GlobalVariables.aTaskLogger[GETCURTASKINDEXEX()].AddLog(pBuffer, nBufferCount);
+
+// reset arguments
+stArg1 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg2 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg3 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg4 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg5 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg6 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg7 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg8 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg9 := Tc2_Utilities.EMPTY_ARG_VALUE;
+stArg10 := Tc2_Utilities.EMPTY_ARG_VALUE;
+
+]]></ST>
     </Implementation>
     <Method Name="FB_init" Id="{4f993583-02a7-4efe-804b-13cea4cdd5af}">
       <Declaration><![CDATA[METHOD FB_init : BOOL
@@ -24,14 +87,34 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[THIS^.sLogger := sLogger;
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Logger">
-      <LineId Id="9" Count="0" />
+      <LineId Id="117" Count="2" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="109" Count="5" />
+      <LineId Id="159" Count="1" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="131" Count="8" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="121" Count="1" />
+      <LineId Id="125" Count="1" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="146" Count="8" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="128" Count="0" />
     </LineIds>
     <LineIds Name="FB_Logger.FB_init">
       <LineId Id="7" Count="0" />
+      <LineId Id="14" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MAIN" Id="{9e023de9-a7d3-47c5-b36b-a81c12c72c93}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbLog			: FB_Logger('MAIN');
+	bWriteLog		: BOOL;
+	bWriteCont		: BOOL;
+	nVar1			: INT;
+	nVar2			: T_MaxString;
+	nVar3			: REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+IF bWriteLog OR bWriteCont THEN
+	bWriteLog := FALSE;
+	
+	fbLog(
+		eLogLevel	:= E_LogLEvel.eError,
+		sMessage	:= 'Test Log Message {arg1} {arg2} {arg3}',
+		stArg1		:= F_INT(nVar1),
+		stArg2		:= F_String(nVar2),
+		stArg3		:= F_REAL(nVar3),
+	);
+	
+	fbLog(
+		eLogLevel	:= E_LogLEvel.eInfo,
+		sMessage	:= 'Info Message',
+	);
+
+END_IF
+
+Log4TC.CallLogTask();
+
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="21" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="24" Count="2" />
+      <LineId Id="46" Count="2" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

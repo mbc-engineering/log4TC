@@ -1,0 +1,6 @@
+source/**/.vs/
+source/**/_Boot/
+source/**/_CompileInfo/
+source/**/*.tmc
+source/**/bin/
+source/**/obj/

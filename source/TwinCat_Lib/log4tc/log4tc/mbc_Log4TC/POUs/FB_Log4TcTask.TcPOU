@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_Log4TcTask" Id="{7a1ab82d-e3cd-4e48-96e0-5ca76f3c5915}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+Main code of Log4TC which manages log messages of a single task.
+*)
+FUNCTION_BLOCK FB_Log4TcTask
+VAR
+	fbRingBuffer		: Tc2_Utilities.FB_MemRingBufferEx;
+	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <CFC>
+        <XmlArchive>
+          <Data>
+            <o xml:space="preserve" t="CFCImplementationObject">
+              <o n="Items" t="CFCItemList">
+                <l2 n="InnerList" />
+              </o>
+              <n n="ParameterInitializationMethodGenerator" />
+              <o n="RoutingPathTable" t="CFCRoutingPathTable">
+                <d2 n="InnerDictionary" />
+              </o>
+              <v n="AutoSizeCanvas">true</v>
+              <v n="CanvasWidth">1</v>
+              <v n="CanvasHeight">1</v>
+            </o>
+          </Data>
+          <TypeList>
+            <Type n="Boolean">System.Boolean</Type>
+            <Type n="CFCImplementationObject">{32d3375e-c010-41e2-9e43-b2fbf4f2b374}</Type>
+            <Type n="CFCItemList">{cd57ba20-558b-4b98-96c1-73c6000c3087}</Type>
+            <Type n="CFCRoutingPathTable">{4b8bcc79-5980-4868-b49e-005a8148859b}</Type>
+            <Type n="Int32">System.Int32</Type>
+          </TypeList>
+        </XmlArchive>
+      </CFC>
+    </Implementation>
+    <Method Name="AddLog" Id="{a60c1ca6-dc51-4ca0-8f1b-e9265e4c8b3d}">
+      <Declaration><![CDATA[METHOD INTERNAL AddLog : BOOL
+VAR_INPUT
+	pLogBuffer		: PVOID;
+	nLogBufferLen	: UINT;
+END_VAR
+VAR
+	bAddOk			: BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbRingBuffer.A_AddTail(
+	pBuffer 	:= ADR(aBuffer),
+	cbBuffer 	:= SIZEOF(aBuffer),
+	pWrite		:= pLogBuffer,
+	cbWrite		:= nLogBufferLen,	
+	bOk			=> bAddOk,
+);
+
+{IF defined (DEBUG)}
+IF NOT bAddOk THEN
+	Tc2_System.ADSLOGDINT(
+		Tc2_System.ADSLOG_MSGTYPE_LOG OR Tc2_System.ADSLOG_MSGTYPE_ERROR,
+		'Error adding log message to buffer. Task=%d',
+		Tc2_System.GETCURTASKINDEXEX()
+	);
+END_IF 
+{END_IF}
+
+AddLog := bAddOk;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Call" Id="{ef6225c0-33b1-4834-a78e-390eae37cdd9}">
+      <Declaration><![CDATA[(*
+Should be called regularly in the same task as its instance was
+declared.
+*)
+METHOD PUBLIC Call
+VAR_INST
+	nState			: UINT;
+	nTaskIndex		: DINT;
+	aSendBuffer		: ARRAY[1..Config.nBufferLen] OF BYTE;		(* Buffer for send data *)
+	nSendBufferLen	: UDINT;
+	bContinue		: BOOL;
+	fbAdsWriteMsg	: Tc2_System.ADSWRITE:=(PORT:=Config.nAdsPort);
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+CASE nState OF
+	0: // Init
+		nTaskIndex := Tc2_System.GETCURTASKINDEXEX();
+		nSendBufferLen := 0;
+		nState := 10;
+		
+	10: // Wait for log entry; add them to the send buffer
+		REPEAT
+			fbRingBuffer.A_GetHead(
+				pBuffer 	:= ADR(aBuffer),
+				cbBuffer 	:= SIZEOF(aBuffer),
+			);
+			
+			IF fbRingBuffer.bOk AND (SIZEOF(aSendBuffer) - nSendBufferLen) >= fbRingBuffer.cbRead THEN
+				MEMCPY(ADR(aSendBuffer) + nSendBufferLen, fbRingBuffer.pRead, fbRingBuffer.cbRead);
+				nSendBufferLen := nSendBufferLen + fbRingBuffer.cbRead;
+				
+				fbRingBuffer.A_FreeHead(
+					pBuffer 	:= ADR(aBuffer),
+					cbBuffer 	:= SIZEOF(aBuffer),
+				);
+				
+				bContinue := TRUE;
+			ELSE
+				bContinue := FALSE;
+			END_IF
+		UNTIL
+			NOT bContinue
+		END_REPEAT;
+		
+		IF nSendBufferLen > 0 THEN
+			fbAdsWriteMsg(WRITE:=FALSE);
+			fbAdsWriteMsg(
+				WRITE	:= TRUE,
+				IDXGRP 	:= Config.nLogIndexGrp,
+				IDXOFFS := DINT_TO_UDINT(nTaskIndex),
+				LEN		:= nSendBufferLen,
+				SRCADDR	:= ADR(aSendBuffer),
+			);
+		
+			nState := 20;
+		END_IF
+		
+	20: // Wait for sent data
+		fbAdsWriteMsg();
+		IF NOT fbAdsWriteMsg.BUSY THEN
+			IF fbAdsWriteMsg.ERR THEN
+				{IF defined (DEBUG)}
+					Tc2_System.ADSLOGDINT(
+						Tc2_System.ADSLOG_MSGTYPE_LOG OR Tc2_System.ADSLOG_MSGTYPE_ERROR,
+						'Error sending message. Error=%d',
+						UDINT_TO_DINT(fbAdsWriteMsg.ERRID)
+					);					
+				{END_IF}
+			END_IF
+			
+			nSendBufferLen := 0;
+			nState := 10;
+		END_IF
+	
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{f1e448f2-18e5-42ea-bc52-6c978df9ed18}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbRingBuffer.A_Reset
+(
+	pBuffer 	:= ADR(aBuffer),
+	cbBuffer 	:= SIZEOF(aBuffer),
+);
+
+	]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Log4TcTask.AddLog">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="26" Count="3" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.Call">
+      <LineId Id="12" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="46" Count="3" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="51" Count="4" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="62" Count="1" />
+      <LineId Id="65" Count="3" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="56" Count="1" />
+      <LineId Id="69" Count="4" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="82" Count="3" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="86" Count="1" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.FB_init">
+      <LineId Id="7" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

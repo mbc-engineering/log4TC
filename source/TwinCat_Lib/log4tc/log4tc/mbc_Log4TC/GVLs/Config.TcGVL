@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <GVL Name="Config" Id="{f1864d0c-c59a-47ec-8a7f-6899735fe3cf}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+	nBufferLen 			: UINT := 8192;	(* Length of per task log buffer in bytes *)
+	nAdsPort			: UINT := 16150; 
+	nLogIndexGrp		: UINT := 1;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

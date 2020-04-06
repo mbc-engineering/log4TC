@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_LogEntry" Id="{fdc002f1-7166-489a-9e27-9853cb239b8c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LogEntry
+VAR
+	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
+	nBufferCount		: UINT;
+	nBufferRemaining	: UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <CFC>
+        <XmlArchive>
+          <Data>
+            <o xml:space="preserve" t="CFCImplementationObject">
+              <o n="Items" t="CFCItemList">
+                <l2 n="InnerList" />
+              </o>
+              <n n="ParameterInitializationMethodGenerator" />
+              <o n="RoutingPathTable" t="CFCRoutingPathTable">
+                <d2 n="InnerDictionary" />
+              </o>
+              <v n="AutoSizeCanvas">true</v>
+              <v n="CanvasWidth">1</v>
+              <v n="CanvasHeight">1</v>
+            </o>
+          </Data>
+          <TypeList>
+            <Type n="Boolean">System.Boolean</Type>
+            <Type n="CFCImplementationObject">{32d3375e-c010-41e2-9e43-b2fbf4f2b374}</Type>
+            <Type n="CFCItemList">{cd57ba20-558b-4b98-96c1-73c6000c3087}</Type>
+            <Type n="CFCRoutingPathTable">{4b8bcc79-5980-4868-b49e-005a8148859b}</Type>
+            <Type n="Int32">System.Int32</Type>
+          </TypeList>
+        </XmlArchive>
+      </CFC>
+    </Implementation>
+    <Method Name="_Copy" Id="{99ee4e2d-22a8-4520-82ff-7cdfea7b9682}">
+      <Declaration><![CDATA[METHOD PRIVATE _Copy : BOOL
+VAR_INPUT
+	pSrc		: PVOID;
+	nCount		: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nBufferRemaining >= nCount THEN
+	MEMCPY(ADR(aBuffer) + nBufferCount, pSrc, nCount);
+	nBufferCount := nBufferCount + nCount;
+	nBufferRemaining := nBufferRemaining - nCount;
+	
+	_Copy := TRUE;
+ELSE
+	_Copy := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_Reset" Id="{3b95adfe-4470-48c7-9883-459b79c8d02e}">
+      <Declaration><![CDATA[METHOD PRIVATE _Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nBufferCount := 0;
+nBufferRemaining := SIZEOF(aBuffer);
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteArg" Id="{3b3fb0e0-9974-45aa-aea8-7369baa43d26}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteArg : BOOL
+VAR_INPUT
+	stArg		: Tc2_Utilities.T_Arg;
+END_VAR
+VAR
+	bOk			: BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bOk := _Copy(ADR(stArg.eType), SIZEOF(stArg.eType));
+IF bOk THEN
+	bOk := _Copy(stArg.pData, UDINT_TO_UINT(stArg.cbLen));
+END_IF
+
+_WriteArg := bOk;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteByte" Id="{0f2a32d5-7ca1-4461-b5b3-ecdba5089cf7}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteByte : BOOL
+VAR_INPUT
+	nValue		: BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_WriteByte := _Copy(ADR(nValue), SIZEOF(nValue));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteLInt" Id="{a9241a29-7b50-42e6-8816-7c3677e86c02}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteLInt : BOOL
+VAR_INPUT
+	nValue		: LINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_WriteLInt := _Copy(ADR(nValue), SIZEOF(nValue));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteString" Id="{72f9a8b3-3c1d-4761-ae72-3d6b25a6f9bc}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteString : BOOL
+VAR_INPUT
+	refValue		: REFERENCE TO T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_WriteString := _Copy(ADR(refValue), INT_TO_UINT(LEN(refValue) + 1));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteUInt" Id="{a5e49c9b-672a-45af-a878-aeae834cb9a4}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteUInt : BOOL
+VAR_INPUT
+	nValue		: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_WriteUInt := _Copy(ADR(nValue), SIZEOF(nValue));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddArg" Id="{304f53b9-cac0-4330-9fa1-d6d2839918cb}">
+      <Declaration><![CDATA[METHOD PUBLIC AddArg : BOOL
+VAR_INPUT
+	nArgNo		: BYTE;
+	stArg		: Tc2_Utilities.T_Arg;
+END_VAR
+VAR
+	bOk			: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF stArg.eType = E_ArgType.ARGTYPE_UNKNOWN THEN
+	AddArg := TRUE;
+	RETURN;
+END_IF
+
+bOk := _WriteByte(1); // Type 1: Argument follows
+IF bOk THEN
+	bOk := _WriteByte(nArgNo);
+END_IF
+IF bOk THEN
+	bOk := _WriteArg(stArg);
+END_IF
+
+AddArg := bOk;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="End" Id="{4019125f-ca1b-4897-a5d1-68f974a63a5a}">
+      <Declaration><![CDATA[METHOD PUBLIC End : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[End := _WriteByte(255);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetBuffer" Id="{80a8662d-8498-4449-bb64-ee658cd4902d}">
+      <Declaration><![CDATA[METHOD PUBLIC GetBuffer : BOOL
+VAR_OUTPUT
+	pBuffer			: PVOID;
+	nBufferCount	: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pBuffer := ADR(aBuffer);
+nBufferCount := THIS^.nBufferCount;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{e5a72334-4567-4486-8751-71a0aba4e1b2}">
+      <Declaration><![CDATA[METHOD PUBLIC Start : REFERENCE TO FB_LogEntry
+VAR_INPUT
+	refMessage		: REFERENCE TO T_MaxString;
+	refLogger		: REFERENCE TO T_MaxString;
+	eLogLevel		: E_LogLevel;
+	nTimeStampPlc	: LINT;
+	nTimeStampClock	: LINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Reset();
+
+// Log-Entry Version
+_WriteByte(1);
+
+// Message
+_WriteString(refMessage);
+
+// Logger
+_WriteString(refLogger);
+
+// Level
+_WriteUInt(eLogLevel);
+
+// Timestamp PLC
+_WriteLInt(nTimeStampPlc);
+
+// Timestamp Clock
+_WriteLInt(nTimeStampClock);
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_LogEntry._Copy">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="11" Count="5" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._Reset">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteArg">
+      <LineId Id="14" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteByte">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteLInt">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteString">
+      <LineId Id="11" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteUInt">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.AddArg">
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="19" Count="3" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.End">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.GetBuffer">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.Start">
+      <LineId Id="5" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="36" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

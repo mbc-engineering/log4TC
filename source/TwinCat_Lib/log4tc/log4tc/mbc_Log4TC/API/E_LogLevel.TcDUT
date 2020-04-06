@@ -11,7 +11,7 @@ TYPE E_LogLevel :
 	eWarn,
 	eError,
 	eFatal
-);
+) UINT;
 END_TYPE
 ]]></Declaration>
   </DUT>
