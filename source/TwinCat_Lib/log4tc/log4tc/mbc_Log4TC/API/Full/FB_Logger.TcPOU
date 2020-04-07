@@ -29,6 +29,7 @@ VAR_TEMP
 	nTimestamp		: LINT;
 	pBuffer			: PVOID;
 	nBufferCount	: UINT;
+	iLogEntryAdder	: I_LogEntryAdder;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -55,6 +56,10 @@ fbLogEntry.AddArg(8, stArg8);
 fbLogEntry.AddArg(9, stArg9);
 fbLogEntry.AddArg(10, stArg10);
 
+IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
+	iLogEntryAdder.AddToLogEntry(fbLogEntry);
+END_IF
+
 fbLogEntry.End();
 
 // Add to buffer
@@ -75,6 +80,8 @@ stArg7 := Tc2_Utilities.EMPTY_ARG_VALUE;
 stArg8 := Tc2_Utilities.EMPTY_ARG_VALUE;
 stArg9 := Tc2_Utilities.EMPTY_ARG_VALUE;
 stArg10 := Tc2_Utilities.EMPTY_ARG_VALUE;
+iContextBuilder := 0;
+
 
 ]]></ST>
     </Implementation>
@@ -98,6 +105,9 @@ END_VAR
       <LineId Id="159" Count="1" />
       <LineId Id="158" Count="0" />
       <LineId Id="131" Count="8" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="192" Count="1" />
       <LineId Id="157" Count="0" />
       <LineId Id="140" Count="0" />
       <LineId Id="77" Count="0" />
@@ -109,6 +119,7 @@ END_VAR
       <LineId Id="142" Count="0" />
       <LineId Id="144" Count="0" />
       <LineId Id="146" Count="8" />
+      <LineId Id="224" Count="1" />
       <LineId Id="145" Count="0" />
       <LineId Id="128" Count="0" />
     </LineIds>

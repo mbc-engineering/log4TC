@@ -59,6 +59,7 @@ namespace Log4TcPrototype
                     var timestampClock = DateTime.FromFileTime(buffer.ReadInt64());
 
                     var args = new List<(int, object)>();
+                    var contex = new List<(string, object)>();
                     byte type;
                     while ((type = buffer.ReadByte()) != 255)
                     {
@@ -90,9 +91,21 @@ namespace Log4TcPrototype
 
                             args.Add((argNo, argValue));
                         }
+                        else if (type == 2)
+                        {
+                            i = 0;
+                            while ((ch = buffer.ReadByte()) != 0)
+                            {
+                                buf[i++] = ch;
+                            }
+                            var name = Encoding.Default.GetString(buf, 0, i);
+                            var value = buffer.ReadInt16();
+                            contex.Add((name, value));
+                        }
                     }
 
-                    Console.WriteLine($"Log-Entry: version={version} message={message} logger={logger} level={level} timestamp={timestampPlc}.{timestampPlc.Millisecond} args=[{string.Join(",", args)}]");
+
+                    Console.WriteLine($"Log-Entry: version={version} message={message} logger={logger} level={level} timestamp={timestampPlc}.{timestampPlc.Millisecond} args=[{string.Join(",", args)}] context=[{string.Join(",", contex)}]");
                 }
 
                 AdsWriteRes(rAddr, invokeId, AdsErrorCode.NoError);

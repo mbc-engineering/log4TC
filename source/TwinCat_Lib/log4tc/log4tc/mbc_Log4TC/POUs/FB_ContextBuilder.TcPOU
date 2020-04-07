@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_ContextBuilder" Id="{7f1d5e34-ea3b-4ad5-887e-933d0a5923d7}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_ContextBuilder IMPLEMENTS I_ContextBuilder
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ContextBuilder IMPLEMENTS I_ContextBuilder, I_LogEntryAdder
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	aBuffer				: ARRAY[1..1024] OF BYTE;	(* buffer for context variables *)
+	nBufferCount		: UINT;
+	nBufferRemaining	: UINT := SIZEOF(aBuffer);
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -22,8 +25,8 @@ END_VAR
                 <d2 n="InnerDictionary" />
               </o>
               <v n="AutoSizeCanvas">true</v>
-              <v n="CanvasWidth">0</v>
-              <v n="CanvasHeight">0</v>
+              <v n="CanvasWidth">1</v>
+              <v n="CanvasHeight">1</v>
             </o>
           </Data>
           <TypeList>
@@ -36,20 +39,101 @@ END_VAR
         </XmlArchive>
       </CFC>
     </Implementation>
+    <Method Name="_Copy" Id="{5437ce7d-fe97-4a41-96e0-5f302b0be4c0}">
+      <Declaration><![CDATA[METHOD PRIVATE _Copy : BOOL
+VAR_INPUT
+	pSrc		: PVOID;
+	nCount		: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nBufferRemaining >= nCount THEN
+	MEMCPY(ADR(aBuffer) + nBufferCount, pSrc, nCount);
+	nBufferCount := nBufferCount + nCount;
+	nBufferRemaining := nBufferRemaining - nCount;
+	
+	_Copy := TRUE;
+ELSE
+	_Copy := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_Reset" Id="{761de020-35ac-4bdf-a8df-dafe5712596b}">
+      <Declaration><![CDATA[METHOD PRIVATE _Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nBufferCount := 0;
+nBufferRemaining := SIZEOF(aBuffer);
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteByte" Id="{7d91aff1-f35b-439a-b713-0bc671d559ec}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteByte : BOOL
+VAR_INPUT
+	nValue		: BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_WriteByte := _Copy(ADR(nValue), SIZEOF(nValue));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddToLogEntry" Id="{c595d1aa-4916-409a-98e2-7f96efa63808}">
+      <Declaration><![CDATA[METHOD AddToLogEntry : BOOL
+VAR_INPUT
+	refLogEntry		: REFERENCE TO FB_LogEntry;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddToLogEntry := refLogEntry.AddBuffer(ADR(aBuffer), nBufferCount);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="WithContextInt" Id="{fb2119ae-4050-4e81-8815-a8079d098669}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD WithContextInt : I_ContextBuilder
+      <Declaration><![CDATA[METHOD WithContextInt : I_ContextBuilder
 VAR_INPUT
 	sName	: Tc2_System.T_MaxString;
 	nValue	: INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[_WriteByte(2); // Type 2: Context follows
+_Copy(ADR(sName), INT_TO_UINT(LEN(sName) + 1));
+_Copy(ADR(nValue), SIZEOF(nValue));
+
+WithContextInt := THIS^;
+]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_ContextBuilder.WithContextInt">
+    <LineIds Name="FB_ContextBuilder._Copy">
+      <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
+      <LineId Id="11" Count="5" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder._Reset">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder._WriteByte">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddToLogEntry">
+      <LineId Id="6" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.WithContextInt">
+      <LineId Id="19" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

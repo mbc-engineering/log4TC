@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <Itf Name="I_ContextBuilder" Id="{bcb2d462-f071-430e-9ed3-5e8d8bd02a9f}">
-    <Declaration><![CDATA[INTERFACE I_ContextBuilder
+    <Declaration><![CDATA[INTERFACE I_ContextBuilder EXTENDS __System.IQueryInterface
 ]]></Declaration>
     <Method Name="WithContextInt" Id="{83857395-5dc2-4d8c-b632-9b91e65617f9}">
       <Declaration><![CDATA[METHOD WithContextInt : I_ContextBuilder

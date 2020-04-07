@@ -4,3 +4,5 @@ source/**/_CompileInfo/
 source/**/*.tmc
 source/**/bin/
 source/**/obj/
+*.tclrs
+*.~u

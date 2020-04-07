@@ -26,6 +26,7 @@
     <Folder Include="API\Full" />
     <Folder Include="API\Simple" />
     <Folder Include="GVLs" />
+    <Folder Include="ITFs" />
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +64,9 @@
     <Compile Include="GVLs\GlobalVariables.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="ITFs\I_LogEntryAdder.TcIO">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_ContextBuilder.TcPOU">
       <SubType>Code</SubType>

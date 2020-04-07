@@ -10,6 +10,10 @@ VAR
 	nVar2			: T_MaxString;
 	nVar3			: REAL;
 END_VAR
+
+VAR_TEMP
+	fbContext		: FB_ContextBuilder;
+END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
@@ -22,6 +26,7 @@ IF bWriteLog OR bWriteCont THEN
 		stArg1		:= F_INT(nVar1),
 		stArg2		:= F_String(nVar2),
 		stArg3		:= F_REAL(nVar3),
+		iContextBuilder := fbContext.WithContextInt('foo', 42).WithContextInt('bar', 420),
 	);
 	
 	fbLog(
@@ -43,6 +48,7 @@ Log4TC.CallLogTask();
       <LineId Id="28" Count="0" />
       <LineId Id="24" Count="2" />
       <LineId Id="46" Count="2" />
+      <LineId Id="64" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="38" Count="1" />

@@ -156,6 +156,18 @@ AddArg := bOk;
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="AddBuffer" Id="{31c2876b-d726-4f69-9895-f6a6abe66cef}">
+      <Declaration><![CDATA[METHOD INTERNAL AddBuffer : BOOL
+VAR_INPUT
+	pBuffer			: PVOID;
+	nBufferLen		: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddBuffer := _Copy(pBuffer, nBufferLen);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="End" Id="{4019125f-ca1b-4897-a5d1-68f974a63a5a}">
       <Declaration><![CDATA[METHOD PUBLIC End : BOOL
 VAR_INPUT
@@ -262,6 +274,10 @@ _WriteLInt(nTimeStampClock);
       <LineId Id="24" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.AddBuffer">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry.End">
       <LineId Id="5" Count="1" />
