@@ -2,14 +2,15 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_ContextBuilder" Id="{7f1d5e34-ea3b-4ad5-887e-933d0a5923d7}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_ContextBuilder IMPLEMENTS I_ContextBuilder, I_LogEntryAdder
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
+VAR CONSTANT
+	nBufferSize			: UINT := 1024;
 END_VAR
 VAR
-	aBuffer				: ARRAY[1..1024] OF BYTE;	(* buffer for context variables *)
-	nBufferCount		: UINT;
-	nBufferRemaining	: UINT := SIZEOF(aBuffer);
+	aBuffer				: ARRAY[0..nBufferSize - 1] OF BYTE;	(* buffer for context variables *)
+	nBufferCount		: UINT := 0;
+	
+	aContext			: ARRAY[0..19] OF UINT;
+	nContextCount		: UINT(0..20) := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -39,6 +40,21 @@ END_VAR
         </XmlArchive>
       </CFC>
     </Implementation>
+    <Method Name="_AddContext" Id="{6aa8d9e5-f779-4ed2-aaf7-4b557b9e4966}">
+      <Declaration><![CDATA[METHOD PRIVATE _AddContext : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nContextCount < 20 THEN
+	aContext[nContextCount] := nBufferCount;
+	nContextCount := nContextCount + 1;
+	_AddContext := TRUE;
+ELSE
+	_AddContext := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="_Copy" Id="{5437ce7d-fe97-4a41-96e0-5f302b0be4c0}">
       <Declaration><![CDATA[METHOD PRIVATE _Copy : BOOL
 VAR_INPUT
@@ -47,15 +63,57 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nBufferRemaining >= nCount THEN
+        <ST><![CDATA[IF (nBufferSize - nBufferCount) >= nCount THEN
 	MEMCPY(ADR(aBuffer) + nBufferCount, pSrc, nCount);
 	nBufferCount := nBufferCount + nCount;
-	nBufferRemaining := nBufferRemaining - nCount;
 	
 	_Copy := TRUE;
 ELSE
 	_Copy := FALSE;
 END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_RemoveContext" Id="{40ba97da-22cb-4f7f-a723-f506078b82dc}">
+      <Declaration><![CDATA[METHOD PRIVATE _RemoveContext : BOOL
+VAR_INPUT
+	refName		: REFERENCE TO Tc2_System.T_MaxString;
+END_VAR
+VAR
+	nIdx		: UINT;
+	nBufferOff	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nContextCount > 0 THEN
+	FOR nIdx := 0 TO nContextCount - 1 DO
+		IF MEMCMP(ADR(refName), ADR(aBuffer) + aContext[nIdx], INT_TO_UDINT(LEN(refName) + 1)) = 0 THEN
+			(* Found - remove entry and compact buffer *)
+			IF (nIdx + 1) < nContextCount THEN
+				// Move buffer data
+				MEMMOVE(
+					ADR(aBuffer) + aContext[nIdx], 
+					ADR(aBuffer) + aContext[nIdx + 1], 
+					nBufferCount - aContext[nIdx + 1]
+				);
+				
+				nBufferOff := aContext[nIdx + 1] - aContext[nIdx];
+				nBufferCount := nBufferCount - nBufferOff;
+				
+				// Move and change index
+				WHILE (nIdx + 1) < nContextCount DO
+					aContext[nIdx] := aContext[nIdx + 1] - nBufferOff;
+					nIdx := nIdx + 1;
+				END_WHILE
+			END_IF
+
+			nContextCount := nContextCount - 1;
+			_RemoveContext := TRUE;
+			RETURN;
+		END_IF
+	END_FOR
+END_IF
+
+_RemoveContext := FALSE;
+		]]></ST>
       </Implementation>
     </Method>
     <Method Name="_Reset" Id="{761de020-35ac-4bdf-a8df-dafe5712596b}">
@@ -65,9 +123,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[nBufferCount := 0;
-nBufferRemaining := SIZEOF(aBuffer);
-
-]]></ST>
+nContextCount := 0;]]></ST>
       </Implementation>
     </Method>
     <Method Name="_WriteByte" Id="{7d91aff1-f35b-439a-b713-0bc671d559ec}">
@@ -81,56 +137,149 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="_WriteInt" Id="{1e3ba4d6-8552-4cd1-bb10-63e78e1fd099}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteInt : BOOL
+VAR_INPUT
+	nValue		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_WriteInt := _Copy(ADR(nValue), SIZEOF(nValue));
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AddToLogEntry" Id="{c595d1aa-4916-409a-98e2-7f96efa63808}">
       <Declaration><![CDATA[METHOD AddToLogEntry : BOOL
 VAR_INPUT
 	refLogEntry		: REFERENCE TO FB_LogEntry;
 END_VAR
-]]></Declaration>
+VAR
+	nIdx			: UINT;
+	bOk				: BOOL;
+	nContextLen		: UINT;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[AddToLogEntry := refLogEntry.AddBuffer(ADR(aBuffer), nBufferCount);
+        <ST><![CDATA[nIdx := 0;
+bOk := TRUE;
+WHILE nIdx < nContextCount AND bOk DO
+	IF (nIdx + 1) < nContextCount THEN
+		nContextLen := aContext[nIdx + 1] - aContext[nIdx];
+	ELSE
+		nContextLen := nBufferCount - aContext[nIdx];
+	END_IF
+	
+	refLogEntry.AddContext(ADR(aBuffer) + aContext[nIdx], nContextLen);
+	
+	nIdx := nIdx + 1;
+END_WHILE 
+
+AddToLogEntry := bOk;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="WithContextInt" Id="{fb2119ae-4050-4e81-8815-a8079d098669}">
-      <Declaration><![CDATA[METHOD WithContextInt : I_ContextBuilder
+    <Method Name="Reset" Id="{5cde927c-0f51-4040-b17c-fddd9ecadd40}">
+      <Declaration><![CDATA[METHOD Reset : I_ContextBuilder
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Reset();
+Reset := THIS^;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="WithInt" Id="{fb2119ae-4050-4e81-8815-a8079d098669}">
+      <Declaration><![CDATA[METHOD WithInt : I_ContextBuilder
 VAR_INPUT
 	sName	: Tc2_System.T_MaxString;
 	nValue	: INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_WriteByte(2); // Type 2: Context follows
-_Copy(ADR(sName), INT_TO_UINT(LEN(sName) + 1));
-_Copy(ADR(nValue), SIZEOF(nValue));
+        <ST><![CDATA[_RemoveContext(sName);
 
-WithContextInt := THIS^;
+IF _AddContext() THEN
+	_Copy(ADR(sName), INT_TO_UINT(LEN(sName) + 1));
+	_WriteInt(E_ArgType.ARGTYPE_INT);
+	_Copy(ADR(nValue), SIZEOF(nValue));
+END_IF
+
+WithInt := THIS^;
 ]]></ST>
       </Implementation>
     </Method>
+    <LineIds Name="FB_ContextBuilder._AddContext">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="3" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
     <LineIds Name="FB_ContextBuilder._Copy">
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
-      <LineId Id="11" Count="5" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="3" />
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_ContextBuilder._Reset">
+    <LineIds Name="FB_ContextBuilder._RemoveContext">
+      <LineId Id="56" Count="0" />
       <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
       <LineId Id="9" Count="0" />
-      <LineId Id="6" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="37" Count="3" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="68" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="48" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder._Reset">
+      <LineId Id="5" Count="1" />
     </LineIds>
     <LineIds Name="FB_ContextBuilder._WriteByte">
       <LineId Id="13" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
+    <LineIds Name="FB_ContextBuilder._WriteInt">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
     <LineIds Name="FB_ContextBuilder.AddToLogEntry">
+      <LineId Id="17" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="13" Count="0" />
       <LineId Id="6" Count="1" />
     </LineIds>
-    <LineIds Name="FB_ContextBuilder.WithContextInt">
-      <LineId Id="19" Count="0" />
+    <LineIds Name="FB_ContextBuilder.Reset">
+      <LineId Id="5" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.WithInt">
+      <LineId Id="28" Count="1" />
+      <LineId Id="26" Count="0" />
       <LineId Id="8" Count="0" />
+      <LineId Id="25" Count="0" />
       <LineId Id="15" Count="0" />
+      <LineId Id="27" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="18" Count="0" />

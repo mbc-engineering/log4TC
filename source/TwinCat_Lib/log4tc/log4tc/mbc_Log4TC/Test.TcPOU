@@ -39,7 +39,7 @@ fbLogger(
 	stArg1 			:= F_StringEx('Arg 1'),
 	stArg2 			:= F_StringEx('Arg 2'),
 	stArg3 			:= F_StringEx('Arg 3'),
-	iContextBuilder	:= F_LogContext().WithContextInt('id', 42)
+	iContextBuilder	:= F_LogContext().WithInt('id', 42)
 );
 	
 ]]></ST>

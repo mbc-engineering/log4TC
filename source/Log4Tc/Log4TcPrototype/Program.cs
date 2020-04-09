@@ -99,6 +99,7 @@ namespace Log4TcPrototype
                                 buf[i++] = ch;
                             }
                             var name = Encoding.Default.GetString(buf, 0, i);
+                            var valueType = buffer.ReadInt16();
                             var value = buffer.ReadInt16();
                             contex.Add((name, value));
                         }

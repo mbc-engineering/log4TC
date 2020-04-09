@@ -8,6 +8,7 @@ FUNCTION_BLOCK FB_Log4TcTask
 VAR
 	fbRingBuffer		: Tc2_Utilities.FB_MemRingBufferEx;
 	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
+	fbTaskContext		: FB_ContextBuilder;
 END_VAR]]></Declaration>
     <Implementation>
       <CFC>
@@ -165,6 +166,18 @@ END_VAR
 	]]></ST>
       </Implementation>
     </Method>
+    <Property Name="TaskContext" Id="{a018f989-1abe-4e9e-89b8-b0325eaf919a}">
+      <Declaration><![CDATA[PROPERTY PUBLIC TaskContext : I_ContextBuilder]]></Declaration>
+      <Get Name="Get" Id="{22578776-6244-4fbb-ade8-0863c0a26537}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TaskContext := fbTaskContext;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <LineIds Name="FB_Log4TcTask.AddLog">
       <LineId Id="5" Count="0" />
       <LineId Id="10" Count="0" />
@@ -231,6 +244,10 @@ END_VAR
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.TaskContext.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

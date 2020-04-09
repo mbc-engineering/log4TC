@@ -2,16 +2,17 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="F_LogContext" Id="{15bc0808-4d58-45ab-93cf-1a8d645eec0b}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_LogContext : I_ContextBuilder
-VAR_INPUT
-END_VAR
-VAR
+VAR_STAT
+	aTaskContext		: ARRAY[1..SIZEOF(TwinCAT_SystemInfoVarList._TaskInfo)/SIZEOF(PlcTaskSystemInfo)] OF FB_ContextBuilder;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[F_LogContext := aTaskContext[Tc2_System.GETCURTASKINDEXEX()].Reset();
+]]></ST>
     </Implementation>
     <LineIds Name="F_LogContext">
       <LineId Id="7" Count="0" />
+      <LineId Id="18" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

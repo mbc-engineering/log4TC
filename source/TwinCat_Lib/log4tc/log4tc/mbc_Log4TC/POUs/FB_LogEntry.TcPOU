@@ -168,6 +168,26 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="AddContext" Id="{a72c87a4-55c3-45a0-9300-6595ac48ec35}">
+      <Declaration><![CDATA[METHOD PUBLIC AddContext : BOOL
+VAR_INPUT
+	pBuffer			: PVOID;
+	nBufferLen		: UINT;
+END_VAR
+VAR
+	bOk				: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[bOk := _WriteByte(2); // Type 2: Context follows
+IF bOk THEN
+	bOk := _Copy(pBuffer, nBufferLen);
+END_IF
+
+AddContext := bOk;
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="End" Id="{4019125f-ca1b-4897-a5d1-68f974a63a5a}">
       <Declaration><![CDATA[METHOD PUBLIC End : BOOL
 VAR_INPUT
@@ -278,6 +298,13 @@ _WriteLInt(nTimeStampClock);
     <LineIds Name="FB_LogEntry.AddBuffer">
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.AddContext">
+      <LineId Id="11" Count="0" />
+      <LineId Id="14" Count="2" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry.End">
       <LineId Id="5" Count="1" />

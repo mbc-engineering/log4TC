@@ -36,13 +36,16 @@
     <Compile Include="API\Full\FB_Logger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\F_GetTaskContext.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\F_LogContext.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\I_ContextBuilder.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="API\CallLogTask.TcPOU">
+    <Compile Include="API\F_CallLogTask.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Simple\F_Log3.TcPOU">

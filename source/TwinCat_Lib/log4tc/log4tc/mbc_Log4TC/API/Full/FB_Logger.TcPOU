@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_Logger" Id="{50b11db4-e622-4fbf-aac9-873d9c447954}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Logger
+    <Declaration><![CDATA[{attribute 'reflection'} 
+FUNCTION_BLOCK FB_Logger
 VAR_INPUT
 	eLogLevel		: E_LogLevel;
 	sMessage		: T_MaxString;
@@ -21,7 +22,11 @@ VAR CONSTANT
 	nLogEntryVersion	: BYTE := 1;
 END_VAR
 VAR
+    {attribute 'instance-path'} 
+    {attribute 'noinit'} 
+    sInstancePath	: T_MaxString; 	
 	sLogger			: T_MaxString;
+	fbLoggerContext	: FB_ContextBuilder;
 END_VAR
 VAR_TEMP
 	fbLogEntry		: FB_LogEntry();
@@ -56,9 +61,17 @@ fbLogEntry.AddArg(8, stArg8);
 fbLogEntry.AddArg(9, stArg9);
 fbLogEntry.AddArg(10, stArg10);
 
+IF __QUERYINTERFACE(F_GetTaskContext(), iLogEntryAdder) THEN
+	iLogEntryAdder.AddToLogEntry(fbLogEntry);
+END_IF
+
+fbLoggerContext.AddToLogEntry(fbLogEntry);
+
 IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
 	iLogEntryAdder.AddToLogEntry(fbLogEntry);
 END_IF
+
+// TODO instance path
 
 fbLogEntry.End();
 
@@ -98,34 +111,43 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="LoggerContext" Id="{6edca1ac-6992-4eed-9259-16ec1f6c2111}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LoggerContext : I_ContextBuilder]]></Declaration>
+      <Get Name="Get" Id="{939d1d29-6449-4f5b-95f5-2539d372fa5c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LoggerContext := fbLoggerContext;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <ObjectProperties>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="LicenseProperty">
+            <l2 n="Licenses" />
+          </o>
+        </Data>
+        <TypeList>
+          <Type n="LicenseProperty">{ec6b18ef-cd41-4646-b1b3-985c60f930b9}</Type>
+        </TypeList>
+      </XmlArchive>
+    </ObjectProperties>
     <LineIds Name="FB_Logger">
-      <LineId Id="117" Count="2" />
-      <LineId Id="116" Count="0" />
-      <LineId Id="109" Count="5" />
-      <LineId Id="159" Count="1" />
-      <LineId Id="158" Count="0" />
-      <LineId Id="131" Count="8" />
-      <LineId Id="191" Count="0" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="192" Count="1" />
-      <LineId Id="157" Count="0" />
-      <LineId Id="140" Count="0" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="121" Count="1" />
-      <LineId Id="125" Count="1" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="143" Count="0" />
-      <LineId Id="142" Count="0" />
-      <LineId Id="144" Count="0" />
-      <LineId Id="146" Count="8" />
-      <LineId Id="224" Count="1" />
-      <LineId Id="145" Count="0" />
-      <LineId Id="128" Count="0" />
+      <LineId Id="3" Count="31" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="35" Count="23" />
+      <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_Logger.FB_init">
-      <LineId Id="7" Count="0" />
-      <LineId Id="14" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Logger.LoggerContext.Get">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

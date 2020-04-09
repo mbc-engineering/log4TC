@@ -20,13 +20,17 @@ END_VAR
 IF bWriteLog OR bWriteCont THEN
 	bWriteLog := FALSE;
 	
+	F_GetTaskContext().Reset().WithInt('Task', -10000);
+	
+	fbLog.LoggerContext.Reset().WithInt('Logger', 1234);
+	
 	fbLog(
-		eLogLevel	:= E_LogLEvel.eError,
-		sMessage	:= 'Test Log Message {arg1} {arg2} {arg3}',
-		stArg1		:= F_INT(nVar1),
-		stArg2		:= F_String(nVar2),
-		stArg3		:= F_REAL(nVar3),
-		iContextBuilder := fbContext.WithContextInt('foo', 42).WithContextInt('bar', 420),
+		eLogLevel		:= E_LogLEvel.eError,
+		sMessage		:= 'Test Log Message {arg1} {arg2} {arg3}',
+		stArg1			:= F_INT(nVar1),
+		stArg2			:= F_String(nVar2),
+		stArg3			:= F_REAL(nVar3),
+		iContextBuilder := F_LogContext().WithInt('foo', 42).WithInt('bar', 420).WithInt('baz', 0).WithInt('bar', 4200),
 	);
 	
 	fbLog(
@@ -36,30 +40,17 @@ IF bWriteLog OR bWriteCont THEN
 
 END_IF
 
-Log4TC.CallLogTask();
+F_CallLogTask();
 
 
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="21" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="24" Count="2" />
-      <LineId Id="46" Count="2" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="38" Count="1" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="29" Count="0" />
+      <LineId Id="101" Count="2" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="167" Count="1" />
+      <LineId Id="152" Count="1" />
+      <LineId Id="105" Count="18" />
       <LineId Id="14" Count="0" />
     </LineIds>
   </POU>

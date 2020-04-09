@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="CallLogTask" Id="{43b77b84-3ad4-4dba-a1e5-4c575f461237}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION CallLogTask : BOOL
+  <POU Name="F_CallLogTask" Id="{43b77b84-3ad4-4dba-a1e5-4c575f461237}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_CallLogTask
 
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[GlobalVariables.aTaskLogger[GETCURTASKINDEXEX()].Call();
 ]]></ST>
     </Implementation>
-    <LineIds Name="CallLogTask">
-      <LineId Id="7" Count="1" />
+    <LineIds Name="F_CallLogTask">
+      <LineId Id="12" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

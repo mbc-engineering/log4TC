@@ -6,6 +6,7 @@ VAR_GLOBAL CONSTANT
 	nBufferLen 			: UINT := 8192;	(* Length of per task log buffer in bytes *)
 	nAdsPort			: UINT := 16150; 
 	nLogIndexGrp		: UINT := 1;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
   </GVL>
 </TcPlcObject>
