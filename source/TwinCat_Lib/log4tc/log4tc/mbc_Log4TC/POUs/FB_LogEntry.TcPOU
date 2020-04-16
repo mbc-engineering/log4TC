@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_LogEntry" Id="{fdc002f1-7166-489a-9e27-9853cb239b8c}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_LogEntry
+    <Declaration><![CDATA[{attribute 'no_explicit_call' := 'no direct call necessary'} 
+FUNCTION_BLOCK FB_LogEntry
 VAR
 	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
 	nBufferCount		: UINT;
-	nBufferRemaining	: UINT;
+	bError				: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -35,22 +36,42 @@ END_VAR
         </XmlArchive>
       </CFC>
     </Implementation>
+    <Property Name="_BufferRemaining" Id="{bc895630-2700-4d9d-bca9-7623e20b7a0c}">
+      <Declaration><![CDATA[PROPERTY PRIVATE _BufferRemaining : UINT]]></Declaration>
+      <Get Name="Get" Id="{c03bdd10-e5b4-4010-a65c-30332708f044}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_BufferRemaining := SIZEOF(aBuffer) - nBufferCount;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="_Copy" Id="{99ee4e2d-22a8-4520-82ff-7cdfea7b9682}">
-      <Declaration><![CDATA[METHOD PRIVATE _Copy : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE _Copy
 VAR_INPUT
 	pSrc		: PVOID;
 	nCount		: UINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nBufferRemaining >= nCount THEN
-	MEMCPY(ADR(aBuffer) + nBufferCount, pSrc, nCount);
+        <ST><![CDATA[IF NOT bError AND_THEN _BufferRemaining >= nCount THEN
+	Tc2_System.MEMCPY(ADR(aBuffer) + nBufferCount, pSrc, nCount);
 	nBufferCount := nBufferCount + nCount;
-	nBufferRemaining := nBufferRemaining - nCount;
-	
-	_Copy := TRUE;
 ELSE
-	_Copy := FALSE;
+	IF NOT bError THEN
+		F_InternalLog(
+			E_LogLevel.eWarn,
+			'FB_LogEntry._Copy',
+			'Error buffer overflow for log message (act=%d, new=%d)',
+			Tc2_Utilities.F_UINT(nBufferCount),
+			Tc2_Utilities.F_UINT(nCount),
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+	END_IF
+	bError := TRUE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -61,13 +82,12 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[nBufferCount := 0;
-nBufferRemaining := SIZEOF(aBuffer);
-
+bError := FALSE;
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="_WriteArg" Id="{3b3fb0e0-9974-45aa-aea8-7369baa43d26}">
-      <Declaration><![CDATA[METHOD PRIVATE _WriteArg : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE _WriteArg
 VAR_INPUT
 	stArg		: Tc2_Utilities.T_Arg;
 END_VAR
@@ -75,61 +95,279 @@ VAR
 	bOk			: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[bOk := _Copy(ADR(stArg.eType), SIZEOF(stArg.eType));
-IF bOk THEN
-	bOk := _Copy(stArg.pData, UDINT_TO_UINT(stArg.cbLen));
-END_IF
+        <ST><![CDATA[_Copy(ADR(stArg.eType), SIZEOF(stArg.eType));
 
-_WriteArg := bOk;
+_Copy(stArg.pData, UDINT_TO_UINT(stArg.cbLen));
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="_WriteByte" Id="{0f2a32d5-7ca1-4461-b5b3-ecdba5089cf7}">
-      <Declaration><![CDATA[METHOD PRIVATE _WriteByte : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE _WriteByte 
 VAR_INPUT
 	nValue		: BYTE;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_WriteByte := _Copy(ADR(nValue), SIZEOF(nValue));
+        <ST><![CDATA[_Copy(ADR(nValue), SIZEOF(nValue));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteDInt" Id="{c63bcde7-178a-4194-a393-a2f27be4ab2f}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteDInt
+VAR_INPUT
+	nValue		: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Copy(ADR(nValue), SIZEOF(nValue));
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteInt" Id="{a2eba8aa-0721-4c7f-b560-c2f82e32f7e6}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteInt 
+VAR_INPUT
+	nValue		: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Copy(ADR(nValue), SIZEOF(nValue));
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="_WriteLInt" Id="{a9241a29-7b50-42e6-8816-7c3677e86c02}">
-      <Declaration><![CDATA[METHOD PRIVATE _WriteLInt : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE _WriteLInt
 VAR_INPUT
 	nValue		: LINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_WriteLInt := _Copy(ADR(nValue), SIZEOF(nValue));
+        <ST><![CDATA[_Copy(ADR(nValue), SIZEOF(nValue));
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="_WriteString" Id="{72f9a8b3-3c1d-4761-ae72-3d6b25a6f9bc}">
-      <Declaration><![CDATA[METHOD PRIVATE _WriteString : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE _WriteString
 VAR_INPUT
-	refValue		: REFERENCE TO T_MaxString;
+	pValue		: POINTER TO Tc2_Utilities.T_MaxString;
+END_VAR
+VAR
+	nLen			: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pValue <> 0 THEN
+	nLen := Tc2_Standard.LEN(pValue^);
+	IF nLen >= 0 AND nLen <= 255 THEN
+		_WriteByte(INT_TO_BYTE(nLen)); 
+		_Copy(ADR(pValue), INT_TO_UINT(nLen));
+	ELSE
+		// should not happen because T_MaxString is <= 255 bytes long
+		bError := TRUE;
+		F_InternalLog(
+			E_LogLevel.eError,
+			'FB_LogEntry._WriteString',
+			'String longer than 255 bytes (actual=%d) - missin 0-byte?',
+			Tc2_Utilities.F_INT(nLen),
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+	END_IF
+ELSE
+		bError := TRUE;
+		F_InternalLog(
+			E_LogLevel.eError,
+			'FB_LogEntry._WriteString',
+			'String null pointer',
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="_WriteUDInt" Id="{00acea58-e60f-44e9-9b47-aa0f37886570}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteUDInt
+VAR_INPUT
+	nValue		: UDINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_WriteString := _Copy(ADR(refValue), INT_TO_UINT(LEN(refValue) + 1));
+        <ST><![CDATA[_Copy(ADR(nValue), SIZEOF(nValue));
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="_WriteUInt" Id="{a5e49c9b-672a-45af-a878-aeae834cb9a4}">
-      <Declaration><![CDATA[METHOD PRIVATE _WriteUInt : BOOL
+      <Declaration><![CDATA[METHOD PRIVATE _WriteUInt 
 VAR_INPUT
 	nValue		: UINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_WriteUInt := _Copy(ADR(nValue), SIZEOF(nValue));
+        <ST><![CDATA[_Copy(ADR(nValue), SIZEOF(nValue));
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="AddArg" Id="{304f53b9-cac0-4330-9fa1-d6d2839918cb}">
-      <Declaration><![CDATA[METHOD PUBLIC AddArg : BOOL
+    <Method Name="AddAnyArg" Id="{8d510acf-92fd-4561-af25-430687de9976}">
+      <Declaration><![CDATA[METHOD INTERNAL AddAnyArg : BOOL
+VAR_INPUT
+	nArgNo		: BYTE;
+	stArg		: ANY;
+END_VAR
+VAR
+	bOk			: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF stArg.pValue = 0 THEN
+	RETURN;
+END_IF
+
+_WriteByte(1); // Type 1: Argument follows
+_WriteByte(nArgno);
+
+CASE UDINT_TO_DINT(stArg.TypeClass) OF
+	IBaseLibrary.TypeClass.TYPE_BOOL:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_BOOL);
+		IF Tc2_Utilities.PBYTE_TO_BYTE(stArg.pValue) <> 0 THEN
+			_WriteByte(1);
+		ELSE
+			_WriteByte(0);
+		END_IF
+
+	IBaseLibrary.TypeClass.TYPE_BYTE:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_BYTE);
+		_Copy(stArg.pValue, SIZEOF(BYTE));
+	
+	IBaseLibrary.TypeClass.TYPE_WORD:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_WORD);
+		_Copy(stArg.pValue, SIZEOF(WORD));		
+	
+	IBaseLibrary.TypeClass.TYPE_DWORD:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_DWORD);
+		_Copy(stArg.pValue, SIZEOF(DWORD));		
+	
+	IBaseLibrary.TypeClass.TYPE_LWORD:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_LWORD);
+		_Copy(stArg.pValue, SIZEOF(LWORD));
+	
+	IBaseLibrary.TypeClass.TYPE_SINT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_SINT);
+		_Copy(stArg.pValue, SIZEOF(SINT));
+	
+	IBaseLibrary.TypeClass.TYPE_INT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_INT);
+		_Copy(stArg.pValue, SIZEOF(INT));		
+	
+	IBaseLibrary.TypeClass.TYPE_DINT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_DINT);
+		_Copy(stArg.pValue, SIZEOF(DINT));		
+	
+	IBaseLibrary.TypeClass.TYPE_LINT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_LARGE);
+		_Copy(stArg.pValue, SIZEOF(LINT));		
+	
+	IBaseLibrary.TypeClass.TYPE_USINT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_USINT);
+		_Copy(stArg.pValue, SIZEOF(USINT));
+	
+	IBaseLibrary.TypeClass.TYPE_UINT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_UINT);
+		_Copy(stArg.pValue, SIZEOF(UINT));		
+	
+	IBaseLibrary.TypeClass.TYPE_UDINT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_UDINT);
+		_Copy(stArg.pValue, SIZEOF(UDINT));		
+	
+	IBaseLibrary.TypeClass.TYPE_ULINT:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_ULARGE);
+		_Copy(stArg.pValue, SIZEOF(ULINT));		
+	
+	IBaseLibrary.TypeClass.TYPE_REAL:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_REAL);
+		_Copy(stArg.pValue, SIZEOF(REAL));		
+	
+	IBaseLibrary.TypeClass.TYPE_LREAL:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_LREAL);
+		_Copy(stArg.pValue, SIZEOF(LREAL));		
+	
+	IBaseLibrary.TypeClass.TYPE_STRING:
+		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_STRING);
+		_WriteString(stArg.pValue);
+
+	//IBaseLibrary.TypeClass.TYPE_WSTRING:
+		// TODO
+
+	//IBaseLibrary.TypeClass.TYPE_TIME:
+		//_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_TIME);
+		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(TIME)));
+
+	//IBaseLibrary.TypeClass.TYPE_DATE:
+		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(DATE)));
+
+	//IBaseLibrary.TypeClass.TYPE_DATEANDTIME:
+		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(Date_)));
+
+	//IBaseLibrary.TypeClass.TYPE_TIMEOFDAY:
+		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(TIMEOFDAY)));
+
+	//IBaseLibrary.TypeClass.TYPE_ENUM:
+		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, 8));
+
+	//IBaseLibrary.TypeClass.TYPE_LTIME:
+		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(LTIME)));
+		
+	ELSE
+		F_InternalLog(
+			E_LogLevel.eWarn,
+			'FB_LogEntry.AddAnyArg',
+			'Unhandled ANY type=%d',
+			Tc2_Utilities.F_UDINT(stArg.TypeClass),
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+		// TODO maybe rollback and ignore argument or use replacement value (null)
+		bError := TRUE;
+END_CASE
+
+AddAnyArg := NOT bError;
+
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddBuffer" Id="{31c2876b-d726-4f69-9895-f6a6abe66cef}">
+      <Declaration><![CDATA[METHOD INTERNAL AddBuffer
+VAR_INPUT
+	pBuffer			: PVOID;
+	nBufferLen		: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_Copy(pBuffer, nBufferLen);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddContext" Id="{a72c87a4-55c3-45a0-9300-6595ac48ec35}">
+      <Declaration><![CDATA[METHOD PUBLIC AddContext
+VAR_INPUT
+	pBuffer			: PVOID;
+	nBufferLen		: UINT;
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_WriteByte(2); // Type 2: Context follows
+_Copy(pBuffer, nBufferLen);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddTArg" Id="{304f53b9-cac0-4330-9fa1-d6d2839918cb}">
+      <Declaration><![CDATA[METHOD INTERNAL AddTArg
 VAR_INPUT
 	nArgNo		: BYTE;
 	stArg		: Tc2_Utilities.T_Arg;
@@ -140,61 +378,24 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF stArg.eType = E_ArgType.ARGTYPE_UNKNOWN THEN
-	AddArg := TRUE;
 	RETURN;
 END_IF
 
-bOk := _WriteByte(1); // Type 1: Argument follows
-IF bOk THEN
-	bOk := _WriteByte(nArgNo);
-END_IF
-IF bOk THEN
-	bOk := _WriteArg(stArg);
-END_IF
-
-AddArg := bOk;
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="AddBuffer" Id="{31c2876b-d726-4f69-9895-f6a6abe66cef}">
-      <Declaration><![CDATA[METHOD INTERNAL AddBuffer : BOOL
-VAR_INPUT
-	pBuffer			: PVOID;
-	nBufferLen		: UINT;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[AddBuffer := _Copy(pBuffer, nBufferLen);
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="AddContext" Id="{a72c87a4-55c3-45a0-9300-6595ac48ec35}">
-      <Declaration><![CDATA[METHOD PUBLIC AddContext : BOOL
-VAR_INPUT
-	pBuffer			: PVOID;
-	nBufferLen		: UINT;
-END_VAR
-VAR
-	bOk				: BOOL;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[bOk := _WriteByte(2); // Type 2: Context follows
-IF bOk THEN
-	bOk := _Copy(pBuffer, nBufferLen);
-END_IF
-
-AddContext := bOk;
+_WriteByte(1); // Type 1: Argument follows
+_WriteByte(nArgNo);
+_WriteArg(stArg);
 ]]></ST>
       </Implementation>
     </Method>
     <Method Name="End" Id="{4019125f-ca1b-4897-a5d1-68f974a63a5a}">
       <Declaration><![CDATA[METHOD PUBLIC End : BOOL
-VAR_INPUT
-END_VAR
+
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[End := _WriteByte(255);
+        <ST><![CDATA[_WriteByte(255);
+
+End := NOT bError;
+
 ]]></ST>
       </Implementation>
     </Method>
@@ -212,25 +413,35 @@ nBufferCount := THIS^.nBufferCount;
       </Implementation>
     </Method>
     <Method Name="Start" Id="{e5a72334-4567-4486-8751-71a0aba4e1b2}">
-      <Declaration><![CDATA[METHOD PUBLIC Start : REFERENCE TO FB_LogEntry
+      <Declaration><![CDATA[METHOD INTERNAL Start : BOOL
 VAR_INPUT
-	refMessage		: REFERENCE TO T_MaxString;
-	refLogger		: REFERENCE TO T_MaxString;
+	pLogger		: POINTER TO T_MaxString;
+	pMessage		: POINTER TO T_MaxString;
 	eLogLevel		: E_LogLevel;
 	nTimeStampPlc	: LINT;
 	nTimeStampClock	: LINT;
+END_VAR
+VAR
+	fbSysTime		: Tc2_System.GETSYSTEMTIME;
+	nTaskIndex		: DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_Reset();
+        <ST><![CDATA[// Timestamp PLC
+IF nTimestampPlc = 0 THEN
+	fbSysTime();
+	nTimeStampPlc := ULINT_TO_LINT(SHL(UDINT_TO_ULINT(fbSysTime.timeHiDW), 32) OR fbSysTime.timeLoDW);
+END_IF
+
+_Reset();
 
 // Log-Entry Version
 _WriteByte(1);
 
 // Message
-_WriteString(refMessage);
+_WriteString(pMessage);
 
 // Logger
-_WriteString(refLogger);
+_WriteString(pLogger);
 
 // Level
 _WriteUInt(eLogLevel);
@@ -241,31 +452,58 @@ _WriteLInt(nTimeStampPlc);
 // Timestamp Clock
 _WriteLInt(nTimeStampClock);
 
+// Task Infos 
+nTaskIndex := Tc2_System.GETCURTASKINDEXEX();
+_WriteDInt(nTaskIndex);
+_WriteString(ADR(_TaskInfo[nTaskIndex].TaskName));
+_WriteUDInt(_TaskInfo[nTaskIndex].CycleCount);
+
+// App Infos
+_WriteString(ADR(_AppInfo.AppName));
+_WriteString(ADR(_AppInfo.ProjectName));
+_WriteUDInt(_AppInfo.OnlineChangeCnt);
+
+Start := NOT bError;
+
+
 ]]></ST>
       </Implementation>
     </Method>
+    <LineIds Name="FB_LogEntry._BufferRemaining.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
     <LineIds Name="FB_LogEntry._Copy">
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
-      <LineId Id="11" Count="5" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="25" Count="7" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="16" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry._Reset">
       <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="9" Count="0" />
+      <LineId Id="13" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry._WriteArg">
       <LineId Id="14" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="22" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="23" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry._WriteByte">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteDInt">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteInt">
       <LineId Id="13" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
@@ -274,24 +512,98 @@ _WriteLInt(nTimeStampClock);
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry._WriteString">
-      <LineId Id="11" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="25" Count="9" />
+      <LineId Id="21" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="39" Count="9" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteUDInt">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry._WriteUInt">
       <LineId Id="13" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_LogEntry.AddArg">
-      <LineId Id="10" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="14" Count="0" />
+    <LineIds Name="FB_LogEntry.AddAnyArg">
+      <LineId Id="51" Count="0" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="125" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="59" Count="1" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="61" Count="2" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="72" Count="2" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="75" Count="2" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="78" Count="2" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="85" Count="2" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="88" Count="2" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="91" Count="2" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="94" Count="2" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="104" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="107" Count="15" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="141" Count="1" />
+      <LineId Id="144" Count="3" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="151" Count="1" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="154" Count="1" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="156" Count="0" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="34" Count="1" />
       <LineId Id="13" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="19" Count="3" />
-      <LineId Id="24" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
@@ -301,19 +613,36 @@ _WriteLInt(nTimeStampClock);
     </LineIds>
     <LineIds Name="FB_LogEntry.AddContext">
       <LineId Id="11" Count="0" />
-      <LineId Id="14" Count="2" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="17" Count="0" />
+      <LineId Id="15" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
+    <LineIds Name="FB_LogEntry.AddTArg">
+      <LineId Id="10" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
     <LineIds Name="FB_LogEntry.End">
-      <LineId Id="5" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="6" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry.GetBuffer">
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="1" />
     </LineIds>
     <LineIds Name="FB_LogEntry.Start">
+      <LineId Id="51" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
@@ -332,6 +661,19 @@ _WriteLInt(nTimeStampClock);
       <LineId Id="32" Count="0" />
       <LineId Id="34" Count="1" />
       <LineId Id="33" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="59" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="36" Count="0" />
     </LineIds>

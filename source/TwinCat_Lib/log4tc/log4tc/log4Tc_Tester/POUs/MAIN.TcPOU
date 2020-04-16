@@ -9,6 +9,7 @@ VAR
 	nVar1			: INT;
 	nVar2			: T_MaxString;
 	nVar3			: REAL;
+	var1			: __SYSTEM.VAR_INFO;
 END_VAR
 
 VAR_TEMP
@@ -17,12 +18,24 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
+	
+fbLog(
+	bExecute	:= bWriteLog,
+	eLogLevel	:= E_LogLEvel.eInfo,
+	sMessage	:= 'Info Message',
+);
+
+var1 := __VARINFO(fbLog);
+
 IF bWriteLog OR bWriteCont THEN
 	bWriteLog := FALSE;
 	
-	F_GetTaskContext().Reset().WithInt('Task', -10000);
+	F_FUN();
+	GVL.fbLog();
 	
-	fbLog.LoggerContext.Reset().WithInt('Logger', 1234);
+	F_GetTaskContext().WithInt('Task', -10000);
+	
+	fbLog.LoggerContext.WithInt('Logger', 1234);
 	
 	fbLog(
 		eLogLevel		:= E_LogLEvel.eError,
@@ -31,11 +44,6 @@ IF bWriteLog OR bWriteCont THEN
 		stArg2			:= F_String(nVar2),
 		stArg3			:= F_REAL(nVar3),
 		iContextBuilder := F_LogContext().WithInt('foo', 42).WithInt('bar', 420).WithInt('baz', 0).WithInt('bar', 4200),
-	);
-	
-	fbLog(
-		eLogLevel	:= E_LogLEvel.eInfo,
-		sMessage	:= 'Info Message',
 	);
 
 END_IF
@@ -46,11 +54,20 @@ F_CallLogTask();
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
+      <LineId Id="199" Count="0" />
+      <LineId Id="201" Count="1" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="203" Count="2" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="200" Count="0" />
       <LineId Id="101" Count="2" />
       <LineId Id="138" Count="0" />
+      <LineId Id="220" Count="1" />
+      <LineId Id="185" Count="0" />
       <LineId Id="167" Count="1" />
       <LineId Id="152" Count="1" />
-      <LineId Id="105" Count="18" />
+      <LineId Id="105" Count="7" />
+      <LineId Id="118" Count="5" />
       <LineId Id="14" Count="0" />
     </LineIds>
   </POU>

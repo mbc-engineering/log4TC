@@ -4,6 +4,9 @@
     <Declaration><![CDATA[PROGRAM Test
 VAR
 	fbLogger		: FB_Logger('mbc4Log.Test');
+	nInt			: INT;
+	sStr			: STRING;
+	fFloat			: REAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -14,6 +17,14 @@ F_Log3(
 	F_StringEx('Arg 1'),
 	F_StringEx('Arg 2'),
 	F_StringEx('Arg 3')
+);
+
+F_LogA3(
+	E_LogLevel.eError,
+	'Log Message Arg={structuredArg} Arg={1} Arg=%s',
+	nInt,
+	sStr,
+	fFloat
 );
 
 // Einfaches Logging mit expliziten Logger
@@ -46,6 +57,9 @@ fbLogger(
     </Implementation>
     <LineIds Name="Test">
       <LineId Id="5" Count="7" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="5" />
       <LineId Id="15" Count="3" />
       <LineId Id="24" Count="0" />
       <LineId Id="19" Count="4" />

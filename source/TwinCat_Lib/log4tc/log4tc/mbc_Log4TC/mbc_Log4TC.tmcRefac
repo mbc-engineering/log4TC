@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedType>
+      <Type guid="304f53b9-cac0-4330-9fa1-d6d2839918cb">ADDARG</Type>
+      <From>AddArg</From>
+      <To>AddTArg</To>
+    </RenamedType>
+  </Renames>
+</Refactors>

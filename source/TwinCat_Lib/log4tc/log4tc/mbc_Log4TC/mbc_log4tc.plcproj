@@ -28,6 +28,7 @@
     <Folder Include="GVLs" />
     <Folder Include="ITFs" />
     <Folder Include="POUs" />
+    <Folder Include="POUs\Utils" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\E_LogLevel.TcDUT">
@@ -54,6 +55,12 @@
     <Compile Include="API\Simple\F_Log3L.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Simple\F_LogA3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\F_LogLA3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\Simple\F_LogBuilder.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -61,6 +68,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GVLs\Config.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
+    <Compile Include="GVLs\Const.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -78,6 +89,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_LogEntry.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\F_InternalLog.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\F_DINT_TO_UINT_MAX.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Test.TcPOU">
@@ -102,6 +119,11 @@
     <None Include="mbc_Log4TC.tmc">
       <SubType>Content</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryReference Include="Base Interfaces,newest,System">
+      <Namespace>IBaseLibrary</Namespace>
+    </LibraryReference>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

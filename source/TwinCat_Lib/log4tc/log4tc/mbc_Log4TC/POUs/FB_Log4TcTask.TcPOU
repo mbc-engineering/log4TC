@@ -4,7 +4,7 @@
     <Declaration><![CDATA[(*
 Main code of Log4TC which manages log messages of a single task.
 *)
-FUNCTION_BLOCK FB_Log4TcTask
+FUNCTION_BLOCK INTERNAL FB_Log4TcTask
 VAR
 	fbRingBuffer		: Tc2_Utilities.FB_MemRingBufferEx;
 	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
@@ -74,25 +74,44 @@ AddLog := bAddOk;
 Should be called regularly in the same task as its instance was
 declared.
 *)
-METHOD PUBLIC Call
+METHOD INTERNAL Call
+VAR
+	nMessageCount		: UINT;
+END_VAR
 VAR_INST
-	nState			: UINT;
-	nTaskIndex		: DINT;
-	aSendBuffer		: ARRAY[1..Config.nBufferLen] OF BYTE;		(* Buffer for send data *)
-	nSendBufferLen	: UDINT;
-	bContinue		: BOOL;
-	fbAdsWriteMsg	: Tc2_System.ADSWRITE:=(PORT:=Config.nAdsPort);
+	nState				: UINT;
+	nTaskIndex			: DINT;
+	nActTaskIndex		: DINT;
+	aSendBuffer			: ARRAY[1..Config.nBufferLen] OF BYTE;		(* Buffer for send data *)
+	nSendBufferLen		: UDINT;
+	bContinue			: BOOL;
+	fbAdsWriteMsg		: Tc2_System.ADSWRITE:=(PORT:=Const.nAdsPort);
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
+        <ST><![CDATA[nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
+IF nTaskIndex = 0 THEN
+	nTaskIndex := nActTaskIndex;
+ELSIF nTaskIndex <> nActTaskIndex THEN
+	F_InternalLog(
+		E_LogLevel.eFatal,
+		'Log4TcTask',
+		'Log4Tc Task called in wrong task (expected=%d actual=%d)',
+		F_DINT(nTaskIndex),
+		F_DINT(nActTaskIndex),
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+	RETURN;
+END_IF
+
 CASE nState OF
 	0: // Init
-		nTaskIndex := Tc2_System.GETCURTASKINDEXEX();
 		nSendBufferLen := 0;
 		nState := 10;
 		
 	10: // Wait for log entry; add them to the send buffer
+		nMessageCount := 0;
 		REPEAT
 			fbRingBuffer.A_GetHead(
 				pBuffer 	:= ADR(aBuffer),
@@ -108,6 +127,7 @@ CASE nState OF
 					cbBuffer 	:= SIZEOF(aBuffer),
 				);
 				
+				nMessageCount := nMessageCount + 1;
 				bContinue := TRUE;
 			ELSE
 				bContinue := FALSE;
@@ -115,13 +135,23 @@ CASE nState OF
 		UNTIL
 			NOT bContinue
 		END_REPEAT;
-		
+
 		IF nSendBufferLen > 0 THEN
+			F_InternalLog(
+				E_LogLevel.eDebug,
+				'FB_Log4TcTask.Call',
+				'Sending %d message with size %d.',
+				Tc2_Utilities.F_UINT(nMessageCount),
+				Tc2_Utilities.F_UDINT(nSendBufferLen),
+				Tc2_Utilities.EMPTY_ARG_VALUE,
+				Tc2_Utilities.EMPTY_ARG_VALUE
+			);	
+		
 			fbAdsWriteMsg(WRITE:=FALSE);
 			fbAdsWriteMsg(
 				WRITE	:= TRUE,
-				IDXGRP 	:= Config.nLogIndexGrp,
-				IDXOFFS := DINT_TO_UDINT(nTaskIndex),
+				IDXGRP 	:= Const.nLogIndexGrp,
+				IDXOFFS := Const.nLogIndexOffs,
 				LEN		:= nSendBufferLen,
 				SRCADDR	:= ADR(aSendBuffer),
 			);
@@ -133,13 +163,25 @@ CASE nState OF
 		fbAdsWriteMsg();
 		IF NOT fbAdsWriteMsg.BUSY THEN
 			IF fbAdsWriteMsg.ERR THEN
-				{IF defined (DEBUG)}
-					Tc2_System.ADSLOGDINT(
-						Tc2_System.ADSLOG_MSGTYPE_LOG OR Tc2_System.ADSLOG_MSGTYPE_ERROR,
-						'Error sending message. Error=%d',
-						UDINT_TO_DINT(fbAdsWriteMsg.ERRID)
-					);					
-				{END_IF}
+				F_InternalLog(
+					E_LogLevel.eFatal,
+					'Log4TcTask',
+					'Error sending log message to handler. task=%d adsErrId=%d',
+					F_DINT(nTaskIndex),
+					F_UDINT(fbAdsWriteMsg.ERRID),
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE
+				);
+			ELSE
+				F_InternalLog(
+					E_LogLevel.eDebug,
+					'FB_Log4TcTask.Call',
+					'Message successfully sent.',
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE
+				);	
 			END_IF
 			
 			nSendBufferLen := 0;
@@ -197,13 +239,21 @@ END_VAR
       <LineId Id="18" Count="0" />
     </LineIds>
     <LineIds Name="FB_Log4TcTask.Call">
+      <LineId Id="142" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="105" Count="1" />
+      <LineId Id="108" Count="5" />
+      <LineId Id="115" Count="1" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="107" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="13" Count="0" />
-      <LineId Id="19" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="20" Count="1" />
+      <LineId Id="160" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="30" Count="0" />
@@ -216,9 +266,15 @@ END_VAR
       <LineId Id="40" Count="0" />
       <LineId Id="42" Count="1" />
       <LineId Id="41" Count="0" />
-      <LineId Id="46" Count="3" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="47" Count="2" />
       <LineId Id="38" Count="0" />
       <LineId Id="51" Count="4" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="165" Count="6" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="163" Count="0" />
       <LineId Id="58" Count="0" />
       <LineId Id="62" Count="1" />
       <LineId Id="65" Count="3" />
@@ -226,10 +282,11 @@ END_VAR
       <LineId Id="59" Count="0" />
       <LineId Id="56" Count="1" />
       <LineId Id="69" Count="4" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="82" Count="3" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="80" Count="0" />
+      <LineId Id="118" Count="5" />
+      <LineId Id="125" Count="2" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="174" Count="7" />
+      <LineId Id="173" Count="0" />
       <LineId Id="76" Count="0" />
       <LineId Id="88" Count="0" />
       <LineId Id="86" Count="1" />

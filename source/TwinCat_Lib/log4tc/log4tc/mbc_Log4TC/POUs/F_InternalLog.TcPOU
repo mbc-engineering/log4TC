@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="F_InternalLog" Id="{8a461a6a-6d1a-4114-9343-a1b060b1c536}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_InternalLog : BOOL
+VAR_INPUT
+	eLogLevel 			: E_LogLevel;
+	sContext			: Tc2_System.T_MaxString;
+	sMessageFmt			: Tc2_System.T_MaxString;
+	stArg1				: Tc2_Utilities.T_Arg;
+	stArg2				: Tc2_Utilities.T_Arg;
+	stArg3				: Tc2_Utilities.T_Arg;
+	stArg4				: Tc2_Utilities.T_Arg;
+END_VAR
+VAR
+	sOutputStr			: T_MaxString;
+	fbFormatStr			: FB_FormatString;
+	aBoolToByte			: ARRAY[1..4] OF BYTE;
+	pBool				: POINTER TO BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF eLogLevel < Config.eInternalLog THEN
+	RETURN;
+END_IF
+
+CASE eLogLevel OF
+	E_LogLevel.eTrace:
+		sOutputStr := '[TRACE] ';
+	E_LogLevel.eDebug:
+		sOutputStr := '[DEBUG] ';
+	E_LogLevel.eInfo:
+		sOutputStr := '[INFO] ';
+	E_LogLevel.eWarn:
+		sOutputStr := '[WARN] ';
+	E_LogLevel.eError:
+		sOutputStr := '[ERROR] ';
+	ELSE
+		sOutputStr := '[FATAL] ';
+END_CASE
+
+IF LEN(sContext) > 0 THEN
+	sOutputStr := CONCAT(sOutputStr, CONCAT(sContext, ' - '));
+END_IF
+
+IF stArg1.eType = E_ArgType.ARGTYPE_BOOL THEN
+	pBool := stArg1.pData;
+	aBoolToByte[1] := SEL(pBool^, 0, 1);
+	stArg1 := F_BYTE(aBoolToByte[1]);
+END_IF
+
+IF stArg2.eType = E_ArgType.ARGTYPE_BOOL THEN
+	pBool := stArg2.pData;
+	aBoolToByte[2] := SEL(pBool^, 0, 1);
+	stArg2 := F_BYTE(aBoolToByte[2]);
+END_IF
+
+IF stArg3.eType = E_ArgType.ARGTYPE_BOOL THEN
+	pBool := stArg3.pData;
+	aBoolToByte[3] := SEL(pBool^, 0, 1);
+	stArg3 := F_BYTE(aBoolToByte[3]);
+END_IF
+
+IF stArg4.eType = E_ArgType.ARGTYPE_BOOL THEN
+	pBool := stArg4.pData;
+	aBoolToByte[4] := SEL(pBool^, 0, 1);
+	stArg4 := F_BYTE(aBoolToByte[4]);
+END_IF
+
+
+fbFormatStr(
+	sFormat := sMessageFmt,
+	arg1 	:= stArg1,
+	arg2	:= stArg2,
+	arg3	:= stArg3,
+	arg4	:= stArg4,
+);
+
+sOutputStr := CONCAT(sOutputStr, fbFormatStr.sOut);
+
+ADSLOGSTR(ADSLOG_MSGTYPE_LOG, sOutputStr, '');
+
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_InternalLog">
+      <LineId Id="25" Count="6" />
+      <LineId Id="96" Count="1" />
+      <LineId Id="32" Count="36" />
+      <LineId Id="80" Count="7" />
+      <LineId Id="90" Count="5" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
