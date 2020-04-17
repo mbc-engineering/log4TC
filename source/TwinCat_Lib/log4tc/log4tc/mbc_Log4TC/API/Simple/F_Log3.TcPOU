@@ -12,10 +12,12 @@ END_VAR
 
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[F_LogL3(eLogLevel, Const.sGlobalLogger, sMessage, stArg1, stArg2, stArg3);
+]]></ST>
     </Implementation>
     <LineIds Name="F_Log3">
       <LineId Id="7" Count="0" />
+      <LineId Id="17" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

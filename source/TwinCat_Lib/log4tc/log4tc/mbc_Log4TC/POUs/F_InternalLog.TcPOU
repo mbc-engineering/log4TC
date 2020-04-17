@@ -16,12 +16,15 @@ VAR
 	fbFormatStr			: FB_FormatString;
 	aBoolToByte			: ARRAY[1..4] OF BYTE;
 	pBool				: POINTER TO BOOL;
+	nMask				: DWORD;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF eLogLevel < Config.eInternalLog THEN
 	RETURN;
 END_IF
+
+nMask := ADSLOG_MSGTYPE_LOG;
 
 CASE eLogLevel OF
 	E_LogLevel.eTrace:
@@ -30,12 +33,16 @@ CASE eLogLevel OF
 		sOutputStr := '[DEBUG] ';
 	E_LogLevel.eInfo:
 		sOutputStr := '[INFO] ';
+		nMask := nMask OR ADSLOG_MSGTYPE_HINT;
 	E_LogLevel.eWarn:
 		sOutputStr := '[WARN] ';
+		nMask := nMask OR ADSLOG_MSGTYPE_WARN;
 	E_LogLevel.eError:
 		sOutputStr := '[ERROR] ';
+		nMask := nMask OR ADSLOG_MSGTYPE_ERROR;
 	ELSE
 		sOutputStr := '[FATAL] ';
+		nMask := nMask OR ADSLOG_MSGTYPE_ERROR;
 END_CASE
 
 IF LEN(sContext) > 0 THEN
@@ -77,14 +84,25 @@ fbFormatStr(
 
 sOutputStr := CONCAT(sOutputStr, fbFormatStr.sOut);
 
-ADSLOGSTR(ADSLOG_MSGTYPE_LOG, sOutputStr, '');
+ADSLOGSTR(nMask, sOutputStr, '');
 
 ]]></ST>
     </Implementation>
     <LineIds Name="F_InternalLog">
-      <LineId Id="25" Count="6" />
+      <LineId Id="25" Count="2" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="28" Count="3" />
       <LineId Id="96" Count="1" />
-      <LineId Id="32" Count="36" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="117" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="120" Count="0" />
+      <LineId Id="40" Count="28" />
       <LineId Id="80" Count="7" />
       <LineId Id="90" Count="5" />
       <LineId Id="7" Count="0" />

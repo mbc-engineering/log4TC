@@ -91,13 +91,23 @@ bError := FALSE;
 VAR_INPUT
 	stArg		: Tc2_Utilities.T_Arg;
 END_VAR
-VAR
-	bOk			: BOOL;
-END_VAR]]></Declaration>
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[_Copy(ADR(stArg.eType), SIZEOF(stArg.eType));
-
-_Copy(stArg.pData, UDINT_TO_UINT(stArg.cbLen));
+IF stArg.cbLen < 16#FFFF THEN
+	_Copy(stArg.pData, UDINT_TO_UINT(stArg.cbLen));
+ELSE
+	bError := TRUE;
+	F_InternalLog(
+		E_LogLevel.eWarn,
+		'FB_LogEntry._WriteArg',
+		'Size of arg data too long (max UINT, actual=%d).',
+		Tc2_Utilities.F_UDINT(stArg.cbLen),
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);	
+END_IF
 ]]></ST>
       </Implementation>
     </Method>
@@ -377,7 +387,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF stArg.eType = E_ArgType.ARGTYPE_UNKNOWN THEN
+        <ST><![CDATA[IF stArg.eType = E_ArgType.ARGTYPE_UNKNOWN OR stArg.pData = 0 THEN
 	RETURN;
 END_IF
 
@@ -491,8 +501,12 @@ Start := NOT bError;
     </LineIds>
     <LineIds Name="FB_LogEntry._WriteArg">
       <LineId Id="14" Count="0" />
-      <LineId Id="19" Count="0" />
+      <LineId Id="27" Count="0" />
       <LineId Id="22" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="32" Count="7" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry._WriteByte">

@@ -3,17 +3,24 @@
   <Itf Name="I_ContextBuilder" Id="{bcb2d462-f071-430e-9ed3-5e8d8bd02a9f}">
     <Declaration><![CDATA[INTERFACE I_ContextBuilder EXTENDS __System.IQueryInterface
 ]]></Declaration>
-    <Method Name="Reset" Id="{1b05697b-30b1-45d4-807a-8aaa50a553d1}">
-      <Declaration><![CDATA[METHOD Reset : I_ContextBuilder
+    <Method Name="AddInt" Id="{83857395-5dc2-4d8c-b632-9b91e65617f9}">
+      <Declaration><![CDATA[METHOD AddInt : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: INT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Clear" Id="{1b05697b-30b1-45d4-807a-8aaa50a553d1}">
+      <Declaration><![CDATA[METHOD Clear : I_ContextBuilder
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="WithInt" Id="{83857395-5dc2-4d8c-b632-9b91e65617f9}">
-      <Declaration><![CDATA[METHOD WithInt : I_ContextBuilder
+    <Method Name="RemoveInt" Id="{7ae798b7-0841-4ad2-bc80-c84354ac488e}">
+      <Declaration><![CDATA[METHOD RemoveInt : I_ContextBuilder
 VAR_INPUT
-	sName		: T_MaxString;
-	nValue		: INT;
+	sName	: Tc2_System.T_MaxString;
 END_VAR
 ]]></Declaration>
     </Method>

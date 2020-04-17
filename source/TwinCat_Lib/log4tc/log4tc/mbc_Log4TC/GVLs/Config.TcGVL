@@ -5,6 +5,7 @@
 VAR_GLOBAL CONSTANT
 	eInternalLog		: E_LogLevel := E_LogLevel.eDebug;	(* min. log level for internal logging. *)
 	nBufferLen 			: UINT := 8192;		(* Length of per task log buffer in bytes *)
+	nLogLen				: UINT := 1024;		(* Lenght of a single log message in bytes *)
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -28,7 +28,7 @@ F_LogA3(
 );
 
 // Einfaches Logging mit expliziten Logger
-F_Log3L(
+F_LogL3(
 	E_LogLevel.eInfo, 
 	'mbc4Log.Test',
 	'Log Message Arg={structuredArg} Arg={1} Arg=%s', 
@@ -50,7 +50,7 @@ fbLogger(
 	stArg1 			:= F_StringEx('Arg 1'),
 	stArg2 			:= F_StringEx('Arg 2'),
 	stArg3 			:= F_StringEx('Arg 3'),
-	iContextBuilder	:= F_LogContext().WithInt('id', 42)
+	iContextBuilder	:= F_LogContext().AddInt('id', 42)
 );
 	
 ]]></ST>

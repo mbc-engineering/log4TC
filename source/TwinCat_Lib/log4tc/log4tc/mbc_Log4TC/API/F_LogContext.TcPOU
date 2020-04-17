@@ -7,7 +7,7 @@ VAR_STAT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_LogContext := aTaskContext[Tc2_System.GETCURTASKINDEXEX()].Reset();
+      <ST><![CDATA[F_LogContext := aTaskContext[Tc2_System.GETCURTASKINDEXEX()];
 ]]></ST>
     </Implementation>
     <LineIds Name="F_LogContext">

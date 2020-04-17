@@ -53,7 +53,7 @@
     <Compile Include="API\Simple\F_Log3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="API\Simple\F_Log3L.TcPOU">
+    <Compile Include="API\Simple\F_LogL3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Simple\F_LogA3.TcPOU">

@@ -38,6 +38,32 @@ END_VAR]]></Declaration>
         </XmlArchive>
       </CFC>
     </Implementation>
+    <Method Name="_InitAndCheckTask" Id="{cf1c3c00-c377-4ffb-a1eb-30fbb2bc0114}">
+      <Declaration><![CDATA[METHOD PRIVATE _InitAndCheckTask : BOOL
+VAR
+	nActTaskIndex		: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
+
+IF nTaskIndex = 0 AND nActTaskIndex > 0 THEN
+	nTaskIndex := nActTaskIndex;
+	_InitAndCheckTask := TRUE;
+ELSIF nTaskIndex <> nActTaskIndex OR nActTaskIndex = 0 THEN
+	F_InternalLog(
+		E_LogLevel.eFatal,
+		'Log4TcTask._InitAndCheckTask',
+		'Log4Tc called in wrong task (expected=%d actual=%d)',
+		F_DINT(nTaskIndex),
+		F_DINT(nActTaskIndex),
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+	_InitAndCheckTask := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AddLog" Id="{a60c1ca6-dc51-4ca0-8f1b-e9265e4c8b3d}">
       <Declaration><![CDATA[METHOD INTERNAL AddLog : BOOL
 VAR_INPUT
@@ -49,18 +75,7 @@ VAR
 	bAddOk			: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
-IF nActTaskIndex = 0 OR nActTaskIndex <> nTaskIndex THEN
-	F_InternalLog(
-		E_LogLevel.eFatal,
-		'Log4TcTask.AddLog',
-		'Logger called in wrong task. Expected=%d Actual=%d',
-		Tc2_Utilities.F_DINT(nTaskIndex),
-		Tc2_Utilities.F_DINT(nActTaskIndex),
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);
-	AddLog := FALSE;
+        <ST><![CDATA[IF NOT _InitAndCheckTask() THEN
 	RETURN;
 END_IF
 
@@ -112,7 +127,6 @@ VAR
 END_VAR
 VAR_INST
 	nState				: UINT;
-	nActTaskIndex		: DINT;
 	aSendBuffer			: ARRAY[1..Config.nBufferLen] OF BYTE;		(* Buffer for send data *)
 	nSendBufferLen		: UDINT;
 	bContinue			: BOOL;
@@ -120,19 +134,7 @@ VAR_INST
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
-IF nTaskIndex = 0 AND nActTaskIndex > 0 THEN
-	nTaskIndex := nActTaskIndex;
-ELSIF nTaskIndex <> nActTaskIndex OR nActTaskIndex = 0 THEN
-	F_InternalLog(
-		E_LogLevel.eFatal,
-		'Log4TcTask.Call',
-		'Log4Tc Task called in wrong task (expected=%d actual=%d)',
-		F_DINT(nTaskIndex),
-		F_DINT(nActTaskIndex),
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);
+        <ST><![CDATA[IF NOT _InitAndCheckTask() THEN
 	RETURN;
 END_IF
 
@@ -240,13 +242,17 @@ END_VAR
 	]]></ST>
       </Implementation>
     </Method>
+    <LineIds Name="FB_Log4TcTask._InitAndCheckTask">
+      <LineId Id="6" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="9" Count="10" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
     <LineIds Name="FB_Log4TcTask.AddLog">
-      <LineId Id="58" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="65" Count="7" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="61" Count="1" />
+      <LineId Id="81" Count="1" />
+      <LineId Id="62" Count="0" />
       <LineId Id="59" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="10" Count="0" />
@@ -267,14 +273,8 @@ END_VAR
       <LineId Id="18" Count="0" />
     </LineIds>
     <LineIds Name="FB_Log4TcTask.Call">
-      <LineId Id="142" Count="0" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="105" Count="1" />
-      <LineId Id="108" Count="5" />
-      <LineId Id="115" Count="1" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="117" Count="0" />
       <LineId Id="107" Count="0" />
+      <LineId Id="202" Count="1" />
       <LineId Id="12" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="13" Count="0" />
