@@ -39,6 +39,7 @@
     </Compile>
     <Compile Include="API\F_GetTaskContext.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="API\F_LogContext.TcPOU">
       <SubType>Code</SubType>

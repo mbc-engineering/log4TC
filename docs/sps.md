@@ -23,6 +23,12 @@ Die Log-Message besteht aus einem Kopf, der immer vorhanden ist:
 | 2     | LOG_LEVEL  | Log-Level                                                    |
 | 8     | LINT       | Filetime-Zeitstempel der SPS                                 |
 | 8     | LINT       | Filetime-Zeitstempel der Uhrzeit (0=nicht vorhanden)         |
+| 4     | DINT       | Taskindex des Loggers                                        |
+| 1-256 | VAR_STRING | Task-Name                                                    |
+| 4     | UDINT      | Task-Zykluszähler                                            |
+| 1-256 | VAR_STRING | Applikationsname                                             |
+| 1-256 | VAR_STRING | Projektname                                                  |
+| 4     | UDINT      | Online-Change Zähler                                         |
 
 Danach können beliebige optionale Daten hinzugefügt werden. Jedes Datum wird mit einem Byte-Kennung eingeleitet, der den Typ signalisiert.
 

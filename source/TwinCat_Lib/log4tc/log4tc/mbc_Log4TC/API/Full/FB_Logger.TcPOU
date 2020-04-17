@@ -57,9 +57,9 @@ END_VAR
 	fbLogEntry.AddTArg(9, stArg9);
 	fbLogEntry.AddTArg(10, stArg10);
 	
-	IF __QUERYINTERFACE(F_GetTaskContext(), iLogEntryAdder) THEN
-		iLogEntryAdder.AddToLogEntry(fbLogEntry);
-	END_IF
+	//IF __QUERYINTERFACE(F_GetTaskContext(), iLogEntryAdder) THEN
+		//iLogEntryAdder.AddToLogEntry(fbLogEntry);
+	//END_IF
 	
 	fbLoggerContext.AddToLogEntry(fbLogEntry);
 	
@@ -134,10 +134,7 @@ END_VAR
       </XmlArchive>
     </ObjectProperties>
     <LineIds Name="FB_Logger">
-      <LineId Id="101" Count="33" />
-      <LineId Id="136" Count="5" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="142" Count="16" />
+      <LineId Id="3" Count="57" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="FB_Logger.FB_init">

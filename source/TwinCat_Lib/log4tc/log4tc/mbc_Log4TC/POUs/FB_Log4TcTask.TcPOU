@@ -6,6 +6,7 @@ Main code of Log4TC which manages log messages of a single task.
 *)
 FUNCTION_BLOCK INTERNAL FB_Log4TcTask
 VAR
+	nTaskIndex			: DINT;
 	fbRingBuffer		: Tc2_Utilities.FB_MemRingBufferEx;
 	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
 	fbTaskContext		: FB_ContextBuilder;
@@ -44,10 +45,26 @@ VAR_INPUT
 	nLogBufferLen	: UINT;
 END_VAR
 VAR
+	nActTaskIndex		: DINT;
 	bAddOk			: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[fbRingBuffer.A_AddTail(
+        <ST><![CDATA[nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
+IF nActTaskIndex = 0 OR nActTaskIndex <> nTaskIndex THEN
+	F_InternalLog(
+		E_LogLevel.eFatal,
+		'Log4TcTask.AddLog',
+		'Logger called in wrong task. Expected=%d Actual=%d',
+		Tc2_Utilities.F_DINT(nTaskIndex),
+		Tc2_Utilities.F_DINT(nActTaskIndex),
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+	AddLog := FALSE;
+	RETURN;
+END_IF
+
+fbRingBuffer.A_AddTail(
 	pBuffer 	:= ADR(aBuffer),
 	cbBuffer 	:= SIZEOF(aBuffer),
 	pWrite		:= pLogBuffer,
@@ -55,15 +72,27 @@ END_VAR]]></Declaration>
 	bOk			=> bAddOk,
 );
 
-{IF defined (DEBUG)}
 IF NOT bAddOk THEN
-	Tc2_System.ADSLOGDINT(
-		Tc2_System.ADSLOG_MSGTYPE_LOG OR Tc2_System.ADSLOG_MSGTYPE_ERROR,
-		'Error adding log message to buffer. Task=%d',
-		Tc2_System.GETCURTASKINDEXEX()
+	F_InternalLog(
+		E_LogLevel.eFatal,
+		'Log4TcTask.AddLog',
+		'Error adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%',
+		Tc2_Utilities.F_DINT(nTaskIndex),
+		Tc2_Utilities.F_UINT(nLogBufferLen),
+		Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
+		Tc2_Utilities.EMPTY_ARG_VALUE
 	);
+ELSE
+	F_InternalLog(
+		E_LogLevel.eTrace,
+		'Log4TcTask.AddLog',
+		'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%',
+		Tc2_Utilities.F_DINT(nTaskIndex),
+		Tc2_Utilities.F_UINT(nLogBufferLen),
+		Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);	
 END_IF 
-{END_IF}
 
 AddLog := bAddOk;
 ]]></ST>
@@ -80,7 +109,6 @@ VAR
 END_VAR
 VAR_INST
 	nState				: UINT;
-	nTaskIndex			: DINT;
 	nActTaskIndex		: DINT;
 	aSendBuffer			: ARRAY[1..Config.nBufferLen] OF BYTE;		(* Buffer for send data *)
 	nSendBufferLen		: UDINT;
@@ -90,12 +118,12 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
-IF nTaskIndex = 0 THEN
+IF nTaskIndex = 0 AND nActTaskIndex > 0 THEN
 	nTaskIndex := nActTaskIndex;
-ELSIF nTaskIndex <> nActTaskIndex THEN
+ELSIF nTaskIndex <> nActTaskIndex OR nActTaskIndex = 0 THEN
 	F_InternalLog(
 		E_LogLevel.eFatal,
-		'Log4TcTask',
+		'Log4TcTask.Call',
 		'Log4Tc Task called in wrong task (expected=%d actual=%d)',
 		F_DINT(nTaskIndex),
 		F_DINT(nActTaskIndex),
@@ -165,7 +193,7 @@ CASE nState OF
 			IF fbAdsWriteMsg.ERR THEN
 				F_InternalLog(
 					E_LogLevel.eFatal,
-					'Log4TcTask',
+					'Log4TcTask.Call',
 					'Error sending log message to handler. task=%d adsErrId=%d',
 					F_DINT(nTaskIndex),
 					F_UDINT(fbAdsWriteMsg.ERRID),
@@ -208,19 +236,14 @@ END_VAR
 	]]></ST>
       </Implementation>
     </Method>
-    <Property Name="TaskContext" Id="{a018f989-1abe-4e9e-89b8-b0325eaf919a}">
-      <Declaration><![CDATA[PROPERTY PUBLIC TaskContext : I_ContextBuilder]]></Declaration>
-      <Get Name="Get" Id="{22578776-6244-4fbb-ade8-0863c0a26537}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[TaskContext := fbTaskContext;
-]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <LineIds Name="FB_Log4TcTask.AddLog">
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="65" Count="7" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="61" Count="1" />
+      <LineId Id="59" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
@@ -228,12 +251,13 @@ END_VAR
       <LineId Id="15" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
       <LineId Id="23" Count="0" />
+      <LineId Id="37" Count="7" />
       <LineId Id="22" Count="0" />
-      <LineId Id="26" Count="3" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="7" />
+      <LineId Id="49" Count="0" />
       <LineId Id="25" Count="0" />
-      <LineId Id="21" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="18" Count="0" />
@@ -301,10 +325,6 @@ END_VAR
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="10" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.TaskContext.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

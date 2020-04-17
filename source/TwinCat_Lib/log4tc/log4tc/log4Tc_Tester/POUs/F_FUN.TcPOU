@@ -1,14 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="F_FUN" Id="{66f1fd3f-30bd-4766-a4ba-288de1fa6c2c}" SpecialFunc="None">
-    <Declaration><![CDATA[{attribute 'reflection'} 
-FUNCTION F_FUN : BOOL
+    <Declaration><![CDATA[FUNCTION F_FUN : BOOL
 VAR_INPUT
 END_VAR
 VAR
-    {attribute 'instance-path'} 
-    {attribute 'noinit'} // 'log4tc.log4Tc_Tester.MAIN.fbLog' bwz. 'log4tc.log4Tc_Tester.GVL.fbLog'
-    sInstancePath	: T_MaxString; 	
 	var1			: __SYSTEM.VAR_INFO;
 	var2			: __SYSTEM.VAR_INFO;
 	fbLog			: FB_Logger('F_FUN (Inst)');

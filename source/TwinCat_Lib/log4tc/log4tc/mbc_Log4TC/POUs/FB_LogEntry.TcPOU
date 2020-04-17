@@ -455,13 +455,13 @@ _WriteLInt(nTimeStampClock);
 // Task Infos 
 nTaskIndex := Tc2_System.GETCURTASKINDEXEX();
 _WriteDInt(nTaskIndex);
-_WriteString(ADR(_TaskInfo[nTaskIndex].TaskName));
-_WriteUDInt(_TaskInfo[nTaskIndex].CycleCount);
+_WriteString(ADR(TwinCAT_SystemInfoVarList._TaskInfo[nTaskIndex].TaskName));
+_WriteUDInt(TwinCAT_SystemInfoVarList._TaskInfo[nTaskIndex].CycleCount);
 
 // App Infos
-_WriteString(ADR(_AppInfo.AppName));
-_WriteString(ADR(_AppInfo.ProjectName));
-_WriteUDInt(_AppInfo.OnlineChangeCnt);
+_WriteString(ADR(TwinCAT_SystemInfoVarList._AppInfo.AppName));
+_WriteString(ADR(TwinCAT_SystemInfoVarList._AppInfo.ProjectName));
+_WriteUDInt(TwinCAT_SystemInfoVarList._AppInfo.OnlineChangeCnt);
 
 Start := NOT bError;
 

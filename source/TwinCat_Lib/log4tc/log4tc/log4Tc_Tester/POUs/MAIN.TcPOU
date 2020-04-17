@@ -17,7 +17,7 @@ VAR_TEMP
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
+      <ST><![CDATA[PRG_TestSimpleApi();
 	
 fbLog(
 	bExecute	:= bWriteLog,
@@ -33,7 +33,7 @@ IF bWriteLog OR bWriteCont THEN
 	F_FUN();
 	GVL.fbLog();
 	
-	F_GetTaskContext().WithInt('Task', -10000);
+	//F_GetTaskContext().WithInt('Task', -10000);
 	
 	fbLog.LoggerContext.WithInt('Logger', 1234);
 	

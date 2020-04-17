@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="PRG_TestSimpleApi" Id="{bcc7908d-3a35-4ae4-afd2-9b6ede60025b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_TestSimpleApi
+VAR
+	bExecute		: BOOL;
+	nArg			: INT := 42;
+	sArg			: T_MaxString := 'foo';
+	fArg			: REAL := 4.2;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bExecute THEN
+	F_LogLA3(
+		E_LogLevel.eInfo,
+		'PRG_TestSimpleApi',
+		'Log F_LogLA3({arg1},{arg2},{arg3})',
+		nArg,
+		sArg,
+		fArg
+	);
+	
+	F_LogA3(
+		E_LogLevel.eInfo,
+		'Log F_LogA3({arg1},{arg2},{arg3})',
+		nArg,
+		sArg,
+		fArg
+	);
+	
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_TestSimpleApi">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="6" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="23" Count="4" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
