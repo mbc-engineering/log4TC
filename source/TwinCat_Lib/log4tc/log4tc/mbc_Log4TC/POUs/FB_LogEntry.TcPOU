@@ -158,7 +158,7 @@ END_VAR]]></Declaration>
 	nLen := Tc2_Standard.LEN(pValue^);
 	IF nLen >= 0 AND nLen <= 255 THEN
 		_WriteByte(INT_TO_BYTE(nLen)); 
-		_Copy(ADR(pValue), INT_TO_UINT(nLen));
+		_Copy(pValue, INT_TO_UINT(nLen));
 	ELSE
 		// should not happen because T_MaxString is <= 255 bytes long
 		bError := TRUE;

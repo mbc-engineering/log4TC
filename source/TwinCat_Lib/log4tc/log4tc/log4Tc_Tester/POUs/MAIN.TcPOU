@@ -7,9 +7,11 @@ VAR
 	bWriteLog		: BOOL;
 	bWriteCont		: BOOL;
 	nVar1			: INT;
-	nVar2			: T_MaxString;
+	nVar2			: T_MaxString := 'ä';
 	nVar3			: REAL;
 	var1			: __SYSTEM.VAR_INFO;
+	b1 : BYTE;
+	b2 : BYTE;
 END_VAR
 
 VAR_TEMP
@@ -26,6 +28,9 @@ fbLog(
 );
 
 var1 := __VARINFO(fbLog);
+
+b1 := PBYTE_TO_BYTE(ADR(nVar2)); // Windows-1252 
+b2 := PBYTE_TO_BYTE(ADR(nVar2)+1);
 
 IF bWriteLog OR bWriteCont THEN
 	bWriteLog := FALSE;
@@ -48,7 +53,7 @@ IF bWriteLog OR bWriteCont THEN
 
 END_IF
 
-F_CallLogTask();
+F_CallLogTask('192.168.56.1.1.1');
 
 
 ]]></ST>
@@ -60,6 +65,9 @@ F_CallLogTask();
       <LineId Id="203" Count="2" />
       <LineId Id="223" Count="0" />
       <LineId Id="200" Count="0" />
+      <LineId Id="241" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="242" Count="0" />
       <LineId Id="101" Count="2" />
       <LineId Id="138" Count="0" />
       <LineId Id="220" Count="1" />

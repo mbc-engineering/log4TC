@@ -2,10 +2,12 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="F_CallLogTask" Id="{43b77b84-3ad4-4dba-a1e5-4c575f461237}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_CallLogTask
-
+VAR_INPUT
+	sAmsNetId		: Tc2_System.T_AmsNetID;
+END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[GlobalVariables.aTaskLogger[GETCURTASKINDEXEX()].Call();
+      <ST><![CDATA[GlobalVariables.aTaskLogger[GETCURTASKINDEXEX()].Call(sAmsNetId);
 ]]></ST>
     </Implementation>
     <LineIds Name="F_CallLogTask">

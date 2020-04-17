@@ -76,7 +76,7 @@ IF NOT bAddOk THEN
 	F_InternalLog(
 		E_LogLevel.eFatal,
 		'Log4TcTask.AddLog',
-		'Error adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%',
+		'Error adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
 		Tc2_Utilities.F_DINT(nTaskIndex),
 		Tc2_Utilities.F_UINT(nLogBufferLen),
 		Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
@@ -86,7 +86,7 @@ ELSE
 	F_InternalLog(
 		E_LogLevel.eTrace,
 		'Log4TcTask.AddLog',
-		'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%',
+		'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
 		Tc2_Utilities.F_DINT(nTaskIndex),
 		Tc2_Utilities.F_UINT(nLogBufferLen),
 		Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
@@ -104,6 +104,9 @@ Should be called regularly in the same task as its instance was
 declared.
 *)
 METHOD INTERNAL Call
+VAR_INPUT
+	sAmsNetId			: Tc2_System.T_AmsNetID;
+END_VAR
 VAR
 	nMessageCount		: UINT;
 END_VAR
@@ -178,6 +181,7 @@ CASE nState OF
 			fbAdsWriteMsg(WRITE:=FALSE);
 			fbAdsWriteMsg(
 				WRITE	:= TRUE,
+				NETID	:= sAmsNetId,
 				IDXGRP 	:= Const.nLogIndexGrp,
 				IDXOFFS := Const.nLogIndexOffs,
 				LEN		:= nSendBufferLen,
@@ -301,6 +305,7 @@ END_VAR
       <LineId Id="163" Count="0" />
       <LineId Id="58" Count="0" />
       <LineId Id="62" Count="1" />
+      <LineId Id="201" Count="0" />
       <LineId Id="65" Count="3" />
       <LineId Id="64" Count="0" />
       <LineId Id="59" Count="0" />

@@ -21,7 +21,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbLogEntry.Start(
-	pLogger			:= ADR(sGlobalLogger),
+	pLogger			:= ADR(sLogger),
 	pMessage		:= ADR(sMessage),
 	eLogLevel		:= eLogLevel,
 	nTimeStampPlc	:= 0,
