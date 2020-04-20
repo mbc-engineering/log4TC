@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using TwinCAT.Ads;
 using TwinCAT.Ads.Server;
-using TwinCAT.TypeSystem;
 
 namespace Log4TcPrototype
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
             var server = new LogServer();
             server.Connect();
@@ -21,9 +20,12 @@ namespace Log4TcPrototype
         }
     }
 
+#pragma warning disable SA1402 // File may only contain a single type
     internal class LogServer : TcAdsServer
+#pragma warning restore SA1402 // File may only contain a single type
     {
-        public LogServer() : base(16150, "Log4TC")
+        public LogServer()
+            : base(16150, "Log4TC")
         {
         }
 
@@ -45,6 +47,7 @@ namespace Log4TcPrototype
                     {
                         buf[i++] = ch;
                     }
+
                     var message = Encoding.Default.GetString(buf, 0, i);
 
                     i = 0;
@@ -52,6 +55,7 @@ namespace Log4TcPrototype
                     {
                         buf[i++] = ch;
                     }
+
                     var logger = Encoding.Default.GetString(buf, 0, i);
 
                     var level = buffer.ReadUInt16();
@@ -85,6 +89,7 @@ namespace Log4TcPrototype
                                     {
                                         buf[i++] = ch;
                                     }
+
                                     argValue = Encoding.Default.GetString(buf, 0, i);
                                     break;
                             }
@@ -98,6 +103,7 @@ namespace Log4TcPrototype
                             {
                                 buf[i++] = ch;
                             }
+
                             var name = Encoding.Default.GetString(buf, 0, i);
                             var valueType = buffer.ReadInt16();
                             var value = buffer.ReadInt16();
@@ -105,12 +111,10 @@ namespace Log4TcPrototype
                         }
                     }
 
-
                     Console.WriteLine($"Log-Entry: version={version} message={message} logger={logger} level={level} timestamp={timestampPlc}.{timestampPlc.Millisecond} args=[{string.Join(",", args)}] context=[{string.Join(",", contex)}]");
                 }
 
                 AdsWriteRes(rAddr, invokeId, AdsErrorCode.NoError);
-
             }
             catch (Exception e)
             {

@@ -2,42 +2,48 @@
 using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Output;
 using Mbc.Log4Tc.Receiver;
-using Mbc.Common.Interface;
+using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
 namespace Mbc.Log4Tc.Dispatcher
 {
-    public class LogDispatcher : IServiceStartable
+    public class LogDispatcherService : IHostedService
     {
         private readonly List<ILogReceiver> _receiver;
         private readonly Dictionary<string, IOutputHandler> _outputs;
         private readonly List<IDispatchExpression> _dispatchExpressions;
         private readonly BufferBlock<IEnumerable<LogEntry>> _logEntryBuffer = new BufferBlock<IEnumerable<LogEntry>>();
 
-        public LogDispatcher(IEnumerable<ILogReceiver> receiver, IEnumerable<IOutputHandler> outputs, IEnumerable<IDispatchExpression> dispatchExpressions)
+        public LogDispatcherService(IEnumerable<ILogReceiver> receiver, IEnumerable<IOutputHandler> outputs, IEnumerable<IDispatchExpression> dispatchExpressions)
         {
             _receiver = receiver.ToList();
             _outputs = outputs.ToDictionary(x => x.Name);
             _dispatchExpressions = dispatchExpressions.ToList();
         }
 
-        public void Start()
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             _logEntryBuffer.LinkTo(new ActionBlock<IEnumerable<LogEntry>>(ProcessLogEntries));
             foreach (var receiver in _receiver)
             {
                 receiver.LogsReceived += OnLogDispatch;
             }
+
+            return Task.CompletedTask;
         }
 
-        public void Stop()
+        public Task StopAsync(CancellationToken cancellationToken)
         {
             foreach (var receiver in _receiver)
             {
                 receiver.LogsReceived += OnLogDispatch;
             }
+
+            return Task.CompletedTask;
         }
 
         private void OnLogDispatch(object sender, LogEntryEventArgs e)

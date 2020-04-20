@@ -1,5 +1,4 @@
 ﻿using Mbc.Log4Tc.Model;
-using Mbc.Common.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,23 +7,13 @@ using TwinCAT.Ads.Server;
 
 namespace Mbc.Log4Tc.Receiver
 {
-    public class AdsLogReceiver : TcAdsServer, ILogReceiver, IServiceStartable
+    public class AdsLogReceiver : TcAdsServer, ILogReceiver
     {
         public event EventHandler<LogEntryEventArgs> LogsReceived;
 
         public AdsLogReceiver()
             : base(16150, "Log4Tc")
         {
-        }
-
-        public void Start()
-        {
-            Connect();
-        }
-
-        public void Stop()
-        {
-            Disconnect();
         }
 
         public override void AdsWriteInd(AmsAddress rAddr, uint invokeId, uint indexGroup, uint indexOffset, uint cbLength, byte[] data)

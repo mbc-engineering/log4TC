@@ -1,64 +1,31 @@
 ﻿using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Dispatcher.DispatchExpression;
-using Mbc.Log4Tc.Output;
 using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Receiver;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 namespace Mbc.Log4Tc.Service
 {
     public static class Program
     {
-        // private static ServiceStartableManager _serviceStartableManager;
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var receiver = new AdsLogReceiver();
-            var nLogOutput = new NLogLog4TcOutput("NLogOutput");
-            var dispatchExpressions = new List<IDispatchExpression> { new DispatchAllLogsToOutput("NLogOutput") };
-            var dispatcher = new LogDispatcher(new List<ILogReceiver> { receiver }, new List<IOutputHandler> { nLogOutput }, dispatchExpressions);
-
-            dispatcher.Start();
-            receiver.Start();
-
-            Console.ReadKey();
-
-            receiver.Stop();
-            dispatcher.Stop();
-
-            receiver.Dispose();
-
-            /*
-            var builder = new ContainerBuilder();
-            builder.RegisterType<AdsLogReceiver>().SingleInstance();
-            builder.RegisterType<NLogLog4TcOutput>().SingleInstance();
-
-            var container = builder.Build();
-
-            _serviceStartableManager = new ServiceStartableManager(container);
-
-            _serviceStartableManager.StartStartableComponents();
-
-            Console.ReadKey();
-
-            _serviceStartableManager.StopStartableComponents();
-
-            container.Dispose();
-            */
-        }
-
-        /*
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
+            await CreateHostBuilder(args)
+                .Build()
+                .RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    ;// services.AddHostedService<Worker>();
+                    // ToDo: Add from configuration from appsettings
+                    services
+                        .AddLog4TcDispatchExpression(new DispatchAllLogsToOutput("NLogOutput"))
+                        .AddLog4TcAdsLogReceiver()
+                        .AddLog4TcNLogOutput("NLogOutput")
+                        .AddLog4TcDispatcher();
                 });
-        */
     }
 }
