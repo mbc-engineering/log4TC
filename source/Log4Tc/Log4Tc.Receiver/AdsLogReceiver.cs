@@ -42,7 +42,7 @@ namespace Log4Tc.Receiver
                     var version = reader.ReadByte();
                     if (version == 1)
                     {
-                        logEntry = ReadLogEntry(reader);
+                        logEntry = ReadLogEntryV1(reader);
                     }
                     else
                     {
@@ -65,7 +65,7 @@ namespace Log4Tc.Receiver
             }
         }
 
-        private LogEntry ReadLogEntry(AdsBinaryReader reader)
+        private LogEntry ReadLogEntryV1(AdsBinaryReader reader)
         {
             var logEntry = new LogEntry
             {
