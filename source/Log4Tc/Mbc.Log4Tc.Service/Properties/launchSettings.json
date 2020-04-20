@@ -1,9 +1,16 @@
-﻿{
+{
   "profiles": {
-    "Mbc.Log4Tc.Service": {
+    "Mbc.Log4Tc.Service-Development": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "Mbc.Log4Tc.Service-Productive": {
+      "commandName": "Project",
+      "commandLineArgs": "--service",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Production"
       }
     }
   }

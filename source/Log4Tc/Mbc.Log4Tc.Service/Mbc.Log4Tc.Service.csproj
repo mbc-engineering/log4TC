@@ -1,12 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
+    <Platform>Any CPU</Platform>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RuntimeIdentifier>win</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <!-- Only supported for .net core app-->
+    <PublishSingleFile>false</PublishSingleFile>
+    
     <UserSecretsId>dotnet-Mbc.Log4Tc.Service-A8F619B6-166D-4E1E-9671-59E91544F2C0</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="InstallService.ps1" />
+    <None Remove="UninstallService.ps1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="UninstallService.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="InstallService.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>    
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />    
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.3" />
     <PackageReference Include="NLog" Version="4.7.0" />
   </ItemGroup>
 
