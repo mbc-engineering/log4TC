@@ -1,12 +1,12 @@
-﻿using Log4Tc.Model;
+﻿using Mbc.Log4Tc.Model;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Log4TcLevel = Log4Tc.Model.LogLevel;
+using Log4TcLevel = Mbc.Log4Tc.Model.LogLevel;
 using NLogLevel = NLog.LogLevel;
 
-namespace Log4Tc.Output.NLog
+namespace Mbc.Log4Tc.Output.NLog
 {
     public class NLogLog4TcOutput : IOutputHandler
     {

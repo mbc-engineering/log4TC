@@ -1,13 +1,13 @@
-﻿using Log4Tc.Dispatcher.DispatchExpression;
-using Log4Tc.Model;
-using Log4Tc.Output;
-using Log4Tc.Receiver;
+﻿using Mbc.Log4Tc.Dispatcher.DispatchExpression;
+using Mbc.Log4Tc.Model;
+using Mbc.Log4Tc.Output;
+using Mbc.Log4Tc.Receiver;
 using Mbc.Common.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
 
-namespace Log4Tc.Dispatcher
+namespace Mbc.Log4Tc.Dispatcher
 {
     public class LogDispatcher : IServiceStartable
     {

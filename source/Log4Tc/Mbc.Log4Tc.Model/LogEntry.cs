@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Log4Tc.Model
+namespace Mbc.Log4Tc.Model
 {
     public class LogEntry
     {

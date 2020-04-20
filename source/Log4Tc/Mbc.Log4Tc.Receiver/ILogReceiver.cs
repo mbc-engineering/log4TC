@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Log4Tc.Receiver
+namespace Mbc.Log4Tc.Receiver
 {
     public interface ILogReceiver
     {

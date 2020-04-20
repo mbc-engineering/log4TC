@@ -1,4 +1,4 @@
-﻿using Log4Tc.Model;
+﻿using Mbc.Log4Tc.Model;
 using Mbc.Common.Interface;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Text;
 using TwinCAT.Ads;
 using TwinCAT.Ads.Server;
 
-namespace Log4Tc.Receiver
+namespace Mbc.Log4Tc.Receiver
 {
     public class AdsLogReceiver : TcAdsServer, ILogReceiver, IServiceStartable
     {
@@ -16,7 +16,6 @@ namespace Log4Tc.Receiver
             : base(16150, "Log4Tc")
         {
         }
-
 
         public void Start()
         {
@@ -111,7 +110,6 @@ namespace Log4Tc.Receiver
             return logEntry;
         }
 
-
         private object ReadObject(AdsBinaryReader reader)
         {
             var type = reader.ReadInt16();
@@ -168,7 +166,6 @@ namespace Log4Tc.Receiver
                     break;
                 default:
                     throw new NotImplementedException($"type {type}");
-
             }
 
             return value;

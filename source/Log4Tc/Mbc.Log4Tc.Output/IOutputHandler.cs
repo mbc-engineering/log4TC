@@ -1,6 +1,6 @@
-﻿using Log4Tc.Model;
+﻿using Mbc.Log4Tc.Model;
 
-namespace Log4Tc.Output
+namespace Mbc.Log4Tc.Output
 {
     public interface IOutputHandler
     {

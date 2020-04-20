@@ -1,23 +1,22 @@
-﻿using Log4Tc.Dispatcher;
-using Log4Tc.Dispatcher.DispatchExpression;
-using Log4Tc.Output;
-using Log4Tc.Output.NLog;
-using Log4Tc.Receiver;
+﻿using Mbc.Log4Tc.Dispatcher;
+using Mbc.Log4Tc.Dispatcher.DispatchExpression;
+using Mbc.Log4Tc.Output;
+using Mbc.Log4Tc.Output.NLog;
+using Mbc.Log4Tc.Receiver;
 using System;
 using System.Collections.Generic;
 
-namespace Log4Tc.Service
+namespace Mbc.Log4Tc.Service
 {
-    public class Program
+    public static class Program
     {
-        //private static ServiceStartableManager _serviceStartableManager;
-
+        // private static ServiceStartableManager _serviceStartableManager;
         public static void Main(string[] args)
         {
             var receiver = new AdsLogReceiver();
             var nLogOutput = new NLogLog4TcOutput("NLogOutput");
             var dispatchExpressions = new List<IDispatchExpression> { new DispatchAllLogsToOutput("NLogOutput") };
-            var dispatcher = new LogDispatcher(new List<ILogReceiver> { receiver }, new List<IOutputHandler> { nLogOutput }, dispatchExpressions );
+            var dispatcher = new LogDispatcher(new List<ILogReceiver> { receiver }, new List<IOutputHandler> { nLogOutput }, dispatchExpressions);
 
             dispatcher.Start();
             receiver.Start();

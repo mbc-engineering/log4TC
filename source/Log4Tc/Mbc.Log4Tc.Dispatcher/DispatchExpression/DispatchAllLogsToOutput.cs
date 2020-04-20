@@ -1,6 +1,6 @@
-﻿using Log4Tc.Model;
+﻿using Mbc.Log4Tc.Model;
 
-namespace Log4Tc.Dispatcher.DispatchExpression
+namespace Mbc.Log4Tc.Dispatcher.DispatchExpression
 {
     public sealed class DispatchAllLogsToOutput : IDispatchExpression
     {
