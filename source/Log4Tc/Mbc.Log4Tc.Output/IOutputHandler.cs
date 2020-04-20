@@ -1,6 +1,6 @@
 ﻿using Log4Tc.Model;
 
-namespace Log4Tc.Dispatcher
+namespace Log4Tc.Output
 {
     public interface IOutputHandler
     {

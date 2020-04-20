@@ -1,5 +1,6 @@
 ﻿using Log4Tc.Dispatcher.DispatchExpression;
 using Log4Tc.Model;
+using Log4Tc.Output;
 using Log4Tc.Receiver;
 using Mbc.Common.Interface;
 using System.Collections.Generic;

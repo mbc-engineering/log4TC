@@ -1,5 +1,4 @@
-﻿using Log4Tc.Dispatcher;
-using Log4Tc.Model;
+﻿using Log4Tc.Model;
 using NLog;
 using System;
 using System.Collections.Generic;

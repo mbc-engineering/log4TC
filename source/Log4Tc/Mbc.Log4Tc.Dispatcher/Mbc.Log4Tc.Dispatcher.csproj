@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Sobald Release von Beckhoff.TwinCAT.Ads in 5 Ready ist, kann auf netstandard2.0 gewechselt werden -->
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mbc.Common.Interface" Version="0.2.0" />
+    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Receiver\Mbc.Log4Tc.Receiver.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- CSPROJ Reference see: https://docs.microsoft.com/en-us/dotnet/core/tools/csproj -->
+
+  <!-- Solution wide Project infos
+       ############################ -->
+  <PropertyGroup>
+    <Title>Log4Tc</Title>
+    <Product>mbc Log4Tc</Product>
+    <Description>Logging ADS Master für Beckhoff TwinCat 3 mit mehreren Ausgabe Plugins</Description>
+    <Authors>stgm, joge, mihe</Authors>
+    <Company>mbc Engineering GmbH</Company>
+    <Copyright>Copyright © mbc Engineering GmbH 2020</Copyright>
+    
+    <Version>20.04.20</Version>
+    
+  </PropertyGroup>
+
+  <!-- Build configuration Settings 
+       ############################ -->
+  <PropertyGroup>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <!-- Use latest C# Minor Features-->
+    <LangVersion>latest</LangVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <DebugType>embedded</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Default configuration and Platform pre-selection-->
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+
+
+  <!-- Enable Roslyn analyzers-->
+  <PropertyGroup>
+    <!-- Not need if Roslyn analysis is used (https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/2122)
+    <RunCodeAnalysis>true</RunCodeAnalysis> -->
+    <CodeAnalysisRuleSet>$(SolutionDir)\Mbc.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md -->
+    <None Include="$(SolutionDir)\stylecop.json">
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8" />
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="2.9.8" />
+    <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="2.9.8" />
+  </ItemGroup>
+
+</Project>

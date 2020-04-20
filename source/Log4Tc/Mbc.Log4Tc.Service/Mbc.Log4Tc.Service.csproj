@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <UserSecretsId>dotnet-Mbc.Log4Tc.Service-A8F619B6-166D-4E1E-9671-59E91544F2C0</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>    
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />    
+    <PackageReference Include="NLog" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.NLog\Mbc.Log4Tc.Output.NLog.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Receiver\Mbc.Log4Tc.Receiver.csproj" />
+  </ItemGroup>
+</Project>

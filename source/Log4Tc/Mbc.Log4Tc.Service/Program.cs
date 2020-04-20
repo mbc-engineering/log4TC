@@ -1,19 +1,18 @@
-﻿using Autofac;
-using Log4Tc.Dispatcher;
+﻿using Log4Tc.Dispatcher;
 using Log4Tc.Dispatcher.DispatchExpression;
+using Log4Tc.Output;
 using Log4Tc.Output.NLog;
 using Log4Tc.Receiver;
-using Mbc.Common.Service;
 using System;
 using System.Collections.Generic;
 
 namespace Log4Tc.Service
 {
-    class Program
+    public class Program
     {
-        private static ServiceStartableManager _serviceStartableManager;
+        //private static ServiceStartableManager _serviceStartableManager;
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var receiver = new AdsLogReceiver();
             var nLogOutput = new NLogLog4TcOutput("NLogOutput");
@@ -29,8 +28,8 @@ namespace Log4Tc.Service
             dispatcher.Stop();
 
             receiver.Dispose();
-            return;
 
+            /*
             var builder = new ContainerBuilder();
             builder.RegisterType<AdsLogReceiver>().SingleInstance();
             builder.RegisterType<NLogLog4TcOutput>().SingleInstance();
@@ -46,6 +45,21 @@ namespace Log4Tc.Service
             _serviceStartableManager.StopStartableComponents();
 
             container.Dispose();
+            */
         }
+
+        /*
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureServices((hostContext, services) =>
+                {
+                    ;// services.AddHostedService<Worker>();
+                });
+        */
     }
 }
