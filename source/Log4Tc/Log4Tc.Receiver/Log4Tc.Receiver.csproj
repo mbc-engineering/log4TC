@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdsLogReceiver.cs" />
-    <Compile Include="ILogDispatcher.cs" />
+    <Compile Include="ILogReceiver.cs" />
     <Compile Include="LogEntryEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

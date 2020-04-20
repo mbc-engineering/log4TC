@@ -8,9 +8,9 @@ using TwinCAT.Ads.Server;
 
 namespace Log4Tc.Receiver
 {
-    public class AdsLogReceiver : TcAdsServer, ILogDispatcher, IServiceStartable
+    public class AdsLogReceiver : TcAdsServer, ILogReceiver, IServiceStartable
     {
-        public event EventHandler<LogEntryEventArgs> DispatchLogEntry;
+        public event EventHandler<LogEntryEventArgs> LogsReceived;
 
         public AdsLogReceiver()
             : base(16150, "Log4Tc")
@@ -54,7 +54,7 @@ namespace Log4Tc.Receiver
                     entries.Add(logEntry);
                 }
 
-                DispatchLogEntry?.Invoke(this, new LogEntryEventArgs(entries));
+                LogsReceived?.Invoke(this, new LogEntryEventArgs(entries));
 
                 AdsWriteRes(rAddr, invokeId, AdsErrorCode.NoError);
             }

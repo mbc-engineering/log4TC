@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4Tc.Receiver", "Log4Tc.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4Tc.Output.NLog", "Log4Tc.Output.NLog\Log4Tc.Output.NLog.csproj", "{C5B815D1-FB42-4BB3-99C7-7F6891D5562B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log4Tc.Dispatcher", "Log4Tc.Dispatcher\Log4Tc.Dispatcher.csproj", "{7C992A92-5C45-4069-BCFD-83F5F5C222EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C5B815D1-FB42-4BB3-99C7-7F6891D5562B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5B815D1-FB42-4BB3-99C7-7F6891D5562B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5B815D1-FB42-4BB3-99C7-7F6891D5562B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C992A92-5C45-4069-BCFD-83F5F5C222EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C992A92-5C45-4069-BCFD-83F5F5C222EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C992A92-5C45-4069-BCFD-83F5F5C222EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C992A92-5C45-4069-BCFD-83F5F5C222EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

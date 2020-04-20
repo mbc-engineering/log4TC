@@ -1,8 +1,11 @@
 ﻿using Autofac;
+using Log4Tc.Dispatcher;
+using Log4Tc.Dispatcher.DispatchExpression;
 using Log4Tc.Output.NLog;
 using Log4Tc.Receiver;
 using Mbc.Common.Service;
 using System;
+using System.Collections.Generic;
 
 namespace Log4Tc.Service
 {
@@ -12,18 +15,20 @@ namespace Log4Tc.Service
 
         static void Main(string[] args)
         {
-            var a = new AdsLogReceiver();
-            var b = new NLogLog4TcOutput(a);
+            var receiver = new AdsLogReceiver();
+            var nLogOutput = new NLogLog4TcOutput("NLogOutput");
+            var dispatchExpressions = new List<IDispatchExpression> { new DispatchAllLogsToOutput("NLogOutput") };
+            var dispatcher = new LogDispatcher(new List<ILogReceiver> { receiver }, new List<IOutputHandler> { nLogOutput }, dispatchExpressions );
 
-            a.Start();
-            b.Start();
+            dispatcher.Start();
+            receiver.Start();
 
             Console.ReadKey();
 
-            b.Stop();
-            a.Stop();
+            receiver.Stop();
+            dispatcher.Stop();
 
-            a.Dispose();
+            receiver.Dispose();
             return;
 
             var builder = new ContainerBuilder();

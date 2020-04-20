@@ -1,53 +1,26 @@
-﻿using Log4Tc.Model;
-using Log4Tc.Receiver;
-using Mbc.Common.Interface;
+﻿using Log4Tc.Dispatcher;
+using Log4Tc.Model;
 using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks.Dataflow;
 using Log4TcLevel = Log4Tc.Model.LogLevel;
 using NLogLevel = NLog.LogLevel;
 
 namespace Log4Tc.Output.NLog
 {
-    public class NLogLog4TcOutput : IServiceStartable
+    public class NLogLog4TcOutput : IOutputHandler
     {
         private static readonly Logger DispatchLogger = LogManager.GetLogger("TwinCat");
 
-        private readonly BufferBlock<IEnumerable<LogEntry>> _logEntryBuffer = new BufferBlock<IEnumerable<LogEntry>>();
-        private readonly ILogDispatcher _dispatcher;
-
-        public NLogLog4TcOutput(ILogDispatcher dispatcher)
+        public NLogLog4TcOutput(string name)
         {
-            _dispatcher = dispatcher;
+            Name = name;
         }
 
-        public void Start()
-        {
-            _logEntryBuffer.LinkTo(new ActionBlock<IEnumerable<LogEntry>>(ProcessLogEntries));
-            _dispatcher.DispatchLogEntry += OnLogDispatch;
-        }
+        public string Name { get; }
 
-        public void Stop()
-        {
-            _dispatcher.DispatchLogEntry -= OnLogDispatch;
-        }
-
-        private void OnLogDispatch(object sender, LogEntryEventArgs e)
-        {
-            _logEntryBuffer.Post(e.LogEntries);
-        }
-
-        private void ProcessLogEntries(IEnumerable<LogEntry> logEntries)
-        {
-            foreach (var logEntry in logEntries)
-            {
-                ProcesLogEntry(logEntry);
-            }
-        }
-
-        private void ProcesLogEntry(LogEntry logEntry)
+        public void ProcesLogEntry(LogEntry logEntry)
         {
             var logEvent = new LogEventInfo
             {
@@ -57,7 +30,6 @@ namespace Log4Tc.Output.NLog
                 Parameters = ConvertToNLogParameters(logEntry.Arguments),
                 TimeStamp = logEntry.PlcTimestamp,
             };
-            logEvent.StackTrace.
 
             foreach (var ctxProp in logEntry.Context)
             {

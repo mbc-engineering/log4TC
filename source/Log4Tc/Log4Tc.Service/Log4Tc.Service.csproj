@@ -68,8 +68,15 @@
     <PackageReference Include="NLog">
       <Version>4.7.0</Version>
     </PackageReference>
+    <PackageReference Include="YamlDotNet">
+      <Version>8.1.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Log4Tc.Dispatcher\Log4Tc.Dispatcher.csproj">
+      <Project>{7C992A92-5C45-4069-BCFD-83F5F5C222EC}</Project>
+      <Name>Log4Tc.Dispatcher</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Log4Tc.Output.NLog\Log4Tc.Output.NLog.csproj">
       <Project>{c5b815d1-fb42-4bb3-99c7-7f6891d5562b}</Project>
       <Name>Log4Tc.Output.NLog</Name>
