@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="F_LogLA6" Id="{316b3328-3162-4cad-828c-64c859230c23}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_LogLA6 
+VAR_INPUT
+	eLogLevel		: E_LogLevel;
+	sLogger			: T_MaxString;
+	sMessage		: T_MaxString;
+	aArg1			: ANY;
+	aArg2			: ANY;
+	aArg3			: ANY;
+	aArg4			: ANY;
+	aArg5			: ANY;
+	aArg6			: ANY;
+END_VAR
+VAR 
+	aEmptyArg		: BYTE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_LogA(
+	eLogLevel,
+	sLogger,
+	sMessage,
+	4,
+	aArg1,
+	aArg2,
+	aArg3,
+	aArg4,
+	aArg5,
+	aArg6,
+	aEmptyArg,
+	aEmptyArg,
+	aEmptyArg,
+	aEmptyArg
+);
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_LogLA6">
+      <LineId Id="60" Count="0" />
+      <LineId Id="62" Count="7" />
+      <LineId Id="74" Count="5" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="44" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -86,31 +86,6 @@ bError := FALSE;
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="_WriteArg" Id="{3b3fb0e0-9974-45aa-aea8-7369baa43d26}">
-      <Declaration><![CDATA[METHOD PRIVATE _WriteArg
-VAR_INPUT
-	stArg		: Tc2_Utilities.T_Arg;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_Copy(ADR(stArg.eType), SIZEOF(stArg.eType));
-IF stArg.cbLen < 16#FFFF THEN
-	_Copy(stArg.pData, UDINT_TO_UINT(stArg.cbLen));
-ELSE
-	bError := TRUE;
-	F_InternalLog(
-		E_LogLevel.eWarn,
-		'FB_LogEntry._WriteArg',
-		'Size of arg data too long (max UINT, actual=%d).',
-		Tc2_Utilities.F_UDINT(stArg.cbLen),
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);	
-END_IF
-]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="_WriteByte" Id="{0f2a32d5-7ca1-4461-b5b3-ecdba5089cf7}">
       <Declaration><![CDATA[METHOD PRIVATE _WriteByte 
 VAR_INPUT
@@ -225,7 +200,7 @@ VAR_INPUT
 	stArg		: ANY;
 END_VAR
 VAR
-	bOk			: BOOL;
+	nLen		: INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -236,8 +211,13 @@ END_IF
 _WriteByte(1); // Type 1: Argument follows
 _WriteByte(nArgno);
 
-CASE UDINT_TO_DINT(stArg.TypeClass) OF
-	IBaseLibrary.TypeClass.TYPE_BOOL:
+CASE stArg.TypeClass OF
+	__SYSTEM.TYPE_CLASS.TYPE_REAL:
+		_WriteByte(0);
+END_CASE
+
+CASE stArg.TypeClass OF
+	__SYSTEM.TYPE_CLASS.TYPE_BOOL:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_BOOL);
 		IF Tc2_Utilities.PBYTE_TO_BYTE(stArg.pValue) <> 0 THEN
 			_WriteByte(1);
@@ -245,86 +225,86 @@ CASE UDINT_TO_DINT(stArg.TypeClass) OF
 			_WriteByte(0);
 		END_IF
 
-	IBaseLibrary.TypeClass.TYPE_BYTE:
+	__SYSTEM.TYPE_CLASS.TYPE_BYTE:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_BYTE);
 		_Copy(stArg.pValue, SIZEOF(BYTE));
 	
-	IBaseLibrary.TypeClass.TYPE_WORD:
+	__SYSTEM.TYPE_CLASS.TYPE_WORD:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_WORD);
 		_Copy(stArg.pValue, SIZEOF(WORD));		
 	
-	IBaseLibrary.TypeClass.TYPE_DWORD:
+	__SYSTEM.TYPE_CLASS.TYPE_DWORD:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_DWORD);
 		_Copy(stArg.pValue, SIZEOF(DWORD));		
 	
-	IBaseLibrary.TypeClass.TYPE_LWORD:
+	__SYSTEM.TYPE_CLASS.TYPE_LWORD:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_LWORD);
 		_Copy(stArg.pValue, SIZEOF(LWORD));
 	
-	IBaseLibrary.TypeClass.TYPE_SINT:
+	__SYSTEM.TYPE_CLASS.TYPE_SINT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_SINT);
 		_Copy(stArg.pValue, SIZEOF(SINT));
 	
-	IBaseLibrary.TypeClass.TYPE_INT:
+	__SYSTEM.TYPE_CLASS.TYPE_INT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_INT);
 		_Copy(stArg.pValue, SIZEOF(INT));		
 	
-	IBaseLibrary.TypeClass.TYPE_DINT:
+	__SYSTEM.TYPE_CLASS.TYPE_DINT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_DINT);
 		_Copy(stArg.pValue, SIZEOF(DINT));		
 	
-	IBaseLibrary.TypeClass.TYPE_LINT:
+	__SYSTEM.TYPE_CLASS.TYPE_LINT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_LARGE);
 		_Copy(stArg.pValue, SIZEOF(LINT));		
 	
-	IBaseLibrary.TypeClass.TYPE_USINT:
+	__SYSTEM.TYPE_CLASS.TYPE_USINT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_USINT);
 		_Copy(stArg.pValue, SIZEOF(USINT));
 	
-	IBaseLibrary.TypeClass.TYPE_UINT:
+	__SYSTEM.TYPE_CLASS.TYPE_UINT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_UINT);
 		_Copy(stArg.pValue, SIZEOF(UINT));		
 	
-	IBaseLibrary.TypeClass.TYPE_UDINT:
+	__SYSTEM.TYPE_CLASS.TYPE_UDINT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_UDINT);
 		_Copy(stArg.pValue, SIZEOF(UDINT));		
 	
-	IBaseLibrary.TypeClass.TYPE_ULINT:
+	__SYSTEM.TYPE_CLASS.TYPE_ULINT:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_ULARGE);
 		_Copy(stArg.pValue, SIZEOF(ULINT));		
 	
-	IBaseLibrary.TypeClass.TYPE_REAL:
+	__SYSTEM.TYPE_CLASS.TYPE_REAL:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_REAL);
 		_Copy(stArg.pValue, SIZEOF(REAL));		
 	
-	IBaseLibrary.TypeClass.TYPE_LREAL:
+	__SYSTEM.TYPE_CLASS.TYPE_LREAL:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_LREAL);
 		_Copy(stArg.pValue, SIZEOF(LREAL));		
 	
-	IBaseLibrary.TypeClass.TYPE_STRING:
+	__SYSTEM.TYPE_CLASS.TYPE_STRING:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_STRING);
 		_WriteString(stArg.pValue);
 
-	//IBaseLibrary.TypeClass.TYPE_WSTRING:
+	//__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
 		// TODO
 
-	//IBaseLibrary.TypeClass.TYPE_TIME:
+	//__SYSTEM.TYPE_CLASS.TYPE_TIME:
 		//_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_TIME);
 		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(TIME)));
 
-	//IBaseLibrary.TypeClass.TYPE_DATE:
+	//__SYSTEM.TYPE_CLASS.TYPE_DATE:
 		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(DATE)));
 
-	//IBaseLibrary.TypeClass.TYPE_DATEANDTIME:
+	//__SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME:
 		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(Date_)));
 
-	//IBaseLibrary.TypeClass.TYPE_TIMEOFDAY:
+	//__SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY:
 		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(TIMEOFDAY)));
 
-	//IBaseLibrary.TypeClass.TYPE_ENUM:
+	//__SYSTEM.TYPE_CLASS.TYPE_ENUM:
 		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, 8));
 
-	//IBaseLibrary.TypeClass.TYPE_LTIME:
+	//__SYSTEM.TYPE_CLASS.TYPE_LTIME:
 		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(LTIME)));
 		
 	ELSE
@@ -382,9 +362,7 @@ VAR_INPUT
 	nArgNo		: BYTE;
 	stArg		: Tc2_Utilities.T_Arg;
 END_VAR
-VAR
-	bOk			: BOOL;
-END_VAR
+
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF stArg.eType = E_ArgType.ARGTYPE_UNKNOWN OR stArg.pData = 0 THEN
@@ -393,7 +371,43 @@ END_IF
 
 _WriteByte(1); // Type 1: Argument follows
 _WriteByte(nArgNo);
-_WriteArg(stArg);
+_WriteInt(stArg.eType);
+
+_Copy(ADR(stArg.eType), SIZEOF(stArg.eType));
+CASE stArg.eType OF
+	Tc2_Utilities.E_ArgType.ARGTYPE_BYTE:
+		_Copy(stArg.pData, SIZEOF(BYTE));
+	Tc2_Utilities.E_ArgType.ARGTYPE_WORD:
+		_Copy(stArg.pData, SIZEOF(WORD));
+	Tc2_Utilities.E_ArgType.ARGTYPE_DWORD:
+		_Copy(stArg.pData, SIZEOF(DWORD));
+	Tc2_Utilities.E_ArgType.ARGTYPE_REAL:
+		_Copy(stArg.pData, SIZEOF(REAL));
+	Tc2_Utilities.E_ArgType.ARGTYPE_LREAL:
+		_Copy(stArg.pData, SIZEOF(LREAL));
+	Tc2_Utilities.E_ArgType.ARGTYPE_SINT:
+		_Copy(stArg.pData, SIZEOF(SINT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_INT:
+		_Copy(stArg.pData, SIZEOF(INT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_DINT:
+		_Copy(stArg.pData, SIZEOF(DINT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_USINT:
+		_Copy(stArg.pData, SIZEOF(USINT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_UINT:
+		_Copy(stArg.pData, SIZEOF(UINT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_UDINT:
+		_Copy(stArg.pData, SIZEOF(UDINT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_STRING:
+		_WriteString(stArg.pData);
+	Tc2_Utilities.E_ArgType.ARGTYPE_BOOL:
+		_WriteByte(SEL(Tc2_Utilities.PBOOL_TO_BOOL(stArg.pData), 0, 1));
+	Tc2_Utilities.E_ArgType.ARGTYPE_ULARGE:
+		_Copy(stArg.pData, SIZEOF(ULINT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_LARGE:
+		_Copy(stArg.pData, SIZEOF(LINT));
+	Tc2_Utilities.E_ArgType.ARGTYPE_LWORD:
+		_Copy(stArg.pData, SIZEOF(LWORD));
+END_CASE
 ]]></ST>
       </Implementation>
     </Method>
@@ -499,16 +513,6 @@ Start := NOT bError;
       <LineId Id="13" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>
-    <LineIds Name="FB_LogEntry._WriteArg">
-      <LineId Id="14" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="28" Count="1" />
-      <LineId Id="32" Count="7" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
     <LineIds Name="FB_LogEntry._WriteByte">
       <LineId Id="13" Count="0" />
       <LineId Id="5" Count="0" />
@@ -553,6 +557,9 @@ Start := NOT bError;
       <LineId Id="53" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="33" Count="0" />
+      <LineId Id="167" Count="2" />
+      <LineId Id="171" Count="0" />
+      <LineId Id="170" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="39" Count="0" />
@@ -637,7 +644,15 @@ Start := NOT bError;
       <LineId Id="11" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="21" Count="0" />
-      <LineId Id="33" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="58" Count="1" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="63" Count="20" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="87" Count="6" />
+      <LineId Id="60" Count="0" />
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_LogEntry.End">

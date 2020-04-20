@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="ST_Log4TcTaskInfo" Id="{1a5f94d8-0411-4499-90bb-f2adb4408e12}">
+    <Declaration><![CDATA[TYPE ST_Log4TcTaskInfo :
+STRUCT
+	nAddLogToBufferErrorCount			: UDINT;	(* Counts error when adding log message to task buffer. *)
+	nSendLogBufferErrorCount			: UDINT;	(* Counts error when sending log task buffer to service. *)
+	nMaxUsedBufferSize					: UDINT;	(* Max. used buffer size of log task buffer. *)
+	nMaxLogsInBuffer					: UINT;		(* Max. number of logs in buffer. *)
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

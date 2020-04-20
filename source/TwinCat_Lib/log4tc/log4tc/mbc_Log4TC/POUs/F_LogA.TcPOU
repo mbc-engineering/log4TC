@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="F_LogA" Id="{8ac1e49b-4f8b-43a6-ae63-dd568afe353d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_LogA 
+VAR_INPUT
+	eLogLevel		: E_LogLevel;
+	sLogger			: T_MaxString;
+	sMessage		: T_MaxString;
+	nArgCount		: UINT (0..10);
+	aArg1			: ANY;
+	aArg2			: ANY;
+	aArg3			: ANY;
+	aArg4			: ANY;
+	aArg5			: ANY;
+	aArg6			: ANY;
+	aArg7			: ANY;
+	aArg8			: ANY;
+	aArg9			: ANY;
+	aArg10			: ANY;
+END_VAR
+VAR
+	fbLogEntry		: FB_LogEntry();
+	pBuffer			: PVOID;
+	nBufferCount	: UINT;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbLogEntry.Start(
+	pLogger			:= ADR(sLogger),
+	pMessage		:= ADR(sMessage),
+	eLogLevel		:= eLogLevel,
+	nTimeStampPlc	:= 0,
+	nTimeStampClock	:= 0
+);
+
+IF nArgCount >= 1 THEN
+	fbLogEntry.AddAnyArg(1, aArg1);
+END_IF
+IF nArgCount >= 2 THEN 
+	fbLogEntry.AddAnyArg(2, aArg2);
+END_IF
+IF nArgCount >= 3 THEN 
+	fbLogEntry.AddAnyArg(3, aArg2);
+END_IF
+IF nArgCount >= 4 THEN 
+	fbLogEntry.AddAnyArg(4, aArg2);
+END_IF
+IF nArgCount >= 5 THEN 
+	fbLogEntry.AddAnyArg(5, aArg2);
+END_IF
+IF nArgCount >= 6 THEN 
+	fbLogEntry.AddAnyArg(6, aArg2);
+END_IF
+IF nArgCount >= 7 THEN 
+	fbLogEntry.AddAnyArg(7, aArg2);
+END_IF
+IF nArgCount >= 8 THEN 
+	fbLogEntry.AddAnyArg(8, aArg2);
+END_IF
+IF nArgCount >= 9 THEN 
+	fbLogEntry.AddAnyArg(9, aArg2);
+END_IF
+IF nArgCount >= 10 THEN 
+	fbLogEntry.AddAnyArg(10, aArg2);
+END_IF
+
+IF fbLogEntry.End() THEN
+	// Add to task ring buffer
+	fbLogEntry.GetBuffer(
+		pBuffer			=> pBuffer,
+		nBufferCount	=> nBufferCount
+	);
+	GlobalVariables.aTaskLogger[GETCURTASKINDEXEX()].AddLog(pBuffer, nBufferCount);
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_LogA">
+      <LineId Id="28" Count="6" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="64" Count="24" />
+      <LineId Id="39" Count="8" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

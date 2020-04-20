@@ -1,16 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <DUT Name="E_LogLevel" Id="{322cf33f-cf60-45fe-86fc-20e9e85b0465}">
-    <Declaration><![CDATA[{attribute 'qualified_only'}
+    <Declaration><![CDATA[(*
+:Description: Definition of available log levels. 
+
+The log levels are ordered. ``eTrace`` has the lowest priority, ``eFatal`` has the
+highest priority.
+
+===============
+Log Level Usage
+===============
+
+Is is recommended to build a guidline for consistent use of the log level. A example
+could be the following:
+
+:eFatal: The fatal level should be used for any error which will to malfunction of the most
+	part of the program. Log message of this type must be handled immedialtely.
+	
+	Example: A Safety controller could not be initialised
+
+:eError: The error level should be used when the program cannot continue to work properly.
+	Normally this means that a operator/user has to be alerted and something has to
+	be fixed.
+
+	Example: Communication errors, something stops a process
+
+:eWarn: The warn level should be used when some expected condition has happend, but the
+	software can proceed in some way or the operation can be repeated later. Normaly
+	the warn level should be read by the user/operator at some time, not necessarly 
+	immediately.
+
+	Example: Cannot connect to some external system (but will repeat to try)
+
+:eInfo: The info level should track some of the import state changes in the programm. This
+	information can be used by the user/operator on demand to track a problem.
+
+	Example: A state of a state-machine has changed, a new recipe has been loaded
+
+:eDebug: The info level should track of the some internals, normally only of importance to
+	developers.
+
+:eTrace: The trace level should be used to track some internal processing. This is rarely
+	used, even by developers, mostly to track some difficult problem.
+
+*)
+{attribute 'qualified_only'}
 {attribute 'strict'}
 TYPE E_LogLevel :
 (
-	eTrace 	:= 0,
-	eDebug 	:= 1,
-	eInfo	:= 2,
-	eWarn	:= 3,
-	eError	:= 4,
-	eFatal	:= 5
+	eTrace 	:= 0,	(* Trace log level. *)
+	eDebug 	:= 1,	(* Debug log level. *)
+	eInfo	:= 2,	(* Info log level. *)
+	eWarn	:= 3,	(* Warn log level. *)
+	eError	:= 4,	(* Error log level. *)
+	eFatal	:= 5	(* Fatal log level. *)
 ) UINT;
 END_TYPE
 ]]></Declaration>

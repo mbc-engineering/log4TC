@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="F_LogL" Id="{43e97f19-f08a-4a01-b9f3-3613b91b4f2b}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+:Description: Writes the given message at the specific level and logger name. 
+
+**Logger**
+
+The logger is used to give the message a scope. Although not enforced, it is
+recommended to use a hierarchical structure which reflects the code. For example
+if the method ``CheckTemp`` of a program block ``PRG_Alarms`` is writing a log message,
+the logger name could be ``'PRG_Alarms.CheckTemp'``.
+
+**Example**
+
+.. code:: 
+
+    F_Log(E_LogLevel.eWarn, 'PRG_Alarms' ,'Something important happened.');
+	
+*)
+FUNCTION F_LogL : BOOL
+VAR_INPUT
+	eLogLevel		: E_LogLevel;		(* The level of this log. *)
+	sLogger			: T_MaxString;      (* The name of the logger. *)
+	sMessage		: T_MaxString;		(* The message to log. *)
+END_VAR
+VAR 
+	aEmptyArg		: BYTE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_LogA(eLogLevel, sLogger, sMessage, 0, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg,);
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_LogL">
+      <LineId Id="7" Count="0" />
+      <LineId Id="84" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

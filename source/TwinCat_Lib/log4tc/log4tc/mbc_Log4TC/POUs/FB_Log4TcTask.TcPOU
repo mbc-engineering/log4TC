@@ -97,6 +97,14 @@ IF NOT bAddOk THEN
 		Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
 		Tc2_Utilities.EMPTY_ARG_VALUE
 	);
+	
+	IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBufferErrorCount);
+	IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize < fbRingBuffer.cbSize THEN
+		Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize := fbRingBuffer.cbSize;
+	END_IF
+	IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer <= fbRingBuffer.nCount THEN
+		Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer := UDINT_TO_UINT(fbRingBuffer.nCount);
+	END_IF
 ELSE
 	F_InternalLog(
 		E_LogLevel.eTrace,
@@ -206,6 +214,8 @@ CASE nState OF
 					Tc2_Utilities.EMPTY_ARG_VALUE,
 					Tc2_Utilities.EMPTY_ARG_VALUE
 				);
+				
+				IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nSendLogBufferErrorCount);
 			ELSE
 				F_InternalLog(
 					E_LogLevel.eDebug,
@@ -264,6 +274,9 @@ END_VAR
       <LineId Id="23" Count="0" />
       <LineId Id="37" Count="7" />
       <LineId Id="22" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="94" Count="5" />
       <LineId Id="48" Count="0" />
       <LineId Id="50" Count="7" />
       <LineId Id="49" Count="0" />
@@ -313,6 +326,8 @@ END_VAR
       <LineId Id="69" Count="4" />
       <LineId Id="118" Count="5" />
       <LineId Id="125" Count="2" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="222" Count="0" />
       <LineId Id="172" Count="0" />
       <LineId Id="174" Count="7" />
       <LineId Id="173" Count="0" />

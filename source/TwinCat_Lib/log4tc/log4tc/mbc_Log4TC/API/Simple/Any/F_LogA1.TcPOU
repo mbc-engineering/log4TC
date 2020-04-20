@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="F_LogA1" Id="{fbb41f90-470a-440a-900e-95d2040a9b4c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_LogA1 
+VAR_INPUT
+	eLogLevel		: E_LogLevel;
+	sLogger			: T_MaxString;
+	sMessage		: T_MaxString;
+	aArg1			: ANY;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_LogLA1(eLogLevel, Const.sGlobalLogger, sMessage, aArg1);
+]]></ST>
+    </Implementation>
+    <LineIds Name="F_LogA1">
+      <LineId Id="60" Count="0" />
+      <LineId Id="44" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

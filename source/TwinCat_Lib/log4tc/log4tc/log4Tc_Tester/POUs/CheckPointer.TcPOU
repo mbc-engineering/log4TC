@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="CheckPointer" Id="{0836ecf9-52c5-45e2-b90e-1199c65e0b0d}" SpecialFunc="CheckPointer">
+    <Declaration><![CDATA[// Implicitly generated code : DO NOT EDIT
+FUNCTION CheckPointer : POINTER TO BYTE
+VAR_INPUT 
+	ptToTest : POINTER TO BYTE; // Destination address of the pointer
+	iSize : DINT;		        // Size of the type the pointer points to. (e.g: 20 for POINTER TO ARRAY [0..9] OF INT) 
+	iGran : DINT;		        // Granularity of the pointer access. This is the size of the biggest non-structured data type in the type the pointer points to. (e.g: 2 for POINTER TO ARRAY [0..9] OF INT)
+	bWrite: BOOL;		        // Indicates read or write Access. TRUE = write access.
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// No standard way of implementation. Fill your own code here
+CheckPointer := ptToTest;
+{flow}]]></ST>
+    </Implementation>
+    <LineIds Name="CheckPointer">
+      <LineId Id="11" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

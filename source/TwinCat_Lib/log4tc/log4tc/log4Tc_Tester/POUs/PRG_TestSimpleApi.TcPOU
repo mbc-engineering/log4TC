@@ -21,7 +21,7 @@ END_VAR
 		'Log F_LogLA3({arg1},{arg2},{arg3})',
 		nArg,
 		sArg,
-		fArg
+		fArg,
 	);
 	
 	F_LogA3(
