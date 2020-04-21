@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <Platform>Any CPU</Platform>
     <Prefer32Bit>false</Prefer32Bit>
     <RuntimeIdentifier>win</RuntimeIdentifier>
     <SelfContained>true</SelfContained>
