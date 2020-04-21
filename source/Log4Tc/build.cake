@@ -72,15 +72,29 @@ Task("Test")
 });
 
 Task("Publish")
-    .IsDependentOn("Clean")
+    //.IsDependentOn("Clean")
     // .IsDependentOn("Test") // keine Tests vorhanden
     .Does(() =>
 {
-    Information($"Publish service for all runtimes");
+    Information($"Publish service for windows runtime");
     DotNetCorePublish("Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj", new DotNetCorePublishSettings()
     {
         Configuration = configuration,
     });
+
+    Information("Create the setup for published service");
+    foreach (var platform in new [] { PlatformTarget.x64, PlatformTarget.x86 })
+    {
+        Information($"MSI {platform.ToString()}");
+        MSBuild("Log4Tc.sln", configurator =>
+            configurator                
+                .SetConfiguration(configuration)
+                .SetPlatformTarget(platform)
+                .WithRestore()
+                .SetVerbosity(Verbosity.Normal)                
+                .UseToolVersion(MSBuildToolVersion.VS2019)
+                .SetMSBuildPlatform(MSBuildPlatform.x86));    // x86 Required for WIX
+    }
 });
 
 Task("Default")

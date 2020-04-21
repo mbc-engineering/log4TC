@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <?include $(sys.CURRENTDIR)Includes/DefinitionsPlatform.wxi ?>
+
+    <!-- Exist twincat 3 router -->
+    <Property Id="WIX_IS_TWINCAT3_ROUTER_INSTALLED">
+      <RegistrySearch Id="PrequisitTwinCatRouterRegSearch"
+                      Root="HKLM"
+                      Key="SOFTWARE\WOW6432Node\Beckhoff\TwinCAT3\System"
+                      Name="Build"
+                      Type="raw"
+                      Win64="$(var.Win64)" />
+    </Property>
+
+    <!-- Exist twincat Alarm & Event v1 TcEventLogger as service -->
+    <Property Id="WIX_IS_TWINCAT3_ALARMEVENTV1_LOGGERSERVICE_INSTALLED">
+      <RegistrySearch Id="PrequisitTwinCatLoggerServiceRegSearch"
+                      Root="HKLM"
+                      Key="SYSTEM\CurrentControlSet\Services\TcEventLogger"
+                      Name="Start"
+                      Type="raw"
+                      Win64="$(var.Win64)"/>
+    </Property>
+	</Fragment>
+</Wix>
