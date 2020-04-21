@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="F_LogA" Id="{8ac1e49b-4f8b-43a6-ae63-dd568afe353d}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION F_LogA 
+    <Declaration><![CDATA[FUNCTION INTERNAL F_LogA 
 VAR_INPUT
 	eLogLevel		: E_LogLevel;
 	sLogger			: T_MaxString;

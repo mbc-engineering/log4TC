@@ -4,6 +4,9 @@
 		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="mbc_Log4TC\mbc_Log4TC.tmc">
 			<Name>mbc_Log4TC Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<TaskPouOids>
+				<TaskPouOid Prio="20" OTCID="#x08502001"/>
+			</TaskPouOids>
 		</Instance>
 	</Project>
 </TcSmItem>

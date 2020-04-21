@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_ContextBuilder_Test" Id="{503b98b2-d59e-4322-ac81-c79c92d0993a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ContextBuilder_Test EXTENDS TcUnit.FB_TestSuite
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[AddInt_ShouldAddInt();
+AddInt_WithSameName_ShouldReplace();
+RemoveInt_ShouldRemove();
+
+AddString_ShouldAddString();
+AddString_WithSameName_ShouldReAdd();
+AddString_WithSameName_ShouldReplace();
+RemoveString_ShouldRemove();
+]]></ST>
+    </Implementation>
+    <Method Name="AddInt_ShouldAddInt" Id="{fead3f10-433a-4350-a79e-88bd84803026}">
+      <Declaration><![CDATA[METHOD AddInt_ShouldAddInt
+VAR
+	fbContextBuilder		: FB_ContextBuilder;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('AddInt_ShouldAddInt');
+
+fbContextBuilder.AddInt('foo', 42);
+
+// 1 + 'foo' + 2 + 2
+AssertEquals_UINT(8, fbContextBuilder._BufferCount, 'Buffer size');
+AssertEquals_UINT(1, fbContextBuilder._ContextCount, 'Context count');
+AssertEquals_UINT(0, fbContextBuilder._GetContextOffset(0), 'Context[0]');
+AssertEquals_STRING('foo', fbContextBuilder._ReadName(0), 'Name');
+AssertEquals_INT(Tc2_Utilities.E_ArgType.ARGTYPE_INT, fbContextBuilder._ReadType(0), 'Type');
+
+TcUnit.TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddInt_WithSameName_ShouldReplace" Id="{f5aa8954-9922-4b81-a209-2699062aa176}">
+      <Declaration><![CDATA[METHOD AddInt_WithSameName_ShouldReplace
+VAR
+	fbContextBuilder		: FB_ContextBuilder;
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('AddInt_WithSameName_ShouldReplace');
+
+// first add some
+fbContextBuilder.AddInt('before', 0);	// size: 11
+fbContextBuilder.AddWord('foo', 42);	// size: 8
+fbContextBuilder.AddInt('after', 0);	// size: 10
+
+// then replace
+fbContextBuilder.AddInt('foo', 0);
+
+AssertEquals_UINT(29, fbContextBuilder._BufferCount, 'Buffer size');
+AssertEquals_UINT(3, fbContextBuilder._ContextCount, 'Context count');
+AssertEquals_UINT(0, fbContextBuilder._GetContextOffset(0), 'Context[0]');
+AssertEquals_UINT(11, fbContextBuilder._GetContextOffset(1), 'Context[1]');
+AssertEquals_UINT(19, fbContextBuilder._GetContextOffset(2), 'Context[2]');
+AssertEquals_STRING('before', fbContextBuilder._ReadName(0), 'Name[0]');
+AssertEquals_STRING('foo', fbContextBuilder._ReadName(1), 'Name[1]');
+AssertEquals_STRING('after', fbContextBuilder._ReadName(2), 'Name[2]');
+AssertEquals_INT(Tc2_Utilities.E_ArgType.ARGTYPE_INT, fbContextBuilder._ReadType(1), 'Type');
+
+TcUnit.TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddString_ShouldAddString" Id="{351d0f2b-9773-440a-a673-09a943f3cc61}">
+      <Declaration><![CDATA[METHOD AddString_ShouldAddString
+VAR
+	fbContextBuilder		: FB_ContextBuilder;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('AddString_ShouldAddString');
+
+fbContextBuilder.AddString('foo', 'bar');	// size: 10
+
+AssertEquals_UINT(10, fbContextBuilder._BufferCount, 'Buffer size');
+AssertEquals_UINT(1, fbContextBuilder._ContextCount, 'Context count');
+AssertEquals_UINT(0, fbContextBuilder._GetContextOffset(0), 'Context[0]');
+AssertEquals_STRING('foo', fbContextBuilder._ReadName(0), 'Name');
+AssertEquals_INT(Tc2_Utilities.E_ArgType.ARGTYPE_STRING, fbContextBuilder._ReadType(0), 'Type');
+
+TcUnit.TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddString_WithSameName_ShouldReAdd" Id="{39e66a89-5d7e-422b-b2b9-f6973ca4b6ae}">
+      <Declaration><![CDATA[METHOD AddString_WithSameName_ShouldReAdd
+VAR
+	fbContextBuilder		: FB_ContextBuilder;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('AddString_WithSameName_ShouldReAdd');
+
+fbContextBuilder.AddString('before', 'aaa');	// Size: 13
+fbContextBuilder.AddString('foo', 'bar');		// Size: 10
+fbContextBuilder.AddString('after', 'zzz');		// Size: 12
+
+fbContextBuilder.AddString('foo', 'bazbar');	// Size: 13
+
+AssertEquals_UINT(38, fbContextBuilder._BufferCount, 'Buffer size');
+AssertEquals_UINT(3, fbContextBuilder._ContextCount, 'Context count');
+AssertEquals_UINT(0, fbContextBuilder._GetContextOffset(0), 'Context[0]');
+AssertEquals_UINT(13, fbContextBuilder._GetContextOffset(1), 'Context[1]');
+AssertEquals_UINT(25, fbContextBuilder._GetContextOffset(2), 'Context[2]');
+AssertEquals_STRING('before', fbContextBuilder._ReadName(0), 'Name[0]');
+AssertEquals_STRING('after', fbContextBuilder._ReadName(1), 'Name[1]');
+AssertEquals_STRING('foo', fbContextBuilder._ReadName(2), 'Name[2]');
+AssertEquals_INT(Tc2_Utilities.E_ArgType.ARGTYPE_STRING, fbContextBuilder._ReadType(2), 'Type');
+
+TcUnit.TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddString_WithSameName_ShouldReplace" Id="{3cfc05c9-2541-413b-b54a-8c6ea3880360}">
+      <Declaration><![CDATA[METHOD AddString_WithSameName_ShouldReplace
+VAR
+	fbContextBuilder		: FB_ContextBuilder;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('AddString_WithSameName_ShouldReplace');
+
+fbContextBuilder.AddString('before', 'aaa');	// Size: 13
+fbContextBuilder.AddString('foo', 'bar');		// Size: 10
+fbContextBuilder.AddString('after', 'zzz');		// Size: 12
+
+fbContextBuilder.AddString('foo', 'baz');
+
+AssertEquals_UINT(35, fbContextBuilder._BufferCount, 'Buffer size');
+AssertEquals_UINT(3, fbContextBuilder._ContextCount, 'Context count');
+AssertEquals_UINT(0, fbContextBuilder._GetContextOffset(0), 'Context[0]');
+AssertEquals_UINT(13, fbContextBuilder._GetContextOffset(1), 'Context[1]');
+AssertEquals_UINT(23, fbContextBuilder._GetContextOffset(2), 'Context[2]');
+AssertEquals_STRING('before', fbContextBuilder._ReadName(0), 'Name[0]');
+AssertEquals_STRING('foo', fbContextBuilder._ReadName(1), 'Name[1]');
+AssertEquals_STRING('after', fbContextBuilder._ReadName(2), 'Name[2]');
+AssertEquals_INT(Tc2_Utilities.E_ArgType.ARGTYPE_STRING, fbContextBuilder._ReadType(2), 'Type');
+
+TcUnit.TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveInt_ShouldRemove" Id="{7f110374-0827-466f-8d0e-67ba54391784}">
+      <Declaration><![CDATA[METHOD RemoveInt_ShouldRemove
+VAR
+	fbContextBuilder		: FB_ContextBuilder;
+
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('RemoveInt_ShouldRemove');
+
+// first add some
+fbContextBuilder.AddInt('before', 0);	// size: 11
+fbContextBuilder.AddWord('foo', 42);	// size: 8
+fbContextBuilder.AddInt('after', 0);	// size: 10
+
+// then remove
+fbContextBuilder.Remove('foo');
+
+AssertEquals_UINT(21, fbContextBuilder._BufferCount, 'Buffer size');
+AssertEquals_UINT(2, fbContextBuilder._ContextCount, 'Context count');
+AssertEquals_UINT(0, fbContextBuilder._GetContextOffset(0), 'Context[0]');
+AssertEquals_UINT(11, fbContextBuilder._GetContextOffset(1), 'Context[1]');
+AssertEquals_STRING('before', fbContextBuilder._ReadName(0), 'Name[0]');
+AssertEquals_STRING('after', fbContextBuilder._ReadName(1), 'Name[1]');
+
+TcUnit.TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RemoveString_ShouldRemove" Id="{8359906f-d3a0-418a-be80-ef8d87811e4d}">
+      <Declaration><![CDATA[METHOD RemoveString_ShouldRemove
+VAR
+	fbContextBuilder		: FB_ContextBuilder;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[TcUnit.TEST('RemoveString_ShouldRemove');
+
+fbContextBuilder.AddString('before', 'aaa');	// Size: 13
+fbContextBuilder.AddString('foo', 'bar');		// Size: 10
+fbContextBuilder.AddString('after', 'zzz');		// Size: 12
+
+fbContextBuilder.Remove('foo');
+
+AssertEquals_UINT(25, fbContextBuilder._BufferCount, 'Buffer size');
+AssertEquals_UINT(2, fbContextBuilder._ContextCount, 'Context count');
+AssertEquals_UINT(0, fbContextBuilder._GetContextOffset(0), 'Context[0]');
+AssertEquals_UINT(13, fbContextBuilder._GetContextOffset(1), 'Context[1]');
+AssertEquals_STRING('before', fbContextBuilder._ReadName(0), 'Name[0]');
+AssertEquals_STRING('after', fbContextBuilder._ReadName(1), 'Name[1]');
+
+TcUnit.TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ContextBuilder_Test">
+      <LineId Id="9" Count="2" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder_Test.AddInt_ShouldAddInt">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="3" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder_Test.AddInt_WithSameName_ShouldReplace">
+      <LineId Id="5" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="29" Count="3" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder_Test.AddString_ShouldAddString">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="3" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder_Test.AddString_WithSameName_ShouldReAdd">
+      <LineId Id="5" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder_Test.AddString_WithSameName_ShouldReplace">
+      <LineId Id="5" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder_Test.RemoveInt_ShouldRemove">
+      <LineId Id="5" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder_Test.RemoveString_ShouldRemove">
+      <LineId Id="5" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="29" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

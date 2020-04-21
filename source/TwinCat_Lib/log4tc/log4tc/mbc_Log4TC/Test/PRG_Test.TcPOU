@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="PRG_Test" Id="{e5eebc94-2583-419e-a5ae-15055f39621e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_Test
+VAR
+	fbContextBuilder_Test	: FB_ContextBuilder_Test;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[TcUnit.RUN();
+]]></ST>
+    </Implementation>
+    <LineIds Name="PRG_Test">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -3,6 +3,29 @@
   <Itf Name="I_ContextBuilder" Id="{bcb2d462-f071-430e-9ed3-5e8d8bd02a9f}">
     <Declaration><![CDATA[INTERFACE I_ContextBuilder EXTENDS __System.IQueryInterface
 ]]></Declaration>
+    <Method Name="AddBool" Id="{1549fa88-7a1a-408d-a46b-0987bbb18c72}">
+      <Declaration><![CDATA[METHOD AddBool : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;	
+	bValue		: BOOL;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddByte" Id="{1bfbd2fe-8ab3-4e9c-995d-122cf7a70c47}">
+      <Declaration><![CDATA[METHOD AddByte : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: BYTE;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddDWord" Id="{ab9c0c69-f06c-4cc5-8287-915aa504941c}">
+      <Declaration><![CDATA[METHOD AddDWord : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: DWORD;
+END_VAR]]></Declaration>
+    </Method>
     <Method Name="AddInt" Id="{83857395-5dc2-4d8c-b632-9b91e65617f9}">
       <Declaration><![CDATA[METHOD AddInt : I_ContextBuilder
 VAR_INPUT
@@ -11,14 +34,43 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="AddLReal" Id="{5b5d6ced-138b-4151-b62f-71b409861f8e}">
+      <Declaration><![CDATA[METHOD AddLReal : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	fValue	: LREAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddReal" Id="{a484a222-b91e-4da8-b00a-1b292e1e1b96}">
+      <Declaration><![CDATA[METHOD AddReal : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	fValue	: REAL;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddString" Id="{8a0a537e-f65d-4865-90e1-c05c0d7262b8}">
+      <Declaration><![CDATA[METHOD AddString : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	sValue		: T_MaxString;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddWord" Id="{ebfbc796-5311-4c07-8002-55130a9b2624}">
+      <Declaration><![CDATA[METHOD AddWord : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: WORD;
+END_VAR]]></Declaration>
+    </Method>
     <Method Name="Clear" Id="{1b05697b-30b1-45d4-807a-8aaa50a553d1}">
       <Declaration><![CDATA[METHOD Clear : I_ContextBuilder
 VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
-    <Method Name="RemoveInt" Id="{7ae798b7-0841-4ad2-bc80-c84354ac488e}">
-      <Declaration><![CDATA[METHOD RemoveInt : I_ContextBuilder
+    <Method Name="Remove" Id="{7ae798b7-0841-4ad2-bc80-c84354ac488e}">
+      <Declaration><![CDATA[METHOD Remove : I_ContextBuilder
 VAR_INPUT
 	sName	: Tc2_System.T_MaxString;
 END_VAR

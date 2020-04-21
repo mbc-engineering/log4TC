@@ -33,6 +33,7 @@
     <Folder Include="GVLs" />
     <Folder Include="ITFs" />
     <Folder Include="DUTs" />
+    <Folder Include="Test" />
     <Folder Include="POUs" />
     <Folder Include="POUs\Utils" />
   </ItemGroup>
@@ -134,6 +135,9 @@
     <Compile Include="API\Simple\TArg\F_LogL3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\E_Scope.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\ST_Log4TcTaskInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -180,6 +184,17 @@
     <Compile Include="Test.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Test\FB_ContextBuilder_Test.TcPOU">
+      <SubType>Code</SubType>
+      <CompilerDefines>DEBUG</CompilerDefines>
+    </Compile>
+    <Compile Include="Test\PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Test\PRG_Test.TcPOU">
+      <SubType>Code</SubType>
+      <CompilerDefines>DEBUG</CompilerDefines>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -194,6 +209,14 @@
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcUnit">
+      <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
+      <Namespace>TcUnit</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="mbc_Log4TC.tmc">
@@ -204,6 +227,22 @@
     <LibraryReference Include="Base Interfaces,newest,System">
       <Namespace>IBaseLibrary</Namespace>
     </LibraryReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SubObject Include="FB_ContextBuilder._BufferCount">
+      <CompilerDefines>DEBUG</CompilerDefines>
+    </SubObject>
+    <SubObject Include="FB_ContextBuilder._ContextCount">
+      <CompilerDefines>DEBUG</CompilerDefines>
+    </SubObject>
+    <SubObject Include="FB_ContextBuilder\Test">
+      <CompilerDefines>DEBUG</CompilerDefines>
+    </SubObject>
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderResolution Include="TcUnit">
+      <Resolution>TcUnit, 1.0.0.0 (www.tcunit.org)</Resolution>
+    </PlaceholderResolution>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
@@ -250,7 +289,7 @@
                   <d n="SubKeys" t="Hashtable" />
                   <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
                     <v>bActive</v>
-                    <v>True</v>
+                    <v>False</v>
                   </d>
                 </o>
                 <v>6</v>
