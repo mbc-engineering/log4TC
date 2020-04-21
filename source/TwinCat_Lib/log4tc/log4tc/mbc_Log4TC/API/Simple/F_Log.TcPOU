@@ -4,6 +4,9 @@
     <Declaration><![CDATA[(*
 :Description: Writes the given message at the specific level. 
 
+This function implicit uses the global logger ``Const.sGlobalLogger`` with
+the value ``'_GLOBAL_'``.
+
 **Example**
 
 .. code:: 

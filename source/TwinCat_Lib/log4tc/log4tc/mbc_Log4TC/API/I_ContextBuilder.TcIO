@@ -19,6 +19,14 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="AddDInt" Id="{b5e267f9-5638-4853-ae37-954675380583}">
+      <Declaration><![CDATA[METHOD AddDInt : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: DINT;
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="AddDWord" Id="{ab9c0c69-f06c-4cc5-8287-915aa504941c}">
       <Declaration><![CDATA[METHOD AddDWord : I_ContextBuilder
 VAR_INPUT
@@ -34,12 +42,28 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="AddLint" Id="{574a7efe-7c28-4a30-979a-01de739cdcae}">
+      <Declaration><![CDATA[METHOD AddLint : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: LINT;
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="AddLReal" Id="{5b5d6ced-138b-4151-b62f-71b409861f8e}">
       <Declaration><![CDATA[METHOD AddLReal : I_ContextBuilder
 VAR_INPUT
 	sName	: Tc2_System.T_MaxString;
 	fValue	: LREAL;
 END_VAR]]></Declaration>
+    </Method>
+    <Method Name="AddLWord" Id="{1efe2c10-9abe-4469-a60f-896fdc99e5c9}">
+      <Declaration><![CDATA[METHOD AddLWord : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: LWORD;
+END_VAR
+]]></Declaration>
     </Method>
     <Method Name="AddReal" Id="{a484a222-b91e-4da8-b00a-1b292e1e1b96}">
       <Declaration><![CDATA[METHOD AddReal : I_ContextBuilder
@@ -48,11 +72,51 @@ VAR_INPUT
 	fValue	: REAL;
 END_VAR]]></Declaration>
     </Method>
+    <Method Name="AddSInt" Id="{838d6ade-d5fd-4276-b306-0fec1dce8856}">
+      <Declaration><![CDATA[METHOD AddSInt : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: SINT;
+END_VAR
+]]></Declaration>
+    </Method>
     <Method Name="AddString" Id="{8a0a537e-f65d-4865-90e1-c05c0d7262b8}">
       <Declaration><![CDATA[METHOD AddString : I_ContextBuilder
 VAR_INPUT
 	sName		: T_MaxString;
 	sValue		: T_MaxString;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddUDInt" Id="{4c8742cc-848c-4d7c-bb32-6aac9c20e943}">
+      <Declaration><![CDATA[METHOD AddUDInt : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: UDINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddUInt" Id="{f43d3574-763a-41e8-8d3e-350c2e425b34}">
+      <Declaration><![CDATA[METHOD AddUInt : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: UINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddULint" Id="{ce12c5d8-eeb7-453f-bd9c-58f7e79aac92}">
+      <Declaration><![CDATA[METHOD AddULint : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: ULINT;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="AddUSInt" Id="{3eb1c1f1-08a2-4a5a-aa7f-72ece4fbea37}">
+      <Declaration><![CDATA[METHOD AddUSInt : I_ContextBuilder
+VAR_INPUT
+	sName		: T_MaxString;
+	nValue		: USINT;
 END_VAR
 ]]></Declaration>
     </Method>

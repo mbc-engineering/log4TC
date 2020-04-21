@@ -17,11 +17,13 @@ VAR_INPUT
 	aArg8			: ANY;
 	aArg9			: ANY;
 	aArg10			: ANY;
+	iContextBuilder	: I_ContextBuilder;
 END_VAR
 VAR
 	fbLogEntry		: FB_LogEntry();
 	pBuffer			: PVOID;
 	nBufferCount	: UINT;	
+	iLogEntryAdder	: I_LogEntryAdder;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -64,6 +66,10 @@ IF nArgCount >= 10 THEN
 	fbLogEntry.AddAnyArg(10, aArg2);
 END_IF
 
+IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
+	iLogEntryAdder.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
+END_IF
+
 IF fbLogEntry.End() THEN
 	// Add to task ring buffer
 	fbLogEntry.GetBuffer(
@@ -81,6 +87,8 @@ END_IF
       <LineId Id="49" Count="1" />
       <LineId Id="37" Count="0" />
       <LineId Id="64" Count="24" />
+      <LineId Id="115" Count="2" />
+      <LineId Id="113" Count="0" />
       <LineId Id="39" Count="8" />
       <LineId Id="7" Count="0" />
     </LineIds>

@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="F_LogL" Id="{43e97f19-f08a-4a01-b9f3-3613b91b4f2b}" SpecialFunc="None">
+  <POU Name="F_LogLC" Id="{83301c4c-c10e-4326-bd0e-ea6259ddb20e}" SpecialFunc="None">
     <Declaration><![CDATA[(*
-:Description: Writes the given message at the specific level and logger name. 
+:Description: Writes the given message at the specific level, logger name and with
+	the given context properties. 
 
 **Logger**
 
@@ -15,23 +16,24 @@ the logger name could be ``'PRG_Alarms.CheckTemp'``.
 
 .. code:: 
 
-    F_LogL(E_LogLevel.eWarn, 'PRG_Alarms' ,'Something important happened.');
+    F_LogLC(E_LogLevel.eWarn, 'PRG_Alarms' ,'Something important happened.', F_LogContext().AddInt('serial', 1234));
 	
 *)
-FUNCTION F_LogL : BOOL
+FUNCTION F_LogLC : BOOL
 VAR_INPUT
 	eLogLevel		: E_LogLevel;		(* The level of this log. *)
 	sLogger			: T_MaxString;      (* The name of the logger. *)
 	sMessage		: T_MaxString;		(* The message to log. *)
+	iContextBuilder	: I_ContextBuilder;	(* A context builder (or 0) *)
 END_VAR
 VAR 
 	aEmptyArg		: BYTE;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_LogA(eLogLevel, sLogger, sMessage, 0, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, 0);
+      <ST><![CDATA[F_LogA(eLogLevel, sLogger, sMessage, 0, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, iContextBuilder);
 ]]></ST>
     </Implementation>
-    <LineIds Name="F_LogL">
+    <LineIds Name="F_LogLC">
       <LineId Id="7" Count="0" />
       <LineId Id="84" Count="0" />
     </LineIds>

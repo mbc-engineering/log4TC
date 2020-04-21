@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="Test" Id="{d28d37df-7237-480f-92a3-f93252c88566}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM Test
+  <POU Name="ApiTest" Id="{d28d37df-7237-480f-92a3-f93252c88566}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM ApiTest
 VAR
 	fbLogger		: FB_Logger('mbc4Log.Test');
 	nInt			: INT;
@@ -11,6 +11,13 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Einfaches Logging
+F_LogLC(
+	E_LogLevel.eInfo,
+	'ApiTest',
+	'Log message',
+	0
+);
+
 F_Log3(
 	E_LogLevel.eInfo, 
 	'Log Message Arg={structuredArg} Arg={1} Arg=%s', 
@@ -55,8 +62,11 @@ fbLogger(
 	
 ]]></ST>
     </Implementation>
-    <LineIds Name="Test">
-      <LineId Id="5" Count="7" />
+    <LineIds Name="ApiTest">
+      <LineId Id="5" Count="0" />
+      <LineId Id="63" Count="5" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="6" Count="6" />
       <LineId Id="48" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="49" Count="5" />

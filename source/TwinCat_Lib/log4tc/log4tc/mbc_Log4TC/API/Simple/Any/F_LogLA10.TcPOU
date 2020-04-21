@@ -34,12 +34,15 @@ END_VAR
 	aArg7,
 	aArg8,
 	aArg9,
-	aArg10
+	aArg10,
+	0
 );
 ]]></ST>
     </Implementation>
     <LineIds Name="F_LogLA10">
-      <LineId Id="67" Count="15" />
+      <LineId Id="67" Count="14" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="82" Count="0" />
       <LineId Id="44" Count="0" />
     </LineIds>
   </POU>

@@ -345,6 +345,7 @@ END_VAR
     <Method Name="AddContext" Id="{a72c87a4-55c3-45a0-9300-6595ac48ec35}">
       <Declaration><![CDATA[METHOD PUBLIC AddContext
 VAR_INPUT
+	eScope			: E_Scope;
 	pBuffer			: PVOID;
 	nBufferLen		: UINT;
 END_VAR
@@ -352,6 +353,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_WriteByte(2); // Type 2: Context follows
+_WriteByte(eScope);
 _Copy(pBuffer, nBufferLen);
 ]]></ST>
       </Implementation>
@@ -634,6 +636,7 @@ Start := NOT bError;
     </LineIds>
     <LineIds Name="FB_LogEntry.AddContext">
       <LineId Id="11" Count="0" />
+      <LineId Id="23" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>

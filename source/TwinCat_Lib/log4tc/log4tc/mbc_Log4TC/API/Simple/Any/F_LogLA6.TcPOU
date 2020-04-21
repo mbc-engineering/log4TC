@@ -32,7 +32,8 @@ END_VAR
 	aEmptyArg,
 	aEmptyArg,
 	aEmptyArg,
-	aEmptyArg
+	aEmptyArg,
+	0
 );
 ]]></ST>
     </Implementation>
@@ -40,6 +41,7 @@ END_VAR
       <LineId Id="60" Count="0" />
       <LineId Id="62" Count="7" />
       <LineId Id="74" Count="5" />
+      <LineId Id="95" Count="0" />
       <LineId Id="61" Count="0" />
       <LineId Id="44" Count="0" />
     </LineIds>

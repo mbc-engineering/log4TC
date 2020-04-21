@@ -6,6 +6,7 @@
     <Method Name="AddToLogEntry" Id="{667bcead-58b5-4e4b-adb9-6ccb1b9ea69e}">
       <Declaration><![CDATA[METHOD AddToLogEntry : BOOL
 VAR_INPUT
+	eScope			: E_Scope;
 	refLogEntry		: REFERENCE TO FB_LogEntry;
 END_VAR
 ]]></Declaration>

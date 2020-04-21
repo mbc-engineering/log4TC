@@ -61,10 +61,10 @@ END_VAR
 		//iLogEntryAdder.AddToLogEntry(fbLogEntry);
 	//END_IF
 	
-	fbLoggerContext.AddToLogEntry(fbLogEntry);
+	fbLoggerContext.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
 	
 	IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
-		iLogEntryAdder.AddToLogEntry(fbLogEntry);
+		iLogEntryAdder.AddToLogEntry(E_Scope.eLog, fbLogEntry);
 	END_IF
 	
 	// TODO instance path

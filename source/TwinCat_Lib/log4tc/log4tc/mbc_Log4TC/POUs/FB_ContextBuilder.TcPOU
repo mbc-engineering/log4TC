@@ -457,6 +457,37 @@ _AddContext(
 );]]></ST>
       </Implementation>
     </Method>
+    <Method Name="AddDInt" Id="{14338167-95b7-4b48-af57-60faf0cb4418}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddDInt : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: DINT;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddDInt := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_DINT, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_DINT,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AddDWord" Id="{3a61d1e9-6bbf-4e04-a9be-dcdd56370b0c}" FolderPath="I_ContextBuilder\">
       <Declaration><![CDATA[METHOD AddDWord : I_ContextBuilder
 VAR_INPUT
@@ -518,6 +549,37 @@ _AddContext(
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="AddLInt" Id="{ec5bb388-452b-4afb-8ddf-fa6bc6431abc}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddLInt : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: LINT;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddLInt := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_LARGE, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_LARGE,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AddLReal" Id="{a75e25ee-03e4-4380-951a-909b7280bb14}" FolderPath="I_ContextBuilder\">
       <Declaration><![CDATA[METHOD AddLReal : I_ContextBuilder
 VAR_INPUT
@@ -548,6 +610,37 @@ _AddContext(
 );]]></ST>
       </Implementation>
     </Method>
+    <Method Name="AddLWord" Id="{5cf2db2a-24c8-4a05-83f1-34f03fee5c34}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddLWord : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: LWORD;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddLWord := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_LWORD, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_LWORD,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AddReal" Id="{7c5c7e6e-ff0c-4b08-8169-15c7c093cc5c}" FolderPath="I_ContextBuilder\">
       <Declaration><![CDATA[METHOD AddReal : I_ContextBuilder
 VAR_INPUT
@@ -576,6 +669,37 @@ _AddContext(
 	pValue		:= ADR(fValue),
 	nValueLen	:= SIZEOF(fValue)
 );]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddSInt" Id="{521f9d39-b78b-4c63-ac7d-5b8fb737ac33}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddSInt : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: SINT;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddSInt := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_SINT, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_SINT,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="AddString" Id="{0065f8e4-eb4e-430e-80a0-8d6911fe784a}" FolderPath="I_ContextBuilder\">
@@ -630,6 +754,7 @@ END_IF]]></ST>
     <Method Name="AddToLogEntry" Id="{c595d1aa-4916-409a-98e2-7f96efa63808}">
       <Declaration><![CDATA[METHOD AddToLogEntry : BOOL
 VAR_INPUT
+	eScope			: E_Scope;
 	refLogEntry		: REFERENCE TO FB_LogEntry;
 END_VAR
 VAR
@@ -641,18 +766,147 @@ END_VAR]]></Declaration>
         <ST><![CDATA[nIdx := 0;
 bOk := TRUE;
 WHILE nIdx < nContextCount AND bOk DO
-	IF (nIdx + 1) < nContextCount THEN
-		nContextLen := aContext[nIdx + 1] - aContext[nIdx];
-	ELSE
-		nContextLen := nBufferCount - aContext[nIdx];
-	END_IF
-	
-	refLogEntry.AddContext(ADR(aBuffer) + aContext[nIdx], nContextLen);
-	
+	refLogEntry.AddContext(eScope, ADR(aBuffer) + aContext[nIdx], _GetSize(nIdx));
 	nIdx := nIdx + 1;
-END_WHILE 
+END_WHILE
+
+IF nIdx < nContextCount AND NOT bOk THEN
+	F_InternalLog(
+		E_LogLevel.eWarn,
+		'FB_ContextBuilder.AddLogEntry',
+		'Could not add all context properties to log entry. (act=%d, all=%d)',
+		Tc2_Utilities.F_UINT(nIdx),
+		Tc2_Utilities.F_UINT(nContextCount),
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+END_IF 
 
 AddToLogEntry := bOk;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddUDInt" Id="{3ded8ddb-e75b-4840-b4e6-192353878227}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddUDInt : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: UDINT;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddUDInt := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_UDINT, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_UDINT,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddUInt" Id="{d7fdfb1c-a0fd-4570-ac15-12901c10d36f}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddUInt : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: UINT;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddUInt := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_UINT, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_UINT,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddULInt" Id="{6c2b26da-e080-41fb-ad9c-880acc8ee7dc}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddULInt : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: ULINT;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddULInt := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_ULARGE, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_ULARGE,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AddUSInt" Id="{d8d3fe19-0b7b-4572-8e73-e8ed79fedae9}" FolderPath="I_ContextBuilder\">
+      <Declaration><![CDATA[METHOD AddUSInt : I_ContextBuilder
+VAR_INPUT
+	sName	: Tc2_System.T_MaxString;
+	nValue	: USINT;
+END_VAR
+VAR
+	nIdx	: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AddUSInt := THIS^;
+
+nIdx := _FindContext(sName);
+IF nIdx <> UINT#16#FFFF THEN
+	IF _GetDataLen(nIdx) = SIZEOF(nValue) THEN
+		_ReplaceContext(nIdx, Tc2_Utilities.E_ArgType.ARGTYPE_USINT, ADR(nValue), SIZEOF(nValue));
+		RETURN;
+	END_IF
+	
+	_RemoveContext(sName);
+END_IF
+
+_AddContext(
+	refName		:= sName,
+	nValueType	:= Tc2_Utilities.E_ArgType.ARGTYPE_USINT,
+	pValue		:= ADR(nValue),
+	nValueLen	:= SIZEOF(nValue)
+);
 ]]></ST>
       </Implementation>
     </Method>
@@ -857,6 +1111,21 @@ _RemoveContext(sName);]]></ST>
       <LineId Id="11" Count="16" />
       <LineId Id="5" Count="0" />
     </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddDInt">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
     <LineIds Name="FB_ContextBuilder.AddDWord">
       <LineId Id="10" Count="16" />
       <LineId Id="6" Count="0" />
@@ -876,13 +1145,58 @@ _RemoveContext(sName);]]></ST>
       <LineId Id="68" Count="5" />
       <LineId Id="18" Count="0" />
     </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddLInt">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
     <LineIds Name="FB_ContextBuilder.AddLReal">
       <LineId Id="10" Count="16" />
       <LineId Id="6" Count="0" />
     </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddLWord">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
     <LineIds Name="FB_ContextBuilder.AddReal">
       <LineId Id="10" Count="16" />
       <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddSInt">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
     </LineIds>
     <LineIds Name="FB_ContextBuilder.AddString">
       <LineId Id="28" Count="1" />
@@ -909,15 +1223,75 @@ _RemoveContext(sName);]]></ST>
       <LineId Id="17" Count="0" />
       <LineId Id="20" Count="0" />
       <LineId Id="19" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="27" Count="1" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="29" Count="0" />
       <LineId Id="22" Count="0" />
-      <LineId Id="30" Count="1" />
+      <LineId Id="31" Count="0" />
       <LineId Id="21" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="44" Count="8" />
+      <LineId Id="43" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="6" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddUDInt">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddUInt">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddULInt">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ContextBuilder.AddUSInt">
+      <LineId Id="35" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="68" Count="5" />
+      <LineId Id="18" Count="0" />
     </LineIds>
     <LineIds Name="FB_ContextBuilder.AddWord">
       <LineId Id="10" Count="16" />
