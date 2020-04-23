@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
-  <POU Name="F_LogL3" Id="{8efedc25-279d-4827-9a61-9fd70346530d}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION F_LogL3 
+  <POU Name="F_LogL2" Id="{640e86b9-6b82-4437-9981-be1d5c25e259}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_LogL2 
 VAR_INPUT
 	eLogLevel		: E_LogLevel;
 	sLogger			: T_MaxString;
 	sMessage		: T_MaxString;
 	stArg1			: T_Arg;
 	stArg2			: T_Arg;
-	stArg3			: T_Arg;
 END_VAR
 
 
@@ -20,7 +19,7 @@ END_VAR
 	sMessage, 
 	stArg1, 
 	stArg2, 
-	stArg3, 
+	Tc2_Utilities.EMPTY_ARG_VALUE, 
 	Tc2_Utilities.EMPTY_ARG_VALUE, 
 	Tc2_Utilities.EMPTY_ARG_VALUE, 
 	Tc2_Utilities.EMPTY_ARG_VALUE, 
@@ -31,7 +30,7 @@ END_VAR
 	0
 );]]></ST>
     </Implementation>
-    <LineIds Name="F_LogL3">
+    <LineIds Name="F_LogL2">
       <LineId Id="7" Count="0" />
       <LineId Id="52" Count="14" />
     </LineIds>

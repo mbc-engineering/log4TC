@@ -27,6 +27,7 @@
   <ItemGroup>
     <Folder Include="API" />
     <Folder Include="API\Full" />
+    <Folder Include="API\Context" />
     <Folder Include="API\Simple" />
     <Folder Include="API\Simple\Any" />
     <Folder Include="API\Simple\TArg" />
@@ -38,23 +39,19 @@
     <Folder Include="POUs\Utils" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Context\F_LogContext.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Context\I_ContextBuilder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\E_LogLevel.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Full\FB_Logger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="API\F_GetTaskContext.TcPOU">
-      <SubType>Code</SubType>
-      <ExcludeFromBuild>true</ExcludeFromBuild>
-    </Compile>
-    <Compile Include="API\F_LogContext.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="API\I_ContextBuilder.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="API\F_CallLogTask.TcPOU">
+    <Compile Include="API\PRG_TaskLog.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Simple\Any\F_LogA5.TcPOU">
@@ -132,10 +129,34 @@
     <Compile Include="API\Simple\I_LogBuilder.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="API\Simple\TArg\F_Log3.TcPOU">
+    <Compile Include="API\Simple\TArg\F_LogL5.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL4.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL7.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL6.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL9.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Simple\TArg\F_LogL3.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL10.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\TArg\F_LogL8.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\E_Scope.TcDUT">
@@ -149,10 +170,6 @@
       <LinkAlways>true</LinkAlways>
     </Compile>
     <Compile Include="GVLs\Const.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
-    <Compile Include="GVLs\GlobalVariables.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
@@ -176,6 +193,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\F_LogA.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\F_LogTArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Utils\F_DINT_TO_UINT_MAX.TcPOU">

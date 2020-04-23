@@ -4,12 +4,19 @@
     <Declaration><![CDATA[(*
 Main code of Log4TC which manages log messages of a single task.
 *)
+{attribute 'no_explicit_call' := 'no direct call necessary'}
 FUNCTION_BLOCK INTERNAL FB_Log4TcTask
+VAR CONSTANT
+	nAdsPort			: UINT := 16150; 
+	nLogIndexGrp		: UINT := 1;
+	nLogIndexOffs		: UINT := 1;	
+END_VAR
 VAR
 	nTaskIndex			: DINT;
 	fbRingBuffer		: Tc2_Utilities.FB_MemRingBufferEx;
 	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
 	fbTaskContext		: FB_ContextBuilder;
+	sAmsNetId			: Tc2_System.T_AmsNetID := '';
 END_VAR]]></Declaration>
     <Implementation>
       <CFC>
@@ -127,9 +134,6 @@ Should be called regularly in the same task as its instance was
 declared.
 *)
 METHOD INTERNAL Call
-VAR_INPUT
-	sAmsNetId			: Tc2_System.T_AmsNetID;
-END_VAR
 VAR
 	nMessageCount		: UINT;
 END_VAR
@@ -138,7 +142,7 @@ VAR_INST
 	aSendBuffer			: ARRAY[1..Config.nBufferLen] OF BYTE;		(* Buffer for send data *)
 	nSendBufferLen		: UDINT;
 	bContinue			: BOOL;
-	fbAdsWriteMsg		: Tc2_System.ADSWRITE:=(PORT:=Const.nAdsPort);
+	fbAdsWriteMsg		: Tc2_System.ADSWRITE:=(PORT:=nAdsPort);
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -192,8 +196,8 @@ CASE nState OF
 			fbAdsWriteMsg(
 				WRITE	:= TRUE,
 				NETID	:= sAmsNetId,
-				IDXGRP 	:= Const.nLogIndexGrp,
-				IDXOFFS := Const.nLogIndexOffs,
+				IDXGRP 	:= nLogIndexGrp,
+				IDXOFFS := nLogIndexOffs,
 				LEN		:= nSendBufferLen,
 				SRCADDR	:= ADR(aSendBuffer),
 			);
@@ -250,6 +254,17 @@ END_VAR
 );
 
 	]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{4c1aa6a6-d3c0-4a54-a089-02dcf00605ae}">
+      <Declaration><![CDATA[METHOD INTERNAL Init
+VAR_INPUT
+	sAmsNetId	: Tc2_Utilities.T_AmsNetID;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sAmsNetId := sAmsNetId;
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Log4TcTask._InitAndCheckTask">
@@ -345,6 +360,10 @@ END_VAR
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.Init">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

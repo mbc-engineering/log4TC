@@ -76,7 +76,7 @@ IF fbLogEntry.End() THEN
 		pBuffer			=> pBuffer,
 		nBufferCount	=> nBufferCount
 	);
-	GlobalVariables.aTaskLogger[GETCURTASKINDEXEX()].AddLog(pBuffer, nBufferCount);
+	PRG_TaskLog.TaskLogger.AddLog(pBuffer, nBufferCount);
 END_IF
 ]]></ST>
     </Implementation>

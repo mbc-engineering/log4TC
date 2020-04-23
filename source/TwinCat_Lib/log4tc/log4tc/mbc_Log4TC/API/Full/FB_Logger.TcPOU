@@ -75,7 +75,7 @@ END_VAR
 			pBuffer			=> pBuffer,
 			nBufferCount	=> nBufferCount
 		);
-		GlobalVariables.aTaskLogger[GETCURTASKINDEXEX()].AddLog(pBuffer, nBufferCount);
+		PRG_TaskLog.TaskLogger.AddLog(pBuffer, nBufferCount);
 	END_IF
 END_IF
 

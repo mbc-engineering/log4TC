@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_ContextBuilder" Id="{7f1d5e34-ea3b-4ad5-887e-933d0a5923d7}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_ContextBuilder IMPLEMENTS I_ContextBuilder, I_LogEntryAdder
+    <Declaration><![CDATA[{attribute 'no_explicit_call' := 'no direct call necessary'}
+FUNCTION_BLOCK FB_ContextBuilder IMPLEMENTS I_ContextBuilder, I_LogEntryAdder
 VAR CONSTANT
 	nBufferSize			: UINT := 1024;
 END_VAR

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="F_LogTArg" Id="{96de29ad-8a00-41d2-a81d-71abb6e3e0e5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_LogTArg
+VAR_INPUT
+	eLogLevel		: E_LogLevel;
+	sLogger			: Tc2_Utilities.T_MaxString;
+	sMessage		: Tc2_Utilities.T_MaxString;
+	stArg1			: Tc2_Utilities.T_Arg;
+	stArg2			: Tc2_Utilities.T_Arg;
+	stArg3			: Tc2_Utilities.T_Arg;
+	stArg4			: Tc2_Utilities.T_Arg;
+	stArg5			: Tc2_Utilities.T_Arg;
+	stArg6			: Tc2_Utilities.T_Arg;
+	stArg7			: Tc2_Utilities.T_Arg;
+	stArg8			: Tc2_Utilities.T_Arg;
+	stArg9			: Tc2_Utilities.T_Arg;
+	stArg10			: Tc2_Utilities.T_Arg;
+	iContextBuilder	: I_ContextBuilder;
+END_VAR
+VAR
+	fbLogEntry		: FB_LogEntry();
+	pBuffer			: PVOID;
+	nBufferCount	: UINT;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbLogEntry.Start(
+	pLogger			:= ADR(sLogger),
+	pMessage		:= ADR(sMessage),
+	eLogLevel		:= eLogLevel,
+	nTimeStampPlc	:= 0,
+	nTimeStampClock	:= 0
+);
+
+IF stArg1.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg1.pData <> 0 THEN
+	fbLogEntry.AddTArg(1, stArg1);
+END_IF
+
+IF stArg2.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg2.pData <> 0 THEN
+	fbLogEntry.AddTArg(2, stArg2);
+END_IF
+
+IF stArg3.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg3.pData <> 0 THEN
+	fbLogEntry.AddTArg(3, stArg3);
+END_IF
+
+IF stArg4.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg4.pData <> 0 THEN
+	fbLogEntry.AddTArg(4, stArg4);
+END_IF
+
+IF stArg5.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg5.pData <> 0 THEN
+	fbLogEntry.AddTArg(5, stArg5);
+END_IF
+
+IF stArg6.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg6.pData <> 0 THEN
+	fbLogEntry.AddTArg(6, stArg6);
+END_IF
+
+IF stArg7.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg7.pData <> 0 THEN
+	fbLogEntry.AddTArg(7, stArg7);
+END_IF
+
+IF stArg8.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg8.pData <> 0 THEN
+	fbLogEntry.AddTArg(8, stArg8);
+END_IF
+
+IF stArg9.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg9.pData <> 0 THEN
+	fbLogEntry.AddTArg(9, stArg9);
+END_IF
+
+IF stArg10.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg10.pData <> 0 THEN
+	fbLogEntry.AddTArg(10, stArg10);
+END_IF
+
+IF fbLogEntry.End() THEN
+	// Add to task ring buffer
+	fbLogEntry.GetBuffer(
+		pBuffer			=> pBuffer,
+		nBufferCount	=> nBufferCount
+	);
+	PRG_TaskLog.TaskLogger.AddLog(pBuffer, nBufferCount);
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="F_LogTArg">
+      <LineId Id="31" Count="6" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="38" Count="1" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="57" Count="2" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="60" Count="2" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="63" Count="2" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="66" Count="2" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="69" Count="2" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="72" Count="2" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="75" Count="2" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="78" Count="2" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="81" Count="2" />
+      <LineId Id="42" Count="7" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

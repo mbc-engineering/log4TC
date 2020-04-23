@@ -18,8 +18,9 @@ F_LogLC(
 	0
 );
 
-F_Log3(
-	E_LogLevel.eInfo, 
+F_LogL3(
+	E_LogLevel.eInfo,
+	Const.sGlobalLogger, 
 	'Log Message Arg={structuredArg} Arg={1} Arg=%s', 
 	F_StringEx('Arg 1'),
 	F_StringEx('Arg 2'),
@@ -66,7 +67,9 @@ fbLogger(
       <LineId Id="5" Count="0" />
       <LineId Id="63" Count="5" />
       <LineId Id="62" Count="0" />
-      <LineId Id="6" Count="6" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="8" Count="4" />
       <LineId Id="48" Count="0" />
       <LineId Id="47" Count="0" />
       <LineId Id="49" Count="5" />

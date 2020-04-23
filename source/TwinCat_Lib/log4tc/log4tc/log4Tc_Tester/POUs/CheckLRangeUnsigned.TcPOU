@@ -7,20 +7,27 @@ VAR_INPUT
 	value, lower, upper: ULINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Implicitly generated code : Only an Implementation suggestion
-{noflow}
+      <ST><![CDATA[{noflow}
 IF (value < lower) THEN
-	CheckLRangeUnsigned := lower;
+	CheckRangeUnsigned := lower;
+	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeUnsigned', 'Check ULINT range unsigned exception: {value} {lower} {upper}', value, lower, upper);
 ELSIF(value > upper) THEN
-	CheckLRangeUnsigned := upper;
+	CheckRangeUnsigned := upper;
+	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeUnsigned', 'Check ULINT range unsigned exception: {value} {lower} {upper}', value, lower, upper);
 ELSE
-	CheckLRangeUnsigned := value;
+	CheckRangeUnsigned := value;
 END_IF
-{flow}]]></ST>
+{flow}
+]]></ST>
     </Implementation>
     <LineIds Name="CheckLRangeUnsigned">
-      <LineId Id="7" Count="8" />
+      <LineId Id="21" Count="2" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="26" Count="2" />
       <LineId Id="2" Count="0" />
+      <LineId Id="29" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

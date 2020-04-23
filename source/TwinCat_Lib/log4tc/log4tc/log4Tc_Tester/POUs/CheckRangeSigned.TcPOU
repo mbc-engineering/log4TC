@@ -7,19 +7,24 @@ VAR_INPUT
 	value, lower, upper: DINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Implicitly generated code : Only an Implementation suggestion
-{noflow}
+      <ST><![CDATA[{noflow}
 IF (value < lower) THEN
 	CheckRangeSigned := lower;
+	F_LogLA3(E_LogLevel.eFatal, 'CheckRangeSigned', 'Check DINT range signed exception: {value} {lower} {upper}', value, lower, upper);
 ELSIF(value > upper) THEN
 	CheckRangeSigned := upper;
+	F_LogLA3(E_LogLevel.eFatal, 'CheckRangeSigned', 'Check DINT range signed exception: {value} {lower} {upper}', value, lower, upper);
 ELSE
 	CheckRangeSigned := value;
 END_IF
 {flow}]]></ST>
     </Implementation>
     <LineIds Name="CheckRangeSigned">
-      <LineId Id="7" Count="8" />
+      <LineId Id="8" Count="2" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="13" Count="2" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

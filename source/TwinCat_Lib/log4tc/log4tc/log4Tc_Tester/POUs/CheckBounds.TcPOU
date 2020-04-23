@@ -8,20 +8,27 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Implicitly generated code : Only an Implementation suggestion
-{noflow}
-IF  index < lower THEN
+      <ST><![CDATA[{noflow}
+IF (index < lower) THEN
 	CheckBounds := lower;
-ELSIF  index > upper THEN
+	F_LogLA3(E_LogLevel.eFatal, 'CheckBounds', 'Check bounds exception: {index} {lower} {upper}', index, lower, upper);
+ELSIF(index > upper) THEN
 	CheckBounds := upper;
-ELSE  
+	F_LogLA3(E_LogLevel.eFatal, 'CheckBounds', 'Check bounds exception: {index} {lower} {upper}', index, lower, upper);
+ELSE
 	CheckBounds := index;
 END_IF
-{flow}]]></ST>
+{flow}
+]]></ST>
     </Implementation>
     <LineIds Name="CheckBounds">
-      <LineId Id="8" Count="8" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="28" Count="2" />
       <LineId Id="2" Count="0" />
+      <LineId Id="31" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -3,10 +3,6 @@
   <GVL Name="Const" Id="{f1864d0c-c59a-47ec-8a7f-6899735fe3cf}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
-	nAdsPort			: UINT := 16150; 
-	nLogIndexGrp		: UINT := 1;
-	nLogIndexOffs		: UINT := 1;
-	
 	sGlobalLogger		: STRING := '_GLOBAL_';		(* Global logger name for logger without logger input *)
 END_VAR
 ]]></Declaration>

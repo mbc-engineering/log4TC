@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="PRG_TaskLog" Id="{d9deec54-041b-4d4a-a876-7d0487674ab5}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'no_explicit_call' := 'no direct call necessary'}
+PROGRAM PRG_TaskLog
+VAR
+		aTaskLogger			: ARRAY[1..SIZEOF(TwinCAT_SystemInfoVarList._TaskInfo)/SIZEOF(PlcTaskSystemInfo)] OF FB_Log4TcTask;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{7aeb9926-c091-4a02-a0d3-9930716cb4d1}">
+      <Declaration><![CDATA[METHOD PUBLIC Call
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[aTaskLogger[GETCURTASKINDEXEX()].Call();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{a5681b61-7170-465c-b800-f922f70178d3}">
+      <Declaration><![CDATA[METHOD PUBLIC Init : BOOL
+VAR_INPUT
+	sAmsNetId	: Tc2_Utilities.T_AmsNetID;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[aTaskLogger[GETCURTASKINDEXEX()].Init(sAmsNetId);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="TaskLogger" Id="{e5ae713c-f421-49cb-9871-258b1113ba41}">
+      <Declaration><![CDATA[PROPERTY INTERNAL TaskLogger : REFERENCE TO FB_Log4TcTask]]></Declaration>
+      <Get Name="Get" Id="{2041d993-1b63-44b0-b94c-7510408823c4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TaskLogger REF= aTaskLogger[GETCURTASKINDEXEX()];
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="PRG_TaskLog">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PRG_TaskLog.Call">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="PRG_TaskLog.Init">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="PRG_TaskLog.TaskLogger.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -11,12 +11,17 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// No standard way of implementation. Fill your own code here
+      <ST><![CDATA[IF ptToTest = 0 THEN
+	F_LogLA3(E_LogLevel.eFatal, 'CheckPointer', 'Check pointer exception: {iSize} {iGran} {bWrite}', iSize, iGran, bWrite);
+END_IF
 CheckPointer := ptToTest;
-{flow}]]></ST>
+]]></ST>
     </Implementation>
     <LineIds Name="CheckPointer">
-      <LineId Id="11" Count="1" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="12" Count="0" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

@@ -7,21 +7,27 @@ VAR_INPUT
 	value, lower, upper: LINT;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// Implicitly generated code : Only an Implementation suggestion
-{noflow}
+      <ST><![CDATA[{noflow}
 IF (value < lower) THEN
-	CheckLRangeSigned := lower;
+	CheckRangeSigned := lower;
+	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeSigned', 'Check LINT range signed exception: {value} {lower} {upper}', value, lower, upper);
 ELSIF(value > upper) THEN
-	CheckLRangeSigned := upper;
+	CheckRangeSigned := upper;
+	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeSigned', 'Check LINT range signed exception: {value} {lower} {upper}', value, lower, upper);
 ELSE
-	CheckLRangeSigned := value;
+	CheckRangeSigned := value;
 END_IF
-
-{flow}]]></ST>
+{flow}
+]]></ST>
     </Implementation>
     <LineIds Name="CheckLRangeSigned">
-      <LineId Id="7" Count="9" />
+      <LineId Id="21" Count="2" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="26" Count="2" />
       <LineId Id="2" Count="0" />
+      <LineId Id="29" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
