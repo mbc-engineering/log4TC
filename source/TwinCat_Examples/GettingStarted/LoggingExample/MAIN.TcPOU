@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MAIN" Id="{34a46844-5b30-4771-a165-ea8d33eb10ba}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbIntervalTimer		: tc2_standard.TON := (PT:=T#5S);
+	fTempRoom			: LREAL;
+	nOnlineChangeCnt	: UDINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Example 1: Cyclic logging of some values
+fbIntervalTimer(IN:=NOT fbIntervalTimer.Q);
+IF fbIntervalTimer.Q THEN
+	fTempRoom := F_ReadSimulatedTemperature();
+	
+	// Log the temperature to log4tc system. Use the function
+	// with logger name and one ANY argument.
+	log4tc.F_LogLA1(
+		E_LogLevel.eInfo,
+		'MAIN',
+		'Room temperature {roomTemp} °C',
+		fTempRoom
+	);
+END_IF
+
+// Example 2: Event based logging
+IF _TaskInfo[Tc2_System.GETCURTASKINDEXEX()].FirstCycle THEN
+	// Log the plc start to the log4tc system.
+	log4tc.F_LogLA1(E_LogLevel.eDebug, 'MAIN', 'PLC started with application {appName}.', _AppInfo.AppName);
+END_IF
+
+IF _AppInfo.OnlineChangeCnt <> nOnlineChangeCnt THEN
+	log4tc.F_LogLA1(E_LogLevel.eInfo, 'MAIN', 'Online change executed: {changeCount}.', _AppInfo.OnlineChangeCnt);
+END_IF
+nOnlineChangeCnt := _AppInfo.OnlineChangeCnt;
+
+IF _AppInfo.BSODOccured THEN
+	log4tc.F_LogL(E_LogLevel.eFatal, 'MAIN', 'Windows crashed');
+END_IF
+
+// Must be called in each task, preferable once a cycle
+PRG_TaskLog.Call();
+]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="2" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="22" Count="5" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="51" Count="2" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
