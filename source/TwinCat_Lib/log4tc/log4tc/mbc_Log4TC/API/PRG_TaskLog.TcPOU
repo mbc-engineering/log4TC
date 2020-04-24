@@ -11,7 +11,20 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Call" Id="{7aeb9926-c091-4a02-a0d3-9930716cb4d1}">
-      <Declaration><![CDATA[METHOD PUBLIC Call
+      <Declaration><![CDATA[(*
+:Description: Sends collected log message of a single task to the service. 
+
+This method must be called in each task which uses logging. It should be
+called once a cycle.
+
+**Example**
+
+.. code:: 
+
+    PRG_TaskLog.Call();
+	
+*)
+METHOD PUBLIC Call
 
 ]]></Declaration>
       <Implementation>
@@ -20,15 +33,61 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Init" Id="{a5681b61-7170-465c-b800-f922f70178d3}">
-      <Declaration><![CDATA[METHOD PUBLIC Init : BOOL
+      <Declaration><![CDATA[(*
+:Description: Initialise the task logger with custom parameter. 
+
+This method must be called in each task which uses logging. As long as
+the parameter do not change a single call is sufficient.
+
+**Example**
+
+.. code:: 
+
+	IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+		PRG_TaskLog.Init('192.168.1.99.1.1');
+	END_IF
+    
+*)
+METHOD PUBLIC Init : BOOL
 VAR_INPUT
-	sAmsNetId	: Tc2_Utilities.T_AmsNetID;
+	sAmsNetId	: Tc2_Utilities.T_AmsNetID;	(* The ams net id of the log service. Defaults to localhost (empty string). *)
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[aTaskLogger[GETCURTASKINDEXEX()].Init(sAmsNetId);
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="TaskContextBuilder" Id="{37ede606-5a7a-4581-9bfb-710648eb6050}">
+      <Declaration><![CDATA[(*
+:Description: Returns the ``I_ContextBuilder`` for task specific context
+	properties. 
+
+Task specific properties are added to each log message which is created
+on the same task. 
+
+For best performance properties should only be added or removed if the
+values have changed.
+
+**Example**
+
+.. code:: 
+
+	IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+		PRG_TaskLog.TaskContextBuilder.AddInt('machineNo', nMachineNumber);
+	END_IF
+    
+*)
+PROPERTY PUBLIC TaskContextBuilder : I_ContextBuilder]]></Declaration>
+      <Get Name="Get" Id="{0565efa6-0f30-4a5a-8d01-6c8dcd2d67fb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TaskContextBuilder := aTaskLogger[GETCURTASKINDEXEX()].TaskContext;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="TaskLogger" Id="{e5ae713c-f421-49cb-9871-258b1113ba41}">
       <Declaration><![CDATA[PROPERTY INTERNAL TaskLogger : REFERENCE TO FB_Log4TcTask]]></Declaration>
       <Get Name="Get" Id="{2041d993-1b63-44b0-b94c-7510408823c4}">
@@ -50,6 +109,10 @@ END_VAR
     <LineIds Name="PRG_TaskLog.Init">
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="PRG_TaskLog.TaskContextBuilder.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="PRG_TaskLog.TaskLogger.Get">
       <LineId Id="2" Count="0" />

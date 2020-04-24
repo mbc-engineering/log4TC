@@ -9,11 +9,17 @@ VAR
 	nArg			: INT := 42;
 	sArg			: T_MaxString := 'foo';
 	fArg			: REAL := 4.2;
+	
+	fbScope			: FB_ScopedContext;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF bExecute OR bExecuteSingle THEN
+      <ST><![CDATA[fbScope.ContextBuilder.AddInt('scope', 42);
+
+IF bExecute OR bExecuteSingle THEN
 	bExecuteSingle := FALSE;
+
+	fbScope.Begin();
 	
 	F_LogLA3(
 		E_LogLevel.eInfo,
@@ -23,6 +29,8 @@ END_VAR
 		sArg,
 		fArg,
 	);
+	
+	fbScope.End();
 	
 	F_LogA3(
 		E_LogLevel.eInfo,
@@ -35,10 +43,15 @@ END_VAR
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="PRG_TestSimpleApi">
+      <LineId Id="64" Count="1" />
       <LineId Id="5" Count="0" />
-      <LineId Id="38" Count="1" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="12" Count="6" />
+      <LineId Id="66" Count="1" />
       <LineId Id="28" Count="0" />
       <LineId Id="20" Count="1" />
       <LineId Id="23" Count="4" />

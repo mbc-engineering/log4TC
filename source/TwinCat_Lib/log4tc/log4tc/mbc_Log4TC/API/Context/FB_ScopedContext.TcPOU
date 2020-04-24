@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_ScopedContext" Id="{01352ada-ce14-48e5-b21f-83c98419f019}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+:Description: Provide nested scoped context properties. 
+
+This function block can be used to define context properties, which
+are valid from ``Begin()`` to ``End()``. This context properties can
+be used to provide call-stack specific properties for example when
+using multi-instance.
+
+The maximum nested level can be configured with ``Config.nMaxScopedContext``.
+The default level is 4.
+
+**Example**
+
+.. code:: 
+
+	fbMachine1Ctx	: FB_ScopedContext;
+	fbMachine2Ctx	: FB_ScopedContext;
+	
+	IF bInit THEN
+		fbMachine1Ctx.ContextBuilder.WithInt('MachineNo', 1);
+		fbMachine1Ctx.ContextBuilder.WithInt('MachineNo', 2);
+	END_IF
+	
+    fbMachine1Ctx.Begin();
+	// Call code for machine 1
+	fbMachine1Ctx.End();
+	
+    fbMachine2Ctx.Begin();
+	// Call code for machine 2
+	fbMachine2Ctx.End();
+*)
+{attribute 'no_explicit_call' := 'no direct call necessary'}
+FUNCTION_BLOCK PUBLIC FB_ScopedContext
+VAR
+	fbContext			: FB_ContextBuilder;
+	bActive				: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Begin" Id="{ddbbe298-8049-460b-b093-7f33b79aac4d}">
+      <Declaration><![CDATA[(*
+:Description: Begins a nested context. 
+
+Each ``Begin()`` call must be balance by an ``End()`` call in the same
+order if nested context are used.
+*)
+METHOD PUBLIC Begin
+VAR
+	refTaskContextStack		: REFERENCE TO ST_ScopedContextStack;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT bActive THEN
+	bActive := TRUE;
+	
+	refTaskContextStack REF= PRG_ScopedContextStack.TaskContextStack;
+	
+	IF refTaskContextStack.nScopeContextCount < Config.nMaxScopedContext THEN
+		refTaskContextStack.aScopedContext[refTaskContextStack.nScopeContextCount] := fbContext;
+		refTaskContextStack.nScopeContextCount := refTaskContextStack.nScopeContextCount + 1;
+	ELSE
+		F_InternalLog(
+			E_LogLevel.eError,
+			'FB_ScopedContext.Begin',
+			'Too many nested scoped context.',
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+	END_IF
+ELSE
+	F_InternalLog(
+		E_LogLevel.eError,
+		'FB_ScopedContext.Begin',
+		'Begin() called twice without End()',
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ContextBuilder" Id="{30890266-8e25-4d01-ad83-fd4dbc790248}">
+      <Declaration><![CDATA[(*
+:Description: Returns the context builder for this scoped context. 
+
+For best performance the context build should only be called on
+changed values.
+*)
+PROPERTY PUBLIC ContextBuilder : I_ContextBuilder]]></Declaration>
+      <Get Name="Get" Id="{cfbe982c-2176-44b1-aa17-82bde3f76c34}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ContextBuilder := fbContext;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="End" Id="{40302603-8509-463e-b2bc-733388a53e95}">
+      <Declaration><![CDATA[(*
+:Description: Ends a nested context. 
+
+Each ``Begin()`` call must be balance by an ``End()`` call in the same
+order if nested context are used.
+*)
+METHOD PUBLIC End
+VAR
+	nIdx					: INT;
+	refTaskContextStack		: REFERENCE TO ST_ScopedContextStack;
+	iThisContextBuilder		: I_ContextBuilder;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bActive THEN
+	bActive := FALSE;
+	
+	refTaskContextStack REF= PRG_ScopedContextStack.TaskContextStack;
+	iThisContextBuilder := fbContext;
+	
+	// expected at top
+	IF refTaskContextStack.nScopeContextCount > 0 
+			AND_THEN refTaskContextStack.aScopedContext[refTaskContextStack.nScopeContextCount - 1] = iThisContextBuilder 
+	THEN
+		refTaskContextStack.nScopeContextCount := refTaskContextStack.nScopeContextCount - 1;
+		RETURN;
+	END_IF
+	
+	// try to find it in the stack
+	FOR nIdx := UINT_TO_INT(refTaskContextStack.nScopeContextCount) - 1 TO 0 BY -1 DO
+		IF refTaskContextStack.aScopedContext[nIdx] = iThisContextBuilder THEN
+			F_InternalLog(
+				E_LogLevel.eError,
+				'FB_ScopedContext.End',
+				'Removed scoped context at %d instead of %d-1 - ensure Begin/End are called in order.',
+				Tc2_Utilities.F_INT(nIdx),
+				Tc2_Utilities.F_UINT(refTaskContextStack.nScopeContextCount),
+				Tc2_Utilities.EMPTY_ARG_VALUE,
+				Tc2_Utilities.EMPTY_ARG_VALUE
+			);	
+		
+			refTaskContextStack.nScopeContextCount := INT_TO_UINT(nIdx);
+			RETURN;
+		END_IF
+	END_FOR
+	
+	F_InternalLog(
+		E_LogLevel.eError,
+		'FB_ScopedContext.End',
+		'Cannot remove non existing scope',
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);	
+ELSE
+	F_InternalLog(
+		E_LogLevel.eError,
+		'FB_ScopedContext.End',
+		'End() called without Begin()',
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ScopedContext">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ScopedContext.Begin">
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="8" Count="2" />
+      <LineId Id="12" Count="9" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="30" Count="9" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ScopedContext.ContextBuilder.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ScopedContext.End">
+      <LineId Id="41" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="61" Count="1" />
+      <LineId Id="9" Count="29" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="51" Count="7" />
+      <LineId Id="45" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

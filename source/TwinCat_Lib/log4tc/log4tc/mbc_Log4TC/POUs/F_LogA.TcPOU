@@ -20,10 +20,12 @@ VAR_INPUT
 	iContextBuilder	: I_ContextBuilder;
 END_VAR
 VAR
-	fbLogEntry		: FB_LogEntry();
-	pBuffer			: PVOID;
-	nBufferCount	: UINT;	
-	iLogEntryAdder	: I_LogEntryAdder;
+	fbLogEntry			: FB_LogEntry();
+	pBuffer				: PVOID;
+	nBufferCount		: UINT;	
+	iLogEntryAdder		: I_LogEntryAdder;
+	nIdx				: UINT;
+	refScopedContext	: REFERENCE TO ST_ScopedContextStack;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -66,6 +68,17 @@ IF nArgCount >= 10 THEN
 	fbLogEntry.AddAnyArg(10, aArg2);
 END_IF
 
+IF __QUERYINTERFACE(PRG_TaskLog.TaskLogger.TaskContext, iLogEntryAdder) THEN
+	iLogEntryAdder.AddToLogEntry(E_Scope.eTask, fbLogEntry);
+END_IF
+
+refScopedContext REF= PRG_ScopedContextStack.TaskContextStack;
+FOR nIdx := 0 TO refScopedContext.nScopeContextCount DO
+	IF __QUERYINTERFACE(refScopedContext.aScopedContext[nIdx], iLogEntryAdder) THEN
+		iLogEntryAdder.AddToLogEntry(E_Scope.eScoped, fbLogEntry);
+	END_IF
+END_FOR
+
 IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
 	iLogEntryAdder.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
 END_IF
@@ -87,6 +100,12 @@ END_IF
       <LineId Id="49" Count="1" />
       <LineId Id="37" Count="0" />
       <LineId Id="64" Count="24" />
+      <LineId Id="142" Count="3" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="154" Count="1" />
+      <LineId Id="152" Count="1" />
       <LineId Id="115" Count="2" />
       <LineId Id="113" Count="0" />
       <LineId Id="39" Count="8" />

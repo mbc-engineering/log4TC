@@ -43,6 +43,9 @@
     <Compile Include="POUs\CheckRangeUnsigned.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_TcExternalTime.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\F_FUN.TcPOU">
       <SubType>Code</SubType>
     </Compile>

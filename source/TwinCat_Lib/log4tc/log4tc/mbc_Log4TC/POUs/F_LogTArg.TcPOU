@@ -19,9 +19,12 @@ VAR_INPUT
 	iContextBuilder	: I_ContextBuilder;
 END_VAR
 VAR
-	fbLogEntry		: FB_LogEntry();
-	pBuffer			: PVOID;
-	nBufferCount	: UINT;	
+	fbLogEntry			: FB_LogEntry();
+	pBuffer				: PVOID;
+	nBufferCount		: UINT;	
+	iLogEntryAdder		: I_LogEntryAdder;
+	nIdx				: UINT;
+	refScopedContext	: REFERENCE TO ST_ScopedContextStack;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -73,6 +76,21 @@ IF stArg10.eType <> Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN AND stArg10.pData <>
 	fbLogEntry.AddTArg(10, stArg10);
 END_IF
 
+IF __QUERYINTERFACE(PRG_TaskLog.TaskLogger.TaskContext, iLogEntryAdder) THEN
+	iLogEntryAdder.AddToLogEntry(E_Scope.eTask, fbLogEntry);
+END_IF
+
+refScopedContext REF= PRG_ScopedContextStack.TaskContextStack;
+FOR nIdx := 0 TO refScopedContext.nScopeContextCount DO
+	IF __QUERYINTERFACE(refScopedContext.aScopedContext[nIdx], iLogEntryAdder) THEN
+		iLogEntryAdder.AddToLogEntry(E_Scope.eScoped, fbLogEntry);
+	END_IF
+END_FOR
+
+IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
+	iLogEntryAdder.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
+END_IF
+
 IF fbLogEntry.End() THEN
 	// Add to task ring buffer
 	fbLogEntry.GetBuffer(
@@ -105,6 +123,11 @@ END_IF]]></ST>
       <LineId Id="78" Count="2" />
       <LineId Id="92" Count="0" />
       <LineId Id="81" Count="2" />
+      <LineId Id="116" Count="3" />
+      <LineId Id="127" Count="5" />
+      <LineId Id="126" Count="0" />
+      <LineId Id="120" Count="2" />
+      <LineId Id="115" Count="0" />
       <LineId Id="42" Count="7" />
       <LineId Id="7" Count="0" />
     </LineIds>

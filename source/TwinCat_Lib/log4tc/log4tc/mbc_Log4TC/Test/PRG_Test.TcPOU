@@ -4,15 +4,26 @@
     <Declaration><![CDATA[PROGRAM PRG_Test
 VAR
 	fbContextBuilder_Test	: FB_ContextBuilder_Test;
+	
+	fbScope			: FB_ScopedContext;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[TcUnit.RUN();
+
+
+fbScope.Begin();
+
+fbScope.End();
 ]]></ST>
     </Implementation>
     <LineIds Name="PRG_Test">
       <LineId Id="5" Count="0" />
+      <LineId Id="14" Count="1" />
       <LineId Id="7" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

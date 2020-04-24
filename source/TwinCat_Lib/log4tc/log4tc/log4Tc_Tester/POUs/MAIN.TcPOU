@@ -3,6 +3,8 @@
   <POU Name="MAIN" Id="{9e023de9-a7d3-47c5-b36b-a81c12c72c93}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
+	fbTime			: FB_TcExternalTime(ETcExternalTimeType.SystemTime);
+	nOffset			: LINT;
 	fbLog			: FB_Logger('MAIN');
 	bWriteLog		: BOOL;
 	bWriteCont		: BOOL;
@@ -22,6 +24,8 @@ END_VAR
       <ST><![CDATA[IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
 	PRG_TaskLog.Init('192.168.56.1.1.1');
 END_IF
+
+nOffset := fbTime.GetExternalOffset();
 
 PRG_TestSimpleApi();
 	
@@ -64,6 +68,7 @@ PRG_TaskLog.Call();
     <LineIds Name="MAIN">
       <LineId Id="260" Count="0" />
       <LineId Id="262" Count="1" />
+      <LineId Id="281" Count="1" />
       <LineId Id="261" Count="0" />
       <LineId Id="199" Count="0" />
       <LineId Id="201" Count="1" />

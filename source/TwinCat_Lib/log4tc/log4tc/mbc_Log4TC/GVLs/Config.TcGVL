@@ -3,9 +3,10 @@
   <GVL Name="Config" Id="{a1726ba6-7c08-42a0-82ef-a943824dc09f}" ParameterList="True">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
-	eInternalLog		: E_LogLevel := E_LogLevel.eDebug;	(* min. log level for internal logging. *)
-	nBufferLen 			: UINT := 8192;		(* Length of per task log buffer in bytes *)
-	nLogLen				: UINT := 1024;		(* Lenght of a single log message in bytes *)
+	eInternalLog			: E_LogLevel := E_LogLevel.eDebug;	(* min. log level for internal logging. *)
+	nBufferLen 				: UINT := 8192;		(* Length of per task log buffer in bytes *)
+	nLogLen					: UINT := 1024;		(* Lenght of a single log message in bytes *)
+	nMaxScopedContext		: UINT := 4;		(* Max. number of nested scope context. *)	
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

@@ -7,7 +7,8 @@ TYPE E_Scope :
 (
 	eLog			:= 0,
 	eLogger			:= 1,
-	eTask			:= 2
+	eScoped			:= 2,
+	eTask			:= 3
 ) BYTE;
 END_TYPE
 ]]></Declaration>

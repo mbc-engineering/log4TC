@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="PRG_ScopedContextStack" Id="{c32a6184-a03b-4217-9b7b-06a1b2e77d20}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM INTERNAL PRG_ScopedContextStack
+VAR
+	aContextStack		: ARRAY[1..SIZEOF(TwinCAT_SystemInfoVarList._TaskInfo)/SIZEOF(PlcTaskSystemInfo)] OF ST_ScopedContextStack;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="TaskContextStack" Id="{ce9ae34e-fa10-4f49-a87d-e55aacc3500f}">
+      <Declaration><![CDATA[PROPERTY INTERNAL TaskContextStack : REFERENCE TO ST_ScopedContextStack]]></Declaration>
+      <Get Name="Get" Id="{60fce572-d48b-4c16-83b1-a567999dbd38}">
+        <Declaration><![CDATA[VAR
+	nTaskIdx	: DINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[nTaskIdx := Tc2_System.GETCURTASKINDEXEX();
+TaskContextStack REF= aContextStack[nTaskIdx];
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="PRG_ScopedContextStack">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="PRG_ScopedContextStack.TaskContextStack.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="6" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

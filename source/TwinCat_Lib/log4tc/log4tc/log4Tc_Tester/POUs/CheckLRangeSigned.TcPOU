@@ -9,13 +9,13 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[{noflow}
 IF (value < lower) THEN
-	CheckRangeSigned := lower;
+	CheckLRangeSigned := lower;
 	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeSigned', 'Check LINT range signed exception: {value} {lower} {upper}', value, lower, upper);
 ELSIF(value > upper) THEN
-	CheckRangeSigned := upper;
+	CheckLRangeSigned := upper;
 	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeSigned', 'Check LINT range signed exception: {value} {lower} {upper}', value, lower, upper);
 ELSE
-	CheckRangeSigned := value;
+	CheckLRangeSigned := value;
 END_IF
 {flow}
 ]]></ST>

@@ -267,6 +267,18 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="TaskContext" Id="{a42ac3ee-e15f-4b32-97d9-0012d00cbdde}">
+      <Declaration><![CDATA[PROPERTY INTERNAL TaskContext : REFERENCE TO FB_ContextBuilder]]></Declaration>
+      <Get Name="Get" Id="{62de58c1-99d7-44fb-9958-1832b346614f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TaskContext REF= fbTaskContext;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <LineIds Name="FB_Log4TcTask._InitAndCheckTask">
       <LineId Id="6" Count="0" />
       <LineId Id="22" Count="0" />
@@ -364,6 +376,10 @@ END_VAR
     <LineIds Name="FB_Log4TcTask.Init">
       <LineId Id="5" Count="0" />
       <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.TaskContext.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

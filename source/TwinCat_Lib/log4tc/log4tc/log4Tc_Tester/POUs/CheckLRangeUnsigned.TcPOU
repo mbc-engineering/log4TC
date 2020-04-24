@@ -9,13 +9,13 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[{noflow}
 IF (value < lower) THEN
-	CheckRangeUnsigned := lower;
+	CheckLRangeUnsigned := lower;
 	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeUnsigned', 'Check ULINT range unsigned exception: {value} {lower} {upper}', value, lower, upper);
 ELSIF(value > upper) THEN
-	CheckRangeUnsigned := upper;
+	CheckLRangeUnsigned := upper;
 	F_LogLA3(E_LogLevel.eFatal, 'CheckLRangeUnsigned', 'Check ULINT range unsigned exception: {value} {lower} {upper}', value, lower, upper);
 ELSE
-	CheckRangeUnsigned := value;
+	CheckLRangeUnsigned := value;
 END_IF
 {flow}
 ]]></ST>

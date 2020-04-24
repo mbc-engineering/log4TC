@@ -39,6 +39,9 @@
     <Folder Include="POUs\Utils" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Context\FB_ScopedContext.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\Context\F_LogContext.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -165,6 +168,9 @@
     <Compile Include="DUTs\ST_Log4TcTaskInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\ST_ScopedContextStack.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GVLs\Config.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -196,6 +202,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\F_LogTArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\PRG_ScopedContextStack.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Utils\F_DINT_TO_UINT_MAX.TcPOU">

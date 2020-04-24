@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="ST_ScopedContextStack" Id="{4a8187ff-c55a-454e-89ac-86e2dc158433}">
+    <Declaration><![CDATA[TYPE ST_ScopedContextStack :
+STRUCT
+	aScopedContext		: ARRAY[0..Config.nMaxScopedContext-1] OF I_ContextBuilder;
+	nScopeContextCount	: UINT (0..Config.nMaxScopedContext);
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
