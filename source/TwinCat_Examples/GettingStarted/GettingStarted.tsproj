@@ -6,10 +6,16 @@
 				<Task Id="3" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
 				</Task>
+				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
+					<Name>PlcTask1</Name>
+				</Task>
 			</Tasks>
 		</System>
 		<Plc>
 			<Project File="LoggingExample.xti"/>
+			<Project File="A_SimpleLogMessage.xti"/>
+			<Project File="B_LogMessageWithArg.xti"/>
+			<Project File="C_LogWithLogger.xti"/>
 		</Plc>
 	</Project>
 </TcSmProject>

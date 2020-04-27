@@ -4,7 +4,6 @@
     <Declaration><![CDATA[FUNCTION F_LogA1 
 VAR_INPUT
 	eLogLevel		: E_LogLevel;
-	sLogger			: T_MaxString;
 	sMessage		: T_MaxString;
 	aArg1			: ANY;
 END_VAR

@@ -1,7 +1,5 @@
-﻿- name: Tutorials
-  href: tutorial/intro.md
+﻿- name: Erste Schritte
+  href: gettingstarted/intro.md
 - name: changelog
   href: Changelog.md
-- name: Api Documentation
-  href: api/
-  homepage: api/index.md
+
