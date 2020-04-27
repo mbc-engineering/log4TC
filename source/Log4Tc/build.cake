@@ -98,8 +98,9 @@ Task("Publish")
 });
 
 Task("Default")
-    .IsDependentOn("Build")
-    .IsDependentOn("Test")
+    // Add when test exists
+    //.IsDependentOn("Build")
+    //.IsDependentOn("Test")
     .IsDependentOn("Publish");
 
 RunTarget(target);

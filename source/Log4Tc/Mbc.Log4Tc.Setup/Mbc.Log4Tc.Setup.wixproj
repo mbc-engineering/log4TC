@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceInstall.wxs" />
+    <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLib.wxs" />
     <Compile Include="Fragments\NetFx471.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" />
     <Compile Include="Fragments\TwinCat3.wxs" />
@@ -84,6 +85,7 @@
   <ItemGroup>
     <Folder Include="Fragments\" />
     <Folder Include="Fragments\Log4TcServiceFeature" />
+    <Folder Include="Fragments\Log4TcTwinCatLibFeature" />
     <Folder Include="Includes" />
     <Folder Include="Resources" />
   </ItemGroup>

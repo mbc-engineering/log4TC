@@ -11,9 +11,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="gettingstarted\" />
-    <Folder Include="internal\" />
-  </ItemGroup>
-
 </Project>

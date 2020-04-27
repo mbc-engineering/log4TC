@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Fragment>
+    <DirectoryRef Id="DIR_Twincat_31_Components_Plc_ManagedLibraries">
+      <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc" Name="!(bind.property.Manufacturer)" >
+        <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc_Log4Tc" Name="Log4TC" >
+          <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc_Log4Tc_Current" Name="0.0.2" />
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Cmp_Log4TcTwinCatLib">
+      <!-- Copy the TwinCat library files to the -->
+      <Component Id="Cmp_Log4TcTwinCatLib1" 
+                 Directory="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc_Log4Tc_Current" 
+                 NeverOverwrite="no"
+                 KeyPath="yes"
+                 Guid="DA0DAA54-1D99-4301-9B8C-33A85D4A2B0A">
+        <File Id="Log4Tc9A2725A36EA148CA917E046323D92BBC" Source="..\..\..\library\0.0.2\browsercache" />
+        <File Id="Log4Tc2ADA892851984EFCAE4E4A8A2A761A31" Source="..\..\..\library\0.0.2\dependencies" />
+        <File Id="Log4Tc8CA02606A38B4E448C405DCFFC568A35" Source="..\..\..\library\0.0.2\mbc_Log4TC_v.0.0.2.library" />
+        <File Id="Log4Tc4EEE060B601C46B8B49E0C70A41F82A3" Source="..\..\..\library\0.0.2\projectinfo" />
+      </Component>
+      
+      <!-- Add new entry to the xml chache file under C:\TwinCAT\3.1\Components\Plc\Managed Libraries -->
+      <Component Id="Cmp_Log4TcTwinCatLib2"
+                 Directory="DIR_Twincat_31_Components_Plc_ManagedLibraries"
+                 NeverOverwrite="no"
+                 KeyPath="yes"
+                 Guid="DA0DAA54-1D99-4301-9B8C-33A85D4A2B0B">
+        
+        <util:XmlConfig Id="LibraryElementLog4Tc"
+                        File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache"
+                        Action="create"
+                        ElementPath="LibraryRepository"
+                        VerifyPath="/LibraryRepository/Library[\[]@Title='Log4TC' and @Version='0.0.2'[\]]"
+                        Name="Library"
+                        Node="element"
+                        On="install">
+          <util:XmlConfig Id="LibraryElementLog4Tc_Path" 
+                          ElementId="LibraryElementLog4Tc" 
+                          Name="Path" 
+                          Value="mbc engineering GmbH\Log4TC\0.0.2\mbc_Log4TC_v.0.0.2.library" 
+                          File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache" />
+          <util:XmlConfig Id="LibraryElementLog4Tc_Title"
+                          ElementId="LibraryElementLog4Tc"
+                          Name="Title"
+                          Value="Log4TC"
+                          File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache" />
+          <util:XmlConfig Id="LibraryElementLog4Tc_Version"
+                          ElementId="LibraryElementLog4Tc"
+                          Name="Version"
+                          Value="0.0.2"
+                          File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache" />
+          <util:XmlConfig Id="LibraryElementLog4Tc_Company"
+                          ElementId="LibraryElementLog4Tc"
+                          Name="Company"
+                          Value="mbc engineering GmbH"
+                          File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache" />
+          <!-- Empty values
+          <util:XmlConfig Id="LibraryElementLog4Tc_DefaultNamespace"
+                          ElementId="LibraryElementLog4Tc"
+                          Name="DefaultNamespace"
+                          Value=""
+                          File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache" />
+          <util:XmlConfig Id="LibraryElementLog4Tc_Categoryids"
+                          ElementId="LibraryElementLog4Tc"
+                          Name="CategoryIds"
+                          Value=""
+                          File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache" />
+            -->
+        </util:XmlConfig>
+
+        <util:XmlConfig Id="RemoveLibraryElementLog4Tc"
+                        File="[DIR_Twincat_31_Components_Plc_ManagedLibraries]\cache"
+                        Action="delete"
+                        ElementPath="LibraryRepository"
+                        VerifyPath="/LibraryRepository/Library[\[]@Title='Log4TC' and @Version='0.0.2'[\]]"
+                        Node="element"
+                        On="uninstall" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
