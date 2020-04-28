@@ -1,7 +1,9 @@
 ﻿using Mbc.Log4Tc.Model;
 using NLog;
+using NLog.Config;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Log4TcLevel = Mbc.Log4Tc.Model.LogLevel;
 using NLogLevel = NLog.LogLevel;
@@ -10,7 +12,13 @@ namespace Mbc.Log4Tc.Output.NLog
 {
     public class NLogLog4TcOutput : IOutputHandler
     {
-        private static readonly Logger DispatchLogger = LogManager.GetLogger("TwinCat");
+        static NLogLog4TcOutput()
+        {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "log4tc", "config", "NLog.config");
+            LogManager.Configuration = new XmlLoggingConfiguration(path);
+        }
+
+        private readonly Logger _dispatchLogger = LogManager.GetLogger("TwinCat");
 
         public NLogLog4TcOutput(string name)
         {
@@ -41,8 +49,9 @@ namespace Mbc.Log4Tc.Output.NLog
             logEvent.Properties.Add("_TcAppName_", logEntry.AppName);
             logEvent.Properties.Add("_TcProjectName_", logEntry.ProjectName);
             logEvent.Properties.Add("_TcOnlineChangeCount_", logEntry.OnlineChangeCount);
+            logEvent.Properties.Add("_TcLogSource_", logEntry.Source);
 
-            DispatchLogger.Log(logEvent);
+            _dispatchLogger.Log(logEvent);
         }
 
         private object[] ConvertToNLogParameters(IDictionary<int, object> arguments)

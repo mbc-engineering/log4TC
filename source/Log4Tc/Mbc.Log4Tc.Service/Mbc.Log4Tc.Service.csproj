@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="InstallService.ps1" />
     <None Remove="UninstallService.ps1" />
   </ItemGroup>
@@ -23,6 +27,10 @@
     <Content Include="InstallService.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="NLog.config" />
   </ItemGroup>
 
   <ItemGroup>    
