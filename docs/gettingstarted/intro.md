@@ -25,7 +25,7 @@ Die Tour geht Schrittweise vor. Es wird empfohlen beim ersten Kontakt mit log4TC
 5. [Benutzung von Loggern](logger_usage.md)
 6. [Integration von Context-Eigenschaften](context_usage.md)
 7. [Log-Meldungen mit Log4View beobachten](tools_log4view.md)
-8. Darstellung von strukturierten Logging in Charts
+8. [Protokollierung von strukturierten Werten](write_structured_values.md)
 9. Zentrales Logging mit Graylog
 
 

@@ -8,9 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3EBBCF4C-829A-4152-BA5B-25FC54CBB029}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		build.cake = build.cake
-		build.ps1 = build.ps1
-		build.sh = build.sh
 		Directory.Build.props = Directory.Build.props
 		Mbc.CodeAnalysis.ruleset = Mbc.CodeAnalysis.ruleset
 		NuGet.Config = NuGet.Config
@@ -34,6 +31,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "docfx", "..\..\docs\docfx.csproj", "{2B7B51BC-C10D-444D-B0D9-A0BE3B7E4101}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Mbc.Log4Tc.Setup", "Mbc.Log4Tc.Setup\Mbc.Log4Tc.Setup.wixproj", "{C00CA1F3-B410-4CF3-9027-91FD287BBE53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mbc.Log4Tc.Output.NLog.Test", "Mbc.Log4Tc.Output.NLog.Test\Mbc.Log4Tc.Output.NLog.Test.csproj", "{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,6 +145,18 @@ Global
 		{C00CA1F3-B410-4CF3-9027-91FD287BBE53}.Release|x64.Build.0 = Release|x64
 		{C00CA1F3-B410-4CF3-9027-91FD287BBE53}.Release|x86.ActiveCfg = Release|x86
 		{C00CA1F3-B410-4CF3-9027-91FD287BBE53}.Release|x86.Build.0 = Release|x86
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Debug|x64.Build.0 = Debug|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Debug|x86.Build.0 = Debug|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Release|x64.ActiveCfg = Release|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Release|x64.Build.0 = Release|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Release|x86.ActiveCfg = Release|Any CPU
+		{185D47FD-72F3-4CD8-B69F-74DA8EDF5EB6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

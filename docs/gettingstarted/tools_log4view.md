@@ -26,7 +26,9 @@ Jetzt muss noch das Format der Datei eingestellt werden. Die Einstellungen sollt
 
 Nach dem Bestätigen mit *OK* wird die Datei geladen und im Fenster angezeigt. Man findet hier alle Informationen, die auch im Log-File waren, aber in strukturierter Form. So kann man z.B. zu einem Zeitstempel springen, Logger ausblenden, Nur bestimmte Level anzeigen, usw.
 
+![Log4View](_assets/log4view.png)
 
+## Nächster Schritt
 
-
+[Protokollierung von strukturierten Werten](write_structured_values.md)
 

@@ -212,11 +212,6 @@ _WriteByte(1); // Type 1: Argument follows
 _WriteByte(nArgno);
 
 CASE stArg.TypeClass OF
-	__SYSTEM.TYPE_CLASS.TYPE_REAL:
-		_WriteByte(0);
-END_CASE
-
-CASE stArg.TypeClass OF
 	__SYSTEM.TYPE_CLASS.TYPE_BOOL:
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_BOOL);
 		IF Tc2_Utilities.PBYTE_TO_BYTE(stArg.pValue) <> 0 THEN
@@ -559,9 +554,6 @@ Start := NOT bError;
       <LineId Id="53" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="33" Count="0" />
-      <LineId Id="167" Count="2" />
-      <LineId Id="171" Count="0" />
-      <LineId Id="170" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="39" Count="0" />

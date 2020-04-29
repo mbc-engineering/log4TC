@@ -90,6 +90,30 @@
     <Compile Include="API\Simple\Any\F_LogA1.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA10C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA2C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA1C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA4C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA3C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA6C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA5C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA8C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\Simple\Any\F_LogLA3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -114,7 +138,13 @@
     <Compile Include="API\Simple\Any\F_LogLA8.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA7C.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\Simple\Any\F_LogLA9.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="API\Simple\Any\F_LogLA9C.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Simple\F_LogL.TcPOU">

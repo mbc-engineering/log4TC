@@ -19,6 +19,14 @@ END_VAR
 IF bExecute OR bExecuteSingle THEN
 	bExecuteSingle := FALSE;
 
+	F_LogLA1C(
+		E_LogLevel.eInfo, 
+		'PRG_TestSimpleApi', 
+		'Temperatur {temperature}', 
+		fArg, 
+		F_LogContext().AddBool('csv', TRUE)
+	);
+	
 	fbScope.Begin();
 	
 	F_LogLA3(
@@ -46,7 +54,10 @@ END_IF]]></ST>
       <LineId Id="64" Count="1" />
       <LineId Id="5" Count="0" />
       <LineId Id="38" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="81" Count="5" />
       <LineId Id="63" Count="0" />
+      <LineId Id="80" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="10" Count="0" />
