@@ -56,6 +56,11 @@ namespace Mbc.Log4Tc.Output.NLog
 
         private object[] ConvertToNLogParameters(IDictionary<int, object> arguments)
         {
+            if (arguments.Count == 0)
+            {
+                return new object[0];
+            }
+
             var count = arguments.Keys.Max();
             var parameters = new object[count];
 
