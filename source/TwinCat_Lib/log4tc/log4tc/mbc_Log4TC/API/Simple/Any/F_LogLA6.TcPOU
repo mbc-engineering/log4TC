@@ -22,7 +22,7 @@ END_VAR
 	eLogLevel,
 	sLogger,
 	sMessage,
-	4,
+	6,
 	aArg1,
 	aArg2,
 	aArg3,

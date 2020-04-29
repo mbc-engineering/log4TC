@@ -52,11 +52,11 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
+        <ST><![CDATA[_InitAndCheckTask := TRUE;
 
+nActTaskIndex := Tc2_System.GETCURTASKINDEXEX();
 IF nTaskIndex = 0 AND nActTaskIndex > 0 THEN
 	nTaskIndex := nActTaskIndex;
-	_InitAndCheckTask := TRUE;
 ELSIF nTaskIndex <> nActTaskIndex OR nActTaskIndex = 0 THEN
 	F_InternalLog(
 		E_LogLevel.eFatal,
@@ -280,11 +280,8 @@ END_VAR
       </Get>
     </Property>
     <LineIds Name="FB_Log4TcTask._InitAndCheckTask">
-      <LineId Id="6" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="7" Count="1" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="9" Count="10" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="6" Count="13" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Log4TcTask.AddLog">

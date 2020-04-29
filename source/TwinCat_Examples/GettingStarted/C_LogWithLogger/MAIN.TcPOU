@@ -34,7 +34,7 @@ PRG_TaskLog.Call();
       <LineId Id="19" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="2" Count="0" />
-      <LineId Id="9" Count="0" />
+      <LineId Id="24" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
