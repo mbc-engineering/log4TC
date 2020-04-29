@@ -28,7 +28,7 @@ Die Tour geht Schrittweise vor. Es wird empfohlen beim ersten Kontakt mit log4TC
 8. [Protokollierung von strukturierten Werten](write_structured_values.md)
 9. Zentrales Logging mit Graylog
 
-
+---
 
 Nächster Schritt: [TwinCAT Projekt anlegen](create_twincat_project.md)
 
