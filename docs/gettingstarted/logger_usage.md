@@ -1,18 +1,18 @@
 # Benutzung von Loggern
 
-## Was sind 'Logger'?
+## Zweck von *Logger*
 
-Log4TC orientiert sich stark an etablierte Logging-Systeme wie [NLog](https://nlog-project.org/) oder [Log4j](http://logging.apache.org/) für andere Programmiersprachen. Ein Aspekt daraus ist die Übernahme des Konzepts von *Loggern*.
+Rein technisch betrachtet ist ein *Logger* ein String-Wert für eine oder mehrere Log-Meldungen, das durch das gesamte Logging-System weitergereicht wird. Ein *Logger* kann daher z.B. von Filterplugins verwendet werden oder bei der Ausgabe mit geschrieben werden.
 
-Rein technisch betrachtet ist ein *Logger* ein Namen für eine oder mehrere Log-Meldungen, die durch das gesamte Logging-System transparent weitergereicht wird. *Logger* bekommen erst eine Funktion, in dem sie von Filter- und/oder Ausgabe-Plugins verwendet werden. Obwohl die Bedeutung der *Logger* grundsätzlich selbst definiert werden kann, empfiehlt es sich folgender Konvetion zu folgen.
+Wie genau und ob *Logger* benutzt werden kann vom Entwickler selbst definiert werden. Bei allen grösseren Projekten hat sich folgende Richtlinie als Vorteil erwiesen:
 
-Systeme wie NLog oder Log4j verwenden den *Logger* als Bezeichnung des vollen Klassennamen, in dem eine Log-Meldung erzeugt wird. Dieses Konvention kann analog auch für log4TC verwendet werden in dem für den *Logger* der Name des Bausteins verwendet wird, in dem die Log-Meldung erzeugt wird.
+*Logger* kennzeichnen Bereiche einer Applikation, der Log-Meldungen zugeordnet werden. Ein Bereich einer Applikation ist ein Baustein, Methode, Namensraum (bei Libraries) die mit einem hierarchisch aufgebauten Namen gekennzeichnet werden. Die einzelnen Teile eines solchen Namens werden durch einen Punkt "." getrennt.
 
-## Was sind die Vorteile von 'Logger'?
+Beispiele:
+* Eine Methode eines Libraries-Bausteins: `MyLib.PRG_Foo.Init` (`MyLib`=Librarynamen, `PRG_Foo`=Bautein, `Init`=Methode)
+* Ein Baustein in einem Subsystem: `Communication.FB_Send` (`Communication`=Subsystem, `FB_Send`=Baustein)
 
-Bei allen nicht trivialen Projekten entstehen im Laufe der Zeit im Code hunderte oder tausende Log-Meldungen. Sollen diese später analysiert werden, ist es oft schwierig sich daran zu erinnern, wo eine Meldung ausgegeben wurde. Benutzt man als *Logger* den Bausteinnamen, hat man sofort eine Eingrenzung.
-
-*Logger* können aber auch für Filter verwendet werden. Soll z.B. ein Programmteil wegen Problemen mit Logging überwacht werden, können diese Meldungen aufgrund des *Logger* in separate Log-Files ausgegeben werden.
+Durch die hierarchiesche Gliederung können Log-Meldungen auch bei grossen Systemen mit hunderten oder tausenden Log-Meldungen schnell zugeordnet werden. Ebenso können z.B. auch einfach Meldungen eines Subsystems ausgefiltert oder in eine eigene Log-Datei umgeleitet werden.
 
 ## Wie werden Logger benutzt?
 
@@ -41,11 +41,20 @@ END_IF
 PRG_TaskLog.Call();
 ```
 
+## Ausgabe im Log
+
+Im Log-File wird der *Logger* in der zweiten Spalte ausgegeben:
+
+![Logmeldung mit Logger](_assets/log3.png)
+
+
 ## Was passiert wenn kein 'Logger' benutzt wird?
 
 *Logger* sind ein integrierter Bestandteil von log4TC, aus diesen Grund wird intern immer ein *Logger* benutzt, auch wenn keiner angegeben wird. Der Logger in solchen Fällen ist in `Const.sGlobalLogger` definiert und hat den Wert `'_GLOBAL_'`.
 
-Nächster Schritt: [Integration von Context-Eigenschaften](context_usage.md)
+## Nächster Schritt
+
+[Integration von Context-Eigenschaften](context_usage.md)
 
 
 

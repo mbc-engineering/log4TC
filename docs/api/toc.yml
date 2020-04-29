@@ -1,0 +1,66 @@
+### YamlMime:TableOfContent
+- uid: Log4TcPrototype
+  name: Log4TcPrototype
+  items:
+  - uid: Log4TcPrototype.Program
+    name: Program
+- uid: Mbc.Log4Tc.Dispatcher
+  name: Mbc.Log4Tc.Dispatcher
+  items:
+  - uid: Mbc.Log4Tc.Dispatcher.LogDispatcherExtensions
+    name: LogDispatcherExtensions
+  - uid: Mbc.Log4Tc.Dispatcher.LogDispatcherService
+    name: LogDispatcherService
+- uid: Mbc.Log4Tc.Dispatcher.DispatchExpression
+  name: Mbc.Log4Tc.Dispatcher.DispatchExpression
+  items:
+  - uid: Mbc.Log4Tc.Dispatcher.DispatchExpression.DispatchAllLogsToOutput
+    name: DispatchAllLogsToOutput
+  - uid: Mbc.Log4Tc.Dispatcher.DispatchExpression.IDispatchExpression
+    name: IDispatchExpression
+  - uid: Mbc.Log4Tc.Dispatcher.DispatchExpression.IDispatchExpressionExtensions
+    name: IDispatchExpressionExtensions
+- uid: Mbc.Log4Tc.Model
+  name: Mbc.Log4Tc.Model
+  items:
+  - uid: Mbc.Log4Tc.Model.LogEntry
+    name: LogEntry
+  - uid: Mbc.Log4Tc.Model.LogLevel
+    name: LogLevel
+- uid: Mbc.Log4Tc.Output
+  name: Mbc.Log4Tc.Output
+  items:
+  - uid: Mbc.Log4Tc.Output.IOutputHandler
+    name: IOutputHandler
+- uid: Mbc.Log4Tc.Output.NLog
+  name: Mbc.Log4Tc.Output.NLog
+  items:
+  - uid: Mbc.Log4Tc.Output.NLog.NLogLog4TcOutput
+    name: NLogLog4TcOutput
+  - uid: Mbc.Log4Tc.Output.NLog.NLogLog4TcOutputExtensions
+    name: NLogLog4TcOutputExtensions
+- uid: Mbc.Log4Tc.Output.NLog.Extensions
+  name: Mbc.Log4Tc.Output.NLog.Extensions
+  items:
+  - uid: Mbc.Log4Tc.Output.NLog.Extensions.AllEventPropertiesLayoutRenderer
+    name: AllEventPropertiesLayoutRenderer
+  - uid: Mbc.Log4Tc.Output.NLog.Extensions.Log4JXmlEventLayoutRenderer
+    name: Log4JXmlEventLayoutRenderer
+- uid: Mbc.Log4Tc.Receiver
+  name: Mbc.Log4Tc.Receiver
+  items:
+  - uid: Mbc.Log4Tc.Receiver.AdsLogReceiver
+    name: AdsLogReceiver
+  - uid: Mbc.Log4Tc.Receiver.AdsLogReceiverExtensions
+    name: AdsLogReceiverExtensions
+  - uid: Mbc.Log4Tc.Receiver.AdsLogReceiverService
+    name: AdsLogReceiverService
+  - uid: Mbc.Log4Tc.Receiver.ILogReceiver
+    name: ILogReceiver
+  - uid: Mbc.Log4Tc.Receiver.LogEntryEventArgs
+    name: LogEntryEventArgs
+- uid: Mbc.Log4Tc.Service
+  name: Mbc.Log4Tc.Service
+  items:
+  - uid: Mbc.Log4Tc.Service.Program
+    name: Program

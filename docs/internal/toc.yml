@@ -1,9 +1,4 @@
-﻿- name: Getting Starded
-  href: intro.md
-  items:
-    - name: Quickstart
-      href: getting_started.md
-- name: Log4Tc Problemlösung
+﻿- name: Log4Tc Problemlösung
   href: project_poster.md
   items:
     - name: Beschreibung

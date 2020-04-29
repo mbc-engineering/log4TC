@@ -10,7 +10,9 @@ Damit log4Tc benutzt werden kann, sind folgende Voraussetzungen notwendig:
 * Microsoft .NET Framework 4.7.2 (TODO link)
 * log4TC (min. 0.1.0)
 
-Beim Installieren von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, das diese Konfiguration aktiv ist.
+Beim Installieren von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, das diese Konfiguration aktiv ist. TODO link für Wiederherstellung.
+
+Für diese Einführung wird ausserdem vorrausgesetzt, dass die SPS und der log4TC auf dem *gleichen* Rechner laufen (Testlizenz ist ausreichend). Dies ist keine Einschränkung von log4TC sondern eine Vereinfachung.
 
 ## Übersicht
 
@@ -22,7 +24,7 @@ Die Tour geht Schrittweise vor. Es wird empfohlen beim ersten Kontakt mit log4TC
 4. [Ausgabe von Log-Meldungen mit Argumenten](argument_logging.md)
 5. [Benutzung von Loggern](logger_usage.md)
 6. [Integration von Context-Eigenschaften](context_usage.md)
-7. Log-Meldungen mit Log4View beobachten
+7. [Log-Meldungen mit Log4View beobachten](tools_log4view.md)
 8. Darstellung von strukturierten Logging in Charts
 9. Zentrales Logging mit Graylog
 

@@ -43,9 +43,29 @@ Um das Projekt auszuführen müssen folgende Schritte ausgeführt werden:
 
 ## Anzeige der ausgegebenen Meldungen
 
-TODO
+Log-Meldungen werden mit der ausgelieferten Konfiguration in das Verzeichnis `%ProgramData%\log4tc\log\` abgelegt.
 
-Nächster Schritt: [Ausgabe von Log-Meldungen mit Argumenten](argument_logging.md)
+Tipp: Bei einer standard Windows Installation ist der Ordner `%ProgramData` (entspricht normalerweise den Pfad `C:\ProgramData`) versteckt und kann nicht im Explorer ausgewählt werden. Man kann aber den Text `%programdata%` als Pfad im Explorer eingeben und gelangt dann direkt zum Ordner.
+
+![ProgramData](_assets/programdata.png)
+
+Im Log-Ordner befinden sich zwei Dateien, momentan ist nur die `log4tc.log` zu beachten.
+
+![Log-Ordner](_assets/log_folder.png)
+
+Die Datei `log4tc.log` kann mit einem normalen Texteditor geöffnet werden (siehe auch [Tools](../reference/tools.md)):
+
+![Erste Log-Meldung](_assets/log1.png)
+
+Die Log-Meldung besteht aus mehreren Teilen, die durch ein `|`-Zeichen getrennt sind (Das Format einer Meldung kann über die NLog-Konfiguration fast beliebig geändert werden.).
+
+* 1: Zeitstempel der Meldung (SPS-Zeit) mit 100ns Auflösung (abhängig von Task-Zeit)
+* 2: Log-Level der Meldung, enstpricht den ersten Input-Parameter (`E_LogLevel.eInfo`)
+* 3: Meldungstext
+
+## Nächster Schritt
+
+[Ausgabe von Log-Meldungen mit Argumenten](argument_logging.md)
 
 
 

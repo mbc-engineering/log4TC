@@ -52,7 +52,11 @@ PRG_TaskLog.Call();
 
 Der geänderte SPS-Code kann jetzt mit einem Online-Change aktualisiert werden. Danach kann man im Log-File jede Sekunden den neuen Zählerwert ablesen.
 
-Nächster Schritt: [Benutzung von Loggern](logger_usage.md)
+![Log mit Argumenten](_assets/log2.png)
+
+## Nächster Schritt
+
+[Benutzung von Loggern](logger_usage.md)
 
 
 
