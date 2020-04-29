@@ -5,13 +5,6 @@
     </Fragment>
     <Fragment>
         <ComponentGroup Id="Cmp_Log4TcService">
-            
-            <Component Id="cmpE2E0196D35A8E1F1D374ACBA91CD372B" Directory="DIR_Log4TcService" Guid="*">
-                <File Id="fil9DFB7FB8732E113395428CA0EFF3568F" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\appsettings.json" />
-            </Component>
-            <Component Id="cmpD394F29ECA75EDAD8E1ED587E0F41A1A" Directory="DIR_Log4TcService" Guid="*">
-                <File Id="fil77B731BF09A5C3C48F07EF67A5737540" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\appsettings.Production.json" />
-            </Component>
             <Component Id="cmp10A5890FE3C90EAF67BC43A43A685F8F" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil9C780F4AC02F4E3CC1195D1373D85761" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\InstallService.ps1" />
             </Component>
@@ -125,9 +118,6 @@
             </Component>
             <Component Id="cmp2D46D9F4AC1ED6D8AFE3800460648115" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil9F2FE250E243FC1E1AC0EA551AAA57D2" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Microsoft.Extensions.Primitives.dll" />
-            </Component>
-            <Component Id="cmpDB36248F68AD1C981DEE6D5B53F0E4A2" Directory="DIR_Log4TcService" Guid="*">
-                <File Id="filF9AB3251B68DC677BF02544D18F5D4A6" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\NLog.config" />
             </Component>
             <Component Id="cmp82EED9BB593DDD90E84A4D77A8879DC7" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil262B360EEC457CEC6863014037E6B071" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\NLog.dll" />

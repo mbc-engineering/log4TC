@@ -18,13 +18,12 @@ Task("Clean")
 {
     DotNetCoreClean("Log4Tc.sln", new DotNetCoreCleanSettings()
     {
-        Configuration = configuration,        
+        Configuration = configuration,
     });
-
+    
     Information($"Clean Output Folders of configuration='{configuration}'");
-    var directoriesToClean = GetDirectories($"./**/bin/{configuration}");
-    CleanDirectories(directoriesToClean);
-
+    var directoriesToClean = GetDirectories($"./**/bin/{configuration}/**/publish");
+    DeleteDirectories(directoriesToClean, new DeleteDirectorySettings() { Recursive = true, Force = true });
 });
 
 Task("Build")
@@ -72,7 +71,7 @@ Task("Test")
 });
 
 Task("Publish")
-    //.IsDependentOn("Clean")
+    .IsDependentOn("Clean")
     // .IsDependentOn("Test") // keine Tests vorhanden
     .Does(() =>
 {

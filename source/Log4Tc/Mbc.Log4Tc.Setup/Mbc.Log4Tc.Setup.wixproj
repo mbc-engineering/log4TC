@@ -41,6 +41,7 @@
     <OutputName>Mbc.Log4Tc.Setup(x64)</OutputName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceOutputFiles.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceInstall.wxs" />
     <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLib.wxs" />
     <Compile Include="Fragments\NetFx471.wxs" />
@@ -78,9 +79,9 @@
     <Content Include="Includes\DefinitionsPlatform.wxi" />
     <Content Include="packages.config" />
     <Content Include="Resources\favicon.ico" />
-    <Content Include="Resources\MbcWixBackground.png" />
-    <Content Include="Resources\MbcWixBanner.png" />
     <Content Include="Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" />
+    <Content Include="Resources\mbcBackground.png" />
+    <Content Include="Resources\mbcBanner.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fragments\" />
@@ -101,7 +102,7 @@
   -->
   <Target Name="AfterResolveReferences">
     <!-- Set Build Version from exe assembly version -->
-    <GetAssemblyIdentity AssemblyFiles="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net48\win\Mbc.Log4Tc.Service.exe">
+    <GetAssemblyIdentity AssemblyFiles="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net48\win\publish\Mbc.Log4Tc.Service.exe">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <PropertyGroup>
@@ -110,7 +111,7 @@
       <!-- Define varialbe for using in csproj afterbuild-->
       <BuildVersion>%(AssemblyVersion.Version)</BuildVersion>
     </PropertyGroup>
-    <!-- harvest wxs file from folder of FischerAg.Ui.Cli project -->
+    <!-- harvest wxs file from publish folder of Mbc.Log4Tc.Service project -->
     <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" Directory="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net48\win\publish" Transforms="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcService" DirectoryRefId="DIR_Log4TcService" AutogenerateGuids="true" PreprocessorVariable="var.Mbc.Log4Tc.Service.TargetDir" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
   </Target>
   <Target Name="AfterBuild">

@@ -4,7 +4,7 @@
   <Fragment>
     <DirectoryRef Id="DIR_Twincat_31_Components_Plc_ManagedLibraries">
       <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc" Name="!(bind.property.Manufacturer)" >
-        <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc_Log4Tc" Name="Log4TC" >
+        <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc_Log4Tc" Name="log4TC" >
           <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries_Mbc_Log4Tc_Current" Name="0.0.2" />
         </Directory>
       </Directory>

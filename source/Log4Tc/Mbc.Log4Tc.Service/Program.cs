@@ -2,8 +2,10 @@
 using Mbc.Log4Tc.Dispatcher.DispatchExpression;
 using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Receiver;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -22,6 +24,11 @@ namespace Mbc.Log4Tc.Service
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             var hostBuilder = Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(configure =>
+                {
+                    // The place to find the appsettings.json
+                    configure.SetBasePath(GetAppsettingsBasePath());
+                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     // ToDo: Add from configuration from appsettings
@@ -51,6 +58,18 @@ namespace Mbc.Log4Tc.Service
             }
 
             return hostBuilder;
+        }
+
+        private static string GetAppsettingsBasePath()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return Path.Combine(Environment.ExpandEnvironmentVariables("%programdata%"), "log4TC", "config");
+            }
+            else
+            {
+                throw new PlatformNotSupportedException("Service still in windows system supported.");
+            }
         }
     }
 }
