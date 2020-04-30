@@ -23,6 +23,211 @@
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
     <Description>A library for logging in PLC code.</Description>
+    <LibraryCategories>
+      <LibraryCategory xmlns="">
+        <Id>{74d110c6-7213-4765-be2b-3ff0f1e344fb}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>BuildingAutomation</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{f85b699a-03a4-49e3-9943-d193548feecb}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>Communication</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{348d807f-e1d6-47d4-ad2a-dc8d5fd59f05}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{f85b699a-03a4-49e3-9943-d193548feecb}</Id>
+        </ParentCategory>
+        <DefaultName>IEC60870</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{ae647248-ff09-4c38-932e-10ab7e9eb9ea}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{f85b699a-03a4-49e3-9943-d193548feecb}</Id>
+        </ParentCategory>
+        <DefaultName>IEC61850</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{54e90195-1c5a-4ae5-80f5-579d92dd9aa8}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{f85b699a-03a4-49e3-9943-d193548feecb}</Id>
+        </ParentCategory>
+        <DefaultName>Serial</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{23b71de8-3c4d-47a7-8969-e84f015c9e5d}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{f85b699a-03a4-49e3-9943-d193548feecb}</Id>
+        </ParentCategory>
+        <DefaultName>TcpIp</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{e800ea8a-cc01-4f20-bd63-4e34f39b75da}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{f85b699a-03a4-49e3-9943-d193548feecb}</Id>
+        </ParentCategory>
+        <DefaultName>Modbus</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{fafce590-c801-4d05-974c-d391e08bd390}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>Controller</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{313ea83d-0856-4423-8239-36856a823d0a}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>DataAccess</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{0c2d2cc2-1178-495d-a2c5-dd48e484d8c0}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>IO</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{425113a0-360b-49bc-b3be-a0c2f5666343}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{0c2d2cc2-1178-495d-a2c5-dd48e484d8c0}</Id>
+        </ParentCategory>
+        <DefaultName>Drive</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{fbd49470-7a3e-4d8c-bec7-8a262b18d231}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>Math</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>Motion</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{ed65ed00-ff03-42ce-9a93-7e375f85ad34}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>PTP</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{e51270e5-11f0-4f5a-961b-9a4c48fe1dc0}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>Camming</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{592129c5-c82e-42b0-b712-006f68958ecb}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>FlyingSaw</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{2a41f279-94f2-4e37-a241-97286347c638}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>Drive</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{186d654a-b252-4ca2-9854-7e23939f7967}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>NCI</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{a1b11c77-e75e-471f-9e45-11fc4eef760b}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>CNC</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{35857722-d45d-45b1-a229-0a409661ea78}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>Hydraulics</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{dc2f4ff8-2ce2-4f1f-bce2-d5b9c174a46a}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>Packaging</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{42e61ec8-3941-4853-92b4-9d204cebc40e}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{90603686-1a10-42a3-90e5-27c0c69154f7}</Id>
+        </ParentCategory>
+        <DefaultName>XFC</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{d77c10e0-9dc6-46ed-bea1-c259418a1863}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>System</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{ba75baba-ddc3-4479-b5b3-3c8059bcba99}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{d77c10e0-9dc6-46ed-bea1-c259418a1863}</Id>
+        </ParentCategory>
+        <DefaultName>CX-Series</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{7c091802-871e-4487-8dcb-28c32dcb0a30}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{d77c10e0-9dc6-46ed-bea1-c259418a1863}</Id>
+        </ParentCategory>
+        <DefaultName>IPC-Series</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{cb610b82-b544-44a3-8551-c878e5389b18}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{d77c10e0-9dc6-46ed-bea1-c259418a1863}</Id>
+        </ParentCategory>
+        <DefaultName>Visu</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{22803ce1-8755-4889-b7b0-5920397c55f8}</Id>
+        <Version>1.0.0.0</Version>
+        <ParentCategory>
+          <Id>{d77c10e0-9dc6-46ed-bea1-c259418a1863}</Id>
+        </ParentCategory>
+        <DefaultName>Obsolete</DefaultName>
+      </LibraryCategory>
+      <LibraryCategory xmlns="">
+        <Id>{196fe72f-48df-4527-8662-d9036e12ac55}</Id>
+        <Version>1.0.0.0</Version>
+        <DefaultName>TwinSAFE</DefaultName>
+      </LibraryCategory>
+    </LibraryCategories>
+    <SelectedLibraryCategories>
+      <Id xmlns="">{d77c10e0-9dc6-46ed-bea1-c259418a1863}</Id>
+    </SelectedLibraryCategories>
+    <DefaultNamespace>log4tc</DefaultNamespace>
+    <Placeholder>log4TC</Placeholder>
+    <CompilerVersion>3.1.4022.0</CompilerVersion>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="API" />
@@ -37,6 +242,7 @@
     <Folder Include="Test" />
     <Folder Include="POUs" />
     <Folder Include="POUs\Utils" />
+    <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Context\FB_ScopedContext.TcPOU">
@@ -53,6 +259,7 @@
     </Compile>
     <Compile Include="API\Full\FB_Logger.TcPOU">
       <SubType>Code</SubType>
+      <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
     <Compile Include="API\PRG_TaskLog.TcPOU">
       <SubType>Code</SubType>
@@ -257,6 +464,9 @@
       <SubType>Code</SubType>
       <CompilerDefines>DEBUG</CompilerDefines>
     </Compile>
+    <Compile Include="Version\Global_Version.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -313,6 +523,17 @@
           <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+        <v>{535658C0-5AF5-460d-99A4-BFFB984A829A}</v>
+        <o>
+          <v n="Name">"{535658C0-5AF5-460d-99A4-BFFB984A829A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="ExactVersionConstraintToSave">
+            <v>VersionConstraint</v>
+            <o>
+              <v n="TheVersion">"3.1.4022.0"</v>
+            </o>
+          </d>
+        </o>
         <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
         <o>
           <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
@@ -423,6 +644,7 @@
         </Data>
         <TypeList>
           <Type n="Boolean">System.Boolean</Type>
+          <Type n="ExactVersionConstraintToSave">{f9079115-a4ba-4f30-bf7c-9e76613146fc}</Type>
           <Type n="Hashtable">System.Collections.Hashtable</Type>
           <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
           <Type n="String">System.String</Type>
