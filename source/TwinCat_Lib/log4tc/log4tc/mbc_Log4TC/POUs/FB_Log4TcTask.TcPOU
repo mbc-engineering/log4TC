@@ -63,6 +63,19 @@ END_VAR]]></Declaration>
 	RETURN;
 END_IF
 
+IF NOT PRG_Licencse.IsLicensed THEN
+	F_InternalLog(
+		E_LogLevel.eError,
+		'Log4TcTask.AddLog',
+		'log4TC license missing or expired.',
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+	RETURN;	
+END_IF
+
 fbRingBuffer.A_AddTail(
 	pBuffer 	:= ADR(aBuffer),
 	cbBuffer 	:= SIZEOF(aBuffer),

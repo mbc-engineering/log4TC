@@ -239,6 +239,7 @@
     <Folder Include="GVLs" />
     <Folder Include="ITFs" />
     <Folder Include="DUTs" />
+    <Folder Include="POUs\Licensing" />
     <Folder Include="Test" />
     <Folder Include="POUs" />
     <Folder Include="POUs\Utils" />
@@ -439,6 +440,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\F_LogTArg.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Licensing\PRG_Licencse.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\PRG_ScopedContextStack.TcPOU">
