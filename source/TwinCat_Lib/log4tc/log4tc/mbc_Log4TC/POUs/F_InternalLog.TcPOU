@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="F_InternalLog" Id="{8a461a6a-6d1a-4114-9343-a1b060b1c536}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION F_InternalLog : BOOL
+    <Declaration><![CDATA[{attribute 'conditionalshow'}
+FUNCTION INTERNAL F_InternalLog : BOOL
 VAR_INPUT
 	eLogLevel 			: E_LogLevel;
 	sContext			: Tc2_System.T_MaxString;
@@ -88,24 +89,5 @@ ADSLOGSTR(nMask, sOutputStr, '');
 
 ]]></ST>
     </Implementation>
-    <LineIds Name="F_InternalLog">
-      <LineId Id="25" Count="2" />
-      <LineId Id="116" Count="0" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="28" Count="3" />
-      <LineId Id="96" Count="1" />
-      <LineId Id="32" Count="1" />
-      <LineId Id="117" Count="0" />
-      <LineId Id="34" Count="1" />
-      <LineId Id="118" Count="0" />
-      <LineId Id="36" Count="1" />
-      <LineId Id="119" Count="0" />
-      <LineId Id="38" Count="1" />
-      <LineId Id="120" Count="0" />
-      <LineId Id="40" Count="28" />
-      <LineId Id="80" Count="7" />
-      <LineId Id="90" Count="5" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

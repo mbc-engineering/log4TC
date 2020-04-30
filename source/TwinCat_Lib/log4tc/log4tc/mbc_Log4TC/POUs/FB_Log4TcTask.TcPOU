@@ -5,6 +5,7 @@
 Main code of Log4TC which manages log messages of a single task.
 *)
 {attribute 'no_explicit_call' := 'no direct call necessary'}
+{attribute 'conditionalshow'}
 FUNCTION_BLOCK INTERNAL FB_Log4TcTask
 VAR CONSTANT
 	nAdsPort			: UINT := 16150; 
@@ -279,104 +280,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <LineIds Name="FB_Log4TcTask._InitAndCheckTask">
-      <LineId Id="29" Count="1" />
-      <LineId Id="6" Count="13" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.AddLog">
-      <LineId Id="81" Count="1" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="11" Count="1" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="37" Count="7" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="92" Count="0" />
-      <LineId Id="94" Count="5" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="50" Count="7" />
-      <LineId Id="49" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="18" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.Call">
-      <LineId Id="107" Count="0" />
-      <LineId Id="202" Count="1" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="20" Count="1" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="36" Count="1" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="42" Count="1" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="46" Count="0" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="47" Count="2" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="51" Count="4" />
-      <LineId Id="162" Count="0" />
-      <LineId Id="165" Count="6" />
-      <LineId Id="164" Count="0" />
-      <LineId Id="163" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="62" Count="1" />
-      <LineId Id="201" Count="0" />
-      <LineId Id="65" Count="3" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="56" Count="1" />
-      <LineId Id="69" Count="4" />
-      <LineId Id="118" Count="5" />
-      <LineId Id="125" Count="2" />
-      <LineId Id="223" Count="0" />
-      <LineId Id="222" Count="0" />
-      <LineId Id="172" Count="0" />
-      <LineId Id="174" Count="7" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="86" Count="1" />
-      <LineId Id="74" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.FB_init">
-      <LineId Id="7" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="8" Count="1" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="10" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.Init">
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.TaskContext.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

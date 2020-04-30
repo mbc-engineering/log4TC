@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_ContextBuilder_Test" Id="{503b98b2-d59e-4322-ac81-c79c92d0993a}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_ContextBuilder_Test EXTENDS TcUnit.FB_TestSuite
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_ContextBuilder_Test EXTENDS TcUnit.FB_TestSuite
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[AddInt_ShouldAddInt();
@@ -202,126 +202,5 @@ TcUnit.TEST_FINISHED();
 ]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_ContextBuilder_Test">
-      <LineId Id="9" Count="2" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="12" Count="1" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="16" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ContextBuilder_Test.AddInt_ShouldAddInt">
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="3" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ContextBuilder_Test.AddInt_WithSameName_ShouldReplace">
-      <LineId Id="5" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="29" Count="3" />
-      <LineId Id="25" Count="1" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ContextBuilder_Test.AddString_ShouldAddString">
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="3" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ContextBuilder_Test.AddString_WithSameName_ShouldReAdd">
-      <LineId Id="5" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="26" Count="1" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="28" Count="1" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ContextBuilder_Test.AddString_WithSameName_ShouldReplace">
-      <LineId Id="5" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="26" Count="1" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="28" Count="1" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ContextBuilder_Test.RemoveInt_ShouldRemove">
-      <LineId Id="5" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="32" Count="1" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ContextBuilder_Test.RemoveString_ShouldRemove">
-      <LineId Id="5" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="1" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="12" Count="1" />
-      <LineId Id="29" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

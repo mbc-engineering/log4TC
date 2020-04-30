@@ -133,17 +133,5 @@ END_VAR
         </TypeList>
       </XmlArchive>
     </ObjectProperties>
-    <LineIds Name="FB_Logger">
-      <LineId Id="3" Count="57" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Logger.FB_init">
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Logger.LoggerContext.Get">
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

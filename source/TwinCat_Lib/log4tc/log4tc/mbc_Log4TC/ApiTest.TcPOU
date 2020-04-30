@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="ApiTest" Id="{d28d37df-7237-480f-92a3-f93252c88566}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM ApiTest
+    <Declaration><![CDATA[PROGRAM INTERNAL ApiTest
 VAR
-	fbLogger		: FB_Logger('mbc4Log.Test');
 	nInt			: INT;
 	sStr			: STRING;
 	fFloat			: REAL;
@@ -51,42 +50,7 @@ F_LogBuilder(E_LogLevel.eError, 'Log Message Arg={structuredArg} Arg={1} Arg=%s'
 	.WithLogger('mbc4Log.Test')
 	.WithContextInt('id', 42)
 	.CreateLog();
-
-fbLogger(
-	eLogLevel 		:= E_LogLevel.eInfo, 
-	sMessage 		:='Log Message Arg={structuredArg} Arg={1} Arg=%s', 
-	stArg1 			:= F_StringEx('Arg 1'),
-	stArg2 			:= F_StringEx('Arg 2'),
-	stArg3 			:= F_StringEx('Arg 3'),
-	iContextBuilder	:= F_LogContext().AddInt('id', 42)
-);
-	
 ]]></ST>
     </Implementation>
-    <LineIds Name="ApiTest">
-      <LineId Id="5" Count="0" />
-      <LineId Id="63" Count="5" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="6" Count="1" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="8" Count="4" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="49" Count="5" />
-      <LineId Id="15" Count="3" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="19" Count="4" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="26" Count="4" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="36" Count="3" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

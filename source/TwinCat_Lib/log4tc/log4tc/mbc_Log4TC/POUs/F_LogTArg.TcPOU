@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="F_LogTArg" Id="{96de29ad-8a00-41d2-a81d-71abb6e3e0e5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION F_LogTArg
+    <Declaration><![CDATA[{attribute 'conditionalshow'}
+FUNCTION INTERNAL F_LogTArg
 VAR_INPUT
 	eLogLevel		: E_LogLevel;
 	sLogger			: Tc2_Utilities.T_MaxString;
@@ -100,36 +101,5 @@ IF fbLogEntry.End() THEN
 	PRG_TaskLog.TaskLogger.AddLog(pBuffer, nBufferCount);
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="F_LogTArg">
-      <LineId Id="31" Count="6" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="38" Count="1" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="57" Count="2" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="60" Count="2" />
-      <LineId Id="86" Count="0" />
-      <LineId Id="63" Count="2" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="66" Count="2" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="69" Count="2" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="72" Count="2" />
-      <LineId Id="90" Count="0" />
-      <LineId Id="75" Count="2" />
-      <LineId Id="91" Count="0" />
-      <LineId Id="78" Count="2" />
-      <LineId Id="92" Count="0" />
-      <LineId Id="81" Count="2" />
-      <LineId Id="116" Count="3" />
-      <LineId Id="127" Count="5" />
-      <LineId Id="126" Count="0" />
-      <LineId Id="120" Count="2" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="42" Count="7" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

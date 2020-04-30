@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="PRG_ScopedContextStack" Id="{c32a6184-a03b-4217-9b7b-06a1b2e77d20}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM INTERNAL PRG_ScopedContextStack
+    <Declaration><![CDATA[{attribute 'conditionalshow'}
+PROGRAM INTERNAL PRG_ScopedContextStack
 VAR
 	aContextStack		: ARRAY[1..SIZEOF(TwinCAT_SystemInfoVarList._TaskInfo)/SIZEOF(PlcTaskSystemInfo)] OF ST_ScopedContextStack;
 END_VAR]]></Declaration>
@@ -22,12 +23,5 @@ TaskContextStack REF= aContextStack[nTaskIdx];
         </Implementation>
       </Get>
     </Property>
-    <LineIds Name="PRG_ScopedContextStack">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="PRG_ScopedContextStack.TaskContextStack.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="6" Count="1" />
-    </LineIds>
   </POU>
 </TcPlcObject>

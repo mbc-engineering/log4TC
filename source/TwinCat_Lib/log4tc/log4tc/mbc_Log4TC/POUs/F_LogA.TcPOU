@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="F_LogA" Id="{8ac1e49b-4f8b-43a6-ae63-dd568afe353d}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION INTERNAL F_LogA 
+    <Declaration><![CDATA[{attribute 'conditionalshow'}
+FUNCTION INTERNAL F_LogA 
 VAR_INPUT
 	eLogLevel		: E_LogLevel;
 	sLogger			: T_MaxString;
@@ -93,23 +94,5 @@ IF fbLogEntry.End() THEN
 END_IF
 ]]></ST>
     </Implementation>
-    <LineIds Name="F_LogA">
-      <LineId Id="28" Count="6" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="35" Count="1" />
-      <LineId Id="49" Count="1" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="64" Count="24" />
-      <LineId Id="142" Count="3" />
-      <LineId Id="150" Count="0" />
-      <LineId Id="147" Count="0" />
-      <LineId Id="151" Count="0" />
-      <LineId Id="154" Count="1" />
-      <LineId Id="152" Count="1" />
-      <LineId Id="115" Count="2" />
-      <LineId Id="113" Count="0" />
-      <LineId Id="39" Count="8" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>
