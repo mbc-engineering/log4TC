@@ -1,5 +1,5 @@
-<?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4023.119">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4022.16" TcVersionFixed="true">
 	<Project ProjectGUID="{42EFEFD1-2124-4746-BAF5-A34787C370C8}" Target64Bit="true" ShowHideConfigurations="#x3c7">
 		<System>
 			<Tasks>
@@ -15,7 +15,6 @@
 			</Tasks>
 		</System>
 		<Plc>
-			<Project File="LoggingExample.xti"/>
 			<Project File="A_SimpleLogMessage.xti"/>
 			<Project File="B_LogMessageWithArg.xti"/>
 			<Project File="C_LogWithLogger.xti"/>
