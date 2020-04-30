@@ -1,8 +1,8 @@
  # Log-Meldungen mit Log4View beobachten
 
- Für die Ausgabe, Speicherung und Weiterverarbeitung existieren eine fast endlose Anzahl an Werkzeugen, Datenbank, usw.
+ Für die Ausgabe, Speicherung und Weiterverarbeitung existieren eine fast endlose Anzahl an Werkzeugen. Ein grosser Vorteil von log4TC ist, dass es sich in etablierte bestehende Systeme integriert.
 
- Ein einfach zu integrierendes Werkzeug für die Analyse und Anzeige von Log-Meldungen ist das Produkt [*Log4View*](https://www.log4view.com/) von PROSA. Die Anwendung kann mit reduzierten Funktionsumfang kostenlos benutzt werden.
+ Ein Werkzeug für die Analyse und Anzeige von Log-Meldungen ist das Produkt [*Log4View*](https://www.log4view.com/) von PROSA. Die Anwendung kann mit reduzierten Funktionsumfang kostenlos benutzt werden.
 
  ## Installation von Log4View
 
@@ -10,9 +10,7 @@
 
  ## Konfiguration der Log-Ausgabe in NLog
 
- Log4View kann verschiedene Eingabeformate verarbeiten, aber das Log4J-XML hat sich bisher als sehr geeignet herausgestellt. Die NLog-Konfiguration in der log4TC Auslierferung enthält bereits alles notwendige, damit solche Dateien geschrieben werden. Sie befinden sich im gleichen Ordner `%ProgramData%\log4TC\log\` wie die bisher benutzte `log4tc.log`.
- 
- Die Log-Datei für Log4View hat den Namen `log4tc.xml`. Der Inhalt ist XML, kann als prinzipiell in einem Texteditor geöffnet werden, ist aber schwieriger zu lesen.
+ Log4View kann verschiedene Eingabeformate verarbeiten, aber das Log4J-XML hat sich bisher als sehr geeignet herausgestellt. Die NLog-Konfiguration in der log4TC Auslierferung enthält bereits alles notwendige, damit solche Dateien geschrieben werden. Die neue Ausgabe ist im XML-Format und befindet sich im gleichen Ordner wie die bisher benutzte Log-Datei. Sie hat den Namen `log4tc.xml`. Der Inhalt ist XML, kann also prinzipiell in einem Texteditor geöffnet werden, ist aber schwieriger zu lesen.
 
  ## Öffnen der `log4tc.xml` in LogView
 
@@ -24,7 +22,7 @@ Jetzt muss noch das Format der Datei eingestellt werden. Die Einstellungen sollt
 
 ![Optionen Log4View](_assets/log4view_options.png)
 
-Nach dem Bestätigen mit *OK* wird die Datei geladen und im Fenster angezeigt. Man findet hier alle Informationen, die auch im Log-File waren, aber in strukturierter Form. So kann man z.B. zu einem Zeitstempel springen, Logger ausblenden, Nur bestimmte Level anzeigen, usw.
+Nach dem Bestätigen mit *OK* wird die Datei geladen und im Fenster angezeigt. Man findet hier alle Informationen, die auch im Log-File waren, aber in strukturierter Form. So kann man z.B. zu einem Zeitstempel springen, Logger ausblenden, nur bestimmte Level anzeigen, usw. Der Nutzen erschliesst sich bei Log-Dateien mit mehreren tausend Meldungen sehr schnell.
 
 ![Log4View](_assets/log4view.png)
 

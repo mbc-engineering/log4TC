@@ -1,21 +1,15 @@
 # TwinCAT Projekt anlegen
 
+Um den Beispielen zu folgen wird ein neues TwinCAT Project mit einem SPS Projekt benötigt. Das Projekt muss für das Beispiel auf den gleichen Rechner aktiviert werden, auf dem auch log4TC installiert ist. Eine lokale Testlizenz ist ausreichend.
+
 ## Solution (TwinCAT Project) anlegen
 
-1. Visual Studio öffnen
-1. File -> New --> Project (oder New TwinCAT Project... in der Start Page anwählen)
-1. Sicherstellen das die Vorlage "TwinCAT XAE Project (XML format)" ausgewählt ist
-1. *Name* eingeben und eine *Location* auswählen, danach Projekt anlegen
+1. Neues leeres TwinCAT XAE Projekt anlegen
+1. Neues "Standard PLC Project" anlegen
 
-## TwinCAT PLC Projekt anlegen
+Es müssen keine speziellen Einstellungen vorgenommen werden.
 
-1. Im *Solution Explorer* rechtsklick auf *PLC*
-1. Dann "Add New Item..." anwählen
-1. "Standard PLC Project" auswählen, *Name* eingeben und anlegen
-
-## Übersicht
-
-Das TwinCAT sollte folgendermassen aussehen:
+Die Visual Studio Solution sollte wie folgt aussehen:
 
 ![Solution](_assets/solution.png)
 

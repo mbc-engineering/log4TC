@@ -28,11 +28,25 @@ Sowohl für positions als auch für benannte Argumente können noch weiter Optio
 
 Der grundlegende Aufbau ist wie folgt:
 
-> `{Index[,Ausrichtung][:Format]}
+    `{Index[,Ausrichtung][:Format]}
 bzw.
-> `{Name[,Ausrichtung][:Format]}
+
+    `{Name[,Ausrichtung][:Format]}
+
+*Index* oder *Name* ist entweder die Argument-Nr (0-basiert) oder der Argument Name. Beispiel: `Von {0} bis {1}`; `Von {startTime} bis {endTime}`.
 
 Die Option *Ausrichtung* ist eine Ganzzahl mit Vorzeichen, welche die bevorzugte Grösse in Zeichen für die Ausgabe angibt. Positive Werte führen zu einer rechtsbündigen Ausrichtung, negative Werte zu einer linksbündigen. Beispiel:
 
-> `({0,5})' {0}=42 => '(   42)'`
-> `({0,-5})' {0}=42 => '(42   )'`
+* `'({0,5})'  {0}=42 => '(   42)'`
+* `'({0,-5})' {0}=42 => '(42   )'`
+
+Die Option *Format* bestimmt wie der Typ des Arguments formattiert wird.
+
+Beispiel für Zahlen:
+
+* Decimal:     `({0D4})' {0}=42   => '(0042)'`     Nur für Ganzzahltypen. Parameter: Minium Anzahl Ziffern.
+* Exponential: `({0E2})' {0}=42   => '(4.20E+1)'`  Parameter: Anzahl Nachkommastellen
+* Fixed-point: `({0F2})' {0}=42   => '(42.00)'`    Parameter: Anzahl Nachkommastellen
+* Number:      `({0N2})' {0}=4200 => '(4'200.00)'` Gruppentrenner ist Sprachabhängig. Parameter: Anzahl * achkommstellen
+* Percent:     `({0P1})' {0}=0.42 => '(42.0 %)'`   Parameter: Anzahl Nachkommstellen
+* Hexadecimal: `({0X4})' {0}=42   => '(002A)'`     Nur für Ganzzahltypen.
