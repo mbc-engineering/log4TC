@@ -2,7 +2,7 @@
 
 ## Aufruf des Loggers im MAIN
 
-Die in der SPS erzeugten Log-Meldungen werden nicht sofort beim Aufruf eines Log-Bausteins übertragen sondern werden zunächst in einen Task-spezifischen Puffer gespeichert. Damit diese Meldungen dann an den log4Tc-Service übertragen werden, muss in **jeder** Task das log4Tc aufgerufen werden.
+Die in der SPS erzeugten Log-Meldungen werden nicht sofort beim Aufruf eines Log-Bausteins übertragen, sondern werden zunächst in einen Task-spezifischen Puffer gespeichert. Damit diese Meldungen dann an den log4Tc-Service übertragen werden, muss in **jeder** Task das log4Tc aufgerufen werden.
 
 Der Aufruf passiert mit folgenden Code, wir empfehlen diese Anweisung an das Ende jedes Bausteins anzufügen, dass von einer Task referenziert wird, in unseren Fall also im MAIN-Baustein.:
 
@@ -53,7 +53,7 @@ Das Projekt kann es aktiviert, geladen und ausgeführt werden.
 
 Log-Meldungen werden mit der ausgelieferten Konfiguration in das Verzeichnis `%ProgramData%\log4tc\log\` abgelegt.
 
-> *Tipp*: In Windows ist der Ordner `%ProgramData%` (entspricht normalerweise den Pfad `C:\ProgramData`) versteckt und wird nicht im Explorer. Man kann aber den Text `%programdata%` als Pfad im Explorer eingeben und gelangt dann direkt zum Ordner. Alternativ können auch die Links verwendent werden, die mit der Installation von log4TC im Startmenü angelegt werden.
+> *Tipp*: In Windows ist der Ordner `%ProgramData%` (entspricht normalerweise den Pfad `C:\ProgramData`) versteckt und wird nicht im Explorer. Man kann aber den Text `%programdata%` als Pfad im Explorer eingeben und gelangt dann direkt zum Ordner. Alternativ können auch die Links verwendet werden, die mit der Installation von log4TC im Startmenü angelegt werden.
 
 ![ProgramData](_assets/programdata.png)
 
@@ -68,7 +68,7 @@ Die Datei `log4tc.log` kann mit einem normalen Texteditor geöffnet werden (sieh
 Die Log-Meldung besteht aus mehreren Teilen, die durch ein `|`-Zeichen getrennt sind (Das Format einer Meldung kann über die NLog-Konfiguration fast beliebig geändert werden.).
 
 1. Zeitstempel der Meldung (SPS-Zeit) mit 100ns Auflösung (abhängig von Task-Zeit)
-2. Log-Level der Meldung, enstpricht den ersten Input-Parameter (`E_LogLevel.eInfo`)
+2. Log-Level der Meldung, entspricht den ersten Input-Parameter (`E_LogLevel.eInfo`)
 3. Meldungstext
 
 Die Erklärung der beiden übrigen Felder (`_GLOBAL` und `[]`) erfolgen später.

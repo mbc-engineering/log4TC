@@ -6,7 +6,7 @@ Log4TC stellt Funktionen für 0 bis 10 Argumente zur Verfügung.
 
 ## Ausgabe von Argumenten mit ANY-Typ
 
-Argumente werden mit dem ST-Datentype `ANY` übergeben werden. Einzige Voraussetzung dafür ist, dass der Wert als Variable vorliegt. Es können daher keine Literale (z.B. `42`) und keine Ausdrücke (z.B. `nVar * 10`) verwendet werden. Dies ist eine Einschränkung des `ANY`-Typs.
+Argumente werden mit dem ST-Datentyp `ANY` übergeben werden. Einzige Voraussetzung dafür ist, dass der Wert als Variable vorliegt. Es können daher keine Literale (z.B. `42`) und keine Ausdrücke (z.B. `nVar * 10`) verwendet werden. Dies ist eine Einschränkung des `ANY`-Typs.
 
 Im Beispiel wird ein Zähler erzeugt, der jede Sekunde um eins hochzählt:
 
@@ -23,7 +23,7 @@ IF fbCountTime.Q THEN
 END_IF
 ```
 
-Als nächstes wird bei jeder Änderung des Zählers eine Meldung in das Log-File geschrieben. Dazu wird der Logger im `IF/THEN` eingefügt und der aktuellen Zählerwert übergeben:
+Als Nächstes wird bei jeder Änderung des Zählers eine Meldung in das Log-File geschrieben. Dazu wird der Logger im `IF/THEN` eingefügt und der aktuellen Zählerwert übergeben:
 
 ```
 F_LogA1(E_LogLevel.eDebug, 'Zähler geändert, neuer Wert {0}', nCounter);
@@ -60,7 +60,7 @@ Der Code befindet sich im Beispielprojekt unter den Namen "B_LogMessageWithArg".
 
 ## Aktualisieren des SPS-Codes und beobachten der Log-Meldung
 
-Der geänderte SPS-Code kann jetzt mit einem Online-Change aktualisiert werden. Danach kann man im Log-File jede Sekunden den neuen Zählerwert ablesen.
+Der geänderte SPS-Code kann jetzt mit einem Online-Change aktualisiert werden. Danach kann man im Log-File jede Sekunde den neuen Zählerwert ablesen.
 
 ![Log mit Argumenten](_assets/log2.png)
 

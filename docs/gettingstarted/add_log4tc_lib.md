@@ -6,7 +6,7 @@ Die log4TC-Library wird mit der Installation als SPS-Library registriert und mus
 
 1. Doppelklick auf Order *References* im SPS-Projekt -> *Library Manager* wird geöffnet
 1. "Add library" anwählen
-1. Im Dialog den Suchtext "log4tc" eingeben; In der Liste sollte die Library "Log4TC" erscheinen
+1. Im Dialog den Suchtext "log4tc" eingeben; in der Liste sollte die Library "Log4TC" erscheinen
 1. Doppelklick auf "Log4TC"
 
 Die Referenzen sollte wie folgt aussehen (Versionnummer kann variieren):

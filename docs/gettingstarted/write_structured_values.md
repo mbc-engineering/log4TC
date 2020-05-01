@@ -1,10 +1,10 @@
 # Protokollierung von strukturierten Werte
 
-log4TC unterstützt das Prinzip von strukturierten Logging (Siehe auch [Message Templates](https://messagetemplates.org/)). Kern des Konzept ist es alle Logging-Daten nicht als String zu übertragen, sondern alle Einzelteile in ihrer Ursprungsform zu übertragen und erste am Ende zusammenzusetzten. Der Vorteil ist, dass man während der Verarbeitung der Log-Meldung mehr Möglichkeiten hat. Ein Beispiel wird nachfolgend Beschrieben, bei dem es darum geht, Temperaturen über log4TC in ein CSV-File zu schreiben.
+log4TC unterstützt das Prinzip von strukturierten Logging (Siehe auch [Message Templates](https://messagetemplates.org/)). Kern des Konzepts ist es alle Logging-Daten nicht als String zu übertragen, sondern alle Einzelteile in ihrer Ursprungsform zu übertragen und erste am Ende zusammenzusetzen. Der Vorteil ist, dass man während der Verarbeitung der Log-Meldung mehr Möglichkeiten hat. Ein Beispiel wird nachfolgend Beschrieben, bei dem es darum geht, Temperaturen über log4TC in ein CSV-File zu schreiben.
 
 ## Aufruf der Meldung mit strukturierter API
 
-Im Beispiel steht in der Variable `fTemp` eine Temperatur, z.B. eines Schaltschranks. Der nachfolgende Code prüft ob sich die Temperatur geändert hat und schreibt diese dann in das Log-File:
+Im Beispiel steht in der Variable `fTemp` eine Temperatur, z.B. eines Schaltschranks. Der nachfolgende Code prüft, ob sich die Temperatur geändert hat und schreibt diese dann in das Log-File:
 
 ```
 IF fTemp <> fPrevTemp THEN
@@ -95,7 +95,7 @@ Zunächst muss ein sog. `target` eingerichtet werden. Ein `target` ist die Konfi
 
 Im Beispiel wird eine Ausgabe in eine Datei (`xsi:type="File"`) konfiguriert, die ein CSV-Layout (`xsi:type="CsvLayout"`) benutzt. Danach werden zwei Spalten konfiguriert, eine für den Zeitstempel und eine für die Temperatur. Da die Temperatur als strukturiertes Element übergeben wird, kann direkt darauf mit `${event-properties:item=temperature}` zugegriffen werden.
 
-Als nächstes dürfen an dieses `target` nur Log-Meldungen weitergeleitet werden, die auch relevant für das CSV sind. Ein Möglichkeit wäre zu prüfen, ob eine Meldung das `temperature` Argument besitzt oder nicht. Um einen anderen Weg zu zeigen wird im Beispiel aber eine Context-Eigenschaft geprüft:
+Als Nächstes dürfen an dieses `target` nur Log-Meldungen weitergeleitet werden, die auch relevant für das CSV sind. Eine Möglichkeit wäre zu prüfen, ob eine Meldung das `temperature` Argument besitzt oder nicht. Um einen anderen Weg zu zeigen, wird im Beispiel aber eine Context-Eigenschaft geprüft:
 
 ```
 <logger name="*" minlevel="Info" writeTo="csvLogFile">
@@ -106,14 +106,14 @@ Als nächstes dürfen an dieses `target` nur Log-Meldungen weitergeleitet werden
 ```
 
 1. Zunäscht werden alle Log-Meldungen Selektiert, die min. den Level "Info" haben (`minlevel="Info"`).
-1. Für diese Meldungen wird geprüft ob eine Context-Eigenschaft mit dem Namen `csv` vorhanden ist und wenn ja wird der Rückgabe-Wert ausgewertet (`condition="${event-properties:item=csv})"`). Ist dieser `true` dann wird die Meldung an die CSV-Ausgabe weitergeleitet (`action="Log` in Verbindung mit `writeTo="csvLogFile"`).
+1. Für diese Meldungen wird geprüft, ob eine Context-Eigenschaft mit dem Namen `csv` vorhanden ist und wenn ja wird der Rückgabe-Wert ausgewertet (`condition="${event-properties:item=csv})"`). Ist dieser `true` dann wird die Meldung an die CSV-Ausgabe weitergeleitet (`action="Log` in Verbindung mit `writeTo="csvLogFile"`).
 1. Trifft die Bedingung nicht zu, dann wird sie für diesen `Target` ignoriert (`defaultAction="Ignore"`).
 
 > *Tip:* Das Ausgabe-Plugin *NLog* von log4TC ist eines der wichtigsten Ausgaben, da es seinerseits wiederum mit einer grossen Anzahl an *Targets* konfiguriert werden kann ([NLog Targets](https://nlog-project.org/config/?tab=targets)). Es lohnt sich daher sich mit der Konfiguration von NLog vertraut zu machen.
 
 ## CSV-Ausgabe
 
-Lädt man das Programm und ändert man die Temperatur in der Variable `fTemp` einige Mal von Hand, wird eine neue Log-Datei im CSV-Format angelegt mit folgenden Inhalt:
+Lädt man das Programm und ändert man die Temperatur in der Variable `fTemp` einige Male von Hand, wird eine neue Log-Datei im CSV-Format angelegt mit folgenden Inhalt:
 
 ![CSV-Output](_assets/log5.png)
 

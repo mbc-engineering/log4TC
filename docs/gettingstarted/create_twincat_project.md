@@ -1,6 +1,6 @@
 # TwinCAT Projekt anlegen
 
-Um den Beispielen zu folgen wird ein neues TwinCAT Project mit einem SPS Projekt benötigt. Das Projekt muss für das Beispiel auf den gleichen Rechner aktiviert werden, auf dem auch log4TC installiert ist. Eine lokale Testlizenz ist ausreichend.
+Um den Beispielen zu folgen, wird ein neues TwinCAT Projekt mit einem SPS-Projekt benötigt. Das Projekt muss für das Beispiel auf den gleichen Rechner aktiviert werden, auf dem auch log4TC installiert ist. Eine lokale Testlizenz ist ausreichend.
 
 ## Solution (TwinCAT Project) anlegen
 

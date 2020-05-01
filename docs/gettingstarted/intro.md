@@ -10,13 +10,14 @@ Damit log4Tc benutzt werden kann, sind folgende Voraussetzungen notwendig:
 * Microsoft .NET Framework 4.8 (TODO link)
 * log4TC (min. 0.1.0)
 
-Beim Installieren von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, das diese Konfiguration aktiv ist. TODO link für Wiederherstellung.
+Beim Installieren von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, dass diese Konfiguration aktiv ist. 
+TODO link für Wiederherstellung.
 
 Für diese Einführung wird ausserdem vorrausgesetzt, dass die SPS und der log4TC auf dem *gleichen* Rechner laufen (Testlizenz ist ausreichend). Dies ist keine Einschränkung von log4TC sondern eine Vereinfachung.
 
 ## Übersicht
 
-Die Einführung geht Schrittweise vor. Es wird empfohlen beim ersten Kontakt mit log4TC alle Schritte nacheinander selbst auszuprobieren.
+Die Einführung geht schrittweise vor. Es wird empfohlen beim ersten Kontakt mit log4TC alle Schritte nacheinander selbst auszuprobieren.
 
 1. [TwinCAT Projekt anlegen](create_twincat_project.md)
 2. [log4TC-Library hinzufügen](add_log4tc_lib.md)

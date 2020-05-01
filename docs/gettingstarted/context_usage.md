@@ -1,12 +1,12 @@
 # Integration von Context-Eigenschaften
 
-Für log4TC sind Log-Meldungen mehr als simple Strings die die Textdateien geschrieben werden. Jede Log-Meldung besteht aus einer variablen Anzahl von zwingend und optionalen Eigenschaften. Context-Properties sind solche optionale Eigenschaften.
+Für log4TC sind Log-Meldungen mehr als simple Strings, die in Textdateien geschrieben werden. Jede Log-Meldung besteht aus einer variablen Anzahl von zwingend und optionalen Eigenschaften. Context-Properties sind solche optionale Eigenschaften.
 
 Context-Eigenschaften sind ein weiterführendes Thema und können beim ersten Kontakt mit log4TC übersprungen werden. Um aber vom Logging-System die maximalen Nutzen ziehen zu können, lohnt sich aber die Einarbeitung.
 
 ## Zweck der Context-Eigenschaften
 
-Die Context-Eigenschaften einer Log-Meldungen ermöglichen es direkt und indirekt zusätzliche Daten einer Log-Message mitzugeben, zu Verarbeiten, zu Filtern und Auszugeben. Der Context ist sehr ähnlich zu Argumenten einer Meldung, mit dem Unterschied, dass sie nicht direkt in der Log-Meldung erscheinen müssen.
+Die Context-Eigenschaften einer Log-Meldungen ermöglichen es direkt und indirekt zusätzliche Daten einer Log-Message mitzugeben, zu verarbeiten, zu filtern und auszugeben. Der Context ist sehr ähnlich zu Argumenten einer Meldung, mit dem Unterschied, dass sie nicht direkt in der Log-Meldung erscheinen müssen.
 
 Der Context existiert auf vier Ebenen:
 
