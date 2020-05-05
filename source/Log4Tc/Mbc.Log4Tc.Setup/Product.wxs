@@ -88,19 +88,39 @@
       <ComponentGroupRef Id="Cmp_Log4TcService" />
       <ComponentGroupRef Id="Cmp_Log4TcServiceInstall" />
       <ComponentGroupRef Id="Cmp_Log4TcServiceOutputFiles" />
+    </Feature>
+    <Feature Id="Log4TcTwinCatLibFeature">
       <ComponentGroupRef Id="Cmp_Log4TcTwinCatLib" />
     </Feature>
 
     <!-- Installation Custom Actions 
          ************************ -->
+    <!--set CustomActionData values for actions to use-->
+    <CustomAction Id="CA_Log4TcTwinCatLibRepToolInstall"
+              BinaryKey="WixCA"
+              DllEntry="CAQuietExec"
+              Execute="deferred"
+              Return="check"  />
+    <Property Id="Twincat3Profile" Value="TwinCAT PLC Control" />
+    <!-- Execute install command "RepTool.exe [dashdash]profile="c:\TwinCAT\3.1\Components\Plc\Profiles\TwinCAT PLC Control" [dashdash]installLib "C:\mbc-source\mbc\log4tc\library\mbc_Log4TC_v.0.0.2.library"-->
+    <SetProperty Id="CA_Log4TcTwinCatLibRepToolInstall"
+                 Value="&quot;[DIR_Twincat3Common]RepTool.exe&quot; --profile=&quot;[DIR_Twincat3Profiles][Twincat3Profile]&quot; --installLib &quot;[#Log4TcTwinCatLibFile]&quot;"
+                 Sequence="execute"
+                 Before="CA_Log4TcTwinCatLibRepToolInstall" />
+    
+    <InstallExecuteSequence>
+      <Custom Action="CA_Log4TcTwinCatLibRepToolInstall" 
+              After="InstallFiles">
+        <!-- Install TwincatLib when value == 3 (3-> on install; 2-> on deinstall)-->
+        <![CDATA[&Log4TcTwinCatLibFeature=3]]>
+      </Custom>
+    </InstallExecuteSequence>
   </Product>
 
 
   <!--Directory structure
       ******************* -->
   <Fragment>
-    <SetDirectory Id="DIR_Twincat" Value="[WindowsVolume]TwinCAT"/>
-  
     <Directory Id="TARGETDIR"
                Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
@@ -120,19 +140,22 @@
         <Directory Id="DIR_CommonAppDataFolderLog4Tc" Name="log4TC" >
           <Directory Id="DIR_CommonAppDataFolderLog4TcConfig" Name="config" />
           <Directory Id="DIR_CommonAppDataFolderLog4TcLog" Name="log" />
+          <Directory Id="DIR_CommonAppDataFolderLog4TcLib" Name="lib" />
         </Directory>
       </Directory>
-
-      <!--C:\TwinCAT\3.1\Components\Plc\Managed Libraries\mbc engineering GmbH\Log4TC\0.0.2-->
-      <Directory Id="DIR_Twincat" >
-        <Directory Id="DIR_Twincat_31" Name="3.1" >
-          <Directory Id="DIR_Twincat_31_Components" Name="Components" >
-            <Directory Id="DIR_Twincat_31_Components_Plc" Name="Plc" >
-              <Directory Id="DIR_Twincat_31_Components_Plc_ManagedLibraries" Name="Managed Libraries" />
-            </Directory>
-          </Directory>
-        </Directory>
+      
+    <!-- Define existing TwinCat installation directories-->
+      <Directory Id="DIR_Twincat">
+        <Directory Id="DIR_Twincat3Common" />
+        <Directory Id="DIR_Twincat3Profiles" />  
       </Directory>
+      
     </Directory>
-  </Fragment>
+  
+    <!-- Set the paths to the existing Twincat Instalation Directories-->
+    <SetDirectory Id="DIR_Twincat" Value="[WindowsVolume]TwinCAT"/>
+    <SetDirectory Id="DIR_Twincat3Common" Value="[DIR_Twincat]\3.1\Components\Plc\Common" />
+    <SetDirectory Id="DIR_Twincat3Profiles" Value="[DIR_Twincat]\3.1\Components\Plc\Profiles" />
+    
+    </Fragment>
 </Wix>
