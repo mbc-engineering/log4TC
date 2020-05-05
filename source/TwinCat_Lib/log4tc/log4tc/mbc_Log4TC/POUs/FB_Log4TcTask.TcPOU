@@ -96,23 +96,30 @@ IF NOT bAddOk THEN
 	);
 	
 	IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBufferErrorCount);
-	IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize < fbRingBuffer.cbSize THEN
-		Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize := fbRingBuffer.cbSize;
-	END_IF
-	IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer <= fbRingBuffer.nCount THEN
-		Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer := UDINT_TO_UINT(fbRingBuffer.nCount);
-	END_IF
 ELSE
-	F_InternalLog(
-		E_LogLevel.eTrace,
-		'Log4TcTask.AddLog',
-		'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
-		Tc2_Utilities.F_DINT(nTaskIndex),
-		Tc2_Utilities.F_UINT(nLogBufferLen),
-		Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);	
+	IF Config.eInternalLog <= E_LogLevel.eTrace THEN
+		F_InternalLog(
+			E_LogLevel.eTrace,
+			'Log4TcTask.AddLog',
+			'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
+			Tc2_Utilities.F_DINT(nTaskIndex),
+			Tc2_Utilities.F_UINT(nLogBufferLen),
+			Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+	END_IF
+	
+	IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBuffer);
 END_IF 
+
+// Statistic
+IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize < fbRingBuffer.cbSize THEN
+	Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize := fbRingBuffer.cbSize;
+END_IF
+IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer <= fbRingBuffer.nCount THEN
+	Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer := UDINT_TO_UINT(fbRingBuffer.nCount);
+END_IF
+
 
 AddLog := bAddOk;
 ]]></ST>

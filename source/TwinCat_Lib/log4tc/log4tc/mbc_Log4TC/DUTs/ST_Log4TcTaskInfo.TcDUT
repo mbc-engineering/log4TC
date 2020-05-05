@@ -3,6 +3,7 @@
   <DUT Name="ST_Log4TcTaskInfo" Id="{1a5f94d8-0411-4499-90bb-f2adb4408e12}">
     <Declaration><![CDATA[TYPE ST_Log4TcTaskInfo :
 STRUCT
+	nAddLogToBuffer						: UDINT;	(* Counts number of logs added to message buffer. *)
 	nAddLogToBufferErrorCount			: UDINT;	(* Counts error when adding log message to task buffer. *)
 	nSendLogBufferErrorCount			: UDINT;	(* Counts error when sending log task buffer to service. *)
 	nMaxUsedBufferSize					: UDINT;	(* Max. used buffer size of log task buffer. *)
