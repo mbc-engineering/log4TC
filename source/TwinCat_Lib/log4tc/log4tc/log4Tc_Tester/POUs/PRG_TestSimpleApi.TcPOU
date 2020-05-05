@@ -14,7 +14,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbScope.ContextBuilder.AddInt('scope', 42);
+      <ST><![CDATA[//fbScope.ContextBuilder.AddInt('scope', 42);
 
 IF bExecute OR bExecuteSingle THEN
 	bExecuteSingle := FALSE;
@@ -27,7 +27,7 @@ IF bExecute OR bExecuteSingle THEN
 		F_LogContext().AddBool('csv', TRUE)
 	);
 	
-	fbScope.Begin();
+	//fbScope.Begin();
 	
 	F_LogLA3(
 		E_LogLevel.eInfo,
@@ -38,7 +38,7 @@ IF bExecute OR bExecuteSingle THEN
 		fArg,
 	);
 	
-	fbScope.End();
+	//fbScope.End();
 	
 	F_LogA3(
 		E_LogLevel.eInfo,
@@ -50,24 +50,5 @@ IF bExecute OR bExecuteSingle THEN
 	
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="PRG_TestSimpleApi">
-      <LineId Id="64" Count="1" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="81" Count="5" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="50" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="12" Count="6" />
-      <LineId Id="66" Count="1" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="20" Count="1" />
-      <LineId Id="23" Count="4" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="11" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

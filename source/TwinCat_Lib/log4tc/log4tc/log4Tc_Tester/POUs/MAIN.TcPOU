@@ -5,7 +5,6 @@
 VAR
 	fbTime			: FB_TcExternalTime(ETcExternalTimeType.SystemTime);
 	nOffset			: LINT;
-	fbLog			: FB_Logger('MAIN');
 	bWriteLog		: BOOL;
 	bWriteCont		: BOOL;
 	nVar1			: INT;
@@ -16,81 +15,19 @@ VAR
 	b2 : BYTE;
 END_VAR
 
-VAR_TEMP
-	fbContext		: FB_ContextBuilder;
-END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
 	PRG_TaskLog.Init('192.168.56.1.1.1');
 END_IF
 
-nOffset := fbTime.GetExternalOffset();
 
 PRG_TestSimpleApi();
 	
-fbLog(
-	bExecute	:= bWriteLog,
-	eLogLevel	:= E_LogLEvel.eInfo,
-	sMessage	:= 'Info Message',
-);
-
-var1 := __VARINFO(fbLog);
-
-b1 := PBYTE_TO_BYTE(ADR(nVar2)); // Windows-1252 
-b2 := PBYTE_TO_BYTE(ADR(nVar2)+1);
-
-IF bWriteLog OR bWriteCont THEN
-	bWriteLog := FALSE;
-	
-	F_FUN();
-	GVL.fbLog();
-	
-	//F_GetTaskContext().WithInt('Task', -10000);
-	
-	fbLog.LoggerContext.AddInt('Logger', 1234);
-	
-	fbLog(
-		eLogLevel		:= E_LogLEvel.eError,
-		sMessage		:= 'Test Log Message {arg1} {arg2} {arg3}',
-		stArg1			:= F_INT(nVar1),
-		stArg2			:= F_String(nVar2),
-		stArg3			:= F_REAL(nVar3),
-		iContextBuilder := F_LogContext().AddInt('foo', 42).AddInt('bar', 420).AddInt('baz', 0).AddInt('bar', 4200),
-	);
-
-END_IF
 
 PRG_TaskLog.Call();
 
 ]]></ST>
     </Implementation>
-    <LineIds Name="MAIN">
-      <LineId Id="260" Count="0" />
-      <LineId Id="262" Count="1" />
-      <LineId Id="281" Count="1" />
-      <LineId Id="261" Count="0" />
-      <LineId Id="199" Count="0" />
-      <LineId Id="201" Count="1" />
-      <LineId Id="206" Count="0" />
-      <LineId Id="203" Count="2" />
-      <LineId Id="223" Count="0" />
-      <LineId Id="200" Count="0" />
-      <LineId Id="241" Count="0" />
-      <LineId Id="240" Count="0" />
-      <LineId Id="242" Count="0" />
-      <LineId Id="101" Count="2" />
-      <LineId Id="138" Count="0" />
-      <LineId Id="220" Count="1" />
-      <LineId Id="185" Count="0" />
-      <LineId Id="167" Count="1" />
-      <LineId Id="152" Count="1" />
-      <LineId Id="105" Count="7" />
-      <LineId Id="118" Count="1" />
-      <LineId Id="259" Count="0" />
-      <LineId Id="120" Count="0" />
-      <LineId Id="123" Count="0" />
-      <LineId Id="14" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

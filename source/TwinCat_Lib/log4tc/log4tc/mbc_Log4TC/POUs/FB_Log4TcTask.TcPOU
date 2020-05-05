@@ -140,6 +140,8 @@ END_VAR
 	RETURN;
 END_IF
 
+PRG_Licencse.InitializeLicenseFromAnyTask();
+
 CASE nState OF
 	0: // Init
 		nSendBufferLen := 0;

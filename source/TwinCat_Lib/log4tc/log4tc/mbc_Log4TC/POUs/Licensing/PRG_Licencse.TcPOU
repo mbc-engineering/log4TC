@@ -6,11 +6,11 @@ PROGRAM INTERNAL PRG_Licencse
 VAR
 	{attribute 'TcNoSymbol'}
 	{attribute 'hide'}
-	nStartTime 		: TIME;
-
+	bExpired 		: BOOL;
+	
 	{attribute 'TcNoSymbol'}
 	{attribute 'hide'}
-	bExpired 		: BOOL;
+	bValidLicense	: BOOL;	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -19,32 +19,109 @@ END_VAR
     <Method Name="_CheckExpiration" Id="{09e7d4f0-a008-443d-841e-a2496614e481}">
       <Declaration><![CDATA[METHOD PRIVATE _CheckExpiration : BOOL
 VAR
-	nRuntime		: TIME;
+	nTaskIdx		: DINT;
+	nCycleTime		: UDINT;
+	nCycleCount		: UDINT;
 END_VAR
 VAR_STAT
 	bCheckRunning	: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF Tc2_Utilities.TestAndSet(bCheckRunning) THEN
-	nRuntime := TIME() - nStartTime;
-	bExpired S= nRuntime > T#24H;
+        <ST><![CDATA[IF bExpired THEN
+	RETURN;
+END_IF
+
+IF Tc2_Utilities.TestAndSet(bCheckRunning) THEN
+	nTaskIdx := Tc2_Utilities.GETCURTASKINDEXEX();
+	nCycleCount := TwinCAT_SystemInfoVarList._TaskInfo[nTaskIdx].CycleCount;
+	nCycleTime := TwinCAT_SystemInfoVarList._TaskInfo[nTaskIdx].CycleTime;
+	
+	// nCycletime 100ns
+	bExpired S= (ULINT#24 * 3600 * 1000 * 1000 * 10) < (UDINT_TO_ULINT(nCycleCount) * UDINT_TO_ULINT(nCycleTime));
+	IF bExpired THEN
+		F_InternalLog(
+			E_LogLevel.eWarn,
+			'Licensing',
+			'Test license expired.',
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+	END_IF
 	
 	bCheckRunning := FALSE;
 END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_init" Id="{1563097a-e597-4035-a20f-0d69fa030945}">
-      <Declaration><![CDATA[METHOD FB_init : BOOL
-VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+    <Method Name="_InitializeLicense" Id="{a2ff8a41-c2b2-498c-9027-7110f9f8699a}">
+      <Declaration><![CDATA[METHOD PRIVATE _InitializeLicense
+VAR_STAT
+	{attribute 'TcNoSymbol'}
+	{attribute 'hide'}
+	bInit			: BOOL;
+
+	{attribute 'TcNoSymbol'}
+	{attribute 'hide'}
+	fbLicense		: Tc2_Utilities.FB_GetLicensesEx;	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF bInit THEN
+	RETURN;
+END_IF
+
+fbLicense(
+	bExecute := TRUE,
+);
+
+IF NOT fbLicense.bBusy THEN
+	bInit := TRUE;
+	IF NOT fbLicense.bError THEN
+		F_InternalLog(
+			E_LogLevel.eInfo,
+			'Licensing',
+			'Licenses successfully read. Got %d OEM licenses.',
+			Tc2_Utilities.F_UDINT(fbLicense.nOemLicenses),
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);		
+		// fbLicense.aOemLicenses[1].
+		// TODO read OEM Lizenz
+		// bValidLicense := TRUE or FALSE;
+	ELSE
+		F_InternalLog(
+			E_LogLevel.eWarn,
+			'Licensing',
+			'Error reading licensing information. %x',
+			Tc2_Utilities.F_UDINT(fbLicense.nErrorId),
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);				
+	END_IF
+END_IF
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InitializeLicenseFromAnyTask" Id="{d1fb34e7-78c2-4c26-b963-b23a16318f5e}">
+      <Declaration><![CDATA[METHOD INTERNAL InitializeLicenseFromAnyTask
+VAR_STAT
+	bFirstTask		: BOOL;
+	nActualTask		: DINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[nStartTime := TIME();
-bExpired := FALSE;
-]]></ST>
+        <ST><![CDATA[IF Tc2_Utilities.TestAndSet(bFirstTask) THEN
+	nActualTask := Tc2_Utilities.GETCURTASKINDEXEX();
+END_IF
+
+IF Tc2_Utilities.GETCURTASKINDEXEX() = nActualTask THEN
+	_InitializeLicense();
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsLicensed" Id="{33116d77-b962-4ef9-9f70-0ec9b8f94385}">
@@ -53,8 +130,12 @@ bExpired := FALSE;
         <Declaration><![CDATA[
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_CheckExpiration();
-IsLicensed := NOT bExpired;
+          <ST><![CDATA[IF bValidLicense THEN
+	IsLicensed := TRUE;
+ELSE
+	_CheckExpiration();
+	IsLicensed := NOT bExpired;
+END_IF
 
 ]]></ST>
         </Implementation>

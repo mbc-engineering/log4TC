@@ -6,15 +6,20 @@ VAR
 	fbContextBuilder_Test	: FB_ContextBuilder_Test;
 	
 	fbScope			: FB_ScopedContext;
+	bLog			: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[TcUnit.RUN();
 
 
-fbScope.Begin();
+IF bLog THEN
+	bLog := FALSE;
+	F_Log(E_LogLevel.eDebug, 'Foobar');
+END_IF
 
-fbScope.End();
+
+PRG_TaskLog.Call();
 ]]></ST>
     </Implementation>
   </POU>
