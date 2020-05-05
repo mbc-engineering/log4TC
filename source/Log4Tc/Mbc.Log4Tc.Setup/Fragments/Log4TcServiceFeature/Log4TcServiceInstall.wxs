@@ -41,7 +41,9 @@
         <CreateFolder Directory="DIR_CommonAppDataFolderLog4TcLog" />
       </Component>
 
-      <Component Id="Cmp_Log4TcServiceInstallStartmenueShortcut" Directory="DIR_ProgramMenuServiceShortcuts" Guid="7B0BDA32-18B1-4346-8F2D-D508BD6B3F13">
+      <Component Id="Cmp_Log4TcServiceInstallStartmenueShortcut" 
+                 Directory="DIR_ProgramMenuServiceShortcuts" 
+                 Guid="7B0BDA32-18B1-4346-8F2D-D508BD6B3F13">
         <!--Start Menu Shortcuts-->
         <CreateFolder Directory="DIR_ProgramMenuServiceShortcuts" />
         <RemoveFolder Id="RemoveCompanyStartMenuFolder"
@@ -74,7 +76,7 @@
 
         <RegistryValue Root="HKCU"
                        Key="Software\mbc engineering GmbH\log4TC"
-                       Name="installed"
+                       Name="Log4TcServiceInstallStartmenueShortcut"
                        Type="integer"
                        Value="1"
                        KeyPath="yes" />

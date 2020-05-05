@@ -91,6 +91,8 @@
     </Feature>
     <Feature Id="Log4TcTwinCatLibFeature">
       <ComponentGroupRef Id="Cmp_Log4TcTwinCatLib" />
+      <ComponentGroupRef Id="Cmp_Log4TcTwinCatLibGettingStardedFiles" />
+      <ComponentGroupRef Id="Cmp_Log4TcTwinCatLibGettingStarded" />
     </Feature>
 
     <!-- Installation Custom Actions 
@@ -141,6 +143,7 @@
           <Directory Id="DIR_CommonAppDataFolderLog4TcConfig" Name="config" />
           <Directory Id="DIR_CommonAppDataFolderLog4TcLog" Name="log" />
           <Directory Id="DIR_CommonAppDataFolderLog4TcLib" Name="lib" />
+          <Directory Id="DIR_CommonAppDataFolderLog4TcGettingStarded" Name="gettingstarded" />
         </Directory>
       </Directory>
       
