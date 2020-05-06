@@ -21,9 +21,12 @@ Task("Clean")
         Configuration = configuration,
     });
     
-    Information($"Clean Output Folders of configuration='{configuration}'");
+    Information($"Clean Output folders of configuration='{configuration}'");
     var directoriesToClean = GetDirectories($"./**/bin/{configuration}/**/publish");
     DeleteDirectories(directoriesToClean, new DeleteDirectorySettings() { Recursive = true, Force = true });
+
+    Information($"Clean docs output folder");
+    DeleteDirectories(GetDirectories($"./../../docs/_site"), new DeleteDirectorySettings() { Recursive = true, Force = true });
 });
 
 Task("Build")
@@ -74,6 +77,13 @@ Task("Publish")
         Configuration = configuration,
     });
 
+    Information("Create docfx docs html content");
+    var settings = new DotNetCoreBuildSettings
+     {
+         Configuration = configuration,
+     };
+    DotNetCoreBuild("./../../docs/", settings);
+    
     Information("Create the setup for published service");
     foreach (var platform in new [] { PlatformTarget.x64, PlatformTarget.x86 })
     {
