@@ -2,16 +2,26 @@
 
 Diese geführte Tour stellt die grundlegenden Konzepte und Features von log4TC in einem kleinen zusammenhängenden Projekt vor.
 
- ## Vorraussetzungen
+## Vorraussetzungen
 
-Damit log4Tc benutzt werden kann, sind folgende Voraussetzungen notwendig:
+Damit log4Tc richtig benutzt werden kann, sollte der Aufbau bekannt sein. Es wird dabei unterschieden zwischen den Komponenten `log4TC TwinCat 3 Bibliothek` und dem `log4TC Service`.
 
-* TwinCat 3 (min. 4022.00)
-* Microsoft .NET Framework 4.8 (TODO link)
-* log4TC (min. 0.1.0)
+![architektur](_assets/architektur.png)
 
-Beim Installieren von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, dass diese Konfiguration aktiv ist. 
-TODO link für Wiederherstellung.
+Folgende Voraussetzungen haben die beiden Komponenten:
+
+**log4TC TwinCat 3 Bibliothek**
+
+* [TwinCat 3 (min. 4022.00)](https://www.beckhoff.de/default.asp?download/tc3-download-xae.htm)
+* [log4TC Bibliothek (min. 0.1.0)](../reference/installation.md)
+
+**log4TC Service**
+
+* min Windows 7 SP1 / Windows Embedded Standard 2009
+* [Microsoft .NET Framework (Mindestends 4.6.1, empfohlen 4.8)](https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer)
+* [log4TC Service (min. 0.1.0)](../reference/installation.md)
+
+Beim Installieren von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, dass diese Konfiguration aktiv ist.
 
 Für diese Einführung wird ausserdem vorrausgesetzt, dass die SPS und der log4TC auf dem *gleichen* Rechner laufen (Testlizenz ist ausreichend). Dies ist keine Einschränkung von log4TC sondern eine Vereinfachung.
 
@@ -31,16 +41,3 @@ Die Einführung geht schrittweise vor. Es wird empfohlen beim ersten Kontakt mit
 ---
 
 ## Nächster Schritt: [TwinCAT Projekt anlegen](create_twincat_project.md)
-
-
-
-
-
-
-
-
-
-
-
-
-

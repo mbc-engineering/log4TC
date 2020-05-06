@@ -31,7 +31,8 @@
         ],
         "exclude": [
           "api/**",
-          "Docker/**"
+          "Docker/**",
+          "internal/**"
         ]
       }
     ],

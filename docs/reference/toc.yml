@@ -1,4 +1,6 @@
-﻿- name: Werkzeuge
+﻿- name: Installation
+  href: installation.md
+- name: Werkzeuge
   href: tools.md
 - name: Formatierung
   href: placeholder.md
