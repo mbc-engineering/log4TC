@@ -6,6 +6,9 @@
         "files": [
           "api/**.yml",
           "api/index.md"
+        ],
+        "exclude": [
+          "internal/**"
         ]
       },
       {
@@ -30,6 +33,9 @@
           "**/assets/*.png",
           "favicon.ico",
           "logo.svg"
+        ],
+        "exclude": [
+          "internal/**"
         ]
       }
     ],
@@ -40,7 +46,8 @@
         ],
         "exclude": [
           "obj/**",
-          "_site/**"
+          "_site/**",
+          "internal/**"
         ]
       }
     ],
