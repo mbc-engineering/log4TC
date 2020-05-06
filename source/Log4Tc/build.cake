@@ -1,4 +1,3 @@
-#tool "nuget:?package=xunit.runner.console"
 // Importand: Execute Set-ExecutionPolicy RemoteSigned and Set-ExecutionPolicy RemoteSigned -Scope Process as Administrator in x86 and x64 powershell!
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -7,6 +6,7 @@
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 var testreportfolder = Argument("testreportfolder", "testresult").TrimEnd('/');
+var testresultsfile =  Argument("testresultsfile", "testresults.trx");
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -46,33 +46,26 @@ Task("Build")
 });
 
 Task("Test")
-    .IsDependentOn("Build")
+    .IsDependentOn("Clean")
     .Does(() =>
 {
-    var testAssemblies = GetFiles($"./**/bin/{configuration}/**/*.test.dll");
-    var xunitSettings = new XUnit2Settings {
-        Parallelism = ParallelismOption.Assemblies,
-        UseX86 = false,
-        HtmlReport = true,
-        JUnitReport = true,
-        NoAppDomain = true,
-        OutputDirectory = $"./{testreportfolder}",
-    };     
-    
-    // Run Tests in x64 Process
-    XUnit2(testAssemblies, xunitSettings); 
+    var settings = new DotNetCoreTestSettings
+     {
+         Configuration = configuration,
+         Logger = $"trx;LogFileName=\"{testresultsfile}\"",  // by default results in Mbc.Log4Tc.Output.NLog.Test\TestResults\testresults.trx
+         // ArgumentCustomization = args=>args.Append("--collect:\"XPlat Code Coverage\""),        // code coverage output for package coverlet.collector
+     };
 
-    /* x86 Not required in NSP 
-    // Run Tests in x86 Process
-    xunitSettings.UseX86 = true;
-    xunitSettings.OutputDirectory += "x86";
-    XUnit2(testAssemblies, xunitSettings); 
-    */
+     var projectFiles = GetFiles("./**/*.Test.csproj");
+     foreach(var file in projectFiles)
+     {
+         DotNetCoreTest(file.FullPath, settings);
+     }
 });
 
 Task("Publish")
     .IsDependentOn("Clean")
-    // .IsDependentOn("Test") // keine Tests vorhanden
+    .IsDependentOn("Test")
     .Does(() =>
 {
     Information($"Publish service for windows runtime");
@@ -97,9 +90,7 @@ Task("Publish")
 });
 
 Task("Default")
-    // Add when test exists
-    //.IsDependentOn("Build")
-    //.IsDependentOn("Test")
+    .IsDependentOn("Test")
     .IsDependentOn("Publish");
 
 RunTarget(target);

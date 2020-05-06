@@ -1,0 +1,65 @@
+# Build Trigger
+trigger:
+  tags:
+    include:
+      - v*
+  branches:
+    include:
+      - master
+
+# Pull Request Trigger
+pr:
+  branches:
+    include:
+      - master
+      - dev
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+# Build steps
+steps:
+- task: NuGetToolInstaller@1
+
+- task: Cake@0
+  displayName: 'Build log4TC with Cake Build tool'
+  inputs:
+    script: 'source/Log4Tc/build.cake'
+    target: 'Default'
+    verbosity: 'Verbose'
+    arguments: '-configuration=$(buildConfiguration)'
+    useBuildAgentNuGetExe: true
+
+- task: CopyFiles@2
+  displayName: 'Copy MSI Setup Files'
+  inputs:
+    Contents: '**/*.msi'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/msi'
+    flattenFolders: true
+
+- task: PublishTestResults@2
+  displayName: 'Publish testresult'
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '**/testresults.trx'
+    searchFolder: '$(System.DefaultWorkingDirectory)/source/Log4Tc'
+    failTaskOnFailedTests: true
+
+#- task: PublishCodeCoverageResults@1
+#  displayName: 'Publish coverage.cobertura.xml results'
+#  inputs:
+#    codeCoverageTool: 'Cobertura'
+#    summaryFileLocation: '$(System.DefaultWorkingDirectory)/source/Log4Tc/**/coverage.cobertura.xml'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish MSI Setup Files'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/msi'
+    ArtifactName: 'msi'
+    publishLocation: 'Container'
+
