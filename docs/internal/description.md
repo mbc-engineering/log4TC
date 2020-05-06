@@ -14,9 +14,9 @@ Es bietet sich an, von System anfallende Daten mit in den Benutzer generierten D
 
 Ziel des *log4tc* ist es für Entwickler, Operatoren und Benutzer eine Möglichkeit zu schaffen Fehler, Abläufe, Audits usw. zu verfolgen, aufzuzeichnen und darauf reagieren zu können, ohne die TwinCAT-XAE Entwicklungsumgebung nutzen zu müssen.
 
-![Kontextdiagramm](_assets/Kontextdiagramm.png)
+![Kontextdiagramm](assets/Kontextdiagramm.png)
 
-![Systemkomponenten](_assets/Systemkomponenten.png)
+![Systemkomponenten](assets/Systemkomponenten.png)
 
 Das *log4tc* besteht aus zwei Komponenten.
 

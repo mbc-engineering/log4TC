@@ -11,7 +11,7 @@ Es müssen keine speziellen Einstellungen vorgenommen werden.
 
 Die Visual Studio Solution sollte wie folgt aussehen:
 
-![Solution](_assets/solution.png)
+![Solution](assets/solution.png)
 
 ## Nächster Schritt: 
 

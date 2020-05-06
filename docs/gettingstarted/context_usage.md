@@ -70,7 +70,7 @@ Der Code befindet sich im Beispielprojekt unter den Namen "D_LogWithContext".
 
 In der mitgelieferten Konfigurationsdatei werden die Context-Eigenschaften am Ende der Log-Meldung hinzugefügt:
 
-![Log mit Context](_assets/log4.png)
+![Log mit Context](assets/log4.png)
 
 ## Nächster Schritt
 

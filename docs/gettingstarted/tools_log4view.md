@@ -18,13 +18,13 @@ Nach dem Starten von Log4View, kann mit *Start*/*Öffnen* die Log-Datei ausgewä
 
 Jetzt muss noch das Format der Datei eingestellt werden. Die Einstellungen sollten den nachfolgenden Bildschirmfoto entsprechen:
 
-![Einstellungen Log4View](_assets/log4view_config.png)
+![Einstellungen Log4View](assets/log4view_config.png)
 
-![Optionen Log4View](_assets/log4view_options.png)
+![Optionen Log4View](assets/log4view_options.png)
 
 Nach dem Bestätigen mit *OK* wird die Datei geladen und im Fenster angezeigt. Man findet hier alle Informationen, die auch im Log-File waren, aber in strukturierter Form. So kann man z.B. zu einem Zeitstempel springen, Logger ausblenden, nur bestimmte Level anzeigen, usw. Der Nutzen erschliesst sich bei Log-Dateien mit mehreren Tausend Meldungen sehr schnell.
 
-![Log4View](_assets/log4view.png)
+![Log4View](assets/log4view.png)
 
 ## Nächster Schritt
 

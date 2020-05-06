@@ -1,19 +1,5 @@
 ﻿{
-  "metadata": [
-    {
-      "src": [
-        {
-          "files": [ "**/*.csproj" ],
-          "exclude": [ "**/bin/**", "**/obj/**" ],
-          "src": "../source/Log4Tc"
-        }
-      ],
-      "dest": "api",
-      "properties": {
-        "TargetFramework": "net461"
-      }
-    }
-  ],
+  "metadata": [],
   "build": {
     "content": [
       {
@@ -41,7 +27,7 @@
         "files": [
           "**/images/**",
           "**/res/*.png",
-          "**/_assets/*.png",
+          "**/assets/*.png",
           "favicon.ico",
           "logo.svg"
         ]

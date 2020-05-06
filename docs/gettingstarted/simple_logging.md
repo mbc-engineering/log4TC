@@ -55,15 +55,15 @@ Log-Meldungen werden mit der ausgelieferten Konfiguration in das Verzeichnis `%P
 
 > *Tipp*: In Windows ist der Ordner `%ProgramData%` (entspricht normalerweise den Pfad `C:\ProgramData`) versteckt und wird nicht im Explorer. Man kann aber den Text `%programdata%` als Pfad im Explorer eingeben und gelangt dann direkt zum Ordner. Alternativ können auch die Links verwendet werden, die mit der Installation von log4TC im Startmenü angelegt werden.
 
-![ProgramData](_assets/programdata.png)
+![ProgramData](assets/programdata.png)
 
 Im Log-Ordner befinden sich zwei Dateien, momentan geht es nur um die `log4tc.log`.
 
-![Log-Ordner](_assets/log_folder.png)
+![Log-Ordner](assets/log_folder.png)
 
 Die Datei `log4tc.log` kann mit einem normalen Texteditor geöffnet werden (siehe auch [Tools](../reference/tools.md)):
 
-![Erste Log-Meldung](_assets/log1.png)
+![Erste Log-Meldung](assets/log1.png)
 
 Die Log-Meldung besteht aus mehreren Teilen, die durch ein `|`-Zeichen getrennt sind (Das Format einer Meldung kann über die NLog-Konfiguration fast beliebig geändert werden.).
 

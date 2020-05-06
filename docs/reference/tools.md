@@ -50,7 +50,7 @@ Leider bietet Log4View bis jetzt noch keine Unterstützung von Context-Propertie
 
 Eines davon *Log Viewer* bietet einfache Möglichkeiten für Log-Files:
 
-![Log Viewer Extension für VS-Code](_assets/vscode_log_viewer.png)
+![Log Viewer Extension für VS-Code](assets/vscode_log_viewer.png)
 
 
 ### TODO

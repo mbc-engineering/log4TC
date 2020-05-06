@@ -115,7 +115,7 @@ Als Nächstes dürfen an dieses `target` nur Log-Meldungen weitergeleitet werden
 
 Lädt man das Programm und ändert man die Temperatur in der Variable `fTemp` einige Male von Hand, wird eine neue Log-Datei im CSV-Format angelegt mit folgenden Inhalt:
 
-![CSV-Output](_assets/log5.png)
+![CSV-Output](assets/log5.png)
 
 Wichtig ist, dass diese Meldung sowohl im CSV als auch im normalen Log ausgegeben werden, aber unterschiedlich formatiert.
 

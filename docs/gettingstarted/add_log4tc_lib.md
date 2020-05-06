@@ -11,7 +11,7 @@ Die log4TC-Library wird mit der Installation als SPS-Library registriert und mus
 
 Die Referenzen sollte wie folgt aussehen (Versionnummer kann variieren):
 
-![References](_assets/references.png)
+![References](assets/references.png)
 
 ## Nächster Schritt
 

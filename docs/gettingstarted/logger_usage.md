@@ -53,7 +53,7 @@ Der Code befindet sich im Beispielprojekt unter den Namen "C_LogWithLogger".
 
 Nachdem der geänderte Baustein geladen wurde, wird im Log-File in der dritten Spalte der *Logger* ausgegeben:
 
-![Logmeldung mit Logger](_assets/log3.png)
+![Logmeldung mit Logger](assets/log3.png)
 
 
 ## Was passiert wenn kein 'Logger' benutzt wird?

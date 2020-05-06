@@ -6,7 +6,7 @@ Diese geführte Tour stellt die grundlegenden Konzepte und Features von log4TC i
 
 Damit log4Tc richtig benutzt werden kann, sollte der Aufbau bekannt sein. Es wird dabei unterschieden zwischen den Komponenten `log4TC TwinCat 3 Bibliothek` und dem `log4TC Service`.
 
-![architektur](_assets/architektur.png)
+![architektur](assets/architektur.png)
 
 Folgende Voraussetzungen haben die beiden Komponenten:
 

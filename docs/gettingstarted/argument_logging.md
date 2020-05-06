@@ -62,7 +62,7 @@ Der Code befindet sich im Beispielprojekt unter den Namen "B_LogMessageWithArg".
 
 Der geänderte SPS-Code kann jetzt mit einem Online-Change aktualisiert werden. Danach kann man im Log-File jede Sekunde den neuen Zählerwert ablesen.
 
-![Log mit Argumenten](_assets/log2.png)
+![Log mit Argumenten](assets/log2.png)
 
 ## Nächster Schritt
 
