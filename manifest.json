@@ -36,15 +36,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "UidNotFound"
-      ],
       "type": "Toc",
       "source_relative_path": "api/toc.yml",
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "6okiFsZAN7y6r8M5dj1Hnw=="
+          "hash": "vSo95Q7NQHotaQs3Pf11fQ=="
         }
       },
       "is_incremental": false,
@@ -62,155 +59,12 @@
       "version": ""
     },
     {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/architektur.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/architektur.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log1.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log1.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log2.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log2.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log3.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log3.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log4.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log4.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log4view.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log4view.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log4view_config.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log4view_config.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log4view_options.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log4view_options.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log5.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log5.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/log_folder.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/log_folder.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/programdata.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/programdata.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/references.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/references.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "gettingstarted/_assets/solution.png",
-      "output": {
-        "resource": {
-          "relative_path": "gettingstarted/_assets/solution.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "type": "Conceptual",
       "source_relative_path": "gettingstarted/add_log4tc_lib.md",
       "output": {
         ".html": {
           "relative_path": "gettingstarted/add_log4tc_lib.html",
-          "hash": "7v1jOOLRgqHZE532yCIlWw=="
+          "hash": "v7VAen1ViKjv+MI8jNa6oA=="
         }
       },
       "is_incremental": false,
@@ -222,7 +76,150 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/argument_logging.html",
-          "hash": "PK84VPk/aGHhngFLgZ5w5g=="
+          "hash": "6iXn+PumHf3/MO72IEXTKw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/architektur.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/architektur.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log1.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log2.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log3.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log4.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log4.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log4view.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log4view.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log4view_config.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log4view_config.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log4view_options.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log4view_options.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log5.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log5.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/log_folder.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/log_folder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/programdata.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/programdata.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/references.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/references.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/assets/solution.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/assets/solution.png"
         }
       },
       "is_incremental": false,
@@ -234,7 +231,7 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/context_usage.html",
-          "hash": "GZPqFmwLNHDKl1tdB6YDYg=="
+          "hash": "Ek7sR7M/DIF9b5CE5/s/Nw=="
         }
       },
       "is_incremental": false,
@@ -246,7 +243,7 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/create_twincat_project.html",
-          "hash": "CMLPXS84q/z0GXOSZuN3CA=="
+          "hash": "5d2W09uUKgfiy3EvOYS7nQ=="
         }
       },
       "is_incremental": false,
@@ -258,7 +255,7 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/intro.html",
-          "hash": "s0z5rza7KZa4AcjSaeo9aA=="
+          "hash": "PvI7BIep2cz88sdf6BIzLg=="
         }
       },
       "is_incremental": false,
@@ -270,7 +267,7 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/logger_usage.html",
-          "hash": "jV6tyH4fJ4H0SpXi7pjvkA=="
+          "hash": "CxYOmx3OP3Xpb/BECgQ9oQ=="
         }
       },
       "is_incremental": false,
@@ -282,7 +279,7 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/simple_logging.html",
-          "hash": "nZvwFNAmzbt5QBz2+lqlJw=="
+          "hash": "cGnUeFBJmNjg6cpJFLzJ5g=="
         }
       },
       "is_incremental": false,
@@ -306,7 +303,7 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/tools_log4view.html",
-          "hash": "dbs1AcGWCcptB+ViTP0D4g=="
+          "hash": "St0JVD80NiopwoP50i3tlA=="
         }
       },
       "is_incremental": false,
@@ -318,7 +315,7 @@
       "output": {
         ".html": {
           "relative_path": "gettingstarted/write_structured_values.html",
-          "hash": "TWCWrsgIm12nzkTdl9Eiyw=="
+          "hash": "gyvOixvZ8HrzCIqYNI2prA=="
         }
       },
       "is_incremental": false,
@@ -338,10 +335,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "internal/_assets/Kontextdiagramm.png",
+      "source_relative_path": "internal/assets/Kontextdiagramm.png",
       "output": {
         "resource": {
-          "relative_path": "internal/_assets/Kontextdiagramm.png"
+          "relative_path": "internal/assets/Kontextdiagramm.png"
         }
       },
       "is_incremental": false,
@@ -349,10 +346,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "internal/_assets/Systemkomponenten.png",
+      "source_relative_path": "internal/assets/Systemkomponenten.png",
       "output": {
         "resource": {
-          "relative_path": "internal/_assets/Systemkomponenten.png"
+          "relative_path": "internal/assets/Systemkomponenten.png"
         }
       },
       "is_incremental": false,
@@ -360,10 +357,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "reference/_assets/vscode_log_viewer.png",
+      "source_relative_path": "reference/assets/vscode_log_viewer.png",
       "output": {
         "resource": {
-          "relative_path": "reference/_assets/vscode_log_viewer.png"
+          "relative_path": "reference/assets/vscode_log_viewer.png"
         }
       },
       "is_incremental": false,
@@ -423,7 +420,7 @@
       "output": {
         ".html": {
           "relative_path": "reference/tools.html",
-          "hash": "U8V1ivYW/H9ezF2mLfrXZg=="
+          "hash": "R9prMkW+a6kgIVvzSpVe6w=="
         }
       },
       "is_incremental": false,
