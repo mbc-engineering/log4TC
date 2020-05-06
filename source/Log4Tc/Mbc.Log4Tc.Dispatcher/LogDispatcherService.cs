@@ -3,6 +3,7 @@ using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Output;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -55,7 +56,16 @@ namespace Mbc.Log4Tc.Dispatcher
         {
             foreach (var logEntry in logEntries)
             {
-                DispatchToOutput(logEntry);
+                try
+                {
+                    DispatchToOutput(logEntry);
+
+                }
+                catch (Exception e)
+                {
+                    // TODO logging
+                    Console.WriteLine(e);
+                }
             }
         }
 

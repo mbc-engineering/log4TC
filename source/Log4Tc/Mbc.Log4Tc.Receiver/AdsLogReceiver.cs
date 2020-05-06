@@ -18,6 +18,9 @@ namespace Mbc.Log4Tc.Receiver
 
         public override void AdsWriteInd(AmsAddress rAddr, uint invokeId, uint indexGroup, uint indexOffset, uint cbLength, byte[] data)
         {
+            // send response as soon as possible
+            AdsWriteRes(rAddr, invokeId, AdsErrorCode.NoError);
+
             try
             {
                 var entries = new List<LogEntry>();
@@ -43,13 +46,11 @@ namespace Mbc.Log4Tc.Receiver
                 }
 
                 LogsReceived?.Invoke(this, new LogEntryEventArgs(entries));
-
-                AdsWriteRes(rAddr, invokeId, AdsErrorCode.NoError);
             }
             catch (Exception e)
             {
+                // TODO Logging
                 Console.WriteLine(e);
-                AdsWriteRes(rAddr, invokeId, AdsErrorCode.DeviceError);
             }
         }
 
@@ -60,8 +61,8 @@ namespace Mbc.Log4Tc.Receiver
                 Message = ReadString(reader),
                 Logger = ReadString(reader),
                 Level = ReadLogLevel(reader),
-                PlcTimestamp = DateTime.FromFileTime(reader.ReadInt64()),
-                ClockTimestamp = DateTime.FromFileTime(reader.ReadInt64()),
+                PlcTimestamp = ReadFiletime(reader),
+                ClockTimestamp = ReadFiletime(reader),
                 TaskIndex = reader.ReadInt32(),
                 TaskName = ReadString(reader),
                 TaskCycleCounter = reader.ReadUInt32(),
@@ -97,6 +98,19 @@ namespace Mbc.Log4Tc.Receiver
             }
 
             return logEntry;
+        }
+
+        private DateTime ReadFiletime(AdsBinaryReader reader)
+        {
+            var filetime = reader.ReadInt64();
+            try
+            {
+                return DateTime.FromFileTime(filetime);
+            }
+            catch (ArgumentException)
+            {
+                return new DateTime(0);
+            }
         }
 
         private object ReadObject(AdsBinaryReader reader)
