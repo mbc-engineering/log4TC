@@ -3,9 +3,10 @@ trigger:
   tags:
     include:
       - v*
-  branches:
-    include:
-      - master
+# not required yet
+#  branches:
+#    include:
+#      - master
 
 # Pull Request Trigger
 pr:
@@ -18,8 +19,6 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
 # Build steps
@@ -36,11 +35,20 @@ steps:
     useBuildAgentNuGetExe: true
 
 - task: CopyFiles@2
-  displayName: 'Copy MSI Setup Files'
+  displayName: 'Copy MSI Setup files'
   inputs:
     Contents: '**/*.msi'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/msi'
+    CleanTargetFolder: true
     flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy generated docfx docs files'
+  inputs:
+    SourceFolder: 'docs/_site'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/docs'
+    CleanTargetFolder: true
 
 - task: PublishTestResults@2
   displayName: 'Publish testresult'
@@ -57,9 +65,16 @@ steps:
 #    summaryFileLocation: '$(System.DefaultWorkingDirectory)/source/Log4Tc/**/coverage.cobertura.xml'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish MSI Setup Files'
+  displayName: 'Publish MSI Setup files'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/msi'
     ArtifactName: 'msi'
+    publishLocation: 'Container'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish docs files'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/docs'
+    ArtifactName: 'docs'
     publishLocation: 'Container'
 
