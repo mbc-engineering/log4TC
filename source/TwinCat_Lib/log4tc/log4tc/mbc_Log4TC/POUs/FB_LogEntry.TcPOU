@@ -430,6 +430,11 @@ IF nTimestampPlc = 0 THEN
 	nTimeStampPlc := ULINT_TO_LINT(SHL(UDINT_TO_ULINT(fbSysTime.timeHiDW), 32) OR fbSysTime.timeLoDW);
 END_IF
 
+// Timestamp RTC
+IF nTimestampClock = 0 THEN
+	nTimestampClock := PRG_TaskLog.RtcTime;
+END_IF
+
 _Reset();
 
 // Log-Entry Version

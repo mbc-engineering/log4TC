@@ -18,7 +18,7 @@
     <Company>mbc engineering GmbH</Company>
     <Released>false</Released>
     <Title>log4TC</Title>
-    <ProjectVersion>0.0.1</ProjectVersion>
+    <ProjectVersion>0.0.2</ProjectVersion>
     <CompilerDefines>DEBUG</CompilerDefines>
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
@@ -448,6 +448,9 @@
     <Compile Include="POUs\PRG_ScopedContextStack.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Utils\FB_RTC_Sync.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Utils\F_DINT_TO_UINT_MAX.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -492,6 +495,8 @@
     <PlaceholderReference Include="TcUnit">
       <DefaultResolution>TcUnit, * (www.tcunit.org)</DefaultResolution>
       <Namespace>TcUnit</Namespace>
+      <HideWhenReferencedAsDependency>true</HideWhenReferencedAsDependency>
+      <Optional>true</Optional>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>

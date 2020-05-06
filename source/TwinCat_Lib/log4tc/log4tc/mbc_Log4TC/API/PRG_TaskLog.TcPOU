@@ -4,7 +4,8 @@
     <Declaration><![CDATA[{attribute 'no_explicit_call' := 'no direct call necessary'}
 PROGRAM PRG_TaskLog
 VAR
-		aTaskLogger			: ARRAY[1..SIZEOF(TwinCAT_SystemInfoVarList._TaskInfo)/SIZEOF(PlcTaskSystemInfo)] OF FB_Log4TcTask;
+	aTaskLogger			: ARRAY[1..SIZEOF(TwinCAT_SystemInfoVarList._TaskInfo)/SIZEOF(PlcTaskSystemInfo)] OF FB_Log4TcTask;
+	aTaskRtcTime		: ARRAY[1..SIZEOF(TwinCAT_SystemInfoVarList._TaskInfo)/SIZEOF(PlcTaskSystemInfo)] OF FB_RTC_Sync;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -25,10 +26,14 @@ called once a cycle.
 	
 *)
 METHOD PUBLIC Call
-
+VAR
+	nIdx	: DINT;
+END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[aTaskLogger[GETCURTASKINDEXEX()].Call();
+        <ST><![CDATA[nIdx := Tc2_Utilities.GETCURTASKINDEXEX();
+aTaskLogger[nIdx].Call();
+aTaskRtcTime[nIdx].Call();
 ]]></ST>
       </Implementation>
     </Method>
@@ -53,10 +58,21 @@ VAR_INPUT
 	sAmsNetId	: Tc2_Utilities.T_AmsNetID;	(* The ams net id of the log service. Defaults to localhost (empty string). *)
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[aTaskLogger[GETCURTASKINDEXEX()].Init(sAmsNetId);
+        <ST><![CDATA[aTaskLogger[Tc2_Utilities.GETCURTASKINDEXEX()].Init(sAmsNetId);
 ]]></ST>
       </Implementation>
     </Method>
+    <Property Name="RtcTime" Id="{3577743f-dcc4-455c-a535-d7ff2826b706}">
+      <Declaration><![CDATA[PROPERTY INTERNAL RtcTime : LINT]]></Declaration>
+      <Get Name="Get" Id="{743e0e5a-c100-4c91-84fb-00ad8ebc0e39}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RtcTime := aTaskRtcTime[Tc2_Utilities.GETCURTASKINDEXEX()].RtcTime;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="TaskContextBuilder" Id="{37ede606-5a7a-4581-9bfb-710648eb6050}">
       <Declaration><![CDATA[(*
 :Description: Returns the ``I_ContextBuilder`` for task specific context
@@ -100,23 +116,5 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <LineIds Name="PRG_TaskLog">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="PRG_TaskLog.Call">
-      <LineId Id="5" Count="1" />
-    </LineIds>
-    <LineIds Name="PRG_TaskLog.Init">
-      <LineId Id="5" Count="0" />
-      <LineId Id="8" Count="0" />
-    </LineIds>
-    <LineIds Name="PRG_TaskLog.TaskContextBuilder.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="PRG_TaskLog.TaskLogger.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

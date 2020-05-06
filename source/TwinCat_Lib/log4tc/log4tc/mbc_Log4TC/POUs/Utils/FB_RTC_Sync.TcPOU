@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_RTC_Sync" Id="{f0acd3d9-ef0f-4b56-99e0-7c98249d8c89}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_RTC_Sync
+VAR
+	fbRtcEx2		: Tc2_Utilities.RTC_EX2;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Call" Id="{fc897c08-4c26-4578-b9ea-71c2c67f067a}">
+      <Declaration><![CDATA[METHOD INTERNAL Call : BOOL
+VAR_INPUT
+END_VAR
+VAR_INST
+	fbGetTime		: Tc2_Utilities.NT_GetTime;
+	fbSyncTimer		: Tc2_Standard.TON := (PT:=T#10M);
+	bInit			: BOOL;	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbSyncTimer(IN:=NOT fbSyncTimer.Q);
+
+fbGetTime.START S= fbSyncTimer.Q OR NOT bInit;
+fbGetTime();
+
+IF NOT fbGetTime.BUSY THEN
+	fbGetTime.START := FALSE;
+	IF NOT fbGetTime.ERR THEN
+		fbRtcEx2.PDT := fbGetTime.TIMESTR;
+		fbRtcEx2.EN := TRUE;
+		fbRtcEx2.PMICRO := 0;
+	END_IF
+END_IF
+
+fbRtcEx2();
+fbRtcEx2.EN := FALSE;
+
+bInit := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="RtcTime" Id="{e99f65d5-e2c8-4335-9fce-a17b284596d7}">
+      <Declaration><![CDATA[PROPERTY INTERNAL RtcTime : LINT]]></Declaration>
+      <Get Name="Get" Id="{6818e827-7b06-4940-a663-b9f8a96ebec0}">
+        <Declaration><![CDATA[VAR
+	nFileTime	: Tc2_Utilities.T_FILETIME;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[fbRtcEx2();
+IF fbRtcEx2.Q THEN
+	nFileTime := Tc2_Utilities.SYSTEMTIME_TO_FILETIME(fbRtcEx2.CDT);
+	RtcTime := ULINT_TO_LINT(SHL(UDINT_TO_ULINT(nFileTime.dwHighDateTime), 32) OR nFileTime.dwLowDateTime)
+		+ fbRtcEx2.CMICRO * LINT#10;
+ELSE
+	Rtctime := 0;
+END_IF
+
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

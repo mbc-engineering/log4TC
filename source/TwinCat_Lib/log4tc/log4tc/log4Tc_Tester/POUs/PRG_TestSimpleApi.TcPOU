@@ -14,7 +14,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//fbScope.ContextBuilder.AddInt('scope', 42);
+      <ST><![CDATA[fbScope.ContextBuilder.AddInt('scope', 42);
 
 IF bExecute OR bExecuteSingle THEN
 	bExecuteSingle := FALSE;
@@ -27,7 +27,7 @@ IF bExecute OR bExecuteSingle THEN
 		F_LogContext().AddBool('csv', TRUE)
 	);
 	
-	//fbScope.Begin();
+	fbScope.Begin();
 	
 	F_LogLA3(
 		E_LogLevel.eInfo,
@@ -38,7 +38,7 @@ IF bExecute OR bExecuteSingle THEN
 		fArg,
 	);
 	
-	//fbScope.End();
+	fbScope.End();
 	
 	F_LogA3(
 		E_LogLevel.eInfo,
