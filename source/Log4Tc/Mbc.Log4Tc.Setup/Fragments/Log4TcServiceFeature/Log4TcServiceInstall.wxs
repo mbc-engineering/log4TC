@@ -8,7 +8,7 @@
         <File Source="$(var.Mbc.Log4Tc.Service.TargetPath) " />
         <ServiceInstall Id="ServiceInstaller"
                         Name="Mbc.Log4TC.Service"
-                        DisplayName="Mbc.Log4TC.Service"
+                        DisplayName="mbc log4TC Service"
                         Description="mbc engineering GmbH log4TC service"
                         Type="ownProcess"
                         Interactive="no"

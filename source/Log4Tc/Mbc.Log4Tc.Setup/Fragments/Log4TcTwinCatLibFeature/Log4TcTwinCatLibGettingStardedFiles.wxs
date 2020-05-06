@@ -20,9 +20,7 @@
             <Component Id="cmp1D70758746AA89639AF76F3F7854A91F" Directory="DIR_CommonAppDataFolderLog4TcGettingStarded" Guid="*">
                 <File Id="filA974BFB830E8156EF3A4300690FC281A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\GettingStarted.tsproj" />
             </Component>
-            <Component Id="cmpBFC62692A203846946D818160D3EACF6" Directory="dir2E5B3503FC0D63DBE2D9F31DAC26E077" Guid="*">
-                <File Id="fil3E458871A6CE7FE603648F3845106E44" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\.vs\GettingStarted\v15\.suo" />
-            </Component>
+            
             <Component Id="cmp6BB4B6BA384EFCAD3446677C0AC3E0C5" Directory="dir654D6B49BD8CA8F446A4D1BB29214551" Guid="*">
                 <File Id="fil5E5716AF0165D7EDF8F90BE6C8C4CACF" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\A_SimpleLogMessage.plcproj" />
             </Component>

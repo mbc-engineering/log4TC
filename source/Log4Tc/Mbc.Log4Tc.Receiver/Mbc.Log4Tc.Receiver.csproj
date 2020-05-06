@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Sobald Release von Beckhoff.TwinCAT.Ads in 5 Ready ist, kann auf netstandard2.0 gewechselt werden -->
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

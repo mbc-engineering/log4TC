@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
     <Prefer32Bit>false</Prefer32Bit>
     <RuntimeIdentifier>win</RuntimeIdentifier>
     <SelfContained>true</SelfContained>

@@ -13,7 +13,7 @@
 
   <!-- Exclude filter pdb and .xml files-->
   <xsl:key name="service-search"
-           match="wix:Component[contains(wix:File/@Source, '.pdb') or contains(wix:File/@Source, '.suo')]"
+           match="wix:Component[contains(wix:File/@Source, '.pdb') or contains(wix:File/@Source, '.suo') or contains(wix:File/@Source, '.library')]"
            use="@Id" />
   <xsl:template match="wix:Component[key('service-search', @Id)]" />
 
