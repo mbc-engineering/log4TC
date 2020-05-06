@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "C:/mbc-source/mbc/log4tc/docs",
+  "source_base_path": "d:/a/1/s/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -335,28 +335,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "internal/assets/Kontextdiagramm.png",
-      "output": {
-        "resource": {
-          "relative_path": "internal/assets/Kontextdiagramm.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "internal/assets/Systemkomponenten.png",
-      "output": {
-        "resource": {
-          "relative_path": "internal/assets/Systemkomponenten.png"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "reference/assets/vscode_log_viewer.png",
       "output": {
         "resource": {
@@ -442,17 +420,19 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": true,
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 15,
-          "skipped_file_count": 15
+          "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
