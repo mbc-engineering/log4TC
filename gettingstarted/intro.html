@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Erste Schritte | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Erste Schritte | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="erste-schritte">Erste Schritte</h1>
+
+<p>Diese geführte Tour stellt die grundlegenden Konzepte und Features von log4TC in einem kleinen zusammenhängenden Projekt vor.</p>
+<h2 id="vorraussetzungen">Vorraussetzungen</h2>
+<p>Damit log4Tc richtig benutzt werden kann, sollte der Aufbau bekannt sein. Es wird dabei unterschieden zwischen den Komponenten <code>log4TC TwinCat 3 Bibliothek</code> und dem <code>log4TC Service</code>.</p>
+<p><img src="_assets/architektur.png" alt="architektur"></p>
+<p>Folgende Voraussetzungen haben die beiden Komponenten:</p>
+<p><strong>log4TC TwinCat 3 Bibliothek</strong></p>
+<ul>
+<li><a href="https://www.beckhoff.de/default.asp?download/tc3-download-xae.htm">TwinCat 3 (min. 4022.00)</a></li>
+<li><a href="../reference/installation.html">log4TC Bibliothek (min. 0.1.0)</a></li>
+</ul>
+<p><strong>log4TC Service</strong></p>
+<ul>
+<li>min Windows 7 SP1 / Windows Embedded Standard 2009</li>
+<li><a href="https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer">Microsoft .NET Framework (Mindestends 4.6.1, empfohlen 4.8)</a></li>
+<li><a href="../reference/installation.html">log4TC Service (min. 0.1.0)</a></li>
+</ul>
+<p>Beim Installieren von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, dass diese Konfiguration aktiv ist.</p>
+<p>Für diese Einführung wird ausserdem vorrausgesetzt, dass die SPS und der log4TC auf dem <em>gleichen</em> Rechner laufen (Testlizenz ist ausreichend). Dies ist keine Einschränkung von log4TC sondern eine Vereinfachung.</p>
+<h2 id="übersicht">Übersicht</h2>
+<p>Die Einführung geht schrittweise vor. Es wird empfohlen beim ersten Kontakt mit log4TC alle Schritte nacheinander selbst auszuprobieren.</p>
+<ol>
+<li><a href="create_twincat_project.html">TwinCAT Projekt anlegen</a></li>
+<li><a href="add_log4tc_lib.html">log4TC-Library hinzufügen</a></li>
+<li><a href="simple_logging.html">Ausgabe einer einfachen Log-Meldung</a></li>
+<li><a href="argument_logging.html">Ausgabe von Log-Meldungen mit Argumenten</a></li>
+<li><a href="logger_usage.html">Benutzung von Loggern</a></li>
+<li><a href="context_usage.html">Integration von Context-Eigenschaften</a></li>
+<li><a href="tools_log4view.html">Log-Meldungen mit Log4View beobachten</a></li>
+<li><a href="write_structured_values.html">Protokollierung von strukturierten Werten</a></li>
+</ol>
+<hr>
+<h2 id="nächster-schritt-twincat-projekt-anlegen">Nächster Schritt: <a href="create_twincat_project.html">TwinCAT Projekt anlegen</a></h2>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

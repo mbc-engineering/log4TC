@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Log-Meldungen mit Log4View beobachten | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Log-Meldungen mit Log4View beobachten | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="log-meldungen-mit-log4view-beobachten">Log-Meldungen mit Log4View beobachten</h1>
+
+<p>Für die Ausgabe, Speicherung und Weiterverarbeitung existieren eine fast endlose Anzahl an Werkzeugen. Ein grosser Vorteil von log4TC ist, dass es sich in etablierte bestehende Systeme integriert.</p>
+<p>Ein Werkzeug für die Analyse und Anzeige von Log-Meldungen ist das Produkt <a href="https://www.log4view.com/"><em>Log4View</em></a> von PROSA. Die Anwendung kann mit reduzierten Funktionsumfang kostenlos benutzt werden.</p>
+<h2 id="installation-von-log4view">Installation von Log4View</h2>
+<p>Die Anwendung kann <a href="https://www.log4view.de/download-1">Hier</a> heruntergeladen werden. Sie wird wie eine normale Windows Anwendung installiert.</p>
+<h2 id="konfiguration-der-log-ausgabe-in-nlog">Konfiguration der Log-Ausgabe in NLog</h2>
+<p>Log4View kann verschiedene Eingabeformate verarbeiten, aber das Log4J-XML hat sich bisher als sehr geeignet herausgestellt. Die NLog-Konfiguration in der log4TC Auslieferung enthält bereits alles Notwendige, damit solche Dateien geschrieben werden. Die neue Ausgabe ist im XML-Format und befindet sich im gleichen Ordner wie die bisher benutzte Log-Datei. Sie hat den Namen <code>log4tc.xml</code>. Der Inhalt ist XML, kann also prinzipiell in einem Texteditor geöffnet werden, ist aber schwieriger zu lesen.</p>
+<h2 id="öffnen-der-log4tcxml-in-logview">Öffnen der <code>log4tc.xml</code> in LogView</h2>
+<p>Nach dem Starten von Log4View, kann mit <em>Start</em>/<em>Öffnen</em> die Log-Datei ausgewählt werden. Am einfachsten geht das, wenn man im Öffnen-Dialog im Pfad folgenden Text hineinkopiert und Enter betätigt: <code>%ProgramData%\log4TC\log\</code>. Danach wird die Datei <code>log4tc.xml</code> ausgewählt und mit Klick auf <em>Öffnen</em> bestätigt.</p>
+<p>Jetzt muss noch das Format der Datei eingestellt werden. Die Einstellungen sollten den nachfolgenden Bildschirmfoto entsprechen:</p>
+<p><img src="_assets/log4view_config.png" alt="Einstellungen Log4View"></p>
+<p><img src="_assets/log4view_options.png" alt="Optionen Log4View"></p>
+<p>Nach dem Bestätigen mit <em>OK</em> wird die Datei geladen und im Fenster angezeigt. Man findet hier alle Informationen, die auch im Log-File waren, aber in strukturierter Form. So kann man z.B. zu einem Zeitstempel springen, Logger ausblenden, nur bestimmte Level anzeigen, usw. Der Nutzen erschliesst sich bei Log-Dateien mit mehreren Tausend Meldungen sehr schnell.</p>
+<p><img src="_assets/log4view.png" alt="Log4View"></p>
+<h2 id="nächster-schritt">Nächster Schritt</h2>
+<p><a href="write_structured_values.html">Protokollierung von strukturierten Werten</a></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

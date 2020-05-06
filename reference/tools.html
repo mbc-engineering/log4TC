@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Werkzeuge rund um log4TC | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Werkzeuge rund um log4TC | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="werkzeuge-rund-um-log4tc">Werkzeuge rund um log4TC</h1>
+
+<h2 id="anzeigen-von-log-meldungen">Anzeigen von Log-Meldungen</h2>
+<h3 id="log4view">Log4View</h3>
+<p>Die Anwendung <a href="https://www.log4view.com/">Log4View</a> von Prosa ist eine unserer Empfehlungen für die Anzeige von mittleren oder grossen Anzahl an Log-Meldungen. Selbst die konstenlose Variante ist für viele Zwecke ausreichend.</p>
+<p>Wichtig bei der Benutzung von Log4View mit log4TC sind folgende Punkte:</p>
+<h4 id="nlog-konfiguration">NLog Konfiguration</h4>
+<p>NLog muss für die log4j-XML Ausgabe konfiguriert werden. NLog kommt mit einem Standard-Layout <code>log4jxmlevent</code>, das prinzipiell diese Anforderung erfüllt. log4TC stellt aber eine erweiterte Variante <code>mbclog4jxmlevent</code> mit folgenden Verbesserungen zur Verfügung:</p>
+<ul>
+<li>Thread-Id enthält die SPS Task-ID</li>
+<li>Zusätzliches Properties um die Message zu formatieren</li>
+</ul>
+<p>Eine Beispiel-Konfiguration könnte so aussehen:</p>
+<pre><code class="lang-xml">  &lt;extensions&gt;
+    &lt;add assembly=&quot;Mbc.Log4Tc.Output.NLog&quot;/&gt;
+  &lt;/extensions&gt;
+
+  &lt;targets&gt;
+    &lt;target name=&quot;xmlLogFile&quot;
+            xsi:type=&quot;File&quot;
+            encoding=&quot;utf-8&quot;
+		    fileName=&quot;${logdir}/log4tc.xml&quot;
+            &lt;!-- evtl. weiter File Optionen --&gt;
+			layout=&quot;${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}&quot;&gt;
+    &lt;/target&gt;
+</code></pre>
+<h4 id="logging">Logging</h4>
+<p>Log4View bietet sehr gute Selektionsmöglichkeiten auf dem Logger und dem Level. Es lohnt sicher daher diese beiden Konsequenzt im Code einzusetzen.</p>
+<p>Leider bietet Log4View bis jetzt noch keine Unterstützung von Context-Properties und/oder structured Logging.</p>
+<h3 id="notepad">Notepad++</h3>
+<p><a href="https://notepad-plus-plus.org/">Notepad++</a> bietet zwar keinen speziellen Modus für log4TC besitzt aber zwei Eigenschaften, die es interssant mach für einfache Logging Aufgaben:</p>
+<ul>
+<li>Im Menü &quot;Ansicht&quot; -&gt; &quot;Überwachen (tail -f)&quot; kann Notepad++ angewiesen werden die Log-Datei laufend zu überwachung und bei Änderung automatisch einzulesen.</li>
+<li>Im Menü &quot;Sprachen&quot; kann nach eigenen Anforderungen ein Stil defineirt werden, wie die einzelnen Blöcke in einem Log-File formatiert werden sollen</li>
+</ul>
+<h3 id="visual-studio-code">Visual Studio Code</h3>
+<p><a href="https://code.visualstudio.com/">Visual Studio Code</a> ist ähnlich wie Notepad++ eine universelle Platzform für Textverarbeitung. VS-Code bietet eine grosse Anzahl an Erweiterungen so z.B. auch für Log-File.</p>
+<p>Eines davon <em>Log Viewer</em> bietet einfache Möglichkeiten für Log-Files:</p>
+<p><img src="_assets/vscode_log_viewer.png" alt="Log Viewer Extension für VS-Code"></p>
+<h3 id="todo">TODO</h3>
+<ul>
+<li><a href="https://www.logviewplus.com/">https://www.logviewplus.com/</a></li>
+<li>Compact Log Viewer in Verbindung CLEF-Format</li>
+</ul>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

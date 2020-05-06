@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Log-Level | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Log-Level | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="log-level">Log-Level</h1>
+
+<p>Das log4Tc kennt sechs Log-Level:</p>
+<ul>
+<li>Trace</li>
+<li>Debug</li>
+<li>Info</li>
+<li>Warn</li>
+<li>Error</li>
+<li>Fatal</li>
+</ul>
+<p>Die Log-Level sind geordnet, Trace hat die kleinste Ordnung, Fatal die grösste.</p>
+<p>Grundsätzlich können die Bedeutung der Log-Level frei definiert werden, es ist aber empfehlenswert, wenn diese Projekt- oder Unternehmensweit definiert wird.</p>
+<p>Log4Tc empfiehlt diese Richtlinien für die Benutzung von Log-Level:</p>
+<h2 id="level-fatal">Level: <code>Fatal</code></h2>
+<p>Der <code>Fatal</code>-Level sollte für Fehler verwendet werden, die verhindern, das ein Programm komplett oder zum grossen Teil korrekt ausgeführt werden kann. Log-Meldungen von dieser Stufe bedeuten i.d.R. sofortiges Handeln und werden meist auch direkt weitergeleitet.</p>
+<p>Beispiel: Der Safety-Controller konnte wegen eines HW-Fehlers nicht initialisiert werden.</p>
+<h2 id="level-error">Level: <code>Error</code></h2>
+<p>Der <code>Error</code>-Level kennzeichnet Meldungen, die von Fehlern stammen, die i.d.R. auch zu Problemen im Programm führen. Im Gegensatz zum <code>Fatal</code>-Level sind hier aber nur Teile der Software betroffen.</p>
+<p>Auch diese Meldungen werden normalerweise direkt an einen Operator/Service weitergeleitet.</p>
+<p>Beispiele: Kommunikation zu einem übergeordneten System ausgefallen.</p>
+<h2 id="level-warn">Level: <code>Warn</code></h2>
+<p>Zustände, die noch nicht zu einem Fehler führen, aber bereits ein baldiges Eingreifen eines Users erfordern, können mit <code>Warn</code> gemeldet werden. Normallerweise läuft die Software noch problemlos weiter. Die Reaktion auf diese Meldungen ist häufig verzögert.</p>
+<p>Beispiel: Zu wenig Kühlmittel im System.</p>
+<h2 id="levelinfo">Level:<code>Info</code></h2>
+<p>Der <code>Info</code>-Level soll wichtige Zustandsänderung der Software protokollieren. Häufig sind diese Informationen wichtig um Fehler besser zuordnen zu können.</p>
+<p>Beispiel: Ein neues Rezept mit der ID 42 wurde geladen.</p>
+<h2 id="level-debug">Level: <code>Debug</code></h2>
+<p>Dieser Level wird häufig von Entwicklern verwendet um weitere detaillierte Zustandsänderungen zu verfolgen. Im Normalfall sind diese Information nur für Entwickler notwendig.</p>
+<p>Beispiel: Der Aufruf des Sendebaustein hat 3.2s benötigt.</p>
+<h2 id="level-trace">Level: <code>Trace</code></h2>
+<p>Der <code>Trace</code>-Level wird ebenfalls von Entwickler verwendet um weitergehende interne Zustände zu verfolgen. Entwickler verwenden diesen Level für die Analyse von bestehenden Problemen. Log-Messages dieses Levels werden häufig nicht dauerhaft abgespeichert.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

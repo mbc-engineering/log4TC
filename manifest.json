@@ -1,0 +1,493 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/mbc-source/mbc/log4tc/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      },
+      "is_incremental": false
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "Changelog.md",
+      "output": {
+        ".html": {
+          "relative_path": "Changelog.html",
+          "hash": "G0ocj7008Ag6ikjEUJCNiQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "Logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "Logo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "UidNotFound"
+      ],
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "6okiFsZAN7y6r8M5dj1Hnw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "favicon.ico",
+      "output": {
+        "resource": {
+          "relative_path": "favicon.ico"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/architektur.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/architektur.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log1.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log1.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log2.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log3.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log4.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log4.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log4view.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log4view.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log4view_config.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log4view_config.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log4view_options.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log4view_options.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log5.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log5.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/log_folder.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/log_folder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/programdata.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/programdata.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/references.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/references.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "gettingstarted/_assets/solution.png",
+      "output": {
+        "resource": {
+          "relative_path": "gettingstarted/_assets/solution.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/add_log4tc_lib.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/add_log4tc_lib.html",
+          "hash": "7v1jOOLRgqHZE532yCIlWw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/argument_logging.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/argument_logging.html",
+          "hash": "PK84VPk/aGHhngFLgZ5w5g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/context_usage.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/context_usage.html",
+          "hash": "GZPqFmwLNHDKl1tdB6YDYg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/create_twincat_project.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/create_twincat_project.html",
+          "hash": "CMLPXS84q/z0GXOSZuN3CA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/intro.html",
+          "hash": "s0z5rza7KZa4AcjSaeo9aA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/logger_usage.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/logger_usage.html",
+          "hash": "jV6tyH4fJ4H0SpXi7pjvkA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/simple_logging.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/simple_logging.html",
+          "hash": "nZvwFNAmzbt5QBz2+lqlJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "gettingstarted/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/toc.html",
+          "hash": "+qnVI2ESb9GtzDuYd6NeEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/tools_log4view.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/tools_log4view.html",
+          "hash": "dbs1AcGWCcptB+ViTP0D4g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "gettingstarted/write_structured_values.md",
+      "output": {
+        ".html": {
+          "relative_path": "gettingstarted/write_structured_values.html",
+          "hash": "TWCWrsgIm12nzkTdl9Eiyw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "rtxXcIMSlwGVB0eEU+iAIw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "internal/_assets/Kontextdiagramm.png",
+      "output": {
+        "resource": {
+          "relative_path": "internal/_assets/Kontextdiagramm.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "internal/_assets/Systemkomponenten.png",
+      "output": {
+        "resource": {
+          "relative_path": "internal/_assets/Systemkomponenten.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "reference/_assets/vscode_log_viewer.png",
+      "output": {
+        "resource": {
+          "relative_path": "reference/_assets/vscode_log_viewer.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "reference/installation.md",
+      "output": {
+        ".html": {
+          "relative_path": "reference/installation.html",
+          "hash": "LGaExI8Aia51IFgE1m1apg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "reference/loglevel.md",
+      "output": {
+        ".html": {
+          "relative_path": "reference/loglevel.html",
+          "hash": "JwUgqoYsBOoOBMhGvc7ZVQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "reference/placeholder.md",
+      "output": {
+        ".html": {
+          "relative_path": "reference/placeholder.html",
+          "hash": "dOs0Ot0Uw9nNTKsQgt1Jlg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "reference/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "reference/toc.html",
+          "hash": "MEIiRkZZhv3HyIMgNeBryQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "reference/tools.md",
+      "output": {
+        ".html": {
+          "relative_path": "reference/tools.html",
+          "hash": "U8V1ivYW/H9ezF2mLfrXZg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "lC041mZUcEe5X9Ugw72sbQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 15,
+          "skipped_file_count": 15
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: should not trace intermediate info.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

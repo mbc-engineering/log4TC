@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Ausgabe von Log-Meldungen mit Argumenten | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Ausgabe von Log-Meldungen mit Argumenten | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="ausgabe-von-log-meldungen-mit-argumenten">Ausgabe von Log-Meldungen mit Argumenten</h1>
+
+<p>Log4TC erlaubt es nicht nur konstante Log-Message auszugeben, sondern auch Argumente mitzugeben. Die Argumente stehen dann für den Text zur Formattierung zur Verfügung.</p>
+<p>Log4TC stellt Funktionen für 0 bis 10 Argumente zur Verfügung.</p>
+<h2 id="ausgabe-von-argumenten-mit-any-typ">Ausgabe von Argumenten mit ANY-Typ</h2>
+<p>Argumente werden mit dem ST-Datentyp <code>ANY</code> übergeben werden. Einzige Voraussetzung dafür ist, dass der Wert als Variable vorliegt. Es können daher keine Literale (z.B. <code>42</code>) und keine Ausdrücke (z.B. <code>nVar * 10</code>) verwendet werden. Dies ist eine Einschränkung des <code>ANY</code>-Typs.</p>
+<p>Im Beispiel wird ein Zähler erzeugt, der jede Sekunde um eins hochzählt:</p>
+<pre><code>VAR
+	nCounter	: UINT;
+	fbCountTime	: TON := (PT:=T#1S);
+END_VAR
+----------------------------------------------------------------------
+fbCountTime(IN:=NOT fbCountTime.Q);
+IF fbCountTime.Q THEN
+	nCounter := nCounter + 1;
+	// Hier Zähler ausgeben
+END_IF
+</code></pre>
+<p>Als Nächstes wird bei jeder Änderung des Zählers eine Meldung in das Log-File geschrieben. Dazu wird der Logger im <code>IF/THEN</code> eingefügt und der aktuellen Zählerwert übergeben:</p>
+<pre><code>F_LogA1(E_LogLevel.eDebug, 'Zähler geändert, neuer Wert {0}', nCounter);
+</code></pre>
+<p>Da ein Argument vom Typ <code>ANY</code> übergeben wird, heisst die Funktion <code>F_LogA1</code>. Gegenüber <code>F_Log</code> besitzt diese einen weiteren Input-Parameter mit dem der aktuelle Zählerwert übergeben wird. Entsprechend würde die Funktion bei zwei Argumenten <code>F_LogA2</code> heissen.</p>
+<p>Damit der Zähler-Wert auch im Text erscheint, wird ein Platzhalter <code>{0}</code> in der Log-Message gesetzt (<a href="../reference/placeholder.html">Platzhalter</a>). Im Beispiel wird dieser Platzhalter bei der Ausgabe durch den Wert der Variable <code>nCounter</code> ersetzt.</p>
+<p>Der komplette MAIN-Code sieht damit wie folgt aus:</p>
+<pre><code>PROGRAM MAIN
+VAR
+	nCounter	: UINT;
+	fbCountTime	: TON := (PT:=T#1S);
+END_VAR
+----------------------------------------------------------------------
+IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+	F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
+END_IF
+
+fbCountTime(IN:=NOT fbCountTime.Q);
+IF fbCountTime.Q THEN
+	nCounter := nCounter + 1;
+	F_LogA1(E_LogLevel.eDebug, 'Zähler geändert, neuer Wert {counter}', nCounter);
+END_IF
+
+PRG_TaskLog.Call();
+</code></pre>
+<p>Der Code befindet sich im Beispielprojekt unter den Namen &quot;B_LogMessageWithArg&quot;.</p>
+<h2 id="aktualisieren-des-sps-codes-und-beobachten-der-log-meldung">Aktualisieren des SPS-Codes und beobachten der Log-Meldung</h2>
+<p>Der geänderte SPS-Code kann jetzt mit einem Online-Change aktualisiert werden. Danach kann man im Log-File jede Sekunde den neuen Zählerwert ablesen.</p>
+<p><img src="_assets/log2.png" alt="Log mit Argumenten"></p>
+<h2 id="nächster-schritt">Nächster Schritt</h2>
+<p><a href="logger_usage.html">Benutzung von Loggern</a></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

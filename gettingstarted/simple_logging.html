@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Ausgabe einer einfachen Log-Meldung | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Ausgabe einer einfachen Log-Meldung | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="ausgabe-einer-einfachen-log-meldung">Ausgabe einer einfachen Log-Meldung</h1>
+
+<h2 id="aufruf-des-loggers-im-main">Aufruf des Loggers im MAIN</h2>
+<p>Die in der SPS erzeugten Log-Meldungen werden nicht sofort beim Aufruf eines Log-Bausteins übertragen, sondern werden zunächst in einen Task-spezifischen Puffer gespeichert. Damit diese Meldungen dann an den log4Tc-Service übertragen werden, muss in <strong>jeder</strong> Task das log4Tc aufgerufen werden.</p>
+<p>Der Aufruf passiert mit folgenden Code, wir empfehlen diese Anweisung an das Ende jedes Bausteins anzufügen, dass von einer Task referenziert wird, in unseren Fall also im MAIN-Baustein.:</p>
+<pre><code>PRG_TaskLog.Call();
+</code></pre>
+<h2 id="ausgabe-einer-log-meldung">Ausgabe einer Log-Meldung</h2>
+<p>Im Beispiel soll eine Meldung ausgegeben werden, wenn die SPS startet. TwinCAT stellt ein Flag zur Verfügung, dass im ersten Zyklus auf <code>TRUE</code> gesetzt ist:</p>
+<pre><code>IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+	// Hier soll eine Meldung ausgegebn werden
+END_IF
+</code></pre>
+<p>Um eine Meldung auszugeben, muss an der markierten Stelle eine Funktion der Log4TC Library aufgerufen werden.</p>
+<pre><code>F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
+</code></pre>
+<blockquote>
+<p><em>Hinweis</em>: Im Beispiel wird die kurze Form für Bibliotheksaufrufe verwendet. Der Aufruf kann aber auch mit dem Namensraum erfolgen: <code>log4tc.F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');</code></p>
+</blockquote>
+<p>Der Aufruf besteht aus zwei Parametern:</p>
+<ul>
+<li><code>eLogLevel</code>: Muss immer angegeben werden und definiert den Level der Log-Meldungen. Log4Tc kennt die Stufen Trace, Debug, Info, Warn, Error, Fatal. Weitergehende Informationen zu den Log-Level und ihre Bedeutung sind <a href="../reference/loglevel.html">hier</a> zu finden.</li>
+<li><code>sMessage</code>: Gibt den Text an der geloggt werden soll.</li>
+</ul>
+<p>Der MAIN-Baustein sollte wie folgt aussehen:</p>
+<pre><code>PROGRAM MAIN
+----------------------------------------------------------------------
+IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+	F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
+END_IF
+
+PRG_TaskLog.Call();
+</code></pre>
+<p>Der Code befindet sich im Beispielprojekt unter den Namen &quot;A_SimpleLogMessage&quot;.</p>
+<h2 id="ausführen-des-sps-projekts-und-anzeige-der-meldung">Ausführen des SPS-Projekts und anzeige der Meldung</h2>
+<p>Das Projekt kann es aktiviert, geladen und ausgeführt werden.</p>
+<p>Log-Meldungen werden mit der ausgelieferten Konfiguration in das Verzeichnis <code>%ProgramData%\log4tc\log\</code> abgelegt.</p>
+<blockquote>
+<p><em>Tipp</em>: In Windows ist der Ordner <code>%ProgramData%</code> (entspricht normalerweise den Pfad <code>C:\ProgramData</code>) versteckt und wird nicht im Explorer. Man kann aber den Text <code>%programdata%</code> als Pfad im Explorer eingeben und gelangt dann direkt zum Ordner. Alternativ können auch die Links verwendet werden, die mit der Installation von log4TC im Startmenü angelegt werden.</p>
+</blockquote>
+<p><img src="_assets/programdata.png" alt="ProgramData"></p>
+<p>Im Log-Ordner befinden sich zwei Dateien, momentan geht es nur um die <code>log4tc.log</code>.</p>
+<p><img src="_assets/log_folder.png" alt="Log-Ordner"></p>
+<p>Die Datei <code>log4tc.log</code> kann mit einem normalen Texteditor geöffnet werden (siehe auch <a href="../reference/tools.html">Tools</a>):</p>
+<p><img src="_assets/log1.png" alt="Erste Log-Meldung"></p>
+<p>Die Log-Meldung besteht aus mehreren Teilen, die durch ein <code>|</code>-Zeichen getrennt sind (Das Format einer Meldung kann über die NLog-Konfiguration fast beliebig geändert werden.).</p>
+<ol>
+<li>Zeitstempel der Meldung (SPS-Zeit) mit 100ns Auflösung (abhängig von Task-Zeit)</li>
+<li>Log-Level der Meldung, entspricht den ersten Input-Parameter (<code>E_LogLevel.eInfo</code>)</li>
+<li>Meldungstext</li>
+</ol>
+<p>Die Erklärung der beiden übrigen Felder (<code>_GLOBAL</code> und <code>[]</code>) erfolgen später.</p>
+<h2 id="nächster-schritt">Nächster Schritt</h2>
+<p><a href="argument_logging.html">Ausgabe von Log-Meldungen mit Argumenten</a></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
