@@ -41,7 +41,8 @@
           "**/images/**",
           "**/res/*.png",
           "**/_assets/*.png",
-          "favicon.ico"
+          "favicon.ico",
+          "logo.svg"
         ]
       }
     ],

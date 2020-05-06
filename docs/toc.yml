@@ -1,5 +1,6 @@
 ﻿- name: Erste Schritte
   href: gettingstarted/intro.md
+- name: Einstellungen
+  href: reference/
 - name: changelog
   href: Changelog.md
-
