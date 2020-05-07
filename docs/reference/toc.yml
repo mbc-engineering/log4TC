@@ -1,6 +1,4 @@
-﻿- name: Installation
-  href: installation.md
-- name: Werkzeuge
+﻿- name: Werkzeuge
   href: tools.md
 - name: Formatierung
   href: placeholder.md
@@ -8,3 +6,5 @@
   href: loglevel.md
 - name: NLog-Ausgabeplugin
   href: nlog_output.md
+- name: Installation
+  href: installation.md
