@@ -6,7 +6,8 @@ Den aktuellen Release von Log4TC kann [hier](https://github.com/mbc-engineering/
 
 ## Voraussetzungen
 
-* [TwinCat 3 (min. 4022.00)](https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm)
+* [TwinCat 3.1 (min. 4022.00)](https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm)
+* Administrationsrechte für die Installation
 
 **Nur Service:**
 
@@ -21,11 +22,38 @@ Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 un
 1. Stellen Sie sicher das alle Anwendungen geschlossen sind.
 2. Kopieren des MSI [Mbc.Log4Tc.Setup(x64)v20.5.6.0](https://github.com/mbc-engineering/log4TC/releases) auf den Zielrechner. Führen Sie das MSI setup aus.
 3. Akzeptieren Sie den `log4TC Software-Lizenzvertrag`.
+4. Wählen sie die gewünschten Features. (Nähere Beschreibeung [hier](#features)
 4. Durch Klicken auf `Install` werden alle notwendigen Dateien auf das System kopiert und der log4TC Windows Service mit dem Namen `mbc log4TC Service` gestartet.
 
 ![](assets/setup_successfull.png)
 
-# Bekannte Fehler
+## Features
+
+### log4TC Service
+
+> [!NOTE]
+> Dieses Feature erscheint nur wenn sie ein ADS Router - TC1000 | TC3 ADS installiert haben.
+
+**Beinhaltet**
+
+- Windows Service zum schreiben der generierten Logmeldungen aus TwinCat
+- Konfiguration Links im Startmenü
+
+![links](assets/setup_service_links.png)
+
+### log4TC TwinCat 3 Bibliothek
+
+> [!NOTE]
+> Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4022.00 installiert haben.
+
+**Beinhaltet**
+
+- Installiert die log4TC Twincat 3 Bibliothek lokal
+- Bereitet die OEM Lizenz zur Registrierung für die Produktive Benutzung vor
+- Kopiert das getting starded Projekt unter `C:\ProgramData\log4TC\gettingstarded`
+- Hilfe Links im Startmenü
+
+## Bekannte Fehler
 
 ## Setup endet mit dem Fehler: `... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...`
 

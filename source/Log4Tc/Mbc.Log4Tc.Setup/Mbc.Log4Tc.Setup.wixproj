@@ -41,6 +41,7 @@
     <OutputName>Mbc.Log4Tc.Setup(x64)</OutputName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Fragments\Common\Log4TcCommonStartmenu.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceOutputFiles.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceInstall.wxs" />
     <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStarded.wxs" />
@@ -82,6 +83,7 @@
     <Content Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStardedFilesFilter.xslt" />
     <Content Include="Includes\DefinitionsPlatform.wxi" />
     <Content Include="packages.config" />
+    <Content Include="Resources\log4TcBackground.png" />
     <Content Include="Resources\favicon.ico" />
     <Content Include="Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" />
     <Content Include="Resources\mbcBackground.png" />
@@ -91,6 +93,7 @@
     <Folder Include="Fragments\" />
     <Folder Include="Fragments\Log4TcServiceFeature" />
     <Folder Include="Fragments\Log4TcTwinCatLibFeature" />
+    <Folder Include="Fragments\Common" />
     <Folder Include="Includes" />
     <Folder Include="Resources" />
   </ItemGroup>

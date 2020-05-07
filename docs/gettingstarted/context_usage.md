@@ -75,4 +75,3 @@ In der mitgelieferten Konfigurationsdatei werden die Context-Eigenschaften am En
 ## Nächster Schritt
 
 [Log-Meldungen mit Log4View beobachten](tools_log4view.md)
-

@@ -29,4 +29,3 @@ Nach dem Bestätigen mit *OK* wird die Datei geladen und im Fenster angezeigt. M
 ## Nächster Schritt
 
 [Protokollierung von strukturierten Werten](write_structured_values.md)
-

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Fragment>
+    <ComponentGroup Id="Cmp_Log4TcCommonInstall">
+      <Component Id="Cmp_Log4TcCommonInstallStartmenueShortcut" 
+                 Directory="DIR_ProgramMenuServiceShortcuts" 
+                 Guid="7B0BDA32-18B1-4346-8F2D-D508BD6B3F14">
+        <!--Start Menu Shortcuts-->
+        <CreateFolder Directory="DIR_ProgramMenuServiceShortcuts" />
+        <RemoveFolder Id="RemoveCompanyStartMenuFolderCommon"
+                      Directory="DIR_ProgramMenuServiceShortcuts"
+                      On="uninstall" />
+
+        <util:InternetShortcut Id="StartmenueWebMbcHelpShortcut"
+                       Directory="DIR_ProgramMenuServiceShortcuts"
+                       Name="log4TC Hilfe"
+                       Target="https://mbc-engineering.github.io/log4TC/"
+                       Type="url" />
+
+        <util:InternetShortcut Id="StartmenueWebMbcShortcut"
+                               Directory="DIR_ProgramMenuServiceShortcuts"
+                               Name="mbc-engineering.ch"
+                               Target="https://www.mbc-engineering.ch/"
+                               Type="url" />
+
+        <RegistryValue Root="HKCU"
+                       Key="Software\mbc engineering GmbH\log4TC"
+                       Name="Log4TcCommonInstallStartmenueShortcut"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -1,17 +1,25 @@
 ﻿# Changelog
-All notable changes to this project will be documented in this file.
 
-The Release Versioning format follows the scheme **Year.Mount.Day.Patch**.
-For example could this be: 18.03.1.0, 18.07.30.0, 18.07.30.1.
+## [vNext]
+### Changed
+- Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host
 
-The following types of changes exist:
-- **Added** for new features.
-- **Changed** for changes in existing functionality.
-- **Deprecated** for soon-to-be removed features.
-- **Removed** for now removed features.
-- **Fixed** for any bug fixes.
-- **Security** in case of vulnerabilities.
-
-## [20.04.20]
+## [20.05.06]
 ### Added
-- Log4Tc Grundstruktur
+- Log4Tc Initial Version
+
+
+---
+
+> [!NOTE]
+> All wichtigen Änderungen zu diesem Projekt werden in dieser Datei dokumentiert.
+>
+> Das Release Versionierungsformat folgt dem Schema **Jahr.Monat.Tag.Patch**. Zum Beispiel: 20.05.06, 19.07.30.0, 19.07.30.1.
+> 
+> Es gibt folgende änderungstypen:
+> - **Added** for new features.
+> - **Changed** for changes in existing functionality.
+> - **Deprecated** for soon-to-be removed features.
+> - **Removed** for now removed features.
+> - **Fixed** for any bug fixes.
+> - **Security** in case of vulnerabilities.

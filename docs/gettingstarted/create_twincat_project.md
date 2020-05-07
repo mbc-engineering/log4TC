@@ -13,6 +13,6 @@ Die Visual Studio Solution sollte wie folgt aussehen:
 
 ![Solution](assets/solution.png)
 
-## Nächster Schritt: 
+## Nächster Schritt
 
 [log4TC-Library hinzufügen](add_log4tc_lib.md)
