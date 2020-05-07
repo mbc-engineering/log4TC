@@ -65,7 +65,7 @@
         <util:InternetShortcut Id="StartmenueWebMbcHelpShortcut"
                        Directory="DIR_ProgramMenuServiceShortcuts"
                        Name="log4TC Hilfe"
-                       Target="https://mbc.dev/log4TC/"
+                       Target="https://mbc-engineering.github.io/log4TC/"
                        Type="url" />
 
         <util:InternetShortcut Id="StartmenueWebMbcShortcut"

@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EULA.rtf" />
+    <Content Include="Fragments\Log4TcTwinCatLibFeature\2020-05-06_BADE00315092_Certificate_Signed.tmc" />
     <Content Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStardedFilesFilter.xslt" />
     <Content Include="Includes\DefinitionsPlatform.wxi" />
     <Content Include="packages.config" />
@@ -112,7 +113,7 @@
       <!-- Define constant for using in wix-->
       <DefineConstants>$(DefineConstants);BuildVersion=%(AssemblyVersion.Version)</DefineConstants>
       <!-- Define varialbe for using in csproj afterbuild-->
-      <BuildVersion>%(AssemblyVersion.Version)</BuildVersion>      
+      <BuildVersion>%(AssemblyVersion.Version)</BuildVersion>
     </PropertyGroup>
     <!-- harvest wxs file from publish folder of Mbc.Log4Tc.Service project -->
     <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" Directory="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net461\win\publish" Transforms="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcService" DirectoryRefId="DIR_Log4TcService" AutogenerateGuids="true" PreprocessorVariable="var.Mbc.Log4Tc.Service.TargetDir" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />

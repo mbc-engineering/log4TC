@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass">
+	<Vendor>
+		<Name>mbc engineering GmbH</Name>
+	</Vendor>
+	<Licenses>
+		<License>
+			<LicenseId>{382990C3-AE78-4CDF-8201-CD9F44FB3CAA}</LicenseId>
+			<OemId OemName="mbc engineering GmbH" OrderAddress="">{8681435F-32B7-BE94-25F1-B4E6D05F6E52}</OemId>
+			<OrderNo>27a353f2-6232-4ebd-aa04-4c45bab0d528</OrderNo>
+			<DisplayName>log4tc OEM</DisplayName>
+			<Comment>mbc engineering </Comment>
+		</License>
+	</Licenses>
+</TcModuleClass>
