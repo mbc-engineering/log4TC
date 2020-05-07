@@ -2,15 +2,22 @@
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4023.119">
 	<Project ProjectGUID="{ADF155C1-099B-4386-BD36-DC7AED699701}" TargetNetId="172.16.23.20.1.1" Target64Bit="true" ShowHideConfigurations="#x3c7">
 		<System>
+			<Licenses>
+				<Target BkhfOrder="3242345xvcxc" CustomOrder="10010"/>
+			</Licenses>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="10000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
+				</Task>
+				<Task Id="4" Priority="21" CycleTime="100000" AmsPort="351" AdtTasks="true">
+					<Name>PlcTask1</Name>
 				</Task>
 			</Tasks>
 		</System>
 		<Plc>
 			<Project File="mbc_Log4TC.xti"/>
 			<Project File="log4Tc_Tester.xti"/>
+			<Project File="log4Tc_SmokeTest.xti"/>
 		</Plc>
 	</Project>
 </TcSmProject>
