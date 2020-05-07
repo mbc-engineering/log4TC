@@ -6,3 +6,5 @@
   href: placeholder.md
 - name: Loglevel
   href: loglevel.md
+- name: NLog-Ausgabeplugin
+  href: nlog_output.md

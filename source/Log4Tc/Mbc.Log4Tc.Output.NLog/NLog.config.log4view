@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog
+	xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	throwConfigExceptions="true"
+	autoReload="true"
+	internalLogLevel="Info"
+	throwExceptions="true">
+
+  <!--
+	See https://github.com/nlog/nlog/wiki/Configuration-file
+	for information on customizing logging rules and outputs.
+
+  See also for targets: https://nlog-project.org/config/?tab=targets
+  See also for placeholders: https://nlog-project.org/config/?tab=layout-renderers
+	-->
+
+  <extensions>
+    <add assembly="Mbc.Log4Tc.Output.NLog"/>
+  </extensions>
+
+  <variable name="logdir" value="${specialfolder:folder=CommonApplicationData}\log4TC\log"/>
+
+  <targets>
+    <target xsi:type="File"
+            name="xmlLogFile"
+            createDirs="true"
+            encoding="utf-8"
+            archiveFileName="${logdir}/log4tc.xml.{#}"
+		        fileName="${logdir}/log4tc.xml"
+		        maxArchiveFiles="5"
+            archiveAboveSize="10485760"
+			archiveNumbering="Rolling"
+			layout="${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}">
+    </target>
+  </targets>
+
+  <rules>
+    <!--Levels: Trace, Debug, Info, Warn, Error, Fatal, Off-->
+    <logger name="*" minlevel="Debug" writeTo="xmlLogFile" />
+  </rules>
+</nlog>
