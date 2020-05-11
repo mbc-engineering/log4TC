@@ -3,7 +3,9 @@
 	<Project ProjectGUID="{ADF155C1-099B-4386-BD36-DC7AED699701}" TargetNetId="172.16.23.20.1.1" Target64Bit="true" ShowHideConfigurations="#x3c7">
 		<System>
 			<Licenses>
-				<Target BkhfOrder="3242345xvcxc" CustomOrder="10010"/>
+				<Target BkhfOrder="3242345xvcxc" CustomOrder="10010">
+					<ManualSelect>{382990C3-AE78-4CDF-8201-CD9F44FB3CAA}</ManualSelect>
+				</Target>
 			</Licenses>
 			<Tasks>
 				<Task Id="3" Priority="20" CycleTime="10000" AmsPort="350" AdtTasks="true">

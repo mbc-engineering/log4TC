@@ -11,12 +11,12 @@
     <Authors>stgm, joge, mihe</Authors>
     <Company>mbc Engineering GmbH</Company>
     <Copyright>Copyright © mbc Engineering GmbH 2020</Copyright>
-    
-    <Version>20.05.07</Version>
-    
+
+    <Version>20.05.11</Version>
+
   </PropertyGroup>
 
-  <!-- Build configuration Settings 
+  <!-- Build configuration Settings
        ############################ -->
   <PropertyGroup>
     <PlatformTarget>AnyCPU</PlatformTarget>
