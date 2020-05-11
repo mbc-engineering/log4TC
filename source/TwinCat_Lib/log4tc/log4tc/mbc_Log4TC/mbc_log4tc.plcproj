@@ -18,7 +18,7 @@
     <Company>mbc engineering GmbH</Company>
     <Released>false</Released>
     <Title>log4TC</Title>
-    <ProjectVersion>0.0.2</ProjectVersion>
+    <ProjectVersion>0.0.3</ProjectVersion>
     <CompilerDefines>DEBUG</CompilerDefines>
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
@@ -228,6 +228,8 @@
     <DefaultNamespace>log4tc</DefaultNamespace>
     <Placeholder>log4TC</Placeholder>
     <CompilerVersion>3.1.4022.0</CompilerVersion>
+    <Licenses>
+    </Licenses>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="API" />

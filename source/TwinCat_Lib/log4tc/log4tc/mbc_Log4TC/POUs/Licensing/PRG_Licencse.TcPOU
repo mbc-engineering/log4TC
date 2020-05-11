@@ -65,7 +65,12 @@ VAR_STAT
 
 	{attribute 'TcNoSymbol'}
 	{attribute 'hide'}
-	fbLicense		: Tc2_Utilities.FB_GetLicensesEx;	
+	fbLicense		: Tc2_Utilities.FB_CheckLicense;
+	
+
+	{attribute 'TcNoSymbol'}
+	{attribute 'hide'}	
+	stLog4TcGuid 	: GUID;	
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF bInit THEN
@@ -74,20 +79,52 @@ END_IF
 
 fbLicense(
 	bExecute := TRUE,
+	stLicenseId := Tc2_Utilities.STRING_TO_GUID('382990C3-AE78-4CDF-8201-CD9F44FB3CAA'),
 );
 
 IF NOT fbLicense.bBusy THEN
 	bInit := TRUE;
 	IF NOT fbLicense.bError THEN
 		F_InternalLog(
-			E_LogLevel.eInfo,
+			E_LogLevel.eDebug,
 			'Licensing',
-			'Licenses successfully read. Got %d OEM licenses.',
-			Tc2_Utilities.F_UDINT(fbLicense.nOemLicenses),
-			Tc2_Utilities.EMPTY_ARG_VALUE,
+			'Licenses successfully read. Result=%d Expiration=%s.',
+			Tc2_Utilities.F_DINT(fbLicense.stCheckLicense.eResult),
+			Tc2_Utilities.F_STRINGEx(fbLicense.stCheckLicense.sExpirationTime),
 			Tc2_Utilities.EMPTY_ARG_VALUE,
 			Tc2_Utilities.EMPTY_ARG_VALUE
-		);		
+		);
+
+		CASE fbLicense.stCheckLicense.eResult OF
+			Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK,
+			Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_OEM:
+				bValidLicense := TRUE;
+				
+			Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_Demo:
+				F_InternalLog(
+					E_LogLevel.eWarn,
+					'Licensing',
+					'Demo license active - log4TC stops working in 24h. Visit http://mbc.dev/log4tc to order a licencse.',
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE
+				);
+				bValidLicense := FALSE;					
+			
+			ELSE
+				F_InternalLog(
+					E_LogLevel.eWarn,
+					'Licensing',
+					'Error reading log4TC license - log4TC stops working in 24h. Result code: %d (E_LicenseHResult)',
+					Tc2_Utilities.F_DINT(fbLicense.stCheckLicense.eResult),
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE
+				);
+				bValidLicense := FALSE;					
+		END_CASE
+		
 		// fbLicense.aOemLicenses[1].
 		// TODO read OEM Lizenz
 		// bValidLicense := TRUE or FALSE;
