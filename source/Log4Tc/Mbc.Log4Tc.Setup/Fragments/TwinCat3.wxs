@@ -6,6 +6,16 @@
 	<Fragment>
     <?include $(sys.CURRENTDIR)Includes/DefinitionsPlatform.wxi ?>
 
+    <!-- Get Install Path of twincat-->
+    <Property Id="WIX_TWINCAT31_INSTALLDIR">
+      <RegistrySearch Id="PrequisitTwinCatInstallDirRegSearch"
+                      Root="HKLM"
+                      Key="SOFTWARE\WOW6432Node\Beckhoff\TwinCAT3\3.1"
+                      Name="InstallDir"
+                      Type="directory"
+                      Win64="$(var.Win64)" />
+    </Property>
+
     <!-- Exist twincat 3 router -->
     <Property Id="WIX_IS_TWINCAT3_ROUTER_INSTALLED">
       <RegistrySearch Id="PrequisitTwinCatRouterRegSearch"
@@ -17,13 +27,15 @@
     </Property>
 
     <!-- Exist twincat3 XAE -->
-    <Property Id="WIX_IS_TWINCAT3_XAE_INSTALLED">
-      <RegistrySearch Id="PrequisitTwinCat3XaeRegSearch"
-                      Root="HKLM"
-                      Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\Common7\IDE\TcXaeShell.exe"
-                      Type="raw"
-                      Win64="$(var.Win64)" />
+    <Property Id="WIX_IS_TWINCAT3_XAE_INSTALLED" Value="0">
+      <!--DirectorySearch needs a common Variable like [WindowsVolume] or [ProgramFilesFolder] at the beginning!-->
+      <DirectorySearch Id="PrequisitTwinCat3XaeDirectorySearch"
+                       Path="[WIX_TWINCAT31_INSTALLDIR]Components\Plc\Profiles"
+                       Depth="0"
+                       AssignToProperty="yes">
+      </DirectorySearch>
     </Property>
+    
     
     <!-- TwinCat Version -->
     <Property Id="WIX_TWINCAT3_BUILD_INSTALLED">

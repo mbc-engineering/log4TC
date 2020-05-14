@@ -59,7 +59,8 @@ Task("Test")
          // ArgumentCustomization = args=>args.Append("--collect:\"XPlat Code Coverage\""),        // code coverage output for package coverlet.collector
      };
 
-     var projectFiles = GetFiles("./**/*.Test.csproj");
+     var projectFiles = Enumerable.Concat(GetFiles("./**/*.Test.csproj"), GetFiles("./**/*.SmokeTest.csproj"));
+
      foreach(var file in projectFiles)
      {
          DotNetCoreTest(file.FullPath, settings);

@@ -109,7 +109,7 @@
       <!-- Check Feature prerequisites are installed, when not feature is not visible
            - requires TwinCat XAE -->
       <Condition Level="1">
-        <![CDATA[Installed OR (WIX_IS_TWINCAT3_XAE_INSTALLED AND WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED)]]>
+        <![CDATA[Installed OR (WIX_IS_TWINCAT3_XAE_INSTALLED<>0 AND WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED)]]>
       </Condition>
       
       <ComponentGroupRef Id="Cmp_Log4TcTwinCatLib" />
@@ -171,31 +171,25 @@
       </Directory>
       
       <!-- Define existing TwinCat installation directories-->
-      <Directory Id="WINDOWSVOLUME">
-        <Directory Id="DIR_Twincat"
-                   Name="TwinCAT">
-          <Directory Id="DIR_Twincat3"
-                     Name="3.1">
-            <Directory Id="DIR_Twincat3CustomConfig"
-                       Name="CustomConfig">
-              <Directory Id="DIR_Twincat3CustomConfigLicenses"
-                         Name="Licenses" />
-            </Directory>
-            <Directory Id="DIR_Twincat3Components"
-                       Name="Components">
-              <Directory Id="DIR_Twincat3Plc"
-                       Name="Plc">
-            <Directory Id="DIR_Twincat3Common"
-                       Name="Common"/>
-              <Directory Id="DIR_Twincat3Profiles"
-                       Name="Profiles"/>
-              </Directory>
-              </Directory>
-          </Directory>
+      <Directory Id="DIR_Twincat3">
+        <Directory Id="DIR_Twincat3CustomConfig"
+                    Name="CustomConfig">
+          <Directory Id="DIR_Twincat3CustomConfigLicenses"
+                      Name="Licenses" />
         </Directory>
+        <Directory Id="DIR_Twincat3Components"
+                    Name="Components">
+          <Directory Id="DIR_Twincat3Plc"
+                    Name="Plc">
+        <Directory Id="DIR_Twincat3Common"
+                    Name="Common"/>
+          <Directory Id="DIR_Twincat3Profiles"
+                    Name="Profiles"/>
+          </Directory>
+          </Directory>
       </Directory>
     </Directory>
-    
-    <SetDirectory Id="WINDOWSVOLUME" Value="[WindowsVolume]" /> 
-    </Fragment>
+
+    <SetDirectory Id="DIR_Twincat3" Value="[WIX_TWINCAT31_INSTALLDIR]" />
+  </Fragment>
 </Wix>
