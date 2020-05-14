@@ -59,7 +59,26 @@ Task("Test")
          // ArgumentCustomization = args=>args.Append("--collect:\"XPlat Code Coverage\""),        // code coverage output for package coverlet.collector
      };
 
-     var projectFiles = Enumerable.Concat(GetFiles("./**/*.Test.csproj"), GetFiles("./**/*.SmokeTest.csproj"));
+     var projectFiles = GetFiles("./**/*.Test.csproj");
+
+     foreach(var file in projectFiles)
+     {
+         DotNetCoreTest(file.FullPath, settings);
+     }
+});
+
+Task("SmokeTest")
+    .IsDependentOn("Test")
+    .Does(() =>
+{
+    var settings = new DotNetCoreTestSettings
+     {
+         Configuration = configuration,
+         Logger = $"trx;LogFileName=\"{testresultsfile}\"",  // by default results in Mbc.Log4Tc.Output.NLog.Test\TestResults\testresults.trx
+         // ArgumentCustomization = args=>args.Append("--collect:\"XPlat Code Coverage\""),        // code coverage output for package coverlet.collector
+     };
+
+     var projectFiles = GetFiles("./**/*.SmokeTest.csproj");
 
      foreach(var file in projectFiles)
      {
