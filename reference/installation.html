@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Installation von log4TC | Dokumentation mbc Log4Tc </title>
+    <title>Installationsanleitung von log4TC | Dokumentation mbc Log4Tc </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Installation von log4TC | Dokumentation mbc Log4Tc ">
+    <meta name="title" content="Installationsanleitung von log4TC | Dokumentation mbc Log4Tc ">
     <meta name="generator" content="docfx 2.52.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -77,9 +77,60 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="installation-von-log4tc">Installation von log4TC</h1>
+<h1 id="installationsanleitung-von-log4tc">Installationsanleitung von log4TC</h1>
 
-<p>Führen Sie das MSI setup aus.</p>
+<h2 id="setup">Setup</h2>
+<p>Den aktuellen Release von Log4TC kann <a href="https://github.com/mbc-engineering/log4TC/releases">hier</a> geladen werden. Achten sie auf die Ziel Architektur x86 bzw x64!</p>
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<ul>
+<li><a href="https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm">TwinCat 3.1 (min. 4022.00)</a></li>
+<li>Administrationsrechte für die Installation</li>
+</ul>
+<p><strong>Nur Service:</strong></p>
+<ul>
+<li>min Windows 7 SP1 / Windows Embedded Standard 2009</li>
+<li><a href="https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer">Microsoft .NET Framework (mindestends 4.6.1, empfohlen 4.8)</a></li>
+<li><a href="https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm">ADS Router - TC1000 | TC3 ADS</a></li>
+</ul>
+<h2 id="beispiel-installation">Beispiel Installation</h2>
+<p>Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 und einer x64 Architektur.</p>
+<ol>
+<li>Stellen Sie sicher das alle Anwendungen geschlossen sind.</li>
+<li>Kopieren des MSI <a href="https://github.com/mbc-engineering/log4TC/releases">Mbc.Log4Tc.Setup(x64)v20.5.6.0</a> auf den Zielrechner. Führen Sie das MSI setup aus.</li>
+<li>Akzeptieren Sie den <code>log4TC Software-Lizenzvertrag</code>.</li>
+<li>Wählen sie die gewünschten Features. (Nähere Beschreibeung <a href="#features">hier</a></li>
+<li>Durch Klicken auf <code>Install</code> werden alle notwendigen Dateien auf das System kopiert und der log4TC Windows Service mit dem Namen <code>mbc log4TC Service</code> gestartet.</li>
+</ol>
+<p><img src="assets/setup_successfull.png" alt=""></p>
+<h2 id="features">Features</h2>
+<h3 id="log4tc-service">log4TC Service</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Dieses Feature erscheint nur wenn sie ein ADS Router - TC1000 | TC3 ADS installiert haben.</p>
+</div>
+<p><strong>Beinhaltet</strong></p>
+<ul>
+<li>Windows Service zum schreiben der generierten Logmeldungen aus TwinCat</li>
+<li>Konfiguration Links im Startmenü</li>
+</ul>
+<p><img src="assets/setup_service_links.png" alt="links"></p>
+<h3 id="log4tc-twincat-3-bibliothek">log4TC TwinCat 3 Bibliothek</h3>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4022.00 installiert haben.</p>
+</div>
+<p><strong>Beinhaltet</strong></p>
+<ul>
+<li>Installiert die log4TC Twincat 3 Bibliothek lokal</li>
+<li>Bereitet die OEM Lizenz zur Registrierung für die Produktive Benutzung vor</li>
+<li>Kopiert das getting starded Projekt unter <code>C:\ProgramData\log4TC\gettingstarded</code></li>
+<li>Hilfe Links im Startmenü</li>
+</ul>
+<h2 id="bekannte-fehler">Bekannte Fehler</h2>
+<h2 id="setup-endet-mit-dem-fehler--setup-wizard-endet-prematurely-because-of-an-error-your-system-has-not-been-modified-">Setup endet mit dem Fehler: <code>... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...</code></h2>
+<p>In diesem Fall ist ein Fehler aufgetreten.</p>
+<p><img src="assets/setup_endwitherror.png" alt="setup end with error"></p>
+<p>Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ortner mit dem MSI Setup per <code>cd [folder]</code>. Geben Sie folgendes ein: <code>msiexec.exe /i &quot;[setup].msi&quot; /l*v install.log</code>. Wenden Sie sich anschliessend mit dem <code>install.log</code> an uns.</p>
 </article>
           </div>
           

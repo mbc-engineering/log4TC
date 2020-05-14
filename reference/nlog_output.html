@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>NLog Ausgabe-Plugin | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="NLog Ausgabe-Plugin | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="nlog-ausgabe-plugin">NLog Ausgabe-Plugin</h1>
+
+<p>Log4TC wird standardmässig mit dem NLog Ausgabe-Plugin ausgeliefert, an dem alle Log-Meldungen von log4TC weitergereicht werden. Die Detailkonfiguration kann in <a href="https://nlog-project.org/">NLog-Project</a> nachgeschlagen werden.</p>
+<h2 id="konfiguration-in-log4tc">Konfiguration in log4TC</h2>
+<p>log4TC erwartet die Konfiguration von NLog in <code>%ProgramData%\log4TC\config\NLog.config</code>, am einfachsten kommt man in den Ordner über den Link im Startmenü, der beim Installieren von log4TC angelegt wird.</p>
+<p>Die bei der Installation mit ausgelieferte Konfiguration sind auf die <a href="../gettingstarted/intro.html">Einführung</a> ausgelegt und sollte daher für eigene Projekt angepasst werden. Nachfolgende werden zwei Konfiguration vorgestellt, die als Basis für eigene Anwendungen verwendet werden können.</p>
+<h3 id="einfaches-text-logging">Einfaches Text-Logging</h3>
+<p>Diese Konfiguration schreibt die Log-Meldungen von log4TC in normale Text-Files, die von jeden Editor gelesen werden können (siehe auch <a href="tools.html">Tools</a>).</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;nlog
+	xmlns=&quot;http://www.nlog-project.org/schemas/NLog.xsd&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	throwConfigExceptions=&quot;true&quot;
+	autoReload=&quot;true&quot;
+	internalLogLevel=&quot;Info&quot;
+	throwExceptions=&quot;true&quot;&gt;
+
+  &lt;!--
+	See https://github.com/nlog/nlog/wiki/Configuration-file
+	for information on customizing logging rules and outputs.
+
+  See also for targets: https://nlog-project.org/config/?tab=targets
+  See also for placeholders: https://nlog-project.org/config/?tab=layout-renderers
+	--&gt;
+
+  &lt;extensions&gt;
+    &lt;add assembly=&quot;Mbc.Log4Tc.Output.NLog&quot;/&gt;
+  &lt;/extensions&gt;
+
+  &lt;variable name=&quot;logdir&quot; value=&quot;${specialfolder:folder=CommonApplicationData}\log4TC\log&quot;/&gt;
+
+  &lt;targets&gt;
+    &lt;target name=&quot;textLogFile&quot;
+            xsi:type=&quot;File&quot;
+            createDirs=&quot;true&quot;
+            encoding=&quot;utf-8&quot;
+            archiveFileName=&quot;${logdir}/log4tc.log.{#}&quot;
+            fileName=&quot;${logdir}/log4tc.log&quot;
+            maxArchiveFiles=&quot;5&quot;
+            archiveAboveSize=&quot;10485760&quot;
+            archiveNumbering=&quot;Rolling&quot;
+            layout=&quot;${longdate}|${level:uppercase=true}|${logger}|${message}|[${mbc-all-event-properties}]&quot;&gt;
+    &lt;/target&gt;
+  &lt;/targets&gt;
+
+  &lt;rules&gt;
+    &lt;!--Levels: Trace, Debug, Info, Warn, Error, Fatal, Off--&gt;
+    &lt;logger name=&quot;*&quot; minlevel=&quot;Debug&quot; writeTo=&quot;textLogFile&quot; /&gt;
+  &lt;/rules&gt;
+&lt;/nlog&gt;
+</code></pre>
+<p>Die Konfiguration hat folgende Eigenschaften:</p>
+<ul>
+<li>Die Ausgabe erfolgt in <code>%ProgramData%\log4TC\log\log4Tc.log</code>. Der Pfad kann über die Variable <code>logdir</code> geändert werden.</li>
+<li>Das Log-File wird max. 10 MByte gross, danach wird es archiviert. Es werden max. 5 Archive aufbewahrt, bevor endgültig gelöscht wird.</li>
+<li>Das Ausgabeformat ist: <code>&lt;PLC-Zeitstempel&gt;|&lt;Level&gt;|&lt;Logger&gt;|&lt;Log-Message&gt;|[&lt;Context-Attribute&gt;]</code>.</li>
+<li>Es werden alle Meldungen ab Level <code>Debug</code> und höher geloggt.</li>
+</ul>
+<h3 id="ausgabe-für-log4view">Ausgabe für Log4View</h3>
+<p>Diese Konfiguration schreibt die Log-Meldungen in ein XML-Format, dass von <a href="https://www.log4view.com/">Log4View</a> gelesen werden kann.</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;nlog
+	xmlns=&quot;http://www.nlog-project.org/schemas/NLog.xsd&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	throwConfigExceptions=&quot;true&quot;
+	autoReload=&quot;true&quot;
+	internalLogLevel=&quot;Info&quot;
+	throwExceptions=&quot;true&quot;&gt;
+
+  &lt;!--
+	See https://github.com/nlog/nlog/wiki/Configuration-file
+	for information on customizing logging rules and outputs.
+
+  See also for targets: https://nlog-project.org/config/?tab=targets
+  See also for placeholders: https://nlog-project.org/config/?tab=layout-renderers
+	--&gt;
+
+  &lt;extensions&gt;
+    &lt;add assembly=&quot;Mbc.Log4Tc.Output.NLog&quot;/&gt;
+  &lt;/extensions&gt;
+
+  &lt;variable name=&quot;logdir&quot; value=&quot;${specialfolder:folder=CommonApplicationData}\log4TC\log&quot;/&gt;
+
+  &lt;targets&gt;
+    &lt;target xsi:type=&quot;File&quot;
+            name=&quot;xmlLogFile&quot;
+            createDirs=&quot;true&quot;
+            encoding=&quot;utf-8&quot;
+            archiveFileName=&quot;${logdir}/log4tc.xml.{#}&quot;
+            fileName=&quot;${logdir}/log4tc.xml&quot;
+            maxArchiveFiles=&quot;5&quot;
+            archiveAboveSize=&quot;10485760&quot;
+            archiveNumbering=&quot;Rolling&quot;
+            layout=&quot;${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}&quot;&gt;
+    &lt;/target&gt;
+  &lt;/targets&gt;
+
+  &lt;rules&gt;
+    &lt;!--Levels: Trace, Debug, Info, Warn, Error, Fatal, Off--&gt;
+    &lt;logger name=&quot;*&quot; minlevel=&quot;Debug&quot; writeTo=&quot;xmlLogFile&quot; /&gt;
+  &lt;/rules&gt;
+&lt;/nlog&gt;
+</code></pre>
+<p>Die Konfiguration hat folgende Eigenschaften:</p>
+<ul>
+<li>Die Ausgabe erfolgt in <code>%ProgramData%\log4TC\log\log4Tc.xml</code>. Der Pfad kann über die Variable <code>logdir</code> geändert werden.</li>
+<li>Das Log-File wird max. 10 MByte gross, danach wird es archiviert. Es werden max. 5 Archive aufbewahrt, bevor endgültig gelöscht wird.</li>
+<li>Im Meldungstext werden noch zusätzlich alle Context-Properties eingefügt, sofern welche vorhanden sind.</li>
+<li>Es werden alle Meldungen ab Level <code>Debug</code> und höher geloggt.</li>
+</ul>
+<h2 id="nlog-erweiterungen">NLog-Erweiterungen</h2>
+<p>Log4TC liefert einige Erweiterungen für NLog mit.</p>
+<h3 id="layout-mbclog4jxmlevent-erweiterung-für-log4jxmlevent">Layout <code>mbclog4jxmlevent</code> (Erweiterung für <code>log4jxmlevent</code>)</h3>
+<p>Dieses Layout erweitert bzw. passt das in das NLog integrierte <code>log4xmlevent</code> um folgende Eingeschaften an:</p>
+<ul>
+<li>Alle C#-spezifischen Einstellungen sind weggefallen (kein Mdc, Mdlc, Ndc, CallSite und SourceInfo).</li>
+<li>Die TwinCAT Task-ID wird als Thread-ID ausgegeben und kann in Log4View unter diesen Namen direkt abgelesen werden</li>
+<li>Das Feld <code>log4japp</code> wird mit der Quelle (z.B. <code>172.16.23.20.1.1:350</code>) aufgefüllt</li>
+<li>Für <code>AppInfo</code> und <code>Message</code> kann ein eigenes Layout definiert werden.</li>
+</ul>
+<p>Beispiel:</p>
+<pre><code>layout=&quot;${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}&quot;&gt;
+</code></pre>
+<p>Properties:</p>
+<ul>
+<li><strong><code>IdentXml</code></strong> (Boolean) - Gibt an, ob das XML formattiert ausgegeben werden soll (Default: <code>false</code>)</li>
+<li><strong><code>AppInfo</code></strong> (Layout) - Inhalt des <code>log4japp</code>-Attributs (Default: Kombination aus <code>_TcAppName_</code> und <code>_TcProjectName_</code>)</li>
+<li><strong><code>Message</code></strong> (Layout) - Die auszugebene Meldung (Default: Der formatierte Meldungstext)</li>
+<li><strong><code>LoggerName</code></strong> (Layout) - Der auszugebene Logger (Default: Der Loggername)</li>
+<li><strong><code>IncludeAllProperties</code></strong> (Boolean) - Wenn <code>true</code> werden alle (Context-)-Eigenschaften mit ausgegeben.</li>
+</ul>
+<h3 id="layoutrenderer-mbc-all-event-properties-erweiterung-für-all-event-properties">LayoutRenderer <code>mbc-all-event-properties</code> (Erweiterung für <code>all-event-properties</code>)</h3>
+<p>Dieser LayoutRender hat eine zusätzliche Option <code>ExcludeStandard</code> (Default: <code>true</code>), die verhindert, dass die Standard-Properties, die jede Meldung besitzt mit ausgegeben werden.</p>
+<h2 id="log4tc-standard-properties">log4TC Standard-Properties</h2>
+<p>Alle NLog-Meldungen bekommen unabhängig vom Context und den Argumenten folgenden Properties:</p>
+<ul>
+<li><strong><code>_TcTaskIdx_</code></strong> - Der TwinCAT Task-Index (1-x)</li>
+<li><strong><code>_TcTaskName_</code></strong> - Der Name der TwinCAT Task</li>
+<li><strong><code>_TcTaskCycleCounter_</code></strong> - Der Wert des Task-Zykluszähler (alle Meldungen vom gleichen Zyklus haben den gleichen Wert)</li>
+<li><strong><code>_TcAppName_</code></strong> - Der Name der TwinCAT Application</li>
+<li><strong><code>_TcProjectName_</code></strong> - Der Name des TwinCAT Projekts</li>
+<li><strong><code>_TcOnlineChangeCount_</code></strong> - Anzahl der Online-Changes</li>
+<li><strong><code>_TcLogSource_</code></strong> - Die Quelle der Log-Meldung (AdsNetId mit AdsPort)</li>
+</ul>
+<h2 id="tipps-und-rezepte">Tipps und Rezepte</h2>
+<p><strong>Filtern mit Properties</strong></p>
+<p>Um Log-Meldungen mit Properties zu filtern (Argument und Context), kann der NLog-Filter verwendet werden:</p>
+<pre><code class="lang-xml">&lt;logger ...&gt;
+	&lt;filter defaultAction=&quot;Ignore&quot;&gt;
+		&lt;when condition=&quot;${event-properties:item=foobar})&quot; action=&quot;Log&quot; /&gt;
+	&lt;/filter&gt;
+&lt;/logger&gt;
+</code></pre>
+<p>Details dazu finden sich in <a href="https://github.com/nlog/nlog/wiki/Filtering-log-messages">Filtering log message</a>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
