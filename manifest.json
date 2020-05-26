@@ -49,6 +49,28 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "assets/architektur.png",
+      "output": {
+        "resource": {
+          "relative_path": "assets/architektur.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "assets/showcase.png",
+      "output": {
+        "resource": {
+          "relative_path": "assets/showcase.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "favicon.ico",
       "output": {
         "resource": {
@@ -327,7 +349,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "rtxXcIMSlwGVB0eEU+iAIw=="
+          "hash": "9A65K5kS5l9+BxitwRIVwg=="
         }
       },
       "is_incremental": false,
@@ -372,6 +394,18 @@
       "output": {
         "resource": {
           "relative_path": "reference/assets/vscode_log_viewer.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "reference/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "reference/index.html",
+          "hash": "I31UTR2a9/o4pkez4AcUJg=="
         }
       },
       "is_incremental": false,
@@ -476,7 +510,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 16,
+          "total_file_count": 17,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

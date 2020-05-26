@@ -5,20 +5,20 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>mbc log4TC | Dokumentation mbc Log4Tc </title>
+    <title>Referenz | Dokumentation mbc Log4Tc </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="mbc log4TC | Dokumentation mbc Log4Tc ">
+    <meta name="title" content="Referenz | Dokumentation mbc Log4Tc ">
     <meta name="generator" content="docfx 2.52.0.0">
     
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles/docfx.vendor.css">
-    <link rel="stylesheet" href="styles/docfx.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
-    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
     
-    <meta property="docfx:rel" content="">
+    <meta property="docfx:rel" content="../">
     
   </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
@@ -34,8 +34,8 @@
                 <span class="icon-bar"></span>
               </button>
               
-              <a class="navbar-brand" href="index.html">
-                <img id="logo" class="svg" src="logo.svg" alt="">
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -67,43 +67,24 @@
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
-        <div class="article row grid">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="mbc-log4tc">mbc log4TC</h1>
+<h1 id="referenz">Referenz</h1>
 
-<p>Log4TC ist eine Erweiterung für TwinCAT3 von Beckhoff, um direkt aus der SPS Logmeldungen
-erzeugen zu können. Die Meldungen können transferiert, gefiltert, ausgewertet und an
-verschiedene Ausgaben weitergleitet werden.</p>
-<p>Log4TC besteht aus zwei Teilen, einer SPS-Bibliothek und einen Windows-Service.</p>
-<p><img src="assets/architektur.png" alt="Architektur"></p>
-<p>Der log4TC-Service wird normalerweise auf dem Rechner installiert, auf dem auch die SPS läuft, kann aber für bestimmte Einsatzzwecke auch auf einem anderen Rechner für mehrere Steuerung installiert werden.</p>
-<p><strong>Features</strong></p>
 <ul>
-<li>Einfache API für die integration in die SPS</li>
-<li>Strukturiertes Logging (<a href="https://messagetemplates.org/">https://messagetemplates.org/</a>)</li>
-<li>Unterstützung von Context-Eigenschaften auf verschiedenen Ebenen</li>
-<li>Performant und Modular</li>
-<li>Kostenlose Testversion verfügbar</li>
-<li>Lizenzierung über Beckhoff-Mechanismus in Dongle, Klemme oder PC</li>
-<li>Unbegrenzte Ausgabemöglichkeiten (Textdatei, Datenbank, Cloud, usw.)</li>
-</ul>
-<h2 id="ausgaben">Ausgaben</h2>
-<p><img src="assets/showcase.png" alt="Outputs"></p>
-<p>Log4TC implementiert Ausgaben über ein Plugin-System. Standardmässig bei der Auslieferung ist die NLog-Ausgabe aktiv. Die Ausgabeplugins werden laufend erweitert, die nächsten Plugins sind Ausgaben für Graylog und InfluxDB.</p>
-<p>Bei Bedarf können wir auch kundenspezifische Ausgaben erstellen.</p>
-<h2 id="typische-anwendungsfälle-für-log4tc">Typische Anwendungsfälle für log4TC</h2>
-<ul>
-<li>Fehlertracking und Alarmierung</li>
-<li>Debugging von sporadischen Fehlern ohne Breakpoints</li>
-<li>Ablaufanalysen bei Problemen auch in Nachhinein</li>
-<li>Statistische Auswertungen, z.B. KPI</li>
-</ul>
-<h2 id="nächste-schritte">Nächste Schritte</h2>
-<ul>
-<li><a href="https://www.mbc-engineering.ch/log4tc">Download, Lizenzierung und Dokumentation</a></li>
-<li><a href="gettingstarted/intro.html">Erste Schritte</a></li>
-<li><a href="reference/index.html">Referenz</a></li>
+<li><a href="installation.html">Installation</a></li>
+<li><a href="loglevel.html">Log-Level</a></li>
+<li><a href="nlog_output.html">NLog-Ausgabe</a></li>
+<li><a href="placeholder.html">Platzhaler in Meldungen</a></li>
+<li><a href="tools.html">Tools</a></li>
 </ul>
 </article>
           </div>
@@ -136,8 +117,8 @@ verschiedene Ausgaben weitergleitet werden.</p>
       </footer>
     </div>
     
-    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
-    <script type="text/javascript" src="styles/docfx.js"></script>
-    <script type="text/javascript" src="styles/main.js"></script>
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
   </body>
 </html>
