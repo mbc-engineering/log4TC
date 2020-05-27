@@ -79,7 +79,7 @@ END_IF
 
 fbLicense(
 	bExecute := TRUE,
-	stLicenseId := Tc2_Utilities.STRING_TO_GUID('382990C3-AE78-4CDF-8201-CD9F44FB3CAA'),
+	stLicenseId := Tc2_Utilities.STRING_TO_GUID('9BDDB874-8F39-4D26-90BB-4237ED0644FB'),
 );
 
 IF NOT fbLicense.bBusy THEN
