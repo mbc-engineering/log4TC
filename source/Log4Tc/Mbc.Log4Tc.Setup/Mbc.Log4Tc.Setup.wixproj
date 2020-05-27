@@ -79,8 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EULA.rtf" />
-    <Content Include="Fragments\Log4TcTwinCatLibFeature\2020-05-06_BADE00315092_Certificate_Signed.tmc" />
     <Content Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStardedFilesFilter.xslt" />
+    <Content Include="Fragments\Log4TcTwinCatLibFeature\mbc_engineering_log4tc.tmc" />
     <Content Include="Includes\DefinitionsPlatform.wxi" />
     <Content Include="packages.config" />
     <Content Include="Resources\log4TcBackground.png" />

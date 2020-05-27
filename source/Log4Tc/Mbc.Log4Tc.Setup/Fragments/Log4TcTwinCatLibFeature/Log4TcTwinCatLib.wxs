@@ -15,7 +15,7 @@
       <Component Id="Cmp_Log4TcTwinCatLibLicense"
                  Directory="DIR_Twincat3CustomConfigLicenses"
                  Guid="2FD88ADD-4D58-4A5B-A5C9-5FCD204F5596">
-        <File Id="Log4TcTwinCatLicenseFile" Source="Fragments\Log4TcTwinCatLibFeature\2020-05-06_BADE00315092_Certificate_Signed.tmc" />
+        <File Id="Log4TcTwinCatLicenseFile" Source="Fragments\Log4TcTwinCatLibFeature\mbc_engineering_log4tc.tmc" />
       </Component>
     </ComponentGroup>
   </Fragment>
