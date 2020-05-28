@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_LogBuffer" Id="{375f315b-e151-40c4-ad95-8fb8cec0ccad}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'no_explicit_call' := 'no direct call necessary'}
+FUNCTION_BLOCK INTERNAL FB_LogBuffer
+VAR
+	aBuffer			: ARRAY[1..Config.nBufferLen] OF BYTE;
+	nBufferCount	: UINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="BufferFree" Id="{45c9af0f-ff7c-42cc-93eb-82c692517d9b}">
+      <Declaration><![CDATA[PROPERTY INTERNAL BufferFree : UINT]]></Declaration>
+      <Get Name="Get" Id="{f884c224-1ef7-4d9a-9843-b61796638b0f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BufferFree := Config.nBufferLen - nBufferCount;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="BufferPtr" Id="{93464149-a175-4501-9b11-ad0cf48ea4cd}">
+      <Declaration><![CDATA[PROPERTY INTERNAL BufferPtr : PVOID]]></Declaration>
+      <Get Name="Get" Id="{4b2f7e38-4e3c-4391-9e83-199861dbb97a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BufferPtr := ADR(aBuffer) + nBufferCount;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="BufferUsed" Id="{a265c908-eb73-472e-a899-cc1e6ac8f30d}">
+      <Declaration><![CDATA[PROPERTY INTERNAL BufferUsed : UINT]]></Declaration>
+      <Get Name="Get" Id="{7c3e34ab-7868-4e36-8ebb-ac277fe8a4d9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BufferUsed := nBufferCount;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Clear" Id="{2289c6fe-ee0f-4f85-8d0f-d33fc35902f3}">
+      <Declaration><![CDATA[METHOD INTERNAL Clear
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nBufferCount := 0;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="DataAdded" Id="{b2b25665-2c5a-4e95-8b14-cabec40da64f}">
+      <Declaration><![CDATA[METHOD INTERNAL DataAdded 
+VAR_INPUT
+	nNewData		: UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nBufferCount := nBufferCount + nNewData;
+IF nBufferCount > Config.nBufferLen THEN
+	F_InternalLog(
+		E_LogLevel.eError,
+		'FB_LogBuffer.DataAdded',
+		'Buffer overflow adding to log buffer.',
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

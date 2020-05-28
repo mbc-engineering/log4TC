@@ -66,9 +66,9 @@
       <DefaultResolution>Log4TC, * (mbc engineering GmbH)</DefaultResolution>
       <Namespace>Log4TC</Namespace>
       <Parameters>
-        <Parameter xmlns="">
+        <Parameter>
           <Key>NBUFFERLEN</Key>
-          <Value>16384</Value>
+          <Value>32768</Value>
         </Parameter>
       </Parameters>
     </PlaceholderReference>

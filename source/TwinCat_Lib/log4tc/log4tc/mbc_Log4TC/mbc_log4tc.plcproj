@@ -463,6 +463,9 @@
     <Compile Include="POUs\PRG_ScopedContextStack.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Utils\FB_LogBuffer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Utils\FB_RTC_Sync.TcPOU">
       <SubType>Code</SubType>
     </Compile>

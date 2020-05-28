@@ -14,10 +14,12 @@ VAR CONSTANT
 END_VAR
 VAR
 	nTaskIndex			: DINT;
-	fbRingBuffer		: Tc2_Utilities.FB_MemRingBufferEx;
-	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
 	fbTaskContext		: FB_ContextBuilder;
 	sAmsNetId			: Tc2_System.T_AmsNetID := '';
+	
+	nWriteBuffer		: UINT (1..2) := 1;
+	fbLogBuffer1		: FB_LogBuffer;
+	fbLogBuffer2		: FB_LogBuffer;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
@@ -48,6 +50,36 @@ ELSIF nTaskIndex <> nActTaskIndex OR nActTaskIndex = 0 THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Property Name="_ReadBufferRef" Id="{89350028-23fb-44f2-92f4-54c18e36deb9}">
+      <Declaration><![CDATA[PROPERTY PRIVATE _ReadBufferRef : POINTER TO FB_LogBuffer]]></Declaration>
+      <Get Name="Get" Id="{7c4c9ce0-9138-424d-a830-32f3cd97a4d1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF nWriteBuffer = 1 THEN
+	_ReadBufferRef := ADR(fbLogBuffer2);
+ELSE
+	_ReadBufferRef := ADR(fbLogBuffer1);
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="_WriteBufferRef" Id="{fb964da2-3fa4-48e9-92ae-ad64ee990d37}">
+      <Declaration><![CDATA[PROPERTY PRIVATE _WriteBufferRef : POINTER TO FB_LogBuffer]]></Declaration>
+      <Get Name="Get" Id="{5093a44b-ef4a-4bf5-a3c2-f101475cf92d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF nWriteBuffer = 1 THEN
+	_WriteBufferRef := ADR(fbLogBuffer1);
+ELSE
+	_WriteBufferRef := ADR(fbLogBuffer2);
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Method Name="AddLog" Id="{a60c1ca6-dc51-4ca0-8f1b-e9265e4c8b3d}">
       <Declaration><![CDATA[METHOD INTERNAL AddLog : BOOL
 VAR_INPUT
@@ -55,8 +87,9 @@ VAR_INPUT
 	nLogBufferLen	: UINT;
 END_VAR
 VAR
-	nActTaskIndex		: DINT;
-	bAddOk			: BOOL;
+	nActTaskIndex	: DINT;
+	pWriteBuffer	: POINTER TO FB_LogBuffer;
+	nBufferFree		: UINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF NOT _InitAndCheckTask() THEN
@@ -76,52 +109,50 @@ IF NOT PRG_Licencse.IsLicensed THEN
 	RETURN;	
 END_IF
 
-fbRingBuffer.A_AddTail(
-	pBuffer 	:= ADR(aBuffer),
-	cbBuffer 	:= SIZEOF(aBuffer),
-	pWrite		:= pLogBuffer,
-	cbWrite		:= nLogBufferLen,	
-	bOk			=> bAddOk,
-);
+pWriteBuffer := _WriteBufferRef;
 
-IF NOT bAddOk THEN
+IF pWriteBuffer^.BufferFree < nLogBufferLen THEN
+	nBufferFree := pWriteBuffer^.BufferFree;
 	F_InternalLog(
 		E_LogLevel.eFatal,
 		'Log4TcTask.AddLog',
 		'Error adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
 		Tc2_Utilities.F_DINT(nTaskIndex),
 		Tc2_Utilities.F_UINT(nLogBufferLen),
-		Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
+		Tc2_Utilities.F_UINT(nBufferFree),
 		Tc2_Utilities.EMPTY_ARG_VALUE
 	);
 	
 	IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBufferErrorCount);
-ELSE
-	IF Config.eInternalLog <= E_LogLevel.eTrace THEN
-		F_InternalLog(
-			E_LogLevel.eTrace,
-			'Log4TcTask.AddLog',
-			'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
-			Tc2_Utilities.F_DINT(nTaskIndex),
-			Tc2_Utilities.F_UINT(nLogBufferLen),
-			Tc2_Utilities.F_UDINT(fbRingBuffer.cbFree),
-			Tc2_Utilities.EMPTY_ARG_VALUE
-		);
-	END_IF
 	
-	IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBuffer);
-END_IF 
+	AddLog := FALSE;
+	RETURN;	
+END_IF
+
+MEMCPY(pWriteBuffer^.BufferPtr, pLogBuffer, nLogBufferLen);
+pWriteBuffer^.DataAdded(nLogBufferLen);
+
+IF Config.eInternalLog <= E_LogLevel.eTrace THEN
+	nBufferFree := pWriteBuffer^.BufferFree;
+	F_InternalLog(
+		E_LogLevel.eTrace,
+		'Log4TcTask.AddLog',
+		'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
+		Tc2_Utilities.F_DINT(nTaskIndex),
+		Tc2_Utilities.F_UINT(nLogBufferLen),
+		Tc2_Utilities.F_UINT(nBufferFree),
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+END_IF
+
+IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBuffer);
 
 // Statistic
-IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize < fbRingBuffer.cbSize THEN
-	Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize := fbRingBuffer.cbSize;
-END_IF
-IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer <= fbRingBuffer.nCount THEN
-	Log4TcInfo.aTaskInfo[nTaskIndex].nMaxLogsInBuffer := UDINT_TO_UINT(fbRingBuffer.nCount);
+IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize < pWriteBuffer^.BufferUsed THEN
+	Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize := pWriteBuffer^.BufferUsed;
 END_IF
 
-
-AddLog := bAddOk;
+AddLog := TRUE;
 ]]></ST>
       </Implementation>
     </Method>
@@ -132,14 +163,13 @@ declared.
 *)
 METHOD INTERNAL Call
 VAR
-	nMessageCount		: UINT;
+	pWriteBuffer		: POINTER TO FB_LogBuffer;
+	pReadBuffer			: POINTER TO FB_LogBuffer;
 END_VAR
 VAR_INST
 	nState				: UINT;
-	aSendBuffer			: ARRAY[1..Config.nBufferLen] OF BYTE;		(* Buffer for send data *)
-	nSendBufferLen		: UDINT;
-	bContinue			: BOOL;
 	fbAdsWriteMsg		: Tc2_System.ADSWRITE:=(PORT:=nAdsPort);
+	fbRetryWait			: Tc2_System.TON:=(PT:=T#5S);
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -151,58 +181,37 @@ PRG_Licencse.InitializeLicenseFromAnyTask();
 
 CASE nState OF
 	0: // Init
-		nSendBufferLen := 0;
 		nState := 10;
 		
 	10: // Wait for log entry; add them to the send buffer
-		nMessageCount := 0;
-		REPEAT
-			fbRingBuffer.A_GetHead(
-				pBuffer 	:= ADR(aBuffer),
-				cbBuffer 	:= SIZEOF(aBuffer),
-			);
-			
-			IF fbRingBuffer.bOk AND (SIZEOF(aSendBuffer) - nSendBufferLen) >= fbRingBuffer.cbRead THEN
-				MEMCPY(ADR(aSendBuffer) + nSendBufferLen, fbRingBuffer.pRead, fbRingBuffer.cbRead);
-				nSendBufferLen := nSendBufferLen + fbRingBuffer.cbRead;
-				
-				fbRingBuffer.A_FreeHead(
-					pBuffer 	:= ADR(aBuffer),
-					cbBuffer 	:= SIZEOF(aBuffer),
-				);
-				
-				nMessageCount := nMessageCount + 1;
-				bContinue := TRUE;
-			ELSE
-				bContinue := FALSE;
-			END_IF
-		UNTIL
-			NOT bContinue
-		END_REPEAT;
+		pWriteBuffer := _WriteBufferRef;
 
-		IF nSendBufferLen > 0 THEN
-			F_InternalLog(
-				E_LogLevel.eDebug,
-				'FB_Log4TcTask.Call',
-				'Sending %d message with size %d.',
-				Tc2_Utilities.F_UINT(nMessageCount),
-				Tc2_Utilities.F_UDINT(nSendBufferLen),
-				Tc2_Utilities.EMPTY_ARG_VALUE,
-				Tc2_Utilities.EMPTY_ARG_VALUE
-			);	
-		
+		IF pWriteBuffer^.BufferUsed > 0 THEN
+			// Switch buffer for next write
+			nWriteBuffer := SEL(nWriteBuffer = 1, 1 , 2);
+			
 			fbAdsWriteMsg(WRITE:=FALSE);
 			fbAdsWriteMsg(
 				WRITE	:= TRUE,
 				NETID	:= sAmsNetId,
 				IDXGRP 	:= nLogIndexGrp,
 				IDXOFFS := nLogIndexOffs,
-				LEN		:= nSendBufferLen,
-				SRCADDR	:= ADR(aSendBuffer),
+				LEN		:= pWriteBuffer^.BufferUsed,
+				SRCADDR	:= pWriteBuffer^.BufferPtr,
 			);
+			
+			F_InternalLog(
+				E_LogLevel.eDebug,
+				'FB_Log4TcTask.Call',
+				'Sending message with size %d.',
+				Tc2_Utilities.F_UDINT(fbAdsWriteMsg.LEN),
+				Tc2_Utilities.EMPTY_ARG_VALUE,
+				Tc2_Utilities.EMPTY_ARG_VALUE,
+				Tc2_Utilities.EMPTY_ARG_VALUE
+			);				
 		
-			nState := 20;
-		END_IF
+			nState := 20;			
+		END_IF		
 		
 	20: // Wait for sent data
 		fbAdsWriteMsg();
@@ -219,6 +228,9 @@ CASE nState OF
 				);
 				
 				IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nSendLogBufferErrorCount);
+				
+				fbRetryWait(IN:=FALSE);
+				nState := 30;
 			ELSE
 				F_InternalLog(
 					E_LogLevel.eDebug,
@@ -229,30 +241,23 @@ CASE nState OF
 					Tc2_Utilities.EMPTY_ARG_VALUE,
 					Tc2_Utilities.EMPTY_ARG_VALUE
 				);	
+				
+				pReadBuffer := _ReadBufferRef;
+				pReadBuffer^.Clear();
+				nState := 10;
 			END_IF
-			
-			nSendBufferLen := 0;
-			nState := 10;
+		END_IF
+		
+	30: // Retry wait sending
+		fbRetryWait(IN:=TRUE);
+		IF fbRetryWait.Q THEN
+			// sending same data again
+			fbAdsWriteMsg(WRITE:=FALSE);
+			fbAdsWriteMsg(WRITE:=TRUE);
+			nState := 20;
 		END_IF
 	
 END_CASE]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="FB_init" Id="{f1e448f2-18e5-42ea-bc52-6c978df9ed18}">
-      <Declaration><![CDATA[METHOD FB_init : BOOL
-VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[fbRingBuffer.A_Reset
-(
-	pBuffer 	:= ADR(aBuffer),
-	cbBuffer 	:= SIZEOF(aBuffer),
-);
-
-	]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{4c1aa6a6-d3c0-4a54-a089-02dcf00605ae}">

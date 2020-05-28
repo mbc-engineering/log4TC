@@ -7,7 +7,6 @@ STRUCT
 	nAddLogToBufferErrorCount			: UDINT;	(* Counts error when adding log message to task buffer. *)
 	nSendLogBufferErrorCount			: UDINT;	(* Counts error when sending log task buffer to service. *)
 	nMaxUsedBufferSize					: UDINT;	(* Max. used buffer size of log task buffer. *)
-	nMaxLogsInBuffer					: UINT;		(* Max. number of logs in buffer. *)
 END_STRUCT
 END_TYPE
 ]]></Declaration>
