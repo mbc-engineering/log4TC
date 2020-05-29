@@ -50,32 +50,32 @@ ELSIF nTaskIndex <> nActTaskIndex OR nActTaskIndex = 0 THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Property Name="_ReadBufferRef" Id="{89350028-23fb-44f2-92f4-54c18e36deb9}">
-      <Declaration><![CDATA[PROPERTY PRIVATE _ReadBufferRef : POINTER TO FB_LogBuffer]]></Declaration>
+    <Property Name="_ReadBuffer" Id="{89350028-23fb-44f2-92f4-54c18e36deb9}">
+      <Declaration><![CDATA[PROPERTY PRIVATE _ReadBuffer : POINTER TO FB_LogBuffer]]></Declaration>
       <Get Name="Get" Id="{7c4c9ce0-9138-424d-a830-32f3cd97a4d1}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[IF nWriteBuffer = 1 THEN
-	_ReadBufferRef := ADR(fbLogBuffer2);
+	_ReadBuffer := ADR(fbLogBuffer2);
 ELSE
-	_ReadBufferRef := ADR(fbLogBuffer1);
+	_ReadBuffer := ADR(fbLogBuffer1);
 END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="_WriteBufferRef" Id="{fb964da2-3fa4-48e9-92ae-ad64ee990d37}">
-      <Declaration><![CDATA[PROPERTY PRIVATE _WriteBufferRef : POINTER TO FB_LogBuffer]]></Declaration>
+    <Property Name="_WriteBuffer" Id="{fb964da2-3fa4-48e9-92ae-ad64ee990d37}">
+      <Declaration><![CDATA[PROPERTY PRIVATE _WriteBuffer : POINTER TO FB_LogBuffer]]></Declaration>
       <Get Name="Get" Id="{5093a44b-ef4a-4bf5-a3c2-f101475cf92d}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[IF nWriteBuffer = 1 THEN
-	_WriteBufferRef := ADR(fbLogBuffer1);
+	_WriteBuffer := ADR(fbLogBuffer1);
 ELSE
-	_WriteBufferRef := ADR(fbLogBuffer2);
+	_WriteBuffer := ADR(fbLogBuffer2);
 END_IF]]></ST>
         </Implementation>
       </Get>
@@ -109,7 +109,7 @@ IF NOT PRG_Licencse.IsLicensed THEN
 	RETURN;	
 END_IF
 
-pWriteBuffer := _WriteBufferRef;
+pWriteBuffer := _WriteBuffer;
 
 IF pWriteBuffer^.BufferFree < nLogBufferLen THEN
 	nBufferFree := pWriteBuffer^.BufferFree;
@@ -242,7 +242,7 @@ CASE nState OF
 					Tc2_Utilities.EMPTY_ARG_VALUE
 				);	
 				
-				pReadBuffer := _ReadBufferRef;
+				pReadBuffer := _ReadBuffer;
 				pReadBuffer^.Clear();
 				nState := 10;
 			END_IF
