@@ -65,97 +65,6 @@ END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="_WriteBuffer" Id="{fb964da2-3fa4-48e9-92ae-ad64ee990d37}">
-      <Declaration><![CDATA[PROPERTY PRIVATE _WriteBuffer : POINTER TO FB_LogBuffer]]></Declaration>
-      <Get Name="Get" Id="{5093a44b-ef4a-4bf5-a3c2-f101475cf92d}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[IF nWriteBuffer = 1 THEN
-	_WriteBuffer := ADR(fbLogBuffer1);
-ELSE
-	_WriteBuffer := ADR(fbLogBuffer2);
-END_IF]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
-    <Method Name="AddLog" Id="{a60c1ca6-dc51-4ca0-8f1b-e9265e4c8b3d}">
-      <Declaration><![CDATA[METHOD INTERNAL AddLog : BOOL
-VAR_INPUT
-	pLogBuffer		: PVOID;
-	nLogBufferLen	: UINT;
-END_VAR
-VAR
-	nActTaskIndex	: DINT;
-	pWriteBuffer	: POINTER TO FB_LogBuffer;
-	nBufferFree		: UINT;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF NOT _InitAndCheckTask() THEN
-	RETURN;
-END_IF
-
-IF NOT PRG_Licencse.IsLicensed THEN
-	F_InternalLog(
-		E_LogLevel.eError,
-		'Log4TcTask.AddLog',
-		'log4TC license missing or expired.',
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);
-	RETURN;	
-END_IF
-
-pWriteBuffer := _WriteBuffer;
-
-IF pWriteBuffer^.BufferFree < nLogBufferLen THEN
-	nBufferFree := pWriteBuffer^.BufferFree;
-	F_InternalLog(
-		E_LogLevel.eFatal,
-		'Log4TcTask.AddLog',
-		'Error adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
-		Tc2_Utilities.F_DINT(nTaskIndex),
-		Tc2_Utilities.F_UINT(nLogBufferLen),
-		Tc2_Utilities.F_UINT(nBufferFree),
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);
-	
-	IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBufferErrorCount);
-	
-	AddLog := FALSE;
-	RETURN;	
-END_IF
-
-MEMCPY(pWriteBuffer^.BufferPtr, pLogBuffer, nLogBufferLen);
-pWriteBuffer^.DataAdded(nLogBufferLen);
-
-IF Config.eInternalLog <= E_LogLevel.eTrace THEN
-	nBufferFree := pWriteBuffer^.BufferFree;
-	F_InternalLog(
-		E_LogLevel.eTrace,
-		'Log4TcTask.AddLog',
-		'Adding log message to buffer. TaskIdx=%d MessageSize=%d BufferFree=%d',
-		Tc2_Utilities.F_DINT(nTaskIndex),
-		Tc2_Utilities.F_UINT(nLogBufferLen),
-		Tc2_Utilities.F_UINT(nBufferFree),
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);
-END_IF
-
-IncUDINT(Log4TcInfo.aTaskInfo[nTaskIndex].nAddLogToBuffer);
-
-// Statistic
-IF Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize < pWriteBuffer^.BufferUsed THEN
-	Log4TcInfo.aTaskInfo[nTaskIndex].nMaxUsedBufferSize := pWriteBuffer^.BufferUsed;
-END_IF
-
-AddLog := TRUE;
-]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Call" Id="{ef6225c0-33b1-4834-a78e-390eae37cdd9}">
       <Declaration><![CDATA[(*
 Should be called regularly in the same task as its instance was
@@ -184,7 +93,7 @@ CASE nState OF
 		nState := 10;
 		
 	10: // Wait for log entry; add them to the send buffer
-		pWriteBuffer := _WriteBufferRef;
+		pWriteBuffer := WriteBuffer;
 
 		IF pWriteBuffer^.BufferUsed > 0 THEN
 			// Switch buffer for next write
@@ -197,7 +106,7 @@ CASE nState OF
 				IDXGRP 	:= nLogIndexGrp,
 				IDXOFFS := nLogIndexOffs,
 				LEN		:= pWriteBuffer^.BufferUsed,
-				SRCADDR	:= pWriteBuffer^.BufferPtr,
+				SRCADDR	:= pWriteBuffer^.BufferStartPtr,
 			);
 			
 			F_InternalLog(
@@ -280,6 +189,21 @@ END_VAR
         <Implementation>
           <ST><![CDATA[TaskContext REF= fbTaskContext;
 ]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="WriteBuffer" Id="{fb964da2-3fa4-48e9-92ae-ad64ee990d37}">
+      <Declaration><![CDATA[PROPERTY INTERNAL WriteBuffer : POINTER TO FB_LogBuffer]]></Declaration>
+      <Get Name="Get" Id="{5093a44b-ef4a-4bf5-a3c2-f101475cf92d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF nWriteBuffer = 1 THEN
+	WriteBuffer := ADR(fbLogBuffer1);
+ELSE
+	WriteBuffer := ADR(fbLogBuffer2);
+END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>

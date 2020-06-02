@@ -86,14 +86,7 @@ IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) TH
 	iLogEntryAdder.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
 END_IF
 
-IF fbLogEntry.End() THEN
-	// Add to task ring buffer
-	fbLogEntry.GetBuffer(
-		pBuffer			=> pBuffer,
-		nBufferCount	=> nBufferCount
-	);
-	PRG_TaskLog.TaskLogger.AddLog(pBuffer, nBufferCount);
-END_IF
+fbLogEntry.End();
 ]]></ST>
     </Implementation>
   </POU>

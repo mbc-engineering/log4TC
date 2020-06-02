@@ -5,26 +5,15 @@
 {attribute 'conditionalshow'}
 FUNCTION_BLOCK INTERNAL FB_LogEntry
 VAR
-	aBuffer				: ARRAY[1..Config.nBufferLen] OF BYTE;
-	nBufferCount		: UINT;
-	bError				: BOOL;
+	pBuffer				: PVOID;	// pointer to the current message buffer
+	nBufferCount		: UINT;		// number of bytes written to the message buffer
+	nBufferRemaining	: UINT;		// remaining bytes in the message buffer
+	bError				: BOOL;		// indicates an error in the current message building
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="_BufferRemaining" Id="{bc895630-2700-4d9d-bca9-7623e20b7a0c}">
-      <Declaration><![CDATA[PROPERTY PRIVATE _BufferRemaining : UINT]]></Declaration>
-      <Get Name="Get" Id="{c03bdd10-e5b4-4010-a65c-30332708f044}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[_BufferRemaining := SIZEOF(aBuffer) - nBufferCount;
-]]></ST>
-        </Implementation>
-      </Get>
-    </Property>
     <Method Name="_Copy" Id="{99ee4e2d-22a8-4520-82ff-7cdfea7b9682}">
       <Declaration><![CDATA[METHOD PRIVATE _Copy
 VAR_INPUT
@@ -33,9 +22,10 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT bError AND_THEN _BufferRemaining >= nCount THEN
-	Tc2_System.MEMCPY(ADR(aBuffer) + nBufferCount, pSrc, nCount);
+        <ST><![CDATA[IF NOT bError AND_THEN nBufferRemaining >= nCount THEN
+	Tc2_System.MEMCPY(pBuffer + nBufferCount, pSrc, nCount);
 	nBufferCount := nBufferCount + nCount;
+	nBufferRemaining := nBufferRemaining - nCount;
 ELSE
 	IF NOT bError THEN
 		F_InternalLog(
@@ -54,11 +44,16 @@ END_IF]]></ST>
     </Method>
     <Method Name="_Reset" Id="{3b95adfe-4470-48c7-9883-459b79c8d02e}">
       <Declaration><![CDATA[METHOD PRIVATE _Reset
-VAR_INPUT
+VAR
+	pWriteBuffer	: POINTER TO FB_LogBuffer;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[nBufferCount := 0;
+        <ST><![CDATA[pWriteBuffer := PRG_TaskLog.TaskLogger.WriteBuffer;
+pBuffer := pWriteBuffer^.BufferPtr;
+nBufferCount := 0;
+nBufferRemaining := pWriteBuffer^.BufferFree;
+
 bError := FALSE;
 ]]></ST>
       </Implementation>
@@ -181,7 +176,11 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF stArg.pValue = 0 OR stArg.TypeClass = __SYSTEM.TYPE_CLASS.TYPE_NONE THEN
+        <ST><![CDATA[IF bError THEN
+	RETURN;
+END_IF
+
+IF stArg.pValue = 0 THEN
 	RETURN;
 END_IF
 
@@ -339,7 +338,11 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF stArg.eType = E_ArgType.ARGTYPE_UNKNOWN OR stArg.pData = 0 THEN
+        <ST><![CDATA[IF bError THEN
+	RETURN;
+END_IF
+
+IF stArg.eType = E_ArgType.ARGTYPE_UNKNOWN OR stArg.pData = 0 THEN
 	RETURN;
 END_IF
 
@@ -387,26 +390,81 @@ END_CASE
     </Method>
     <Method Name="End" Id="{4019125f-ca1b-4897-a5d1-68f974a63a5a}">
       <Declaration><![CDATA[METHOD PUBLIC End : BOOL
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_WriteByte(255);
-
-End := NOT bError;
-
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GetBuffer" Id="{80a8662d-8498-4449-bb64-ee658cd4902d}">
-      <Declaration><![CDATA[METHOD PUBLIC GetBuffer : BOOL
-VAR_OUTPUT
-	pBuffer			: PVOID;
-	nBufferCount	: UINT;
+VAR
+	pWriteBuffer	: POINTER TO FB_LogBuffer;
+	nBufferFree		: UINT;
+	nActTaskIndex	: DINT;	
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pBuffer := ADR(aBuffer);
-nBufferCount := THIS^.nBufferCount;
+        <ST><![CDATA[IF bError THEN
+	RETURN;
+END_IF
+
+_WriteByte(255);
+
+IF NOT PRG_Licencse.IsLicensed THEN
+	F_InternalLog(
+		E_LogLevel.eError,
+		'Log4TcTask.AddLog',
+		'log4TC license missing or expired.',
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+	RETURN;	
+END_IF
+
+nActTaskIndex := GETCURTASKINDEXEX();
+
+// end buffer write access
+pWriteBuffer := PRG_TaskLog.TaskLogger.WriteBuffer;
+IF pWriteBuffer^.BufferPtr <> pBuffer THEN 
+	// sanity check
+	F_InternalLog(
+		E_LogLevel.eError,
+		'FB_LogEntry.End',
+		'Expected buffer to be the same.',
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+	
+	bError := TRUE;
+	
+ELSIF pWriteBuffer^.BufferFree < nBufferCount THEN
+	nBufferFree := pWriteBuffer^.BufferFree;
+	F_InternalLog(
+		E_LogLevel.eError,
+		'FB_LogEntry.End',
+		'Buffer capacity does not match buffer count. BufferFree=%d BufferCount=%d',
+		Tc2_Utilities.F_UINT(nBufferFree),
+		Tc2_Utilities.F_UINT(nBufferCount),
+		Tc2_Utilities.EMPTY_ARG_VALUE,
+		Tc2_Utilities.EMPTY_ARG_VALUE
+	);
+
+	bError := TRUE;
+	
+ELSE
+	pWriteBuffer^.DataAdded(nBufferCount);	
+END_IF
+
+// Statistic
+IF bError THEN
+	IncUDINT(Log4TcInfo.aTaskInfo[nActTaskIndex].nAddLogToBufferErrorCount);
+ELSE
+	IncUDINT(Log4TcInfo.aTaskInfo[nActTaskIndex].nAddLogToBuffer);
+END_IF
+
+IF Log4TcInfo.aTaskInfo[nActTaskIndex].nMaxUsedBufferSize < pWriteBuffer^.BufferUsed THEN
+	Log4TcInfo.aTaskInfo[nActTaskIndex].nMaxUsedBufferSize := pWriteBuffer^.BufferUsed;
+END_IF
+
+End := NOT bError;
+
 ]]></ST>
       </Implementation>
     </Method>

@@ -35,6 +35,18 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
+    <Property Name="BufferStartPtr" Id="{bf21fbf2-b4ca-4aee-8b08-b9645a34dcf8}">
+      <Declaration><![CDATA[PROPERTY INTERNAL BufferStartPtr : PVOID]]></Declaration>
+      <Get Name="Get" Id="{69e41bc3-4d44-42d1-adba-a008aa53cdca}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BufferStartPtr := ADR(aBuffer);
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
     <Property Name="BufferUsed" Id="{a265c908-eb73-472e-a899-cc1e6ac8f30d}">
       <Declaration><![CDATA[PROPERTY INTERNAL BufferUsed : UINT]]></Declaration>
       <Get Name="Get" Id="{7c3e34ab-7868-4e36-8ebb-ac277fe8a4d9}">
