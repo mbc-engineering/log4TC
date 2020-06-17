@@ -4,6 +4,7 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
 	sGlobalLogger		: STRING := '_GLOBAL_';		(* Global logger name for logger without logger input *)
+	sLoggerFromInstance	: STRING := '__INST__';		(* FB_Logger*: Initialize logger name from instance path. *)
 END_VAR
 ]]></Declaration>
   </GVL>

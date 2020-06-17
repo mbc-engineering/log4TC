@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_LoggerLAC" Id="{2ce91a2b-8d27-48a3-9046-06198bbeee58}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'reflection'} 
+FUNCTION_BLOCK FB_LoggerLAC
+VAR_INPUT
+	bExecute			: BOOL := TRUE;
+	eLogLevel			: E_LogLevel;
+	sMessage			: Tc2_System.T_MaxString;
+	aArg1				: ANY;
+	aArg2				: ANY;
+	aArg3				: ANY;
+	aArg4				: ANY;
+	aArg5				: ANY;	
+	aArg6				: ANY;	
+	aArg7				: ANY;	
+	aArg8				: ANY;	
+	aArg9				: ANY;	
+	aArg10				: ANY;	
+	iContextBuilder		: I_ContextBuilder := 0;	
+END_VAR
+VAR
+    {attribute 'instance-path'} 
+    {attribute 'noinit'} // 'log4tc.log4Tc_Tester.MAIN.fbLog' bwz. 'log4tc.log4Tc_Tester.GVL.fbLog'
+    sInstancePath		: T_MaxString; 	
+	sLogger				: T_MaxString;	// Initialized from FB_init	
+	bInitLogger			: BOOL;
+	fbLoggerContext		: FB_ContextBuilder;	// Logger scoped context
+END_VAR
+VAR_TEMP
+	fbLogEntry			: FB_LogEntry();
+	iLogEntryAdder		: I_LogEntryAdder;
+	nIdx				: UINT;
+	nFindIdx			: INT;
+	refScopedContext	: REFERENCE TO ST_ScopedContextStack;
+	pBuffer				: PVOID;
+	nBufferCount		: UINT;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bExecute THEN
+	IF NOT bInitLogger THEN
+		bInitLogger := TRUE;
+		IF sLogger = Const.sLoggerFromInstance THEN
+			// strip application/project from instance path
+			nFindIdx := Tc2_Standard.FIND(sInstancePath, '.');
+			IF nFindIdx > 0 THEN
+				sInstancePath := Tc2_Standard.DELETE(sInstancePath, nFindIdx + 1, 0);
+				nFindIdx := Tc2_Standard.FIND(sInstancePath, '.');
+				IF nFindIdx > 0 THEN
+					sInstancePath := Tc2_Standard.DELETE(sInstancePath, nFindIdx + 1, 0);
+					sLogger := sInstancePath;
+				END_IF
+			END_IF
+		END_IF
+	END_IF	
+
+	fbLogEntry.Start(
+		pLogger			:= ADR(sLogger),
+		pMessage		:= ADR(sMessage),
+		eLogLevel		:= eLogLevel,
+		nTimeStampPlc	:= 0,
+		nTimeStampClock	:= 0
+	);
+	
+	fbLogEntry.AddAnyArg(1, aArg1);
+	fbLogEntry.AddAnyArg(2, aArg2);
+	fbLogEntry.AddAnyArg(3, aArg2);
+	fbLogEntry.AddAnyArg(4, aArg2);
+	fbLogEntry.AddAnyArg(5, aArg2);
+	fbLogEntry.AddAnyArg(6, aArg2);
+	fbLogEntry.AddAnyArg(7, aArg2);
+	fbLogEntry.AddAnyArg(8, aArg2);
+	fbLogEntry.AddAnyArg(9, aArg2);
+	fbLogEntry.AddAnyArg(10, aArg2);
+	
+	IF __QUERYINTERFACE(PRG_TaskLog.TaskLogger.TaskContext, iLogEntryAdder) THEN
+		iLogEntryAdder.AddToLogEntry(E_Scope.eTask, fbLogEntry);
+	END_IF
+	
+	refScopedContext REF= PRG_ScopedContextStack.TaskContextStack;
+	FOR nIdx := 0 TO refScopedContext.nScopeContextCount DO
+		IF __QUERYINTERFACE(refScopedContext.aScopedContext[nIdx], iLogEntryAdder) THEN
+			iLogEntryAdder.AddToLogEntry(E_Scope.eScoped, fbLogEntry);
+		END_IF
+	END_FOR
+	
+	fbLoggerContext.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
+	
+	IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
+		iLogEntryAdder.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
+	END_IF
+	
+	IF fbLogEntry.End() THEN
+		// Add to task ring buffer
+		fbLogEntry.GetBuffer(
+			pBuffer			=> pBuffer,
+			nBufferCount	=> nBufferCount
+		);
+		PRG_TaskLog.TaskLogger.AddLog(pBuffer, nBufferCount);
+	END_IF
+END_IF
+
+// reset arguments to default values
+bExecute := TRUE;
+aArg1.pValue := 
+	aArg2.pValue := 
+	aArg3.pValue := 
+	aArg4.pValue := 
+	aArg5.pValue := 
+	aArg6.pValue := 
+	aArg7.pValue := 
+	aArg8.pValue := 
+	aArg9.pValue := 
+	aArg10.pValue := 0;
+aArg1.TypeClass :=
+	aArg2.TypeClass :=
+	aArg3.TypeClass :=
+	aArg4.TypeClass :=
+	aArg5.TypeClass :=
+	aArg6.TypeClass :=
+	aArg7.TypeClass :=
+	aArg8.TypeClass :=
+	aArg9.TypeClass :=
+	aArg10.TypeClass := __SYSTEM.TYPE_CLASS.TYPE_NONE;
+iContextBuilder := 0;
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{f1ea2896-a318-4977-8909-3c1bd535e830}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	sLogger		: T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.sLogger := sLogger;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="LoggerContext" Id="{83ad639a-e7ad-4ed1-9190-ef0de106d6e1}">
+      <Declaration><![CDATA[PROPERTY PUBLIC LoggerContext : I_ContextBuilder]]></Declaration>
+      <Get Name="Get" Id="{25bf3734-09b4-45ef-be60-201efcf02484}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LoggerContext := fbLoggerContext;
+]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

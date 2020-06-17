@@ -181,7 +181,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF stArg.pValue = 0 THEN
+        <ST><![CDATA[IF stArg.pValue = 0 OR stArg.TypeClass = __SYSTEM.TYPE_CLASS.TYPE_NONE THEN
 	RETURN;
 END_IF
 

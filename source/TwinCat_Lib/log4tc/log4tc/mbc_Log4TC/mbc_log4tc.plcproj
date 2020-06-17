@@ -264,6 +264,10 @@
       <SubType>Code</SubType>
       <ExcludeFromBuild>true</ExcludeFromBuild>
     </Compile>
+    <Compile Include="API\Full\FB_LoggerLAC.TcPOU">
+      <SubType>Code</SubType>
+      <ExcludeFromBuild>false</ExcludeFromBuild>
+    </Compile>
     <Compile Include="API\PRG_TaskLog.TcPOU">
       <SubType>Code</SubType>
     </Compile>
