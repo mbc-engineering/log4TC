@@ -697,7 +697,7 @@ END_VAR]]></Declaration>
 nLen := LEN(sValue);
 IF nLen >= 0 AND nLen <= 255 THEN
 	// copy string with length-byte into temporary buffer
-	aDataBuffer[1] := INT_TO_BYTE(nLen);
+	aDataBuffer[0] := INT_TO_BYTE(nLen);
 	MEMCPY(ADR(aDataBuffer) + 1, ADR(sValue), INT_TO_UDINT(nLen));
 	
 	nIdx := _FindContext(sName);

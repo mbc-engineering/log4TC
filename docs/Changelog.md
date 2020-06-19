@@ -4,10 +4,13 @@
 ### Changed
 - Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host
 
+### Fixed
+
+* Bugfix: Context.AddString verwendet jetzt dir korrekt Stringlänge
+
 ## [20.05.06]
 ### Added
 - Log4Tc Initial Version
-
 
 ---
 
