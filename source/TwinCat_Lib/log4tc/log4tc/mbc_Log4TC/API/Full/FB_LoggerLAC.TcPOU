@@ -105,7 +105,7 @@ END_VAR
 	END_IF
 	
 	refScopedContext REF= PRG_ScopedContextStack.TaskContextStack;
-	FOR nIdx := 0 TO refScopedContext.nScopeContextCount DO
+	FOR nIdx := 0 TO refScopedContext.nScopeContextCount - 1 DO
 		IF __QUERYINTERFACE(refScopedContext.aScopedContext[nIdx], iLogEntryAdder) THEN
 			iLogEntryAdder.AddToLogEntry(E_Scope.eScoped, fbLogEntry);
 		END_IF
