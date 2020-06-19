@@ -1,4 +1,6 @@
 ﻿using Mbc.Log4Tc.Model;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NLog;
 using NLog.Config;
 using System;
@@ -19,10 +21,28 @@ namespace Mbc.Log4Tc.Output.NLog
         }
 
         private readonly Logger _dispatchLogger = LogManager.GetLogger("TwinCat");
+        private readonly ILogger<NLogLog4TcOutput> _logger;
 
-        public NLogLog4TcOutput(string name)
+        public NLogLog4TcOutput(IOptions<NLogLog4TcOutputConfiguration> configuration, ILogger<NLogLog4TcOutput> logger)
         {
-            Name = name;
+            _logger = logger;
+
+            try
+            {
+                if (configuration == null || configuration.Value == null)
+                {
+                    throw new ApplicationException($"Could not load the configuration for outputType NLog");
+                }
+
+                Name = configuration.Value.Name;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Could not load the  Output-Type NLog");
+                throw;
+            }
+
+            logger.LogInformation("NLog Output-Type is created.");
         }
 
         public string Name { get; }

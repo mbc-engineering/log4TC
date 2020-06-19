@@ -1,4 +1,5 @@
-﻿using Mbc.Common;
+﻿using FakeItEasy;
+using Mbc.Common;
 using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Dispatcher.DispatchExpression;
 using Mbc.Log4Tc.Model;
@@ -10,11 +11,12 @@ using System.Threading;
 
 namespace Mbc.Log4Tc.SmokeTest
 {
-    class Log4TcService
+    public class Log4TcService
     {
         private readonly AdsLogReceiver _adsLogReceiver;
         private readonly LogDispatcherService _logDispatcher;
         private readonly TestRecordingOutput _output;
+        private readonly ILogger<LogDispatcherService> _logger;
 
         public Log4TcService()
         {

@@ -1,13 +1,16 @@
 ﻿using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Dispatcher.DispatchExpression;
+using Mbc.Log4Tc.Output;
 using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -47,11 +50,12 @@ namespace Mbc.Log4Tc.Service
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    // ToDo: Add from configuration from appsettings
                     services
                         .AddLog4TcDispatchExpression(new DispatchAllLogsToOutput("NLogOutput"))
-                        .AddLog4TcAdsLogReceiver()
-                        .AddLog4TcNLogOutput("NLogOutput")
+                        //.AddLog4TcAdsLogReceiver()
+                        // ToDo: remove and use plugin with attribute
+                        .AddLog4TcNLogOutputType()
+                        .AddOutputs(hostContext.Configuration)
                         .AddLog4TcDispatcher();
                 });
 
