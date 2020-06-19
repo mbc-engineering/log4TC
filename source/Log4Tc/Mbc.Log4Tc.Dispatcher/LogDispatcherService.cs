@@ -3,6 +3,7 @@ using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Output;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,14 @@ namespace Mbc.Log4Tc.Dispatcher
         private readonly Dictionary<string, IOutputHandler> _outputs;
         private readonly List<IDispatchExpression> _dispatchExpressions;
         private readonly BufferBlock<IEnumerable<LogEntry>> _logEntryBuffer = new BufferBlock<IEnumerable<LogEntry>>();
+        private readonly ILogger<LogDispatcherService> _logger;
 
-        public LogDispatcherService(IEnumerable<ILogReceiver> receiver, IEnumerable<IOutputHandler> outputs, IEnumerable<IDispatchExpression> dispatchExpressions)
+        public LogDispatcherService(ILogger<LogDispatcherService> logger, IEnumerable<ILogReceiver> receiver, IEnumerable<IOutputHandler> outputs, IEnumerable<IDispatchExpression> dispatchExpressions)
         {
             _receiver = receiver.ToList();
             _outputs = outputs.ToDictionary(x => x.Name);
             _dispatchExpressions = dispatchExpressions.ToList();
+            _logger = logger;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -34,6 +37,8 @@ namespace Mbc.Log4Tc.Dispatcher
                 receiver.LogsReceived += OnLogDispatch;
             }
 
+            _logger.LogInformation("Log dispatcher started.");
+
             return Task.CompletedTask;
         }
 
@@ -43,6 +48,8 @@ namespace Mbc.Log4Tc.Dispatcher
             {
                 receiver.LogsReceived += OnLogDispatch;
             }
+
+            _logger.LogInformation("Log dispatcher stopped.");
 
             return Task.CompletedTask;
         }

@@ -3,7 +3,10 @@ using Mbc.Log4Tc.Dispatcher.DispatchExpression;
 using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.IO;
 using System.Linq;
@@ -28,6 +31,19 @@ namespace Mbc.Log4Tc.Service
                 {
                     // The place to find the appsettings.json
                     configure.SetBasePath(GetAppsettingsBasePath());
+                })
+                .ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.ClearProviders();
+
+                    var logPath = Path.Combine(GetInternalBasePath(), "service.log");
+                    var logger = new LoggerConfiguration()
+                        .Enrich.FromLogContext()
+                        .WriteTo.Console()
+                        .WriteTo.RollingFile(logPath, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] ({SourceContext}) {Message}{NewLine}{Exception}", fileSizeLimitBytes: 1024 * 1024 * 10, retainedFileCountLimit: 5)
+                        .CreateLogger();
+
+                    loggingBuilder.AddSerilog(logger: logger, dispose: true);
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
@@ -65,6 +81,18 @@ namespace Mbc.Log4Tc.Service
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return Path.Combine(Environment.ExpandEnvironmentVariables("%programdata%"), "log4TC", "config");
+            }
+            else
+            {
+                throw new PlatformNotSupportedException("Service still in windows system supported.");
+            }
+        }
+
+        private static string GetInternalBasePath()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return Path.Combine(Environment.ExpandEnvironmentVariables("%programdata%"), "log4TC", "internal");
             }
             else
             {

@@ -1,7 +1,12 @@
 # Changelog
 
 ## [vNext]
+### Added
+
+* Logging für Service aktiviert (%ProgramData%/log4Tc/internal/service-*.log)
+
 ### Changed
+
 - Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host
 
 ### Fixed
