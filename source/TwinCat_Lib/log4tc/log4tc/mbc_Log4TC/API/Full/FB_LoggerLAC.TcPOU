@@ -1,7 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_LoggerLAC" Id="{2ce91a2b-8d27-48a3-9046-06198bbeee58}" SpecialFunc="None">
-    <Declaration><![CDATA[{attribute 'reflection'} 
+    <Declaration><![CDATA[(*
+:Description: Writes log messages with the same logger and context. 
+
+This function block allows to log messages with the same logger and
+context without repeating the data on each log call.
+
+
+The logger must be specified during instantiation. If the
+constant `Const.sLoggerFromInstance` is specified, then the logger is 
+retrieved from the instance path of the FB (only possible with 
+instantiation in FBs).
+
+**Example**
+
+.. code:: 
+    VAR
+        fbLog   : FB_LoggerLAC(Const.sLoggerFromInstance);
+    END_VAR
+
+	fbLog(
+		eLogLevel 	:= E_LogLevel.eInfo,
+		sMessage 	:= 'Something happens with code {code}',
+		aArg1 		:= nCode
+	);
+	
+*)
+{attribute 'reflection'} 
 FUNCTION_BLOCK FB_LoggerLAC
 VAR_INPUT
 	bExecute			: BOOL := TRUE;
@@ -88,7 +114,7 @@ END_VAR
 	fbLoggerContext.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
 	
 	IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
-		iLogEntryAdder.AddToLogEntry(E_Scope.eLogger, fbLogEntry);
+		iLogEntryAdder.AddToLogEntry(E_Scope.eLog, fbLogEntry);
 	END_IF
 	
 	IF fbLogEntry.End() THEN

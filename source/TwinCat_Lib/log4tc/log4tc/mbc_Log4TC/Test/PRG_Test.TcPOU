@@ -16,15 +16,17 @@ END_VAR
     <Implementation>
       <ST><![CDATA[TcUnit.RUN();
 
+fbLog.LoggerContext.AddInt('logger', 42);
 
 IF bLog THEN
 	bLog := FALSE;
 	F_Log(E_LogLevel.eDebug, 'Foobar');
-	
+
 	fbLog(
-		eLogLevel 	:= E_LogLevel.eInfo,
-		sMessage 	:= 'barbaz {bLog}',
-		aArg1 		:= bLog
+		eLogLevel 		:= E_LogLevel.eInfo,
+		sMessage 		:= 'barbaz {bLog}',
+		aArg1 			:= bLog,
+		iContextBuilder := F_LogContext().AddString('inmessage', 'foo')
 	);
 END_IF
 
