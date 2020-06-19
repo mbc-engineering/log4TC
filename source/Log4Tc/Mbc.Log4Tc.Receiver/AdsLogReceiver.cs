@@ -87,7 +87,7 @@ namespace Mbc.Log4Tc.Receiver
                         var ctxScope = reader.ReadByte(); // TODO
                         var ctxName = ReadString(reader);
                         var ctxValue = ReadObject(reader);
-                        logEntry.Context.Add(ctxName, ctxValue);
+                        logEntry.Context[ctxName] = ctxValue;
                         break;
                     case 255:
                         end = true;

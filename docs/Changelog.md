@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 ## [vNext]
 ### Changed
@@ -7,6 +7,7 @@
 ### Fixed
 
 * Bugfix: Context.AddString verwendet jetzt dir korrekt Stringlänge
+* Im Context überschreiben jetzt gleiche Namen den vorherigen Wert
 
 ## [20.05.06]
 ### Added
