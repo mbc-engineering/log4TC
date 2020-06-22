@@ -1,19 +1,25 @@
 ﻿using Mbc.Log4Tc.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using TwinCAT.Ads;
 using TwinCAT.Ads.Server;
 
+using LogLevel = Mbc.Log4Tc.Model.LogLevel;
+
 namespace Mbc.Log4Tc.Receiver
 {
     public class AdsLogReceiver : TcAdsServer, ILogReceiver
     {
+        private readonly ILogger<AdsLogReceiver> _logger;
+
         public event EventHandler<LogEntryEventArgs> LogsReceived;
 
-        public AdsLogReceiver()
+        public AdsLogReceiver(ILogger<AdsLogReceiver> logger)
             : base(16150, "Log4Tc")
         {
+            _logger = logger;
         }
 
         public override void AdsWriteInd(AmsAddress rAddr, uint invokeId, uint indexGroup, uint indexOffset, uint cbLength, byte[] data)
@@ -49,8 +55,7 @@ namespace Mbc.Log4Tc.Receiver
             }
             catch (Exception e)
             {
-                // TODO Logging
-                Console.WriteLine(e);
+                _logger.LogError(e, "Error parsing log message from plc.");
             }
         }
 

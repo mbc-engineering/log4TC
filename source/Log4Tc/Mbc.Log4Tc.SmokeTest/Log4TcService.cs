@@ -3,6 +3,7 @@ using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Dispatcher.DispatchExpression;
 using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Receiver;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -14,11 +15,11 @@ namespace Mbc.Log4Tc.SmokeTest
         private readonly LogDispatcherService _logDispatcher;
         private readonly TestRecordingOutput _output;
 
-        public Log4TcService()
+        public Log4TcService(ILoggerFactory loggerFactory)
         {
-            _adsLogReceiver = new AdsLogReceiver();
+            _adsLogReceiver = new AdsLogReceiver((ILogger<AdsLogReceiver>)loggerFactory.CreateLogger(typeof(AdsLogReceiver).FullName));
             _output = new TestRecordingOutput();
-            _logDispatcher = new LogDispatcherService(Enumerables.Yield(_adsLogReceiver), Enumerables.Yield(_output), Enumerables.Yield(new DispatchAllLogsToOutput("TestOutput")));
+            _logDispatcher = new LogDispatcherService((ILogger<LogDispatcherService>)loggerFactory.CreateLogger(typeof(LogDispatcherService).FullName), Enumerables.Yield(_adsLogReceiver), Enumerables.Yield(_output), Enumerables.Yield(new DispatchAllLogsToOutput("TestOutput")));
         }
 
         public List<LogEntry> LoggedEntries => _output.LoggedEntries;
