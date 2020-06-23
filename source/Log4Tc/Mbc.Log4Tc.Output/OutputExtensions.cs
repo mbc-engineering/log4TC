@@ -10,10 +10,16 @@ namespace Mbc.Log4Tc.Service
 {
     public static class OutputExtensions
     {
-        public static IServiceCollection AddOutputs(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddOutputs(this IServiceCollection services, string pluginFolder, IConfiguration configuration)
         {
+            // Check Valid Parameters
+            if (!Uri.IsWellFormedUriString(pluginFolder, UriKind.RelativeOrAbsolute))
+            {
+                throw new ApplicationException($"The plugin folder {pluginFolder} is not well formed.");
+            }
+
             // Add Config Parameters
-            var outputs = configuration
+            var outputConfigs = configuration
                 .GetSection("Outputs")
                 .GetChildren()
                 .ToList()
@@ -26,30 +32,36 @@ namespace Mbc.Log4Tc.Service
                     }).ToList();
 
             services
-                .Configure<List<OutputConfiguration>>(config => config.AddRange(outputs));
+                .Configure<List<OutputConfiguration>>(config => config.AddRange(outputConfigs));
 
-            RegisterOutputHandler(services, outputs);
+            // Load the Plugin Assemblies and Create Plugin instance
+            var outputPlugins = OutputPluginLoader.LoadOutputPlugins(pluginFolder);
+
+            // Register all Plugin instances
+            services.TryAddEnumerable(outputPlugins.Select(p => ServiceDescriptor.Singleton(p)));
+
+            // Aktivate all outputs present in the application config
+            ActivateConfiguredOutputs(services, outputPlugins, outputConfigs);
 
             return services;
         }
 
-        private static void RegisterOutputHandler(IServiceCollection services, IEnumerable<OutputConfiguration> outputConfigs)
+        private static void ActivateConfiguredOutputs(IServiceCollection services, IEnumerable<IOutputPlugin> outputPlugins, IEnumerable<OutputConfiguration> outputConfigs)
         {
+            // Load the Plugin Assemblies
             foreach (var outputConfig in outputConfigs)
             {
-                if (OutputAliases.KnownOutputAliases.TryGetValue(outputConfig.Type, out Type outputFactoryType))
+                var pluginForConfig = outputPlugins.FirstOrDefault(p => string.Equals(p.ConfigTypeAlias, outputConfig.Type, StringComparison.OrdinalIgnoreCase));
+                if (pluginForConfig != null)
                 {
-                    var outputFactory = (OutputFactoryBase)Activator.CreateInstance(outputFactoryType);
+                    // Configure DI for Plugin
+                    pluginForConfig.ConfigureServices(outputConfig.ConfigSection, services);
 
-                    // Configure DI
-                    outputFactory.ConfigureServices(outputConfig.ConfigSection, services);
-
-                    services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IOutputHandler), outputFactory.OutputType));
+                    services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IOutputHandler), pluginForConfig.OutputType));
                 }
                 else
                 {
-                    // ToDo: Logging!!!
-                    // _logger.LogWarning("The configured output type {outputType} was not found in the availlable output Plugins.", outputConfig.Type);
+                    throw new ApplicationException($"The configured output type {outputConfig.Type} was not found in the availlable output Plugins.");
                 }
             }
         }

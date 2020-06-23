@@ -4,8 +4,10 @@ using System;
 
 namespace Mbc.Log4Tc.Output.NLog
 {
-    public class NLogLog4TcOutputFactory : OutputFactoryBase
+    public class NLogLog4TcOutputPlugin : OutputPluginBase
     {
+        public override string ConfigTypeAlias => "nlog";
+
         public override Type OutputType => typeof(NLogLog4TcOutput);
 
         public override IServiceCollection ConfigureServices(IConfigurationSection configSection, IServiceCollection services)

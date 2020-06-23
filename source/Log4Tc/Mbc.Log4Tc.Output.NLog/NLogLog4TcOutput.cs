@@ -38,11 +38,11 @@ namespace Mbc.Log4Tc.Output.NLog
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Could not load the  Output-Type NLog");
+                _logger.LogError(ex, "Could not load the  Output-Type NLog");
                 throw;
             }
 
-            logger.LogInformation("NLog Output-Type is created.");
+            _logger.LogInformation("NLog Output-Type is created.");
         }
 
         public string Name { get; }

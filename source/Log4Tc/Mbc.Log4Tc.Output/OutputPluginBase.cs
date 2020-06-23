@@ -4,9 +4,11 @@ using System;
 
 namespace Mbc.Log4Tc.Output
 {
-    public abstract class OutputFactoryBase
+    public abstract class OutputPluginBase : IOutputPlugin
     {
         public virtual Type OutputType { get; }
+
+        public virtual string ConfigTypeAlias { get; }
 
         /// <summary>
         /// Configure the IOC of this component
