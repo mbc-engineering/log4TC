@@ -14,9 +14,8 @@ namespace Mbc.Log4Tc.SmokeTest
 
         public SmokeTest()
         {
-            var loggerFactory = new NullLoggerFactory();
             _plcControl = new PlcControl(AmsAddress.Parse("172.16.23.20.1.1:853"));
-            _log4TcService = new Log4TcService(loggerFactory);
+            _log4TcService = new Log4TcService();
             _log4TcService.Start();
         }
 
