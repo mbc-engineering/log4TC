@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 
   <?define Twincat3MinBuild4022 = 4022 ?>
-  
+
 	<Fragment>
     <?include $(sys.CURRENTDIR)Includes/DefinitionsPlatform.wxi ?>
 
@@ -10,20 +10,20 @@
     <Property Id="WIX_TWINCAT31_INSTALLDIR">
       <RegistrySearch Id="PrequisitTwinCatInstallDirRegSearch"
                       Root="HKLM"
-                      Key="SOFTWARE\WOW6432Node\Beckhoff\TwinCAT3\3.1"
+                      Key="SOFTWARE\Beckhoff\TwinCAT3\3.1"
                       Name="InstallDir"
                       Type="directory"
-                      Win64="$(var.Win64)" />
+                      Win64="no" />
     </Property>
 
     <!-- Exist twincat 3 router -->
     <Property Id="WIX_IS_TWINCAT3_ROUTER_INSTALLED">
       <RegistrySearch Id="PrequisitTwinCatRouterRegSearch"
                       Root="HKLM"
-                      Key="SOFTWARE\WOW6432Node\Beckhoff\TwinCAT3\System"
+                      Key="SOFTWARE\Beckhoff\TwinCAT3\System"
                       Name="Build"
                       Type="raw"
-                      Win64="$(var.Win64)" />
+                      Win64="no" />
     </Property>
 
     <!-- Exist twincat3 XAE -->
@@ -35,16 +35,16 @@
                        AssignToProperty="yes">
       </DirectorySearch>
     </Property>
-    
-    
+
+
     <!-- TwinCat Version -->
     <Property Id="WIX_TWINCAT3_BUILD_INSTALLED">
       <RegistrySearch Id="TwincatBuildVersionRegSearch"
                       Root="HKLM"
-                      Key="SOFTWARE\WOW6432Node\Beckhoff\TwinCAT3\System"
+                      Key="SOFTWARE\Beckhoff\TwinCAT3\System"
                       Name="Build"
                       Type="raw"
-                      Win64="$(var.Win64)" />
+                      Win64="no" />
     </Property>
     <Property Id="WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED" Secure="yes" />
     <SetProperty Id="WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED" Value="1" After="AppSearch">
