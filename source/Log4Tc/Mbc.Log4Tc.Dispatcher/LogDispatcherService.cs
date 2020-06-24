@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -80,22 +79,8 @@ namespace Mbc.Log4Tc.Dispatcher
 
             foreach (var logEntry in logEntries)
             {
-                try
-                {
-                    await DispatchToOutput(logEntry).ConfigureAwait(false);
-
-                }
-                catch (Exception e)
-                {
-                    // TODO logging
-                    Console.WriteLine(e);
-                }
+                await Task.WhenAll(_outputs.Select(x => x.Dispatch(logEntry))).ConfigureAwait(false);
             }
-        }
-
-        private Task DispatchToOutput(LogEntry logEntry)
-        {
-            return Task.WhenAll(_outputs.Select(x => x.Dispatch(logEntry)));
         }
 
         private void InitializeOutputs()

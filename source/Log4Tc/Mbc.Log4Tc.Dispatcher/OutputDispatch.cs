@@ -19,6 +19,7 @@ namespace Mbc.Log4Tc.Dispatcher
         private readonly IConfiguration _outputConfig;
         private readonly IOutputHandler _output;
         private readonly ILogFilter _logFilter;
+        private bool _hasError;
 
         public OutputDispatch(ILogger<OutputDispatch> logger, IServiceProvider serviceProvider, IConfiguration outputConfig)
         {
@@ -51,9 +52,23 @@ namespace Mbc.Log4Tc.Dispatcher
 
         public Task Dispatch(LogEntry logEntry)
         {
-            if (_logFilter.Matches(logEntry))
+            try
             {
-                return _output.ProcesLogEntry(logEntry);
+                if (_logFilter.Matches(logEntry))
+                {
+                    return _output.ProcesLogEntry(logEntry);
+                }
+
+                _hasError = false;
+            }
+            catch (Exception e)
+            {
+                if (!_hasError)
+                {
+                    _logger.LogError(e, "Error writing to output.");
+                }
+
+                _hasError = true;
             }
 
             return Task.CompletedTask;
