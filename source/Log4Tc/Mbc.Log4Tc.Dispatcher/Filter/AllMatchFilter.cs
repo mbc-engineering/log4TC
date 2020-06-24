@@ -10,5 +10,7 @@ namespace Mbc.Log4Tc.Dispatcher.Filter
         public static readonly AllMatchFilter Default = new AllMatchFilter();
 
         public bool Matches(LogEntry logEntry) => true;
+
+        public override string ToString() => "Filter(*)";
     }
 }

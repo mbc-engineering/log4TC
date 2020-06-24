@@ -1,16 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Mbc.Log4Tc.Output.NLog
 {
-    internal static class NLogLog4TcOutputExtensions
+    public static class NLogLog4TcOutputExtensions
     {
-        internal static IServiceCollection AddLog4TcNLogOutputSettings(this IServiceCollection services, IConfiguration configuration)
+        /// <summary>
+        /// Register NLog output <see cref="NLogLog4TcOutput"/> as a <see cref="IOutputHandler"/>
+        /// </summary>
+        public static IServiceCollection AddLog4TcNLogOutput(this IServiceCollection services)
         {
-            services
-                .Configure<NLogLog4TcOutputConfiguration>(configuration)
-                .AddOptions<NLogLog4TcOutputConfiguration>()
-                .ValidateDataAnnotations();
+            services.AddSingleton<IOutputFactory, NLogLog4TcOutputFactory>();
 
             return services;
         }

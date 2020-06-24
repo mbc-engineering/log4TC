@@ -1,9 +1,11 @@
-﻿using Mbc.Log4Tc.Dispatcher.DispatchExpression;
-using Mbc.Log4Tc.Model;
-using Mbc.Log4Tc.Output;
+﻿using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Receiver;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +15,33 @@ using System.Threading.Tasks.Dataflow;
 
 namespace Mbc.Log4Tc.Dispatcher
 {
-    public class LogDispatcherService : IHostedService
+    public class LogDispatcherService : IHostedService, IDisposable
     {
         private readonly List<ILogReceiver> _receiver;
-        private readonly Dictionary<string, IOutputHandler> _outputs;
-        private readonly List<IDispatchExpression> _dispatchExpressions;
         private readonly BufferBlock<IEnumerable<LogEntry>> _logEntryBuffer = new BufferBlock<IEnumerable<LogEntry>>();
         private readonly ILogger<LogDispatcherService> _logger;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IConfiguration _outputsConfiguration;
+        private readonly List<OutputDispatch> _outputs = new List<OutputDispatch>();
+        private bool _outputInitialized;
+        private IChangeToken _outputChangeToken;
 
-        public LogDispatcherService(ILogger<LogDispatcherService> logger, IEnumerable<ILogReceiver> receiver, IEnumerable<IOutputHandler> outputs, IEnumerable<IDispatchExpression> dispatchExpressions)
+        public LogDispatcherService(ILogger<LogDispatcherService> logger, IEnumerable<ILogReceiver> receiver, IConfiguration outputConfiguration, IServiceProvider serviceProvider)
         {
             _receiver = receiver.ToList();
-            _outputs = outputs.ToDictionary(x => x.Name);
-            _dispatchExpressions = dispatchExpressions.ToList();
             _logger = logger;
+            _serviceProvider = serviceProvider;
+            _outputsConfiguration = outputConfiguration.GetSection("Outputs");
+        }
+
+        public void Dispose()
+        {
+            foreach (var disposableOutput in _outputs.OfType<IDisposable>())
+            {
+                disposableOutput.Dispose();
+            }
+
+            _outputs.Clear();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -59,13 +74,15 @@ namespace Mbc.Log4Tc.Dispatcher
             _logEntryBuffer.Post(e.LogEntries);
         }
 
-        private void ProcessLogEntries(IEnumerable<LogEntry> logEntries)
+        private async Task ProcessLogEntries(IEnumerable<LogEntry> logEntries)
         {
+            InitializeOutputs();
+
             foreach (var logEntry in logEntries)
             {
                 try
                 {
-                    DispatchToOutput(logEntry);
+                    await DispatchToOutput(logEntry).ConfigureAwait(false);
 
                 }
                 catch (Exception e)
@@ -76,15 +93,38 @@ namespace Mbc.Log4Tc.Dispatcher
             }
         }
 
-        private void DispatchToOutput(LogEntry logEntry)
+        private Task DispatchToOutput(LogEntry logEntry)
         {
-            foreach (var output in _outputs.Values)
-            {
-                if (_dispatchExpressions.Any(x => x.ShouldDispatch(output.Name, logEntry)))
+            return Task.WhenAll(_outputs.Select(x => x.Dispatch(logEntry)));
+        }
+
+        private void InitializeOutputs()
+        {
+            if (_outputInitialized && _outputChangeToken != null && !_outputChangeToken.HasChanged)
+                return;
+
+            _logger.LogInformation("Loading output configuration.");
+
+            _outputInitialized = true;
+
+            _outputChangeToken = _outputsConfiguration.GetReloadToken();
+
+            _outputs.AddRange(_outputsConfiguration
+                .GetChildren()
+                .Select(x =>
                 {
-                    output.ProcesLogEntry(logEntry);
-                }
-            }
+                    try
+                    {
+                        return ActivatorUtilities.CreateInstance<OutputDispatch>(_serviceProvider, x);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogError(e, "Error loading output.");
+                        return null;
+                    }
+                })
+                .Where(x => x != null)
+                .ToList());
         }
     }
 }

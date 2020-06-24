@@ -1,5 +1,5 @@
 ﻿using Mbc.Log4Tc.Model;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using NLog;
 using NLog.Config;
@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Log4TcLevel = Mbc.Log4Tc.Model.LogLevel;
 using NLogLevel = NLog.LogLevel;
 
@@ -21,33 +22,12 @@ namespace Mbc.Log4Tc.Output.NLog
         }
 
         private readonly Logger _dispatchLogger = LogManager.GetLogger("TwinCat");
-        private readonly ILogger<NLogLog4TcOutput> _logger;
 
-        public NLogLog4TcOutput(IOptions<NLogLog4TcOutputConfiguration> configuration, ILogger<NLogLog4TcOutput> logger)
+        public NLogLog4TcOutput(NLogLog4TcOutputConfiguration configuration)
         {
-            _logger = logger;
-
-            try
-            {
-                if (configuration == null || configuration.Value == null)
-                {
-                    throw new ApplicationException($"Could not load the configuration for outputType NLog");
-                }
-
-                Name = configuration.Value.Name;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Could not load the  Output-Type NLog");
-                throw;
-            }
-
-            _logger.LogInformation("NLog Output-Type is created.");
         }
 
-        public string Name { get; }
-
-        public void ProcesLogEntry(LogEntry logEntry)
+        public Task ProcesLogEntry(LogEntry logEntry)
         {
             var logEvent = new LogEventInfo
             {
@@ -72,6 +52,8 @@ namespace Mbc.Log4Tc.Output.NLog
             logEvent.Properties.Add("_TcLogSource_", logEntry.Source);
 
             _dispatchLogger.Log(logEvent);
+
+            return Task.CompletedTask;
         }
 
         private object[] ConvertToNLogParameters(IDictionary<int, object> arguments)

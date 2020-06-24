@@ -1,11 +1,10 @@
 ﻿using Mbc.Log4Tc.Model;
+using System.Threading.Tasks;
 
 namespace Mbc.Log4Tc.Output
 {
     public interface IOutputHandler
     {
-        string Name { get; }
-
-        void ProcesLogEntry(LogEntry logEntry);
+        Task ProcesLogEntry(LogEntry logEntry);
     }
 }

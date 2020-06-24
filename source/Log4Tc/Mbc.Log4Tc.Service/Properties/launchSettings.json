@@ -2,6 +2,7 @@
   "profiles": {
     "Mbc.Log4Tc.Service-Development": {
       "commandName": "Project",
+      "commandLineArgs": "--localconfig",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }

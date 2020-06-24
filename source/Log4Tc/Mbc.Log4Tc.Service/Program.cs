@@ -1,11 +1,14 @@
 ﻿using Mbc.Log4Tc.Dispatcher;
-using Mbc.Log4Tc.Dispatcher.DispatchExpression;
+using Mbc.Log4Tc.Output;
+using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -27,8 +30,11 @@ namespace Mbc.Log4Tc.Service
             var hostBuilder = Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configure =>
                 {
-                    // The place to find the appsettings.json
-                    configure.SetBasePath(GetAppsettingsBasePath());
+                    if (!args.Contains("--localconfig"))
+                    {
+                        // The place to find the appsettings.json
+                        configure.SetBasePath(GetAppsettingsBasePath());
+                    }
                 })
                 .ConfigureLogging(loggingBuilder =>
                 {
@@ -46,10 +52,9 @@ namespace Mbc.Log4Tc.Service
                 .ConfigureServices((hostContext, services) =>
                 {
                     services
-                        .AddLog4TcDispatchExpression(new DispatchAllLogsToOutput("NLogOutput"))
+                        .AddLog4TcNLogOutput()
                         .AddLog4TcAdsLogReceiver()
-                        .AddOutputs(GetOutputPluginPath(), hostContext.Configuration)
-                        .AddLog4TcDispatcher();
+                        .AddLog4TcDispatcher(hostContext.Configuration.GetSection("Outputs"));
                 });
 
             if (args.Contains("--service"))
@@ -90,22 +95,6 @@ namespace Mbc.Log4Tc.Service
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return Path.Combine(Environment.ExpandEnvironmentVariables("%programdata%"), "log4TC", "internal");
-            }
-            else
-            {
-                throw new PlatformNotSupportedException("Service still in windows system supported.");
-            }
-        }
-
-        private static string GetOutputPluginPath()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-#if DEBUG
-                return @"../../outputplugins";
-#else
-                return "outputplugins"
-#endif
             }
             else
             {

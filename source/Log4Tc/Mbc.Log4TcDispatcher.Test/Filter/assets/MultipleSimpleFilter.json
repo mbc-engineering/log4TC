@@ -1,0 +1,10 @@
+﻿{
+  "Filter": [
+    {
+      "Logger": "foo"
+    },
+    {
+      "Logger": "bar"
+    }
+  ]
+}
