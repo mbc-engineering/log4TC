@@ -35,15 +35,12 @@ namespace Mbc.Log4Tc.Output
 
         private static IEnumerable<IOutputPlugin> CreateOutputPlugins(Assembly assembly)
         {
-            foreach (Type type in assembly.GetTypes())
+            foreach (Type type in assembly.GetTypes().Where(x => typeof(IOutputPlugin).IsAssignableFrom(x)))
             {
-                if (typeof(IOutputPlugin).IsAssignableFrom(type))
+                IOutputPlugin result = Activator.CreateInstance(type) as IOutputPlugin;
+                if (result != null)
                 {
-                    IOutputPlugin result = Activator.CreateInstance(type) as IOutputPlugin;
-                    if (result != null)
-                    {
-                        yield return result;
-                    }
+                    yield return result;
                 }
             }
         }

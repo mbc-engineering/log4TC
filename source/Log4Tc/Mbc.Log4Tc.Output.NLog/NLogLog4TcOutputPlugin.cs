@@ -1,20 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Mbc.Log4Tc.Output.NLog
 {
-    public class NLogLog4TcOutputPlugin : OutputPluginBase
+    public class NLogLog4TcOutputPlugin : IOutputPlugin
     {
-        public override string ConfigTypeAlias => "nlog";
-
-        public override Type OutputType => typeof(NLogLog4TcOutput);
-
-        public override IServiceCollection ConfigureServices(IConfigurationSection configSection, IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddLog4TcNLogOutputSettings(GetConfiguration(configSection));
-
-            return base.ConfigureServices(configSection, services);
+            services.AddSingleton<IOutputFactory, NLogLog4TcOutputFactory>();
         }
     }
 }
