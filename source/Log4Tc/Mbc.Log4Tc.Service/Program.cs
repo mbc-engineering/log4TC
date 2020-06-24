@@ -1,16 +1,14 @@
 ﻿using Mbc.Log4Tc.Dispatcher;
-using Mbc.Log4Tc.Dispatcher.DispatchExpression;
 using Mbc.Log4Tc.Output;
 using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -54,12 +52,9 @@ namespace Mbc.Log4Tc.Service
                 .ConfigureServices((hostContext, services) =>
                 {
                     services
-                        .AddLog4TcDispatchExpression(new DispatchAllLogsToOutput("NLogOutput"))
-                        //.AddLog4TcAdsLogReceiver()
-                        // ToDo: remove and use confension
                         .AddLog4TcNLogOutput()
-                        .AddOutputs(hostContext.Configuration)
-                        .AddLog4TcDispatcher();
+                        .AddLog4TcAdsLogReceiver()
+                        .AddLog4TcDispatcher(hostContext.Configuration.GetSection("Outputs"));
                 });
 
             if (args.Contains("--service"))
@@ -100,22 +95,6 @@ namespace Mbc.Log4Tc.Service
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return Path.Combine(Environment.ExpandEnvironmentVariables("%programdata%"), "log4TC", "internal");
-            }
-            else
-            {
-                throw new PlatformNotSupportedException("Service still in windows system supported.");
-            }
-        }
-
-        private static string GetOutputPluginPath()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-#if DEBUG
-                return @"../../outputplugins";
-#else
-                return "outputplugins"
-#endif
             }
             else
             {
