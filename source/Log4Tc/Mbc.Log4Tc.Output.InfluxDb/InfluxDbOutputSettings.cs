@@ -9,5 +9,8 @@ namespace Mbc.Log4Tc.Output.InfluxDb
         public char[] Password { get; set; }
         public string Database { get; set; }
         public string RetentionPolicy { get; set; }
+
+        public int WriteBatchSize { get; set; } = 1;
+        public int WriteFlushIntervalMillis { get; set; } = 1000;
     }
 }

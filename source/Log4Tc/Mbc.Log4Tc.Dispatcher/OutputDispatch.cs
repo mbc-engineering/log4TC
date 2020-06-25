@@ -35,7 +35,7 @@ namespace Mbc.Log4Tc.Dispatcher
             if (outputFactory == null)
             {
                 // TODO bessere Exception?
-                throw new ArgumentException($"Unknown output type ${outputConfig.GetValue<string>("Type")}.");
+                throw new ArgumentException($"Unknown output type '{outputConfig.GetValue<string>("Type")}'.");
             }
 
             _output = outputFactory.Create(serviceProvider, configSection);
