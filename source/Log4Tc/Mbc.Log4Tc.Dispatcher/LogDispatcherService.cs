@@ -25,12 +25,12 @@ namespace Mbc.Log4Tc.Dispatcher
         private bool _outputInitialized;
         private IChangeToken _outputChangeToken;
 
-        public LogDispatcherService(ILogger<LogDispatcherService> logger, IEnumerable<ILogReceiver> receiver, IConfiguration outputConfiguration, IServiceProvider serviceProvider)
+        public LogDispatcherService(ILogger<LogDispatcherService> logger, IEnumerable<ILogReceiver> receiver, IConfiguration configuration, IServiceProvider serviceProvider)
         {
             _receiver = receiver.ToList();
             _logger = logger;
             _serviceProvider = serviceProvider;
-            _outputsConfiguration = outputConfiguration.GetSection("Outputs");
+            _outputsConfiguration = configuration.GetSection("Outputs");
         }
 
         public void Dispose()
@@ -94,6 +94,7 @@ namespace Mbc.Log4Tc.Dispatcher
 
             _outputChangeToken = _outputsConfiguration.GetReloadToken();
 
+            _outputs.Clear();
             _outputs.AddRange(_outputsConfiguration
                 .GetChildren()
                 .Select(x =>

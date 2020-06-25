@@ -50,7 +50,7 @@ namespace Mbc.Log4Tc.Service
                     services
                         .AddOutputs(GetOutputPluginPath(), hostContext.Configuration)
                         .AddLog4TcAdsLogReceiver()
-                        .AddLog4TcDispatcher(hostContext.Configuration.GetSection("Outputs"));
+                        .AddLog4TcDispatcher();
                 });
 
             if (args.Contains("--service"))
