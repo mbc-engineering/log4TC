@@ -113,8 +113,8 @@
       </Condition>
       
       <ComponentGroupRef Id="Cmp_Log4TcTwinCatLib" />
-      <ComponentGroupRef Id="Cmp_Log4TcTwinCatLibGettingStardedFiles" />
-      <ComponentGroupRef Id="Cmp_Log4TcTwinCatLibGettingStarded" />
+      <ComponentGroupRef Id="Cmp_Log4TcTwinCatLibGettingStartedFiles" />
+      <ComponentGroupRef Id="Cmp_Log4TcTwinCatLibGettingStarted" />
       <ComponentGroupRef Id="Cmp_Log4TcCommonInstall" />
     </Feature>
 
@@ -166,7 +166,7 @@
           <Directory Id="DIR_CommonAppDataFolderLog4TcConfig" Name="config" />
           <Directory Id="DIR_CommonAppDataFolderLog4TcLog" Name="log" />
           <Directory Id="DIR_CommonAppDataFolderLog4TcLib" Name="lib" />
-          <Directory Id="DIR_CommonAppDataFolderLog4TcGettingStarded" Name="gettingstarded" />
+          <Directory Id="DIR_CommonAppDataFolderLog4TcGettingStarted" Name="getting started" />
         </Directory>
       </Directory>
       

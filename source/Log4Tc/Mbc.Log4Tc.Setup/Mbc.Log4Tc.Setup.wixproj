@@ -44,9 +44,9 @@
     <Compile Include="Fragments\Common\Log4TcCommonStartmenu.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceOutputFiles.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceInstall.wxs" />
-    <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStarded.wxs" />
+    <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStarted.wxs" />
     <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLib.wxs" />
-    <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStardedFiles.wxs" />
+    <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStartedFiles.wxs" />
     <Compile Include="Fragments\NetFx471.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" />
     <Compile Include="Fragments\TwinCat3.wxs" />
@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EULA.rtf" />
-    <Content Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStardedFilesFilter.xslt" />
+    <Content Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStartedFilesFilter.xslt" />
     <Content Include="Fragments\Log4TcTwinCatLibFeature\mbc_engineering_log4tc.tmc" />
     <Content Include="Includes\DefinitionsPlatform.wxi" />
     <Content Include="packages.config" />
@@ -120,11 +120,11 @@
     </PropertyGroup>
     <!-- harvest wxs file from publish folder of Mbc.Log4Tc.Service project -->
     <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" Directory="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net461\win\publish" Transforms="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcService" DirectoryRefId="DIR_Log4TcService" AutogenerateGuids="true" PreprocessorVariable="var.Mbc.Log4Tc.Service.TargetDir" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
-    <!-- harvest wxs file from GettingStarded TwinCat3 Example folder of \source\TwinCat_Examples\GettingStarted -->
+    <!-- harvest wxs file from GettingStarted TwinCat3 Example folder of \source\TwinCat_Examples\GettingStarted -->
     <PropertyGroup>
       <DefineConstants>$(DefineConstants);Log4TcTwinCatLibFeatureHarvestPath=$(ProjectDir)..\..\TwinCat_Examples\GettingStarted</DefineConstants>
     </PropertyGroup>
-    <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStardedFiles.wxs" Directory="..\..\TwinCat_Examples\GettingStarted" Transforms="$(ProjectDir)\Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStardedFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcTwinCatLibGettingStardedFiles" DirectoryRefId="DIR_CommonAppDataFolderLog4TcGettingStarded" AutogenerateGuids="true" PreprocessorVariable="var.Log4TcTwinCatLibFeatureHarvestPath" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
+    <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStartedFiles.wxs" Directory="..\..\TwinCat_Examples\GettingStarted" Transforms="$(ProjectDir)\Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStartedFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcTwinCatLibGettingStartedFiles" DirectoryRefId="DIR_CommonAppDataFolderLog4TcGettingStarted" AutogenerateGuids="true" PreprocessorVariable="var.Log4TcTwinCatLibFeatureHarvestPath" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
   </Target>
   <Target Name="AfterBuild">
     <!-- Add the Version to the builded MSI -->

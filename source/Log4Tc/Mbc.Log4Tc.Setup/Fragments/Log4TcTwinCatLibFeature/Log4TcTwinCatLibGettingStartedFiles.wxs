@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
-        <DirectoryRef Id="DIR_CommonAppDataFolderLog4TcGettingStarded">
+        <DirectoryRef Id="DIR_CommonAppDataFolderLog4TcGettingStarted">
             <Directory Id="dir664A59D488C4223C32BF1D4644A24256" Name=".vs" />
             <Directory Id="dir654D6B49BD8CA8F446A4D1BB29214551" Name="A_SimpleLogMessage" />
             <Directory Id="dir4F995E6757F33EDF4A89FE1BDBE4FE0E" Name="B_LogMessageWithArg" />
@@ -13,11 +13,11 @@
         </DirectoryRef>
     </Fragment>
     <Fragment>
-        <ComponentGroup Id="Cmp_Log4TcTwinCatLibGettingStardedFiles">
-            <Component Id="cmpDF2815E421912F2213A6E7B4E87579D4" Directory="DIR_CommonAppDataFolderLog4TcGettingStarded" Guid="*">
+        <ComponentGroup Id="Cmp_Log4TcTwinCatLibGettingStartedFiles">
+            <Component Id="cmpDF2815E421912F2213A6E7B4E87579D4" Directory="DIR_CommonAppDataFolderLog4TcGettingStarted" Guid="*">
                 <File Id="fil418B78539DEE0D39E5E05C6AE441ED60" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\GettingStarted.sln" />
             </Component>
-            <Component Id="cmp1D70758746AA89639AF76F3F7854A91F" Directory="DIR_CommonAppDataFolderLog4TcGettingStarded" Guid="*">
+            <Component Id="cmp1D70758746AA89639AF76F3F7854A91F" Directory="DIR_CommonAppDataFolderLog4TcGettingStarted" Guid="*">
                 <File Id="filA974BFB830E8156EF3A4300690FC281A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\GettingStarted.tsproj" />
             </Component>
             
