@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <!-- Copies the dependencies to output directories for XCopy the output-->
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <OutDir>$(SolutionDir)Mbc.Log4Tc.Service\bin\$(Configuration)\outputplugins\nlog</OutDir>
+    <OutDir>$(SolutionDir)Mbc.Log4Tc.Service\bin\$(Configuration)\plugins\nlog</OutDir>
   </PropertyGroup>
 
   <ItemGroup>

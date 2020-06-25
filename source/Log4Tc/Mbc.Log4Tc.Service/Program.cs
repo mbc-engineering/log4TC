@@ -14,6 +14,8 @@ namespace Mbc.Log4Tc.Service
 {
     public static class Program
     {
+        private static string[] CmdArgs;
+
         public static async Task Main(string[] args)
         {
             await CreateHostBuilder(args)
@@ -23,10 +25,11 @@ namespace Mbc.Log4Tc.Service
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
+            CmdArgs = args;
             var hostBuilder = Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configure =>
                 {
-                    if (!args.Contains("--localconfig"))
+                    if (!IsLocalConfig())
                     {
                         // The place to find the appsettings.json
                         configure.SetBasePath(GetAppsettingsBasePath());
@@ -48,12 +51,16 @@ namespace Mbc.Log4Tc.Service
                 .ConfigureServices((hostContext, services) =>
                 {
                     services
-                        .AddOutputs(GetOutputPluginPath(), hostContext.Configuration)
+                        .AddPlugins(GetPluginPath())
+                        // ToDo: Differenziate output / input / ... configuration in PluginBuilder
+                        .AddOutputs(hostContext.Configuration);
+
+                    services
                         .AddLog4TcAdsLogReceiver()
                         .AddLog4TcDispatcher();
                 });
 
-            if (args.Contains("--service"))
+            if (args.Contains("--service", StringComparer.InvariantCultureIgnoreCase))
             {
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
@@ -98,20 +105,28 @@ namespace Mbc.Log4Tc.Service
             }
         }
 
-        private static string GetOutputPluginPath()
+        private static string GetPluginPath()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-#if DEBUG
-                return @"../../outputplugins";
-#else
-                return "outputplugins";
-#endif
+                if (IsLocalConfig())
+                {
+                    return @"../../plugins";
+                }
+                else
+                {
+                    return "plugins";
+                }
             }
             else
             {
                 throw new PlatformNotSupportedException("Service still in windows system supported.");
             }
+        }
+
+        private static bool IsLocalConfig()
+        {
+            return CmdArgs.Contains("--localconfig", StringComparer.InvariantCultureIgnoreCase);
         }
     }
 }

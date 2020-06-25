@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Mbc.Log4Tc.Output
+namespace Mbc.Log4Tc.Plugin
 {
-    public interface IOutputPlugin
+    public interface IPlugin
     {
         void ConfigureServices(IServiceCollection services, IConfiguration configuration);
     }

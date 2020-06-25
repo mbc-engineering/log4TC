@@ -1,6 +1,4 @@
 ﻿using Mbc.Log4Tc.Model;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using NLog;
 using NLog.Config;
 using System;
