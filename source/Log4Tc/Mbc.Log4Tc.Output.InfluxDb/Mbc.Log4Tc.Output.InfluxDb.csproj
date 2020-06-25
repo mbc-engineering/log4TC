@@ -1,17 +1,31 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- Copies the dependencies to output directories for XCopy the output-->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <OutDir>$(SolutionDir)Mbc.Log4Tc.Service\bin\$(Configuration)\outputplugins\influxdb</OutDir>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.3">
+      <!-- Do not copy dependencies to the output, because is used in the main app -->
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="InfluxDB.Client" Version="1.9.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
-    <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj">
+      <!-- Do not copy dependencies to the output, because is used in the main app -->
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj">
+      <!-- Do not copy dependencies to the output, because is used in the main app -->
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

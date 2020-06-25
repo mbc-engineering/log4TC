@@ -105,7 +105,7 @@ namespace Mbc.Log4Tc.Service
 #if DEBUG
                 return @"../../outputplugins";
 #else
-                return "outputplugins"
+                return "outputplugins";
 #endif
             }
             else

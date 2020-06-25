@@ -26,12 +26,12 @@ namespace Mbc.Log4Tc.Output.InfluxDb
 
         public string Name { get; }
 
-        public void ProcesLogEntry(LogEntry logEntry)
+        public Task ProcesLogEntry(LogEntry logEntry)
         {
             try
             {
                 if (logEntry.Arguments.Count == 0)
-                    return;
+                    return Task.CompletedTask;
 
                 var point = PointData.Measurement(logEntry.Logger);
 
@@ -63,6 +63,8 @@ namespace Mbc.Log4Tc.Output.InfluxDb
             {
                 _logger.LogError(e, "Error sending data to Influx.");
             }
+
+            return Task.CompletedTask;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

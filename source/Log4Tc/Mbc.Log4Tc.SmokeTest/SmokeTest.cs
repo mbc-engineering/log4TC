@@ -1,5 +1,4 @@
 using FluentAssertions;
-using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Threading;
 using TwinCAT.Ads;
