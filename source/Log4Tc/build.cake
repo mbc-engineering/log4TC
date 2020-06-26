@@ -24,6 +24,8 @@ Task("Clean")
     Information($"Clean Output folders of configuration='{configuration}'");
     var directoriesToClean = GetDirectories($"./**/bin/{configuration}/**/publish");
     DeleteDirectories(directoriesToClean, new DeleteDirectorySettings() { Recursive = true, Force = true });
+    var pluginDirectoriesToClean = GetDirectories($"./**/bin/{configuration}/plugins");
+    DeleteDirectories(pluginDirectoriesToClean, new DeleteDirectorySettings() { Recursive = true, Force = true });
 
     Information($"Clean docs output folder");
     DeleteDirectories(GetDirectories($"./../../docs/_site"), new DeleteDirectorySettings() { Recursive = true, Force = true });

@@ -34,6 +34,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Plugins -->
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.InfluxDb\Mbc.Log4Tc.Output.InfluxDb.csproj">
+      <!-- Do not copy dependencies to the output, it is only a build dependencies -->
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.NLog\Mbc.Log4Tc.Output.NLog.csproj">
+      <!-- Do not copy dependencies to the output, it is only a build dependencies -->
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+      
+    <!-- other dependencies -->
     <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj" />

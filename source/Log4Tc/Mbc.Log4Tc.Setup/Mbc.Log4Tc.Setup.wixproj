@@ -49,6 +49,7 @@
     <Compile Include="Fragments\Log4TcTwinCatLibFeature\Log4TcTwinCatLibGettingStartedFiles.wxs" />
     <Compile Include="Fragments\NetFx471.wxs" />
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" />
+    <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServicePluginFiles.wxs" />
     <Compile Include="Fragments\TwinCat3.wxs" />
     <Compile Include="Product.wxs" />
   </ItemGroup>
@@ -120,6 +121,11 @@
     </PropertyGroup>
     <!-- harvest wxs file from publish folder of Mbc.Log4Tc.Service project -->
     <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" Directory="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net461\win\publish" Transforms="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcService" DirectoryRefId="DIR_Log4TcService" AutogenerateGuids="true" PreprocessorVariable="var.Mbc.Log4Tc.Service.TargetDir" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
+    <PropertyGroup>
+      <DefineConstants>$(DefineConstants);Log4TcServicePluginFilesHarvestPath=$(ProjectDir)..\Mbc.Log4Tc.Service\bin\$(Configuration)\plugins</DefineConstants>
+    </PropertyGroup>
+    <!-- harvest wxs file from plugin folder of Mbc.Log4Tc.Service project --> 
+    <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServicePluginFiles.wxs" Directory="..\Mbc.Log4Tc.Service\bin\$(Configuration)\plugins" Transforms="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcServicePlugins" DirectoryRefId="DIR_Log4TcServicePlugin" AutogenerateGuids="true" PreprocessorVariable="var.Log4TcServicePluginFilesHarvestPath" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
     <!-- harvest wxs file from GettingStarted TwinCat3 Example folder of \source\TwinCat_Examples\GettingStarted -->
     <PropertyGroup>
       <DefineConstants>$(DefineConstants);Log4TcTwinCatLibFeatureHarvestPath=$(ProjectDir)..\..\TwinCat_Examples\GettingStarted</DefineConstants>
