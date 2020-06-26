@@ -36,6 +36,7 @@ Die Einführung geht schrittweise vor. Es wird empfohlen beim ersten Kontakt mit
 6. [Integration von Context-Eigenschaften](context_usage.md)
 7. [Log-Meldungen mit Log4View beobachten](tools_log4view.md)
 8. [Protokollierung von strukturierten Werten](write_structured_values.md)
+9. [Logging nach Influx](logging_to_influx.md)
 
 ---
 

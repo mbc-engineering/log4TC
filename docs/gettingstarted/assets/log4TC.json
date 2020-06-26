@@ -1,0 +1,160 @@
+{
+	"meta": {
+		"chronografVersion": "1.8.4",
+		"sources": {
+			"1": {
+				"name": "InfluxDb",
+				"link": "/chronograf/v1/sources/1"
+			},
+			"2": {
+				"name": "InfluxDb",
+				"link": "/chronograf/v1/sources/2"
+			}
+		}
+	},
+	"dashboard": {
+		"id": "10",
+		"cells": [
+			{
+				"i": "6f267b84-b05b-4ce5-803e-bedccdba551a",
+				"x": 0,
+				"y": 0,
+				"w": 12,
+				"h": 6,
+				"name": "Zykluszeit",
+				"queries": [
+					{
+						"query": "SELECT min(\"min\") / 10000 AS \"Minimum\", mean(\"avg\") / 10000 AS \"Durchschnitt\", max(\"max\") / 10000 AS \"Maximum\" FROM \"log4tc\".\"autogen\".\"influxdb.cycletime\" WHERE time > :dashboardTime: AND time < :upperDashboardTime: GROUP BY time(:interval:) FILL(null)",
+						"queryConfig": {
+							"database": "",
+							"measurement": "",
+							"retentionPolicy": "",
+							"fields": [],
+							"tags": {},
+							"groupBy": {
+								"time": "",
+								"tags": []
+							},
+							"areTagsAccepted": false,
+							"rawText": "SELECT min(\"min\") / 10000 AS \"Minimum\", mean(\"avg\") / 10000 AS \"Durchschnitt\", max(\"max\") / 10000 AS \"Maximum\" FROM \"log4tc\".\"autogen\".\"influxdb.cycletime\" WHERE time > :dashboardTime: AND time < :upperDashboardTime: GROUP BY time(:interval:) FILL(null)",
+							"range": null,
+							"shifts": null
+						},
+						"source": "/chronograf/v1/sources/1",
+						"type": "influxql"
+					}
+				],
+				"axes": {
+					"x": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					},
+					"y": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "Zykluszeiten SPS",
+						"prefix": "",
+						"suffix": "ms",
+						"base": "raw",
+						"scale": "linear"
+					},
+					"y2": {
+						"bounds": [
+							"",
+							""
+						],
+						"label": "",
+						"prefix": "",
+						"suffix": "",
+						"base": "10",
+						"scale": "linear"
+					}
+				},
+				"type": "line-stacked",
+				"colors": [
+					{
+						"id": "f9682cc2-8168-4030-9087-52094064e144",
+						"type": "scale",
+						"hex": "#31C0F6",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "5aa81bb6-6e24-40c8-9a6f-cf0ca421ea40",
+						"type": "scale",
+						"hex": "#A500A5",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					},
+					{
+						"id": "0bfc292b-3c27-40d3-b71b-f80ff02e6caa",
+						"type": "scale",
+						"hex": "#FF7E27",
+						"name": "Nineteen Eighty Four",
+						"value": "0"
+					}
+				],
+				"legend": {},
+				"tableOptions": {
+					"verticalTimeAxis": true,
+					"sortBy": {
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					"wrapping": "truncate",
+					"fixFirstColumn": true
+				},
+				"fieldOptions": [
+					{
+						"internalName": "time",
+						"displayName": "",
+						"visible": true
+					},
+					{
+						"internalName": "influxdb.cycletime.mean_avg",
+						"displayName": "",
+						"visible": true
+					},
+					{
+						"internalName": "influxdb.cycletime.max_max",
+						"displayName": "",
+						"visible": true
+					},
+					{
+						"internalName": "influxdb.cycletime.min_min",
+						"displayName": "",
+						"visible": true
+					}
+				],
+				"timeFormat": "MM/DD/YYYY HH:mm:ss",
+				"decimalPlaces": {
+					"isEnforced": true,
+					"digits": 2
+				},
+				"note": "",
+				"noteVisibility": "default",
+				"links": {
+					"self": "/chronograf/v1/dashboards/10/cells/6f267b84-b05b-4ce5-803e-bedccdba551a"
+				}
+			}
+		],
+		"templates": [],
+		"name": "log4TC",
+		"organization": "default",
+		"links": {
+			"self": "/chronograf/v1/dashboards/10",
+			"cells": "/chronograf/v1/dashboards/10/cells",
+			"templates": "/chronograf/v1/dashboards/10/templates"
+		}
+	}
+}

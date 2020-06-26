@@ -119,3 +119,6 @@ Lädt man das Programm und ändert man die Temperatur in der Variable `fTemp` ei
 
 Wichtig ist, dass diese Meldung sowohl im CSV als auch im normalen Log ausgegeben werden, aber unterschiedlich formatiert.
 
+## Nächster Schritt
+
+[Logging nach Influx](logging_to_influx.md)
