@@ -4,14 +4,19 @@
 ### Added
 
 * Logging für Service aktiviert (%ProgramData%/log4Tc/internal/service-*.log)
+* Konfiguration des log4TC Dispatcher (Ausgabe-Plugins)
+* Neue Ausgabe für Influx-DB (>= 1.8)
+* Neues Beispielprojekt für Logging nach Influx
 
 ### Changed
 
-- Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host
+* Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host
+* Neue PLC-Library mit der Version 0.0.4
 
 ### Fixed
 
-* Bugfix: Context.AddString verwendet jetzt dir korrekt Stringlänge
+* Bugfix PLC: Context.AddString verwendet jetzt dir korrekt Stringlänge
+* Bugfix PLC: Log-Argumente wurden nicht korrekt übergeben (ab Argumente 3)
 * Im Context überschreiben jetzt gleiche Namen den vorherigen Wert
 
 ## [20.05.06]

@@ -45,28 +45,28 @@ IF nArgCount >= 2 THEN
 	fbLogEntry.AddAnyArg(2, aArg2);
 END_IF
 IF nArgCount >= 3 THEN 
-	fbLogEntry.AddAnyArg(3, aArg2);
+	fbLogEntry.AddAnyArg(3, aArg3);
 END_IF
 IF nArgCount >= 4 THEN 
-	fbLogEntry.AddAnyArg(4, aArg2);
+	fbLogEntry.AddAnyArg(4, aArg4);
 END_IF
 IF nArgCount >= 5 THEN 
-	fbLogEntry.AddAnyArg(5, aArg2);
+	fbLogEntry.AddAnyArg(5, aArg5);
 END_IF
 IF nArgCount >= 6 THEN 
-	fbLogEntry.AddAnyArg(6, aArg2);
+	fbLogEntry.AddAnyArg(6, aArg6);
 END_IF
 IF nArgCount >= 7 THEN 
-	fbLogEntry.AddAnyArg(7, aArg2);
+	fbLogEntry.AddAnyArg(7, aArg7);
 END_IF
 IF nArgCount >= 8 THEN 
-	fbLogEntry.AddAnyArg(8, aArg2);
+	fbLogEntry.AddAnyArg(8, aArg8);
 END_IF
 IF nArgCount >= 9 THEN 
-	fbLogEntry.AddAnyArg(9, aArg2);
+	fbLogEntry.AddAnyArg(9, aArg9);
 END_IF
 IF nArgCount >= 10 THEN 
-	fbLogEntry.AddAnyArg(10, aArg2);
+	fbLogEntry.AddAnyArg(10, aArg10);
 END_IF
 
 IF __QUERYINTERFACE(PRG_TaskLog.TaskLogger.TaskContext, iLogEntryAdder) THEN
@@ -74,11 +74,13 @@ IF __QUERYINTERFACE(PRG_TaskLog.TaskLogger.TaskContext, iLogEntryAdder) THEN
 END_IF
 
 refScopedContext REF= PRG_ScopedContextStack.TaskContextStack;
-FOR nIdx := 0 TO refScopedContext.nScopeContextCount - 1 DO
-	IF __QUERYINTERFACE(refScopedContext.aScopedContext[nIdx], iLogEntryAdder) THEN
-		iLogEntryAdder.AddToLogEntry(E_Scope.eScoped, fbLogEntry);
-	END_IF
-END_FOR
+IF refScopedContext.nScopeContextCount > 0 THEN
+	FOR nIdx := 0 TO refScopedContext.nScopeContextCount - 1 DO
+		IF __QUERYINTERFACE(refScopedContext.aScopedContext[nIdx], iLogEntryAdder) THEN
+			iLogEntryAdder.AddToLogEntry(E_Scope.eScoped, fbLogEntry);
+		END_IF
+	END_FOR
+END_IF
 
 IF iContextBuilder <> 0 AND __QUERYINTERFACE(iContextBuilder, iLogEntryAdder) THEN
 	iLogEntryAdder.AddToLogEntry(E_Scope.eLogger, fbLogEntry);

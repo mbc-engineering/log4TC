@@ -9,6 +9,9 @@ VAR
 	
 	fbScope			: FB_ScopedContext;
 	bLog			: BOOL;
+	bArg1			: BOOL;
+	nArg2			: INT;
+	sArg3			: STRING;
 	
 	
 END_VAR
@@ -16,11 +19,18 @@ END_VAR
     <Implementation>
       <ST><![CDATA[TcUnit.RUN();
 
+IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+	// For Remote Log4TC Server change the AMS net ID and configure a route
+	PRG_TaskLog.Init('192.168.56.1.1.1');
+	F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
+END_IF
+
 fbLog.LoggerContext.AddInt('logger', 42);
 
 IF bLog THEN
 	bLog := FALSE;
-	F_Log(E_LogLevel.eDebug, 'Foobar');
+	F_Log(E_LogLevel.eDebug, 'Foobar'); 
+	F_LogA3(E_LogLevel.eInfo, '{0}, {1}, {2}', bArg1, nArg2, sArg3);
 
 	fbLog(
 		eLogLevel 		:= E_LogLevel.eInfo,

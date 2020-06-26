@@ -19,6 +19,7 @@ namespace Mbc.Log4Tc.Dispatcher
         private readonly IConfiguration _outputConfig;
         private readonly IOutputHandler _output;
         private readonly ILogFilter _logFilter;
+        private readonly ILogFilter _logExcludeFilter;
         private bool _hasError;
 
         public OutputDispatch(ILogger<OutputDispatch> logger, IServiceProvider serviceProvider, IConfiguration outputConfig)
@@ -29,7 +30,8 @@ namespace Mbc.Log4Tc.Dispatcher
             var type = outputConfig.GetValue<string>("Type");
             var configSection = outputConfig.GetSection("Config");
 
-            _logFilter = FilterConfigurationFactory.Create(outputConfig.GetSection("filter"));
+            _logFilter = FilterConfigurationFactory.Create(outputConfig.GetSection("filter"), AllMatchFilter.Default);
+            _logExcludeFilter = FilterConfigurationFactory.Create(outputConfig.GetSection("excludeFilter"), NoneMatchFilter.Default);
 
             var outputFactory = serviceProvider.GetServices<IOutputFactory>().FirstOrDefault(x => x.ShortTypeName == type);
             if (outputFactory == null)
@@ -39,7 +41,7 @@ namespace Mbc.Log4Tc.Dispatcher
             }
 
             _output = outputFactory.Create(serviceProvider, configSection);
-            _logger.LogInformation("Loaded output '{type}' with filter '{filter}'.", type, _logFilter);
+            _logger.LogInformation("Loaded output '{type}' with filter '{filter}' and exclude '{excludeFilter}'.", type, _logFilter, _logExcludeFilter);
         }
 
         public void Dispose()
@@ -54,7 +56,7 @@ namespace Mbc.Log4Tc.Dispatcher
         {
             try
             {
-                if (_logFilter.Matches(logEntry))
+                if (!_logExcludeFilter.Matches(logEntry) && _logFilter.Matches(logEntry))
                 {
                     return _output.ProcesLogEntry(logEntry);
                 }

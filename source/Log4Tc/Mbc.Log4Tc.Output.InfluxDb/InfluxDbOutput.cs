@@ -54,7 +54,11 @@ namespace Mbc.Log4Tc.Output.InfluxDb
             // add standard tags
             point = point
                 .Tag("level", logEntry.Level.ToString())
-                .Tag("source", logEntry.Source);
+                .Tag("source", logEntry.Source)
+                .Tag("taskName", logEntry.TaskName)
+                .Tag("taskIndex", Convert.ToString(logEntry.TaskIndex, CultureInfo.InvariantCulture))
+                .Tag("appName", logEntry.AppName)
+                .Tag("projectName", logEntry.ProjectName);
 
             // add fields from all arguments
             var argParser = new MessageArgumentParser(logEntry.Message);

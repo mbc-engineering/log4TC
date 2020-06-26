@@ -91,14 +91,14 @@ END_VAR
 	
 	fbLogEntry.AddAnyArg(1, aArg1);
 	fbLogEntry.AddAnyArg(2, aArg2);
-	fbLogEntry.AddAnyArg(3, aArg2);
-	fbLogEntry.AddAnyArg(4, aArg2);
-	fbLogEntry.AddAnyArg(5, aArg2);
-	fbLogEntry.AddAnyArg(6, aArg2);
-	fbLogEntry.AddAnyArg(7, aArg2);
-	fbLogEntry.AddAnyArg(8, aArg2);
-	fbLogEntry.AddAnyArg(9, aArg2);
-	fbLogEntry.AddAnyArg(10, aArg2);
+	fbLogEntry.AddAnyArg(3, aArg3);
+	fbLogEntry.AddAnyArg(4, aArg4);
+	fbLogEntry.AddAnyArg(5, aArg5);
+	fbLogEntry.AddAnyArg(6, aArg6);
+	fbLogEntry.AddAnyArg(7, aArg7);
+	fbLogEntry.AddAnyArg(8, aArg8);
+	fbLogEntry.AddAnyArg(9, aArg9);
+	fbLogEntry.AddAnyArg(10, aArg10);
 	
 	IF __QUERYINTERFACE(PRG_TaskLog.TaskLogger.TaskContext, iLogEntryAdder) THEN
 		iLogEntryAdder.AddToLogEntry(E_Scope.eTask, fbLogEntry);

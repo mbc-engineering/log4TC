@@ -12,23 +12,24 @@ namespace Mbc.Log4Tc.Dispatcher.Filter
     public static class FilterConfigurationFactory
     {
         /// <summary>
-        /// Creates <see cref="ILogFilter"/> from the given <see cref="IConfigurationSection"/>.
+        /// Creates <see cref="ILogFilter"/> from the given <see cref="IConfigurationSection"/>. The
+        /// <paramref name="defaultFilter"/> is returned if no filter was configured.
         /// </summary>
-        public static ILogFilter Create(IConfigurationSection configuration)
+        public static ILogFilter Create(IConfigurationSection configuration, ILogFilter defaultFilter)
         {
             // simple string?
             var filterStr = configuration.Value;
             if (filterStr != null)
             {
                 // not yet supported
-                return AllMatchFilter.Default;
+                return defaultFilter;
             }
 
             if (configuration.Exists())
             {
                 if (configuration.GetChildren().Count() > 1)
                 {
-                    return new OrFilter(configuration.GetChildren().Select(Create));
+                    return new OrFilter(configuration.GetChildren().Select(x => Create(x, defaultFilter)));
                 }
                 else
                 {
@@ -40,7 +41,7 @@ namespace Mbc.Log4Tc.Dispatcher.Filter
                 }
             }
 
-            return AllMatchFilter.Default;
+            return defaultFilter;
         }
     }
 }
