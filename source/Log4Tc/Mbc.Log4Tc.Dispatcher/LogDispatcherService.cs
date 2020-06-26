@@ -16,7 +16,7 @@ namespace Mbc.Log4Tc.Dispatcher
 {
     public class LogDispatcherService : IHostedService, IDisposable
     {
-        private readonly List<ILogReceiver> _receiver;
+        private readonly List<ILogReceiver> _receivers;
         private readonly BufferBlock<IEnumerable<LogEntry>> _logEntryBuffer = new BufferBlock<IEnumerable<LogEntry>>();
         private readonly ILogger<LogDispatcherService> _logger;
         private readonly IServiceProvider _serviceProvider;
@@ -27,7 +27,7 @@ namespace Mbc.Log4Tc.Dispatcher
 
         public LogDispatcherService(ILogger<LogDispatcherService> logger, IEnumerable<ILogReceiver> receiver, IConfiguration configuration, IServiceProvider serviceProvider)
         {
-            _receiver = receiver.ToList();
+            _receivers = receiver.ToList();
             _logger = logger;
             _serviceProvider = serviceProvider;
             _outputsConfiguration = configuration.GetSection("Outputs");
@@ -45,8 +45,11 @@ namespace Mbc.Log4Tc.Dispatcher
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            // Initialize on startup
+            InitializeOutputs();
+
             _logEntryBuffer.LinkTo(new ActionBlock<IEnumerable<LogEntry>>(ProcessLogEntries));
-            foreach (var receiver in _receiver)
+            foreach (var receiver in _receivers)
             {
                 receiver.LogsReceived += OnLogDispatch;
             }
@@ -58,7 +61,7 @@ namespace Mbc.Log4Tc.Dispatcher
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            foreach (var receiver in _receiver)
+            foreach (var receiver in _receivers)
             {
                 receiver.LogsReceived += OnLogDispatch;
             }

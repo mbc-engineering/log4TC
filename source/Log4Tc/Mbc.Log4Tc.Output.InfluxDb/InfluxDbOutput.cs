@@ -115,7 +115,8 @@ namespace Mbc.Log4Tc.Output.InfluxDb
             {
                 if (_client == null)
                 {
-                    _client = InfluxDBClientFactory.CreateV1(_settings.Url, _settings.Username, _settings.Password, _settings.Database, _settings.RetentionPolicy);
+                    char[] password = string.IsNullOrWhiteSpace(_settings.Password) ? null : _settings.Password.ToCharArray();
+                    _client = InfluxDBClientFactory.CreateV1(_settings.Url, _settings.Username, password, _settings.Database, _settings.RetentionPolicy);
                 }
 
                 if (_writeApi == null)

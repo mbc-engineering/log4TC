@@ -12,7 +12,7 @@ namespace Mbc.Log4Tc.Output.NLog
         {
             var config = new NLogLog4TcOutputConfiguration();
             outputConfiguration.Bind(config);
-            return new NLogLog4TcOutput(config);
+            return ActivatorUtilities.CreateInstance<NLogLog4TcOutput>(serviceProvider, config);
         }
     }
 }
