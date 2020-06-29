@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Mbc.Log4Tc.Model
 {
@@ -32,5 +34,35 @@ namespace Mbc.Log4Tc.Model
         public IDictionary<int, object> Arguments { get; } = new Dictionary<int, object>();
 
         public IDictionary<string, object> Context { get; } = new Dictionary<string, object>();
+
+        public string FormattedMessage
+        {
+            get
+            {
+                if (Arguments.Any())
+                {
+                    var parser = new MessageArgumentParser(Message);
+                    return parser.ReplaceArguments((name, index) =>
+                    {
+                        // numeric argument?
+                        if (int.TryParse(name, out int indexName))
+                        {
+                            index = indexName;
+                        }
+
+                        if (Arguments.TryGetValue(index + 1, out object value))
+                        {
+                            return Convert.ToString(value, CultureInfo.InvariantCulture);
+                        }
+                        else
+                        {
+                            return "?";
+                        }
+                    });
+                }
+
+                return Message;
+            }
+        }
     }
 }

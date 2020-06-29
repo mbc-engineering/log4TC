@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
   <POU Name="MAIN" Id="{df1e3a16-6581-4c31-b5b6-204a618c6fef}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -9,29 +9,19 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+	// For Remote Log4TC Server change the AMS net ID and configure a route
+	PRG_TaskLog.Init('192.168.56.1.1.1');
 	F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
 END_IF
 
 fbCountTime(IN:=NOT fbCountTime.Q);
 IF fbCountTime.Q THEN
 	nCounter := nCounter + 1;
-	F_LogA1(E_LogLevel.eDebug, 'Zähler geändert, neuer Wert {0}', nCounter);
+	F_LogA1(E_LogLevel.eInfo, 'Zähler geändert, neuer Wert {0}', nCounter);
 END_IF
 
 PRG_TaskLog.Call();
 ]]></ST>
     </Implementation>
-    <LineIds Name="MAIN">
-      <LineId Id="6" Count="1" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="17" Count="1" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="9" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

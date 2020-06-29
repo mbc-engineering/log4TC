@@ -24,6 +24,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Receiver", "Mbc.Log4Tc.Receiver\Mbc.Log4Tc.Receiver.csproj", "{3FCA04B0-94BC-4FA0-B276-E3ED15F6F364}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Service", "Mbc.Log4Tc.Service\Mbc.Log4Tc.Service.csproj", "{8AE264C6-D1C4-4E15-AF26-3476C499A09F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B} = {D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Log4TcPrototype", "Log4TcPrototype\Log4TcPrototype.csproj", "{ED87D5FC-BB74-406A-A7D4-85B405DB26FB}"
 EndProject
@@ -44,6 +47,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Model.Test", "Mbc.Log4Tc.Model.Test\Mbc.Log4Tc.Model.Test.csproj", "{29973975-6693-423F-AFCC-FE2BC2578F58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Plugin", "Mbc.Log4Tc.Plugin\Mbc.Log4Tc.Plugin.csproj", "{874B2034-8BC5-4364-8249-1D0FF0AB6E91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mbc.Log4Tc.Output.Graylog", "Mbc.Log4Tc.Output.Graylog\Mbc.Log4Tc.Output.Graylog.csproj", "{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mbc.Log4Tc.Output.Graylog.Test", "Mbc.Log4Tc.Output.Graylog.Test\Mbc.Log4Tc.Output.Graylog.Test.csproj", "{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -228,6 +235,30 @@ Global
 		{874B2034-8BC5-4364-8249-1D0FF0AB6E91}.Release|x64.Build.0 = Release|Any CPU
 		{874B2034-8BC5-4364-8249-1D0FF0AB6E91}.Release|x86.ActiveCfg = Release|Any CPU
 		{874B2034-8BC5-4364-8249-1D0FF0AB6E91}.Release|x86.Build.0 = Release|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Debug|x64.Build.0 = Debug|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Debug|x86.Build.0 = Debug|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Release|x64.ActiveCfg = Release|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Release|x64.Build.0 = Release|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Release|x86.ActiveCfg = Release|Any CPU
+		{D4B8963C-D5B1-42CC-B6D3-0FA0C790B17B}.Release|x86.Build.0 = Release|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Debug|x64.Build.0 = Debug|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Release|x64.ActiveCfg = Release|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Release|x64.Build.0 = Release|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE8EFC1F-8D09-4CBF-AB79-A47C0019C8D1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
