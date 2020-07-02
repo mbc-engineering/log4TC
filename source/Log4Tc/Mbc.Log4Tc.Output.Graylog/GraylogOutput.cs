@@ -83,9 +83,8 @@ namespace Mbc.Log4Tc.Output.Graylog
             }
 
             // add arguments
-            var argParser = new MessageArgumentParser(logEntry.Message);
             var index = 1;
-            foreach (var argName in argParser.ParseArguments())
+            foreach (var argName in logEntry.ArgumentIndex)
             {
                 if (index > logEntry.Arguments.Count)
                     break;

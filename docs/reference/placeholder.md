@@ -44,9 +44,9 @@ Die Option *Format* bestimmt wie der Typ des Arguments formattiert wird.
 
 Beispiel für Zahlen:
 
-* Decimal:     `({0D4})' {0}=42   => '(0042)'`     Nur für Ganzzahltypen. Parameter: Minium Anzahl Ziffern.
-* Exponential: `({0E2})' {0}=42   => '(4.20E+1)'`  Parameter: Anzahl Nachkommastellen
-* Fixed-point: `({0F2})' {0}=42   => '(42.00)'`    Parameter: Anzahl Nachkommastellen
-* Number:      `({0N2})' {0}=4200 => '(4'200.00)'` Gruppentrenner ist Sprachabhängig. Parameter: Anzahl * achkommstellen
-* Percent:     `({0P1})' {0}=0.42 => '(42.0 %)'`   Parameter: Anzahl Nachkommstellen
-* Hexadecimal: `({0X4})' {0}=42   => '(002A)'`     Nur für Ganzzahltypen.
+* Decimal:     `({0:D4})' {0}=42   => '(0042)'`       Nur für Ganzzahltypen. Parameter: Minium Anzahl Ziffern.
+* Exponential: `({0:E2})' {0}=42   => '(4.20E+001)'`  Parameter: Anzahl Nachkommastellen
+* Fixed-point: `({0:F2})' {0}=42   => '(42.00)'`      Parameter: Anzahl Nachkommastellen
+* Number:      `({0:N2})' {0}=4200 => '(4’200.00)'`   Mit Gruppentrenner. Parameter: Anzahl Nachkommstellen
+* Percent:     `({0:P1})' {0}=0.42 => '(42.0%)'`     Parameter: Anzahl Nachkommstellen
+* Hexadecimal: `({0:X4})' {0}=42   => '(002A)'`       Nur für Ganzzahltypen.

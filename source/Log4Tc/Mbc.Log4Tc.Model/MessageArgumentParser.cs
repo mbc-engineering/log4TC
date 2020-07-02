@@ -3,13 +3,14 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System;
 using System.Text;
+using System.Globalization;
 
 namespace Mbc.Log4Tc.Model
 {
     /// <summary>
     /// Helper class for parsing message templates (format string).
     /// </summary>
-    public class MessageArgumentParser
+    internal class MessageArgumentParser
     {
         private static readonly Regex ArgPattern = new Regex(@"{(?<name>\w+)}");
         private readonly string _messageTemplate;
@@ -31,9 +32,10 @@ namespace Mbc.Log4Tc.Model
             return matches.Cast<Match>().Select(x => x.Groups["name"].Value);
         }
 
-        public string ReplaceArguments(Func<string, int, string> replacement)
+        public string FormatMessage(IEnumerable<object> args)
         {
-            var formatted = new StringBuilder(_messageTemplate.Length);
+            var argList = args.ToList();
+            var formatted = new StringBuilder(_messageTemplate.Length + 128);
             var argId = new StringBuilder();
 
             bool inArg = false;
@@ -47,7 +49,7 @@ namespace Mbc.Log4Tc.Model
                 {
                     if ((i + 1) < _messageTemplate.Length && !inArg)
                     {
-                        if (_messageTemplate[i+1] == c)
+                        if (_messageTemplate[i + 1] == c)
                         {
                             formatted.Append(c);
                             i++;
@@ -66,7 +68,8 @@ namespace Mbc.Log4Tc.Model
 
                     if (c == '}' && inArg)
                     {
-                        formatted.Append(replacement(argId.ToString(), idx));
+                        formatted.Append(GetArgumentString(argId.ToString(), idx, argList));
+
                         idx++;
                         inArg = false;
                         argId.Clear();
@@ -85,6 +88,63 @@ namespace Mbc.Log4Tc.Model
             }
 
             return formatted.ToString();
+        }
+
+        private string GetArgumentString(string arg, int idx, IList<object> argumentList)
+        {
+            string argIndex = arg;
+            int align = 0;
+            string format = null;
+
+            var pos = arg.IndexOfAny(new[] { ',', ':' });
+            if (pos > 0)
+            {
+                // formattiertes oder ausgerichtetes Argument => Zerlegen in Einzelteile
+                argIndex = arg.Substring(0, pos);
+
+                if (arg[pos] == ',')
+                {
+                    var end = arg.IndexOf(':', pos);
+                    if (end == -1)
+                        end = arg.Length;
+
+                    if (!int.TryParse(arg.Substring(pos + 1, end - pos - 1), out align))
+                    {
+                        align = 0;
+                    }
+
+                    pos = end;
+                }
+
+                if (pos < arg.Length && arg[pos] == ':')
+                {
+                    format = arg.Substring(pos + 1);
+                }
+            }
+
+            // numeric argument?
+            if (!int.TryParse(argIndex, out int indexOfArgument))
+            {
+                indexOfArgument = idx;
+            }
+
+            if (indexOfArgument >= 0 && indexOfArgument < argumentList.Count)
+            {
+                object argValue = argumentList[indexOfArgument];
+
+                if (align == 0 && format == null)
+                {
+                    return Convert.ToString(argValue, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    return string.Format($"{{0,{align}:{format}}}", argValue);
+                }
+            }
+            else
+            {
+                return "?";
+            }
         }
     }
 }

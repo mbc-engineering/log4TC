@@ -16,7 +16,7 @@ namespace Mbc.Log4Tc.Model.Test
             var formattedMessage = logEntry.FormattedMessage;
 
             // Assert
-            formattedMessage.Should().BeSameAs(logEntry.Message);
+            formattedMessage.Should().Be("Foo");
         }
 
         [Fact]
