@@ -1,6 +1,7 @@
 ﻿using Mbc.Log4Tc.Model;
 using NLog;
 using NLog.Config;
+using NLog.MessageTemplates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,13 +28,15 @@ namespace Mbc.Log4Tc.Output.NLog
 
         public Task ProcesLogEntry(LogEntry logEntry)
         {
-            var logEvent = new LogEventInfo
+            // ToDo: Es braucht noch die benanntent platzhalter pro argument
+            var messageTemplateParameters = logEntry.Arguments.Select(x => new MessageTemplateParameter(x.Key.ToString(), x.Value, string.Empty, CaptureType.Normal)).ToList();
+
+            var logEvent = new LogEventInfo(ConvertToNLogLevel(logEntry.Level), logEntry.Logger, logEntry.Message, messageTemplateParameters)
             {
-                Level = ConvertToNLogLevel(logEntry.Level),
-                LoggerName = logEntry.Logger,
-                Message = logEntry.Message,
-                Parameters = ConvertToNLogParameters(logEntry.Arguments),
+                // Parameters = ConvertToNLogParameters(logEntry.Arguments),
                 TimeStamp = logEntry.PlcTimestamp,
+                // Use the already formated message
+                MessageFormatter = (entry) => logEntry.FormattedMessage,
             };
 
             foreach (var ctxProp in logEntry.Context)

@@ -162,7 +162,6 @@ namespace Mbc.Log4Tc.Model.Test
             formatted.Should().Be("(0042)-(4.20E+001)-(42.00)-(4’200.00)-(42.0%)-(002A)");
         }
 
-
         [Fact]
         public void FormatMessage_WithAllFeatures_ShouldFormatArguments()
         {
