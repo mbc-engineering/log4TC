@@ -3,7 +3,6 @@ using NLog;
 using NLog.Config;
 using NLog.MessageTemplates;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,15 +27,14 @@ namespace Mbc.Log4Tc.Output.NLog
 
         public Task ProcesLogEntry(LogEntry logEntry)
         {
-            // ToDo: Es braucht noch die benanntent platzhalter pro argument
-            var messageTemplateParameters = logEntry.Arguments.Select(x => new MessageTemplateParameter(x.Key.ToString(), x.Value, string.Empty, CaptureType.Normal)).ToList();
+            var messageTemplateParameters = logEntry.ArgumentIndex.Zip(logEntry.ArgumentEnumerable, (x, y) => new MessageTemplateParameter(x, y, null, CaptureType.Normal)).ToList();
 
             var logEvent = new LogEventInfo(ConvertToNLogLevel(logEntry.Level), logEntry.Logger, logEntry.Message, messageTemplateParameters)
             {
-                // Parameters = ConvertToNLogParameters(logEntry.Arguments),
                 TimeStamp = logEntry.PlcTimestamp,
                 // Use the already formated message
                 MessageFormatter = (entry) => logEntry.FormattedMessage,
+                Parameters = logEntry.ArgumentEnumerable.ToArray(),
             };
 
             foreach (var ctxProp in logEntry.Context)
@@ -55,27 +53,6 @@ namespace Mbc.Log4Tc.Output.NLog
             _dispatchLogger.Log(logEvent);
 
             return Task.CompletedTask;
-        }
-
-        private object[] ConvertToNLogParameters(IDictionary<int, object> arguments)
-        {
-            if (arguments.Count == 0)
-            {
-                return new object[0];
-            }
-
-            var count = arguments.Keys.Max();
-            var parameters = new object[count];
-
-            for (int i = 0; i < count; ++i)
-            {
-                if (arguments.TryGetValue(i + 1, out object value))
-                {
-                    parameters[i] = value;
-                }
-            }
-
-            return parameters;
         }
 
         private NLogLevel ConvertToNLogLevel(Log4TcLevel level)
