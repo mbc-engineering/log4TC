@@ -10,6 +10,9 @@ namespace Mbc.Log4Tc.Output.InfluxDb
     {
         public override PointData CreatePoint(LogEntry logEntry)
         {
+            if (logEntry.Arguments.Count == 0)
+                return null;
+
             var point = PointData.Measurement(logEntry.Logger);
 
             point = point.Timestamp(logEntry.PlcTimestamp.ToUniversalTime(), WritePrecision.Us);

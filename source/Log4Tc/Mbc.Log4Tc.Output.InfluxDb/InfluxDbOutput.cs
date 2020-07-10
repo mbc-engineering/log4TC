@@ -42,13 +42,13 @@ namespace Mbc.Log4Tc.Output.InfluxDb
 
         public Task ProcesLogEntry(LogEntry logEntry)
         {
-            if (logEntry.Arguments.Count == 0)
-                return Task.CompletedTask;
-
             Initialize();
 
             PointData point = _pointFactory.CreatePoint(logEntry);
-            _writeApi.WritePoint(point);
+            if (point != null)
+            {
+                _writeApi.WritePoint(point);
+            }
 
             return Task.CompletedTask;
         }
