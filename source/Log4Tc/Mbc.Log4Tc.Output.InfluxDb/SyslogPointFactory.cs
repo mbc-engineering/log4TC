@@ -13,7 +13,7 @@ namespace Mbc.Log4Tc.Output.InfluxDb
     {
         private static readonly IReadOnlyList<string> ReservedTags = new List<string>()
         {
-            "appname", "facility", "host", "severity",
+            "appname", "facility", "host", "hostname", "severity",
         }.AsReadOnly();
 
         private static readonly IReadOnlyList<string> ReservedFields = new List<string>()
