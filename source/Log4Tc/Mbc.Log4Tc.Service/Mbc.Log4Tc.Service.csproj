@@ -12,13 +12,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="appsettings - Copy.Development.json" />
+    <Content Remove="appsettings - Copy.Production.json" />
     <Content Remove="appsettings.Development.json" />
     <Content Remove="appsettings.json" />
     <Content Remove="appsettings.Production.json" />
+    <Content Remove="appsettingsInflux.json" />
     <Content Remove="appsettingsSample.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="appsettingsInflux.json" />
     <None Include="appsettingsSample.json" />
     <None Include="appsettings.Development.json" />
     <None Include="appsettings.json" />
