@@ -19,6 +19,8 @@ namespace Mbc.Log4Tc.Model
 
         public string Source { get; set; }
 
+        public string Hostname { get; set; }
+
         public string Message { get; set; }
 
         public string Logger { get; set; }

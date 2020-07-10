@@ -159,6 +159,7 @@ Alle NLog-Meldungen bekommen unabhängig vom Context und den Argumenten folgende
 * **`_TcProjectName_`** - Der Name des TwinCAT Projekts
 * **`_TcOnlineChangeCount_`** - Anzahl der Online-Changes
 * **`_TcLogSource_`** - Die Quelle der Log-Meldung (AdsNetId mit AdsPort)
+* **`_TcHostname_`** - Der Hostname des Rechners, vom dem die Meldung stammt
 
 ## Tipps und Rezepte
 

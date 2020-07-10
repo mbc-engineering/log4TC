@@ -26,25 +26,23 @@ Neben Docker ist auch Docker-Compose notwendig, was meistens automatisch mitinst
 
 Um Influx und Chronograf ausführen zu können, wird folgende Datei mit dem Namen `docker-compose.yml` benötigt:
 ```
-version: '3.0'
-services:
-    influxdb:
-        image: influxdb:1.8
-        container_name: influxdb_developer
-        ports:
-            - "8086:8086"
-            - "8082:8082"
-            - "8089:8089"
-        env:
-            INFLUXDB_DB: log4tc
+version: '3'
 
-    chronograf:
-        image: chronograf:1.8
-        container_name: chronograf_developer
-        ports:
-            - "8888:8888"
-        depends_on:
-            - influxdb
+services:
+  influxdb:
+    image: influxdb:1.7-alpine
+    volumes:
+      - influxdb:/var/lib/influxdb
+    ports:
+      - 8086:8086
+  chronograf:
+    image: chronograf:1.8-alpine
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+    ports:
+      - 8888:8888
+    links:
+      - influxdb
 ```
 
 Zum Starten der beiden Anwendung muss auf einer Kommandozeile im Verzeichnis der Datei `docker-compose.yml` das Kommando `docker-compose up -d` ausgeführt werden. Beim ersten Aufruf werden beiden Anwendungen heruntergeladen. Mit dem Kommando `docker-compose down` werden beide Anwendungen wieder gestoppt.

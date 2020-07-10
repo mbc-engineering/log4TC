@@ -11,6 +11,7 @@ namespace Mbc.Log4Tc.Receiver
         public static IServiceCollection AddLog4TcAdsLogReceiver(this IServiceCollection services)
         {
             services.AddSingleton<AdsLogReceiver>();
+            services.AddSingleton<AdsHostnameService>();
             services.TryAddEnumerable(ServiceDescriptor.Singleton<ILogReceiver, AdsLogReceiver>(x => x.GetRequiredService<AdsLogReceiver>()));
             services.AddHostedService<AdsLogReceiverService>();
             return services;

@@ -49,6 +49,7 @@ namespace Mbc.Log4Tc.Output.NLog
             logEvent.Properties.Add("_TcProjectName_", logEntry.ProjectName);
             logEvent.Properties.Add("_TcOnlineChangeCount_", logEntry.OnlineChangeCount);
             logEvent.Properties.Add("_TcLogSource_", logEntry.Source);
+            logEvent.Properties.Add("_TcHostname_", logEntry.Hostname);
 
             _dispatchLogger.Log(logEvent);
 

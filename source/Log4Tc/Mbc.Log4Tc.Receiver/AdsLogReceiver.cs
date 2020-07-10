@@ -13,13 +13,15 @@ namespace Mbc.Log4Tc.Receiver
     public class AdsLogReceiver : TcAdsServer, ILogReceiver
     {
         private readonly ILogger<AdsLogReceiver> _logger;
+        private readonly AdsHostnameService _adsHostnameService;
 
         public event EventHandler<LogEntryEventArgs> LogsReceived;
 
-        public AdsLogReceiver(ILogger<AdsLogReceiver> logger)
+        public AdsLogReceiver(ILogger<AdsLogReceiver> logger, AdsHostnameService adsHostnameService)
             : base(16150, "Log4Tc")
         {
             _logger = logger;
+            _adsHostnameService = adsHostnameService;
         }
 
         public override void AdsWriteInd(AmsAddress rAddr, uint invokeId, uint indexGroup, uint indexOffset, uint cbLength, byte[] data)
@@ -47,6 +49,7 @@ namespace Mbc.Log4Tc.Receiver
                     }
 
                     logEntry.Source = rAddr.ToString();
+                    logEntry.Hostname = _adsHostnameService.GetHostname(rAddr.NetId).ValueOr(string.Empty);
 
                     entries.Add(logEntry);
                 }

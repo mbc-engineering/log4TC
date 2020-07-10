@@ -20,5 +20,15 @@ namespace Mbc.Log4Tc.Output.InfluxDb
         public int WriteBatchSize { get; set; } = 1;
 
         public int WriteFlushIntervalMillis { get; set; } = 1000;
+
+        public InfluxFormat Format { get; set; } = InfluxFormat.Arguments;
+
+        public int SyslogFacilityCode { get; set; } = 16;
+
+        public enum InfluxFormat
+        {
+            Arguments,
+            Syslog,
+        }
     }
 }
