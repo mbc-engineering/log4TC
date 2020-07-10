@@ -143,7 +143,7 @@ namespace Mbc.Log4Tc.Receiver
                     value = reader.ReadSingle();
                     break;
                 case 5: // LREAL
-                    value = reader.ReadSingle();
+                    value = reader.ReadDouble();
                     break;
                 case 6: // SINT
                     value = reader.ReadSByte();
