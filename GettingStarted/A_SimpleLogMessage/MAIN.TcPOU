@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MAIN" Id="{0d65efd7-894c-4144-a23c-4d79bdbdc725}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+	F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
+END_IF
+
+PRG_TaskLog.Call();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

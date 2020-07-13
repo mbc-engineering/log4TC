@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmItem" TcSmVersion="1.0" TcVersion="3.1.4022.16" ClassName="CNestedPlcProjDef">
+	<Project Disabled="true" GUID="{BDDBEFA6-3EB5-4039-A50F-8AD4026BF2D0}" Name="E_StructuredLogging" PrjFilePath="..\..\E_StructuredLogging\E_StructuredLogging.plcproj" TmcFilePath="..\..\E_StructuredLogging\E_StructuredLogging.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance Id="#x08502100" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="E_StructuredLogging\E_StructuredLogging.tmc">
+			<Name>E_StructuredLogging Instance</Name>
+			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<TaskPouOids>
+				<TaskPouOid Prio="22" OTCID="#x08502101"/>
+			</TaskPouOids>
+		</Instance>
+	</Project>
+</TcSmItem>

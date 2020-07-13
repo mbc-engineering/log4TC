@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="MAIN" Id="{df1e3a16-6581-4c31-b5b6-204a618c6fef}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	nCounter	: UINT;
+	fbCountTime	: TON := (PT:=T#1S);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
+	// For Remote Log4TC Server change the AMS net ID and configure a route
+	PRG_TaskLog.Init('127.0.0.1.1.1');
+	F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
+END_IF
+
+fbCountTime(IN:=NOT fbCountTime.Q);
+IF fbCountTime.Q THEN
+	nCounter := nCounter + 1;
+	F_LogA1(E_LogLevel.eInfo, 'Zähler geändert, neuer Wert {0}', nCounter);
+END_IF
+
+PRG_TaskLog.Call();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
