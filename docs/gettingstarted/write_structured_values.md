@@ -39,7 +39,8 @@ VAR
 END_VAR
 ----------------------------------------------------------------------
 IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
-	PRG_TaskLog.Init('192.168.56.1.1.1');
+	// For Remote Log4TC Server change the AMS net ID and configure a route
+	PRG_TaskLog.Init('127.0.0.1.1.1');
 	F_LogL(E_LogLevel.eInfo, sLogger, 'SPS Task gestartet.');
 END_IF
 
