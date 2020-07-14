@@ -27,14 +27,14 @@ namespace Mbc.Log4Tc.Output.NLog
 
         public Task ProcesLogEntry(LogEntry logEntry)
         {
-            var messageTemplateParameters = logEntry.ArgumentIndex.Zip(logEntry.ArgumentEnumerable, (x, y) => new MessageTemplateParameter(x, y, null, CaptureType.Normal)).ToList();
+            var messageTemplateParameters = logEntry.ArgumentLabels.Zip(logEntry.ArgumentValues, (x, y) => new MessageTemplateParameter(x, y, null, CaptureType.Normal)).ToList();
 
             var logEvent = new LogEventInfo(ConvertToNLogLevel(logEntry.Level), logEntry.Logger, logEntry.Message, messageTemplateParameters)
             {
                 TimeStamp = logEntry.PlcTimestamp,
                 // Use the already formated message
                 MessageFormatter = (entry) => logEntry.FormattedMessage,
-                Parameters = logEntry.ArgumentEnumerable.ToArray(),
+                Parameters = logEntry.ArgumentValues.ToArray(),
             };
 
             foreach (var ctxProp in logEntry.Context)

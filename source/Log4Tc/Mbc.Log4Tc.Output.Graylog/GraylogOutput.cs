@@ -84,7 +84,7 @@ namespace Mbc.Log4Tc.Output.Graylog
 
             // add arguments
             var index = 1;
-            foreach (var argName in logEntry.ArgumentIndex)
+            foreach (var argName in logEntry.ArgumentLabels)
             {
                 if (index > logEntry.Arguments.Count)
                     break;

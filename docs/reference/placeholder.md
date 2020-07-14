@@ -4,7 +4,7 @@ log4TC unterstütz mehrer Arten von Platzhaltern in Meldungstexten.
 
 ## Positions Argumente
 
-Positions Argumente werden im Meldungstext mit Nummer in geschweiften Klammern angegeben. Die Zählung startet bei 0.
+Positions Argumente werden im Meldungstext mit Nummer in geschweiften Klammern angegeben. Die Zählung startet bei 0. Damit Argument mit als Position ausgewertet werden, müssen **alle** Argument nummeriert sein.
 
 Beispiel:
 
@@ -14,7 +14,7 @@ Dieser Meldungstext hat zwei positions Argumente, die bei der Ausgabe ersetzt we
 
 ## Benannte Argumente
 
-Argumente können auch mit einem Namen benannt werden.
+Argumente können auch mit einem Namen benannt werden. Sobald ein Argument benannt ist, werden **alle** Argumente als benannt behandelt.
 
 Beispiel:
 

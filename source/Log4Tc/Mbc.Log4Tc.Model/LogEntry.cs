@@ -6,15 +6,17 @@ namespace Mbc.Log4Tc.Model
 {
     public class LogEntry
     {
-        private readonly Lazy<object[]> _argList;
+        private readonly Lazy<object[]> _argValues;
         private readonly Lazy<string> _formattedMessage;
-        private readonly Lazy<string[]> _argIndex;
+        private readonly Lazy<string[]> _argLabels;
+        private readonly Lazy<List<(string, object)>> _argPairs;
 
         public LogEntry()
         {
-            _argList = new Lazy<object[]>(CreateArgumentList);
+            _argValues = new Lazy<object[]>(CreateArgumentList);
             _formattedMessage = new Lazy<string>(CreateFormattedMessage);
-            _argIndex = new Lazy<string[]>(CreateArgIndex);
+            _argLabels = new Lazy<string[]>(CreateArgIndex);
+            _argPairs = new Lazy<List<(string, object)>>(CreateArgumentPairs);
         }
 
         public string Source { get; set; }
@@ -55,13 +57,15 @@ namespace Mbc.Log4Tc.Model
         /// <summary>
         /// Returns all arguments in order and filled with <c>null</c> values.
         /// </summary>
-        public IEnumerable<object> ArgumentEnumerable => _argList.Value;
+        public IEnumerable<object> ArgumentValues => _argValues.Value;
 
         /// <summary>
-        /// Returns the index (which might be the name or the numeric position) of
-        /// the arguments.
+        /// Returns the label (which might be the name or the numeric position) of
+        /// the arguments in order of the message.
         /// </summary>
-        public IEnumerable<string> ArgumentIndex => _argIndex.Value;
+        public IEnumerable<string> ArgumentLabels => _argLabels.Value;
+
+        public IEnumerable<(string, object)> ArgumentPairs => _argPairs.Value;
 
         private object[] CreateArgumentList()
         {
@@ -84,10 +88,41 @@ namespace Mbc.Log4Tc.Model
             return argList;
         }
 
+        private List<(string, object)> CreateArgumentPairs()
+        {
+            var labels = ArgumentLabels.ToList();
+            var values = ArgumentValues.ToList();
+
+            if (labels.All(x => int.TryParse(x, out int _)))
+            {
+                // all labels are numeric => use numeric semantic
+                var pairs = new List<(string, object)>(labels.Count);
+                foreach (var label in labels)
+                {
+                    var idx = int.Parse(label);
+                    if (idx >= 0 && idx < values.Count)
+                    {
+                        pairs.Add((label, values[idx]));
+                    }
+                    else
+                    {
+                        pairs.Add((label, "?"));
+                    }
+                }
+
+                return pairs;
+            }
+            else
+            {
+                // structured semantic
+                return labels.Zip(values, (label, value) => (label, value)).ToList();
+            }
+        }
+
         private string CreateFormattedMessage()
         {
             var parser = new MessageArgumentParser(Message);
-            return parser.FormatMessage(ArgumentEnumerable);
+            return parser.FormatMessage(ArgumentValues);
         }
 
         private string[] CreateArgIndex()

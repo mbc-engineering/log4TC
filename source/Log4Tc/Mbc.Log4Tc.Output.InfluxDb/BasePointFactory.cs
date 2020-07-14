@@ -27,7 +27,7 @@ namespace Mbc.Log4Tc.Output.InfluxDb
         protected PointData WriteArgumentsToFields(PointData point, LogEntry logEntry)
         {
             var index = 1;
-            foreach (var argName in logEntry.ArgumentIndex)
+            foreach (var argName in logEntry.ArgumentLabels)
             {
                 if (index > logEntry.Arguments.Count)
                     break;
