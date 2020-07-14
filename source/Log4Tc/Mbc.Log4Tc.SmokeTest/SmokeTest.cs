@@ -24,7 +24,7 @@ namespace Mbc.Log4Tc.SmokeTest
             _plcControl.Dispose();
         }
 
-        [Fact]
+        [Fact(Skip = "not yet finished")]
         public void Test1()
         {
             _plcControl.Stop();

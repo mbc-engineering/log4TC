@@ -1,26 +1,17 @@
 # Format Strings für Meldungstexte
 
-log4TC unterstütz mehrer Arten von Platzhaltern in Meldungstexten.
+log4TC unterstütz mehrer Arten von Platzhaltern in Meldungstexten, entweder Positionsargumente oder benannte Argumente. Es gelten folgende Regeln:
 
-## Positions Argumente
-
-Positions Argumente werden im Meldungstext mit Nummer in geschweiften Klammern angegeben. Die Zählung startet bei 0. Damit Argument mit als Position ausgewertet werden, müssen **alle** Argument nummeriert sein.
+* Argumten werden zwischen `{` und `}` Klammern geschrieben
+* Die Klammern selbst können durch Verdopplung geschützt werden; `{{` wird zu `{`
+* Wenn alle Argumente nummeriert sind, wie z.B. `{0}`, `{1}` usw., dann werden die Argumentwerte gemäss der Nummer zugeordnet, also `{0}` verwendet den 1. Wert usw.
+* Ist mindestens ein benanntest Argumente dabei wie z.B. `{index}` dann werden die Argumentwerte gemäss der Reihenfolge wie sie im Text vorkommen zugeordnet.
+* Argumente können noch mit Optionen formatiert werden
 
 Beispiel:
 
 `'Die Verarbeitung von {0} wurde {1} abgeschlossen'`
-
-Dieser Meldungstext hat zwei positions Argumente, die bei der Ausgabe ersetzt werden können.
-
-## Benannte Argumente
-
-Argumente können auch mit einem Namen benannt werden. Sobald ein Argument benannt ist, werden **alle** Argumente als benannt behandelt.
-
-Beispiel:
-
 `'Die Verarbeitung von {typ} wurde {status} abgeschlossen'`
-
-Auch hier können im Meldungstext zwei Argumente ersetzt werden. Die Nummerierung erfolgt implizit immer von links nach rechts, also der Platzhalter `{typ}` ist das 1. Argumente, `{status}` das 2. Argument.
 
 ## Optionen für Argumente
 

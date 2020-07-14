@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mbc.Log4Tc.Model.Message;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,16 +7,17 @@ namespace Mbc.Log4Tc.Model
 {
     public class LogEntry
     {
+        private readonly Lazy<MessageFormatter> _messageFormatter;
         private readonly Lazy<object[]> _argValues;
         private readonly Lazy<string> _formattedMessage;
-        private readonly Lazy<string[]> _argLabels;
         private readonly Lazy<List<(string, object)>> _argPairs;
 
         public LogEntry()
         {
+            _messageFormatter = new Lazy<MessageFormatter>(() => new MessageFormatter(Message));
+
             _argValues = new Lazy<object[]>(CreateArgumentList);
             _formattedMessage = new Lazy<string>(CreateFormattedMessage);
-            _argLabels = new Lazy<string[]>(CreateArgIndex);
             _argPairs = new Lazy<List<(string, object)>>(CreateArgumentPairs);
         }
 
@@ -63,7 +65,7 @@ namespace Mbc.Log4Tc.Model
         /// Returns the label (which might be the name or the numeric position) of
         /// the arguments in order of the message.
         /// </summary>
-        public IEnumerable<string> ArgumentLabels => _argLabels.Value;
+        public IEnumerable<string> ArgumentLabels => _messageFormatter.Value.Arguments;
 
         public IEnumerable<(string, object)> ArgumentPairs => _argPairs.Value;
 
@@ -119,16 +121,6 @@ namespace Mbc.Log4Tc.Model
             }
         }
 
-        private string CreateFormattedMessage()
-        {
-            var parser = new MessageArgumentParser(Message);
-            return parser.FormatMessage(ArgumentValues);
-        }
-
-        private string[] CreateArgIndex()
-        {
-            var parser = new MessageArgumentParser(Message);
-            return parser.ParseArguments().ToArray();
-        }
+        private string CreateFormattedMessage() => _messageFormatter.Value.Format(ArgumentValues);
     }
 }

@@ -13,6 +13,7 @@
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NLog" Version="4.7.0" />
+    <PackageReference Include="Optional" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,6 +13,7 @@
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
     <PackageReference Include="InfluxDB.Client" Version="1.9.0" />
+    <PackageReference Include="Optional" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,7 +27,7 @@
       <Private>false</Private>
       <ExcludeAssets>runtime</ExcludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\Mbc.Log4Tc.Plugin\Mbc.Log4Tc.Plugin.csproj" >
+    <ProjectReference Include="..\Mbc.Log4Tc.Plugin\Mbc.Log4Tc.Plugin.csproj">
       <!-- Do not copy dependencies to the output, because is used in the main app -->
       <Private>false</Private>
       <ExcludeAssets>runtime</ExcludeAssets>

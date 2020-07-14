@@ -4,6 +4,7 @@ using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -20,7 +21,8 @@ namespace Mbc.Log4Tc.SmokeTest
         {
             var adsLogReceiverlogger = A.Fake<ILogger<AdsLogReceiver>>();
             var logDispatcherServiceLogger = A.Fake<ILogger<LogDispatcherService>>();
-            _adsLogReceiver = new AdsLogReceiver(adsLogReceiverlogger);
+            var adsHostnameService = new AdsHostnameService(new NullLogger<AdsHostnameService>());
+            _adsLogReceiver = new AdsLogReceiver(adsLogReceiverlogger, adsHostnameService);
             _output = new TestRecordingOutput();
             //_logDispatcher = new LogDispatcherService(logDispatcherServiceLogger, Enumerables.Yield(_adsLogReceiver), Enumerables.Yield(_output), Enumerables.Yield(new DispatchAllLogsToOutput("TestOutput")));
         }
