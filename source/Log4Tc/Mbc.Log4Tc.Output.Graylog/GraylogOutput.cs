@@ -64,6 +64,7 @@ namespace Mbc.Log4Tc.Output.Graylog
             {
                 Host = logEntry.Source,
                 ShortMessage = logEntry.FormattedMessage,
+                FullMessage = logEntry.Message,
                 Level = ToGelfLevel(logEntry.Level),
                 Timestamp = ToGelfTimeStamp(logEntry.PlcTimestamp),
             };
