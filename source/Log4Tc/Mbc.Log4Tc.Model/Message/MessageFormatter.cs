@@ -1,10 +1,16 @@
-﻿using System;
+﻿using Optional;
+using Optional.Collections;
+using Optional.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Mbc.Log4Tc.Model.Message
 {
+    /// <summary>
+    /// Parses a message template with either positional or named placeholder between {/} brackets.
+    /// </summary>
     public class MessageFormatter
     {
         private readonly List<MessageTemplateToken> _token = new List<MessageTemplateToken>();
@@ -15,8 +21,16 @@ namespace Mbc.Log4Tc.Model.Message
             _messageFormat = messageFormat;
             Parse();
 
-            Arguments = _token.OfType<MessageHoleToken>().Select(x => x.Label);
-            IsPositional = _token.OfType<MessageHoleToken>().All(x => x.Index.HasValue);
+            Arguments = _token.OfType<MessageHoleToken>().Select(x => x.Label).ToList();
+            if (_token.OfType<MessageHoleToken>().All(x => x.Index.HasValue))
+            {
+                PositionalArguments = _token.OfType<MessageHoleToken>().Select(x => x.Index).Values().ToList().Some<IEnumerable<int>>();
+
+            }
+            else
+            {
+                PositionalArguments = Option.None<IEnumerable<int>>();
+            }
         }
 
         private void Parse()
@@ -30,7 +44,7 @@ namespace Mbc.Log4Tc.Model.Message
 
                 if (c == '{')
                 {
-                    if (PeekChar(idx)  != '{')
+                    if (PeekChar(idx) != '{')
                     {
                         // a hole starts -> save text before and parse hole
                         if (text.Length > 0)
@@ -117,13 +131,20 @@ namespace Mbc.Log4Tc.Model.Message
             return new MessageHoleToken(label, alignment, format);
         }
 
+        /// <summary>
+        /// Returns the arguments in order of the template.
+        /// </summary>
         public IEnumerable<string> Arguments { get; }
 
-        public bool IsPositional { get; }
+        /// <summary>
+        /// Returns the indicies of the arguments if the message template is positional,
+        /// <c>Option.None</c> otherweise.
+        /// </summary>
+        public Option<IEnumerable<int>> PositionalArguments { get; }
 
         public string Format(IEnumerable<object> argumentValues)
         {
-            if (IsPositional)
+            if (PositionalArguments.HasValue)
             {
                 return FormatPositional(argumentValues.ToList());
             }

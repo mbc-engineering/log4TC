@@ -27,7 +27,7 @@ namespace Mbc.Log4Tc.Output.NLog
 
         public Task ProcesLogEntry(LogEntry logEntry)
         {
-            var messageTemplateParameters = logEntry.ArgumentLabels.Zip(logEntry.ArgumentValues, (x, y) => new MessageTemplateParameter(x, y, null, CaptureType.Normal)).ToList();
+            var messageTemplateParameters = logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => new MessageTemplateParameter(x, y, null, CaptureType.Normal)).ToList();
 
             var logEvent = new LogEventInfo(ConvertToNLogLevel(logEntry.Level), logEntry.Logger, logEntry.Message, messageTemplateParameters)
             {

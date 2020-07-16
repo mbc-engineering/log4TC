@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,23 +84,9 @@ namespace Mbc.Log4Tc.Output.Graylog
             }
 
             // add arguments
-            var index = 1;
-            foreach (var argName in logEntry.ArgumentLabels)
+            foreach ((string name, object value) in logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => (x, y)))
             {
-                if (index > logEntry.Arguments.Count)
-                    break;
-
-                if (int.TryParse(argName, out int argIdx))
-                {
-                    // numeric argument => set prefix
-                    gelf.Add("arg_" + argIdx, logEntry.Arguments[index]);
-                }
-                else
-                {
-                    gelf.Add(argName, logEntry.Arguments[index]);
-                }
-
-                index++;
+                gelf.Add(name, value);
             }
 
             return gelf;

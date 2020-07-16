@@ -72,8 +72,12 @@ namespace Mbc.Log4Tc.Output.InfluxDb
                 .Tag("hostname", logEntry.Hostname)
                 .Tag("severity", LevelToSyslogSeverity(logEntry.Level));
 
-            // add fields from all arguments
-            point = WriteArgumentsToFields(point, logEntry);
+            // add fields from all arguments. because influxdb cannot change the
+            // field type between logs, all arguments are written as string
+            foreach ((string name, object value) in logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => (x, y)))
+            {
+                point = point.Field(name, Convert.ToString(value, CultureInfo.InvariantCulture));
+            }
 
             // Syslog Fields
             point = point

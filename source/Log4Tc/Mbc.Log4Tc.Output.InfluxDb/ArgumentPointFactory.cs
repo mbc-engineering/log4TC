@@ -3,6 +3,7 @@ using InfluxDB.Client.Writes;
 using Mbc.Log4Tc.Model;
 using System;
 using System.Globalization;
+using System.Linq;
 
 namespace Mbc.Log4Tc.Output.InfluxDb
 {
@@ -30,8 +31,14 @@ namespace Mbc.Log4Tc.Output.InfluxDb
                 .Tag("appName", logEntry.AppName)
                 .Tag("projectName", logEntry.ProjectName);
 
-            // add fields from all arguments
-            point = WriteArgumentsToFields(point, logEntry);
+            // add fields from all arguments if named arguments are used
+            logEntry.MessageFormatter.PositionalArguments.MatchNone(() =>
+                {
+                    foreach ((string name, object value) in logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => (x, y)))
+                    {
+                        point = WriteField(point, name, value);
+                    }
+                });
 
             return point;
         }

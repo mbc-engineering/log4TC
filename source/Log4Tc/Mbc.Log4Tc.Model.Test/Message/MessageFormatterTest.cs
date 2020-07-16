@@ -1,5 +1,10 @@
 ﻿using FluentAssertions;
+using FluentAssertions.Common;
 using Mbc.Log4Tc.Model.Message;
+using Optional;
+using Optional.Collections;
+using Optional.Linq;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Xunit;
@@ -66,29 +71,29 @@ namespace Mbc.Log4Tc.Model.Test.Message
         }
 
         [Fact]
-        public void IsPositional_WithPositionalArgs_ShouldReturnTrue()
+        public void PositionalArguments_WithPositionalArgs_ShouldReturnSome()
         {
             // Arrange
             var parser = new MessageFormatter("{0} {1} {5}");
 
             // Act
-            var positional = parser.IsPositional;
+            var positional = parser.PositionalArguments;
 
             // Assert
-            positional.Should().BeTrue();
+            positional.ValueOr(new int[0]).Should().BeEquivalentTo(new[] { 0, 1, 5 });
         }
 
         [Fact]
-        public void IsPositional_WithNamedArgs_ShouldReturnFalse()
+        public void PositionalArguments_WithNamedArgs_ShouldReturnNone()
         {
             // Arrange
             var parser = new MessageFormatter("{0} {1} {foo}");
 
             // Act
-            var positional = parser.IsPositional;
+            var positional = parser.PositionalArguments;
 
             // Assert
-            positional.Should().BeFalse();
+            positional.Should().Be(Option.None<IEnumerable<int>>());
         }
 
         [Fact]

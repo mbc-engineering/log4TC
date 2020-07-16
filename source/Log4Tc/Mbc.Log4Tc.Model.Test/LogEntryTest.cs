@@ -108,32 +108,6 @@ namespace Mbc.Log4Tc.Model.Test
         }
 
         [Fact]
-        public void ArgumentLabels_WithNumeric_ShouldReturnNumericInOrder()
-        {
-            // Arrange
-            var logEntry = new LogEntry { Message = "{0} {2} {1} {4} {0}" };
-
-            // Act
-            var labels = logEntry.ArgumentLabels;
-
-            // Assert
-            labels.Should().BeEquivalentTo("0", "2", "1", "4", "0");
-        }
-
-        [Fact]
-        public void ArgumentLabels_WithMixed_ShouldReturnLabels()
-        {
-            // Arrange
-            var logEntry = new LogEntry { Message = "{args} {2} {1} {4} {foo}" };
-
-            // Act
-            var labels = logEntry.ArgumentLabels;
-
-            // Assert
-            labels.Should().BeEquivalentTo("args", "2", "1", "4", "foo");
-        }
-
-        [Fact]
         public void ArgumentValues_WithoutHoles_ShouldReturnValues()
         {
             // Arrange
@@ -162,41 +136,6 @@ namespace Mbc.Log4Tc.Model.Test
 
             // Assert
             values.Should().BeEquivalentTo(10, null, 30);
-        }
-
-        [Fact]
-        public void ArgumentPairs_WithNumeric()
-        {
-            // Arrange
-            var logEntry = new LogEntry { Message = "{0} {2} {1} {4} {0}" };
-            logEntry.Arguments.Add(1, 1);
-            logEntry.Arguments.Add(2, 2);
-            logEntry.Arguments.Add(3, 3);
-            logEntry.Arguments.Add(5, 5);
-
-            // Act
-            var pairs = logEntry.ArgumentPairs.ToList();
-
-            // Assert
-            pairs.Should().BeEquivalentTo(("0", 1), ("2", 3), ("1", 2), ("4", 5), ("0", 1));
-        }
-
-        [Fact]
-        public void ArgumentPairs_WithMixed()
-        {
-            // Arrange
-            var logEntry = new LogEntry { Message = "{args} {2} {1} {4} {foo}" };
-            logEntry.Arguments.Add(1, 1);
-            logEntry.Arguments.Add(2, 2);
-            logEntry.Arguments.Add(3, 3);
-            logEntry.Arguments.Add(4, 4);
-            logEntry.Arguments.Add(5, 5);
-
-            // Act
-            var pairs = logEntry.ArgumentPairs.ToList();
-
-            // Assert
-            pairs.Should().BeEquivalentTo(("args", 1), ("2", 2), ("1", 3), ("4", 4), ("foo", 5));
         }
     }
 }

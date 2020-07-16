@@ -10,15 +10,12 @@ namespace Mbc.Log4Tc.Model
         private readonly Lazy<MessageFormatter> _messageFormatter;
         private readonly Lazy<object[]> _argValues;
         private readonly Lazy<string> _formattedMessage;
-        private readonly Lazy<List<(string, object)>> _argPairs;
 
         public LogEntry()
         {
             _messageFormatter = new Lazy<MessageFormatter>(() => new MessageFormatter(Message));
-
             _argValues = new Lazy<object[]>(CreateArgumentList);
             _formattedMessage = new Lazy<string>(CreateFormattedMessage);
-            _argPairs = new Lazy<List<(string, object)>>(CreateArgumentPairs);
         }
 
         public string Source { get; set; }
@@ -51,8 +48,12 @@ namespace Mbc.Log4Tc.Model
 
         public IDictionary<string, object> Context { get; } = new Dictionary<string, object>();
 
+        public MessageFormatter MessageFormatter => _messageFormatter.Value;
+
         /// <summary>
-        /// Returns the <see cref="Message"/> formatted with the <see cref="Arguments"/>.
+        /// Returns the <see cref="Message"/> formatted with the <see cref="Arguments"/>. Usage
+        /// of this property is preferred to <c>MessageFormatter.Format(ArgumentValues></c> because
+        /// the formatted is cached in this instance.
         /// </summary>
         public string FormattedMessage => _formattedMessage.Value;
 
@@ -60,14 +61,6 @@ namespace Mbc.Log4Tc.Model
         /// Returns all arguments in order and filled with <c>null</c> values.
         /// </summary>
         public IEnumerable<object> ArgumentValues => _argValues.Value;
-
-        /// <summary>
-        /// Returns the label (which might be the name or the numeric position) of
-        /// the arguments in order of the message.
-        /// </summary>
-        public IEnumerable<string> ArgumentLabels => _messageFormatter.Value.Arguments;
-
-        public IEnumerable<(string, object)> ArgumentPairs => _argPairs.Value;
 
         private object[] CreateArgumentList()
         {
@@ -88,37 +81,6 @@ namespace Mbc.Log4Tc.Model
             }
 
             return argList;
-        }
-
-        private List<(string, object)> CreateArgumentPairs()
-        {
-            var labels = ArgumentLabels.ToList();
-            var values = ArgumentValues.ToList();
-
-            if (labels.All(x => int.TryParse(x, out int _)))
-            {
-                // all labels are numeric => use numeric semantic
-                var pairs = new List<(string, object)>(labels.Count);
-                foreach (var label in labels)
-                {
-                    var idx = int.Parse(label);
-                    if (idx >= 0 && idx < values.Count)
-                    {
-                        pairs.Add((label, values[idx]));
-                    }
-                    else
-                    {
-                        pairs.Add((label, "?"));
-                    }
-                }
-
-                return pairs;
-            }
-            else
-            {
-                // structured semantic
-                return labels.Zip(values, (label, value) => (label, value)).ToList();
-            }
         }
 
         private string CreateFormattedMessage() => _messageFormatter.Value.Format(ArgumentValues);

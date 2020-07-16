@@ -24,21 +24,6 @@ namespace Mbc.Log4Tc.Output.InfluxDb
             return point;
         }
 
-        protected PointData WriteArgumentsToFields(PointData point, LogEntry logEntry)
-        {
-            var index = 1;
-            foreach (var argName in logEntry.ArgumentLabels)
-            {
-                if (index > logEntry.Arguments.Count)
-                    break;
-
-                point = WriteField(point, argName, logEntry.Arguments[index]);
-                index++;
-            }
-
-            return point;
-        }
-
         protected virtual PointData WriteField(PointData point, string name, object value)
         {
             if (value == null)
