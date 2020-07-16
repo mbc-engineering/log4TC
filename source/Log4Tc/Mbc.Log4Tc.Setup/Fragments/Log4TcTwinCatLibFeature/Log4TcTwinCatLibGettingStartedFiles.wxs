@@ -2,309 +2,106 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="DIR_CommonAppDataFolderLog4TcGettingStarted">
-            <Directory Id="dir664A59D488C4223C32BF1D4644A24256" Name=".vs" />
-            <Directory Id="dir654D6B49BD8CA8F446A4D1BB29214551" Name="A_SimpleLogMessage" />
-            <Directory Id="dir4F995E6757F33EDF4A89FE1BDBE4FE0E" Name="B_LogMessageWithArg" />
-            <Directory Id="dir5D4D20A4B0F121241CB1A354A3B93CB7" Name="C_LogWithLogger" />
-            <Directory Id="dir6D45B4870BAE3F1C8EA49B21F5A63C46" Name="D_LogWithContext" />
-            <Directory Id="dir90E51160AF010D80FF3E8436609AF613" Name="E_StructuredLogging" />
-            <Directory Id="dirDC6BF9BA82F45E9C8CA65FD2C977EF3A" Name="_Boot" />
-            <Directory Id="dirB7093FBFD2056F7044D3D26039E8DBDE" Name="_Config" />
+            <Directory Id="dirFFCEEB30F0BEC9FCC7F112B2B0F107FE" Name="A_SimpleLogMessage" />
+            <Directory Id="dirB67967D3572CBA8851F8A892E1826EDB" Name="B_LogMessageWithArg" />
+            <Directory Id="dirA57FF57C06AF934BB51E3ED856713734" Name="C_LogWithLogger" />
+            <Directory Id="dir497D8E622813FFE24CB616C9A5FFB30C" Name="D_LogWithContext" />
+            <Directory Id="dirD78B082D3959139F2A4AF57F18094764" Name="E_StructuredLogging" />
+            <Directory Id="dirC7C7BA4FB32B9093F646FC34632959B5" Name="F_LogToInflux" />
+            <Directory Id="dirFC1A5E713BF09CBDF473DD65BE5A56F3" Name="_Config" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
         <ComponentGroup Id="Cmp_Log4TcTwinCatLibGettingStartedFiles">
-            <Component Id="cmpDF2815E421912F2213A6E7B4E87579D4" Directory="DIR_CommonAppDataFolderLog4TcGettingStarted" Guid="*">
-                <File Id="fil418B78539DEE0D39E5E05C6AE441ED60" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\GettingStarted.sln" />
+            <Component Id="cmp867070394149CDB2017549A13BF98919" Directory="DIR_CommonAppDataFolderLog4TcGettingStarted" Guid="*">
+                <File Id="fil020E91F69E12B59C01E9002707525332" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\.gitignore" />
             </Component>
-            <Component Id="cmp1D70758746AA89639AF76F3F7854A91F" Directory="DIR_CommonAppDataFolderLog4TcGettingStarted" Guid="*">
-                <File Id="filA974BFB830E8156EF3A4300690FC281A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\GettingStarted.tsproj" />
+            <Component Id="cmp208A8E2DB2F91B6DF8EE1717B491A9BA" Directory="DIR_CommonAppDataFolderLog4TcGettingStarted" Guid="*">
+                <File Id="fil72149008BE50C82501CED9E2528FC809" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\GettingStarted.sln" />
             </Component>
-            
-            
-            <Component Id="cmp6BB4B6BA384EFCAD3446677C0AC3E0C5" Directory="dir654D6B49BD8CA8F446A4D1BB29214551" Guid="*">
-                <File Id="fil5E5716AF0165D7EDF8F90BE6C8C4CACF" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\A_SimpleLogMessage.plcproj" />
+            <Component Id="cmp023D3C0F740A5F1A226397862FE0F252" Directory="DIR_CommonAppDataFolderLog4TcGettingStarted" Guid="*">
+                <File Id="fil9F08A7EFAB890B6D41A8498BFDFC622E" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\GettingStarted.tsproj" />
             </Component>
-            <Component Id="cmp19ADB6B108D4CE49EC1AE1E7981BCA00" Directory="dir654D6B49BD8CA8F446A4D1BB29214551" Guid="*">
-                <File Id="fil61A7E1153C85DAFBC57A0A700AC3AE8C" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\A_SimpleLogMessage.tmc" />
+            <Component Id="cmpCB3AD8C44ADD9B097E61B80252F7CD4B" Directory="dirFFCEEB30F0BEC9FCC7F112B2B0F107FE" Guid="*">
+                <File Id="filC321132C808FD015FF891EDE2DCBA13F" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\A_SimpleLogMessage.plcproj" />
             </Component>
-            <Component Id="cmp0E33544E9E699F2183375B5793CAE48A" Directory="dir654D6B49BD8CA8F446A4D1BB29214551" Guid="*">
-                <File Id="fil723A51BAE461593D143638B3EEF4E6AE" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\A_SimpleLogMessage.tpy" />
+            <Component Id="cmpAF9E2422EF2540A0AC9C231181F8DFE5" Directory="dirFFCEEB30F0BEC9FCC7F112B2B0F107FE" Guid="*">
+                <File Id="fil85E4FFD1F1B714B61E1D5BF9ED3EE1C8" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\MAIN.TcPOU" />
             </Component>
-            <Component Id="cmp8EBF3DC233231784181A694211444FBB" Directory="dir654D6B49BD8CA8F446A4D1BB29214551" Guid="*">
-                <File Id="fil0FB717249FA32261B371AC9BC9A1CF80" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\LineIDs.dbg" />
+            <Component Id="cmp054E4B13B0FE0B3AFF085FCF604566AC" Directory="dirFFCEEB30F0BEC9FCC7F112B2B0F107FE" Guid="*">
+                <File Id="fil255811EF9A20B2FBB63C770A71243382" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\PlcTask.TcTTO" />
             </Component>
-            <Component Id="cmp7AA2813A39BEFD262D869187CB46F818" Directory="dir654D6B49BD8CA8F446A4D1BB29214551" Guid="*">
-                <File Id="filFC092D8D25DA894C4B8F9B69E720BE3C" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\MAIN.TcPOU" />
+            <Component Id="cmp6E8A19E874607A59A1D29022B2256CC1" Directory="dirB67967D3572CBA8851F8A892E1826EDB" Guid="*">
+                <File Id="fil2C46E86C049B62B7F4418799779D1F7B" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\B_LogMessageWithArg.plcproj" />
             </Component>
-            <Component Id="cmpA8686B6C980A9C52A1CB6A5AC0FB8BDC" Directory="dir654D6B49BD8CA8F446A4D1BB29214551" Guid="*">
-                <File Id="fil1CF884AC37EFE530AD7FDD72305AF93F" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\PlcTask.TcTTO" />
+            <Component Id="cmpE99F0F23E6A939D835BFB5E8E78DE9A5" Directory="dirB67967D3572CBA8851F8A892E1826EDB" Guid="*">
+                <File Id="filD1A913B73C032D17694ACF562001DF64" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\MAIN.TcPOU" />
             </Component>
-            <Component Id="cmp65B2A39D7943081398F9B50DC64F0C82" Directory="dir89451A60C6F631E4078ECE4A5A67F367" Guid="*">
-                <File Id="filF373D479D9CA2A9DE44CFF611B7A4DCD" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\A_SimpleLogMessage\_CompileInfo\35DB22F9-1830-147A-51CF-A46703481507.compileinfo" />
+            <Component Id="cmp75CF7C6601345835B9A578469BF138AF" Directory="dirB67967D3572CBA8851F8A892E1826EDB" Guid="*">
+                <File Id="filC5D8741E4B4294E1C6376EF32B702D51" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\PlcTask.TcTTO" />
             </Component>
-            <Component Id="cmpD3D8932DF2C08C1E34F3F3463346B2AC" Directory="dir4F995E6757F33EDF4A89FE1BDBE4FE0E" Guid="*">
-                <File Id="filC00359048698DD1CB3718CE0BE2ED04A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\B_LogMessageWithArg.plcproj" />
+            <Component Id="cmp2283772F0C25A062D670742BDA670D8B" Directory="dirA57FF57C06AF934BB51E3ED856713734" Guid="*">
+                <File Id="fil67C863AD37E8BEF25B798324662899EF" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\C_LogWithLogger.plcproj" />
             </Component>
-            <Component Id="cmp5448A4C00A8D6FB172822ABFAFFBEFD2" Directory="dir4F995E6757F33EDF4A89FE1BDBE4FE0E" Guid="*">
-                <File Id="fil6E5740CE4AD7D42E517F2638F60FEF33" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\B_LogMessageWithArg.tmc" />
+            <Component Id="cmpCFA054D9503DD968D95D9ACA3FECE038" Directory="dirA57FF57C06AF934BB51E3ED856713734" Guid="*">
+                <File Id="fil9E1443BD34DAC11BC5B5E9924BA154B2" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\MAIN.TcPOU" />
             </Component>
-            <Component Id="cmp18F0BCE62FBBED1344C393527AF5215C" Directory="dir4F995E6757F33EDF4A89FE1BDBE4FE0E" Guid="*">
-                <File Id="filDBBAB973F6D1C5F9C0CC4EC76E02AAD4" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\B_LogMessageWithArg.tpy" />
+            <Component Id="cmpF651A03DA7C55AC67E05972A19CFF2AE" Directory="dirA57FF57C06AF934BB51E3ED856713734" Guid="*">
+                <File Id="fil2995F82A201801FF47797585FB3D092B" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\PlcTask.TcTTO" />
             </Component>
-            <Component Id="cmp01D040287EAC131B657E617EDDB5D591" Directory="dir4F995E6757F33EDF4A89FE1BDBE4FE0E" Guid="*">
-                <File Id="fil5ABF2193FF229F9632DBD34EF0FD5CCE" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\MAIN.TcPOU" />
+            <Component Id="cmp401FF9CA4E5FB26605DC8CC181924448" Directory="dir497D8E622813FFE24CB616C9A5FFB30C" Guid="*">
+                <File Id="fil24EC4E745D32AD0CFB1BCA6E37A48AE4" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\D_LogWithContext.plcproj" />
             </Component>
-            <Component Id="cmpF026D8F01E3EBB24F1BA09BFBE80035E" Directory="dir4F995E6757F33EDF4A89FE1BDBE4FE0E" Guid="*">
-                <File Id="filADD555FA5F955165650AE13D37DA09D0" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\PlcTask.TcTTO" />
+            <Component Id="cmpD072809230A7A3CB18D58913E985BAA0" Directory="dir497D8E622813FFE24CB616C9A5FFB30C" Guid="*">
+                <File Id="fil3C11F4E667294846BDFF7CB7D5A40EFA" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\MAIN.TcPOU" />
             </Component>
-            <Component Id="cmpD4F3B13FDE240F02228E0302F58B7E3C" Directory="dir77CDA871EDC5F87FDE4E62568F9364FA" Guid="*">
-                <File Id="fil65443EEEC78C881E34C3A0938E1C3FCC" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\B_LogMessageWithArg\_CompileInfo\3E131192-FC18-BDA0-A347-0D0DF8DA263C.compileinfo" />
+            <Component Id="cmpB9FB4A7A34E6D92EE2E3395650D89101" Directory="dir497D8E622813FFE24CB616C9A5FFB30C" Guid="*">
+                <File Id="filCAF7DC89481929991386E05255A9BDCB" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\PlcTask.TcTTO" />
             </Component>
-            <Component Id="cmpF2A37B8EB6FDB65A41F969074B3DA72F" Directory="dir5D4D20A4B0F121241CB1A354A3B93CB7" Guid="*">
-                <File Id="fil2268AE5AA30D43B216277FE6D929F4EB" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\C_LogWithLogger.plcproj" />
+            <Component Id="cmp6FCB5FA1CB075070D13D8CE3364FA6FD" Directory="dirD78B082D3959139F2A4AF57F18094764" Guid="*">
+                <File Id="fil17C8C3D678BAF9557E125BEBCB0EFD30" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\E_StructuredLogging.plcproj" />
             </Component>
-            <Component Id="cmpE0F625B87004D8BBF7D98875F30458EA" Directory="dir5D4D20A4B0F121241CB1A354A3B93CB7" Guid="*">
-                <File Id="fil18EF24504FF7AA815A3E3FB5A1F4DA25" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\C_LogWithLogger.tmc" />
+            <Component Id="cmp0D15815FECE0BCFBA56104B96C5D15C5" Directory="dirD78B082D3959139F2A4AF57F18094764" Guid="*">
+                <File Id="filEB94C1029CC8847557FF9A27A4BECC6C" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\MAIN.TcPOU" />
             </Component>
-            <Component Id="cmpAE6FC5AADE04CDED5A9591FD9DEFBF19" Directory="dir5D4D20A4B0F121241CB1A354A3B93CB7" Guid="*">
-                <File Id="filA203D0ACE645A8FAE50CFEAC9A4BA876" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\C_LogWithLogger.tpy" />
+            <Component Id="cmpD98B1069351DAD86E943A15368611695" Directory="dirD78B082D3959139F2A4AF57F18094764" Guid="*">
+                <File Id="fil94535F56F4E983D388CE65544143C55D" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\PlcTask.TcTTO" />
             </Component>
-            <Component Id="cmp25860E0564A89A0788BACE98033AE74A" Directory="dir5D4D20A4B0F121241CB1A354A3B93CB7" Guid="*">
-                <File Id="fil529CC811A6DFE5B95EEED9FF1FB3FDF4" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\MAIN.TcPOU" />
+            <Component Id="cmp9E0D86AABD4594F7ED161AA79F3A478C" Directory="dirC7C7BA4FB32B9093F646FC34632959B5" Guid="*">
+                <File Id="fil26357B171774C4E59C8A2533C7174323" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\F_LogToInflux\F_LogToInflux.plcproj" />
             </Component>
-            <Component Id="cmpD573CDE416E0F3EA5ECA2560B99DD29C" Directory="dir5D4D20A4B0F121241CB1A354A3B93CB7" Guid="*">
-                <File Id="fil9292AB60C51BEFFBDA19CE11D847295E" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\PlcTask.TcTTO" />
+            <Component Id="cmpAD1D5C33D0180B5359D1D845288B764A" Directory="dirC7C7BA4FB32B9093F646FC34632959B5" Guid="*">
+                <File Id="fil1FBEF201566E8F6C7024AAD7BD488F69" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\F_LogToInflux\MAIN.TcPOU" />
             </Component>
-            <Component Id="cmp213E8B62417F9EE9DD35C016A18802B2" Directory="dirF138C53E3ECD72E17A2F59AD5B3BAD2C" Guid="*">
-                <File Id="fil1A89F9AD7A4EEF99FD7A04C7FF2DFB46" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\C_LogWithLogger\_CompileInfo\72D03E34-069E-E9A5-59EC-F081313B7CE9.compileinfo" />
+            <Component Id="cmpD52A0DFC02021A7B34A75BEDDCC5C1AF" Directory="dirC7C7BA4FB32B9093F646FC34632959B5" Guid="*">
+                <File Id="filA436D9CD72DCF1DE4F27EAD6B077B558" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\F_LogToInflux\PlcTask.TcTTO" />
             </Component>
-            <Component Id="cmpB4EA5EA99C100319F1814507CB6FD54E" Directory="dir6D45B4870BAE3F1C8EA49B21F5A63C46" Guid="*">
-                <File Id="filE07410AF1B90CD70BE865E03959356F8" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\D_LogWithContext.plcproj" />
+            <Component Id="cmp30AE4F27961A3227475CDB79C37A240B" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
+                <File Id="fil05BA1C30B76622104E4082DF7F4124C0" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\A_SimpleLogMessage.xti" />
             </Component>
-            <Component Id="cmpBAD950F608FABC1FBA2D2A39D49E0346" Directory="dir6D45B4870BAE3F1C8EA49B21F5A63C46" Guid="*">
-                <File Id="fil83EF6B7FF0A43452464D4503280112A0" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\D_LogWithContext.tmc" />
+            <Component Id="cmpAE059A4229796FD21D8C93BB73C929AB" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
+                <File Id="filFCEF5E8C873546926E46C7945081E86A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\B_LogMessageWithArg.xti" />
             </Component>
-            <Component Id="cmp39BD0056274C0C5F662B937DBDEF15C6" Directory="dir6D45B4870BAE3F1C8EA49B21F5A63C46" Guid="*">
-                <File Id="filFBFDDD2AE5D7E343F1B83CCD1541D6ED" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\D_LogWithContext.tpy" />
+            <Component Id="cmp2BB50242F9CD447D386A9605D657986B" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
+                <File Id="filAE61A18D5AFD925DA6234D86EFB3D093" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\C_LogWithLogger.xti" />
             </Component>
-            <Component Id="cmpAFFAB7AA864752F6CCCE6D4E2ED1D4B2" Directory="dir6D45B4870BAE3F1C8EA49B21F5A63C46" Guid="*">
-                <File Id="filCF699EECEADF195247E97111D3A224BE" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\LineIDs.dbg" />
+            <Component Id="cmp37B9BA277452C97EFF5D1CD0C94A8236" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
+                <File Id="fil22241E1A5870CC20C333FA384F4CC605" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\D_LogWithContext.xti" />
             </Component>
-            <Component Id="cmpFBB8301B6A603B1D4191870AEF0315DD" Directory="dir6D45B4870BAE3F1C8EA49B21F5A63C46" Guid="*">
-                <File Id="fil8B264A91665114603FFFA42D8CB40F74" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\MAIN.TcPOU" />
+            <Component Id="cmp12D603D3A731B09F59AB9DADA0398E78" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
+                <File Id="filD9E898E843A0E39B0F726FA3F7AC4600" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\E_StructuredLogging.xti" />
             </Component>
-            <Component Id="cmpB13F1781EDFFCCCB8B58D30E64510E17" Directory="dir6D45B4870BAE3F1C8EA49B21F5A63C46" Guid="*">
-                <File Id="filA1BA5B47CE0FE4563E2F616BF9B73E2A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\PlcTask.TcTTO" />
+            <Component Id="cmp15C9291A0FD2C98F3AB3D413C99C8B57" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
+                <File Id="fil3B3971F830A1A69F9FCF8ED5B8DC4973" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\F_LogToInflux.xti" />
             </Component>
-            <Component Id="cmp6357A21E3118F1C1C3FEEBFD0EAFFC88" Directory="dirCBE2C178DA0C0BF99FB818ED98E23064" Guid="*">
-                <File Id="fil0A30AD6CB9C52AE2DF29A1414CDD9289" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\D_LogWithContext\_CompileInfo\F17A25B7-6F19-6F7D-BB3A-6D8317E9767D.compileinfo" />
-            </Component>
-            <Component Id="cmp5BF7D176B1C727FDDC11E874806F31A0" Directory="dir90E51160AF010D80FF3E8436609AF613" Guid="*">
-                <File Id="filE80D40CD25E4DE9B21777FD1F2956CF5" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\E_StructuredLogging.plcproj" />
-            </Component>
-            <Component Id="cmp051D586E879F8DF963C85E9FB740B4CD" Directory="dir90E51160AF010D80FF3E8436609AF613" Guid="*">
-                <File Id="filF294B7420A6445130DC82A45A5AEF0CE" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\E_StructuredLogging.tmc" />
-            </Component>
-            <Component Id="cmpEAB1C918D62920DFC9798B1D555F9549" Directory="dir90E51160AF010D80FF3E8436609AF613" Guid="*">
-                <File Id="fil2591571257633C1B3795CE967FEBBCF1" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\E_StructuredLogging.tpy" />
-            </Component>
-            <Component Id="cmpB24C5994AFD1D20CDD80EE12DA807AEF" Directory="dir90E51160AF010D80FF3E8436609AF613" Guid="*">
-                <File Id="filF46A23F86153A96D072F112DAC63A22D" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\LineIDs.dbg" />
-            </Component>
-            <Component Id="cmpDEC146745D977DA34890F86167F9C3D2" Directory="dir90E51160AF010D80FF3E8436609AF613" Guid="*">
-                <File Id="fil85037FD29EAA219F3233B0EA83E1D1A0" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\MAIN.TcPOU" />
-            </Component>
-            <Component Id="cmpD5CAF2A8E241C91B2CB4E6ACD0DC904E" Directory="dir90E51160AF010D80FF3E8436609AF613" Guid="*">
-                <File Id="fil4EF8262363EFFE3364A6542D7AB4BD13" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\PlcTask.TcTTO" />
-            </Component>
-            <Component Id="cmp0418972088B03940AFE62D87EF9ACEEC" Directory="dir2E0F554ACE03E1B3A8D0F0A80E91DA07" Guid="*">
-                <File Id="filB21EBD6E57492D36BAF721BCE587BFDB" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\_CompileInfo\830C6326-46C3-C165-C7A0-A04A41122125.compileinfo" />
-            </Component>
-            <Component Id="cmpCA8FD372A39CB94A97D77A573662090C" Directory="dirDC6BF9BA82F45E9C8CA65FD2C977EF3A" Guid="*">
-                <File Id="fil0FB32C3E41DDAEF3679E7039910C6589" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TargetDescription.xml" />
-            </Component>
-            <Component Id="cmpC3DA4C21CEB2CE797B3CB02A79A5A22F" Directory="dir10F71E6179B6AA7B02BCA1DAFCAD9E37" Guid="*">
-                <File Id="fil4246E9CA2535A1CC33AB49C92D98B6C4" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\CurrentConfig.xml" />
-            </Component>
-            <Component Id="cmpAD4EF2C2F2A2B5FD1C4A7E7F8C75876F" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filB80F00CCA6177B2CEF9DA449484677AC" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_852.app" />
-            </Component>
-            <Component Id="cmp4B78550C5DCDB57212296ED14F124CBE" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil063FFF372872154D29DC46BB19AC6787" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_852.autostart" />
-            </Component>
-            <Component Id="cmp0C77FE3C833F9849AEF711B4219F0E19" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil98E7F6E9CF9E2DA44714B84C3C34E45B" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_852.cid" />
-            </Component>
-            <Component Id="cmp3294585760EF77A646C3476269F02423" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil7DD1D731DBCF6ADB034CBCBA9451B06E" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_852.crc" />
-            </Component>
-            <Component Id="cmp1D6745F19F061880CAFDBDE69CA006DA" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil762E9B5416FEA415B1CC6BDD75D3FD0E" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_852.occ" />
-            </Component>
-            <Component Id="cmp1CABEDBFAE0A488699A4809C683266C6" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil5DAFF69C884AA0320566C79BC2F994AE" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_852.ocm" />
-            </Component>
-            <Component Id="cmp5EC51EAF196EFEB07EDE725A91B89547" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filD6153BCDFC021CA6DF2277A4BAB7563E" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_852_boot.tizip" />
-            </Component>
-            <Component Id="cmp016CA93D1CE1E014E9EFD2BC5083B5D3" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil1BC926220FCBA040F236AC5C48AEF54E" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_853.app" />
-            </Component>
-            <Component Id="cmp568773BC5A63F4D0212B4EA196A7942F" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil204D0FDB889D3183F9DB62FA781546AF" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_853.autostart" />
-            </Component>
-            <Component Id="cmpCE08235130026DB1E3F5B4419B41328B" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filE1BEAAA179A4458815619686CDDB941C" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_853.cid" />
-            </Component>
-            <Component Id="cmpA7A27BCA380233BD7A15E7A4CFB25A39" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filC69E76DCAE7BA5FE07C69F242717581E" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_853.crc" />
-            </Component>
-            <Component Id="cmpF2F7DF9650A4C9CB451AC3004052B181" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil520EA3F42DDA4213755334E75F59E53C" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_853.occ" />
-            </Component>
-            <Component Id="cmpA17C731794F8612310667EF3420ACC1F" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil705D92F694E514EC892FED1027E88CCD" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_853.ocm" />
-            </Component>
-            <Component Id="cmp57371703AE1DED743876C2010F075FBA" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filCDA97C65FED73A84F676ABF92274CB7C" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_853_boot.tizip" />
-            </Component>
-            <Component Id="cmpD91085AD464657D2EFECD7531CD0C80C" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filE8A2DEA883BE988CA41B2C1F78D008A9" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_854.app" />
-            </Component>
-            <Component Id="cmpC90183AB562EB1A0B3D7FE99F31D7D7E" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filA71D3C6332956C0AA7D828FFC42E0528" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_854.autostart" />
-            </Component>
-            <Component Id="cmp7A9275240FEA2469101971F6CB93060A" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil409F551B92CDD69BEFFC06F4028FDC75" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_854.cid" />
-            </Component>
-            <Component Id="cmp3B3977AD8C5BBF0A63E200F5010A847B" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filF5B8BA7E3195690BE26A8291E4B0D1BD" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_854.crc" />
-            </Component>
-            <Component Id="cmpDBD4E253F535283B56C7C9F54A25930E" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil97B99DDA0281C0A202A5CDF8FE1DE639" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_854.occ" />
-            </Component>
-            <Component Id="cmp51E703E32E18F2EEBD0619086B15355D" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil174AD0B40B461DA7507871260514C902" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_854.ocm" />
-            </Component>
-            <Component Id="cmpA868BE847D4CB97F4FA22247020FE5B7" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filC9C59512147DC531DED1FFADF94F6BE8" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_854_boot.tizip" />
-            </Component>
-            <Component Id="cmpE2CD016B36D992058622B5193E139CA0" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil283A01D0AF2A8E47EB25C2AAF24C21A3" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_855.app" />
-            </Component>
-            <Component Id="cmpE6F1871F8DE49CD62293095F2B4BB6E3" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filD6F2EB13A9833AAD7D7BAF8D520E5D94" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_855.autostart" />
-            </Component>
-            <Component Id="cmp8DB43A3CA81F7D52A4A0662742293038" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filCD761742A066E83221C7785B72D6B742" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_855.cid" />
-            </Component>
-            <Component Id="cmp70CEE4323D50A8D15953A90DD6DC4D31" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil7C55EDC3DA0B5208BA4270D22D38E0F8" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_855.crc" />
-            </Component>
-            <Component Id="cmpAB44945CA1E72D3B065B2A02EB4EAFC7" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil61C52126C4698C2DB7CAC2A92265D4DF" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_855.occ" />
-            </Component>
-            <Component Id="cmpCECE5E51183209AB0D18328C098051B5" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filD11CD6BDC0E8DFFC858A44F8033B20C1" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_855.ocm" />
-            </Component>
-            <Component Id="cmp2127FD67D334AE97338A79B2434C4B46" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filB57C15C859388F2F00E914335D388E4F" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_855_boot.tizip" />
-            </Component>
-            <Component Id="cmpABC793C452D4FC124489C681B87A6C37" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filE95FDB6787A5921C0A46ACBD32583AF7" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_856.app" />
-            </Component>
-            <Component Id="cmpA5EA8768F8A8D7441E0C95FD985F65C0" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filE01D3609C0F31CB7504B9C8FBA81A1CF" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_856.autostart" />
-            </Component>
-            <Component Id="cmpAEBF26AEEBAC31982D858D66B1CB9FA3" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filEB293E0299F6670311A292484152C14F" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_856.cid" />
-            </Component>
-            <Component Id="cmp8EFD3A4AF98A872A539BCB2E0CACDB57" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil29F775B53771679BA18B36421C029E8D" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_856.crc" />
-            </Component>
-            <Component Id="cmpF023F4AE691F78BE501423B7C7E35F50" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil962464ADBC7F72AF491A445C2BDFBCBE" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_856.occ" />
-            </Component>
-            <Component Id="cmp9756A69F53ED3EE23C2DBCD4D20B0FC7" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="filF47E8F3E400584271E87F00F6E1B310A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_856.ocm" />
-            </Component>
-            <Component Id="cmpA2C0DB647173460EEA7FCC3E828F5679" Directory="dir6CBA7E394EF5E2320AA670F57CDCD76F" Guid="*">
-                <File Id="fil7EC1AEC2752E1A69B8F74D4BB1653EA7" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Boot\TwinCAT RT (x64)\Plc\Port_856_boot.tizip" />
-            </Component>
-            <Component Id="cmp7BE46A3DA25D68FEC9DE9DC249CD099C" Directory="dirD2D76AD9B16114D8556E6C8E0A8C7A99" Guid="*">
-                <File Id="fil5B1B2F3ED3980CA1859111F00716C79B" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\A_SimpleLogMessage.xti" />
-            </Component>
-            <Component Id="cmp4D9B2987E9406E1115D13AD626C2CB98" Directory="dirD2D76AD9B16114D8556E6C8E0A8C7A99" Guid="*">
-                <File Id="fil53DEDAE1081A1C336130DBE40A1AAD6A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\B_LogMessageWithArg.xti" />
-            </Component>
-            <Component Id="cmpFDD85C6DBF35A7626C0D105522170371" Directory="dirD2D76AD9B16114D8556E6C8E0A8C7A99" Guid="*">
-                <File Id="fil38EC604151977F12A70684894EACB4C9" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\C_LogWithLogger.xti" />
-            </Component>
-            <Component Id="cmp34BFDF6484F66742BA8A10C1782CE54A" Directory="dirD2D76AD9B16114D8556E6C8E0A8C7A99" Guid="*">
-                <File Id="fil3CF9B40B8607B1DECAB95A216C45701A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\D_LogWithContext.xti" />
-            </Component>
-            <Component Id="cmpE87CB99223B37D14B28B6DCDE923ACC8" Directory="dirD2D76AD9B16114D8556E6C8E0A8C7A99" Guid="*">
-                <File Id="fil3A96459D11BC8CF4F90542A8C96707FA" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\E_StructuredLogging.xti" />
-            </Component>
-            <Component Id="cmp42C5C72AE7F276224583B2D539C6D524" Directory="dirD2D76AD9B16114D8556E6C8E0A8C7A99" Guid="*">
-                <File Id="fil09281E57195DC81FB2600A63107BA48A" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\LoggingExample.xti" />
+            <Component Id="cmp3F7542204EE05BA40C3B154FCDD48DC2" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
+                <File Id="fil3733EAC06F09E7BA74857A46AEC8D711" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\LoggingExample.xti" />
             </Component>
         </ComponentGroup>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dirDC6BF9BA82F45E9C8CA65FD2C977EF3A">
-            <Directory Id="dir10F71E6179B6AA7B02BCA1DAFCAD9E37" Name="TwinCAT RT (x64)" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir664A59D488C4223C32BF1D4644A24256">
-            <Directory Id="dir14EF986BA848AA7EB4EB1E440573AEEC" Name="GettingStarted" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir90E51160AF010D80FF3E8436609AF613">
-            <Directory Id="dir2E0F554ACE03E1B3A8D0F0A80E91DA07" Name="_CompileInfo" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir14EF986BA848AA7EB4EB1E440573AEEC">
-            <Directory Id="dir2E5B3503FC0D63DBE2D9F31DAC26E077" Name="v15" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir14EF986BA848AA7EB4EB1E440573AEEC">
-            <Directory Id="dir4AD1CB773FE141523A6A7A73EBCEBDF3" Name="v16" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir10F71E6179B6AA7B02BCA1DAFCAD9E37">
-            <Directory Id="dir6CBA7E394EF5E2320AA670F57CDCD76F" Name="Plc" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir4F995E6757F33EDF4A89FE1BDBE4FE0E">
-            <Directory Id="dir77CDA871EDC5F87FDE4E62568F9364FA" Name="_CompileInfo" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir654D6B49BD8CA8F446A4D1BB29214551">
-            <Directory Id="dir89451A60C6F631E4078ECE4A5A67F367" Name="_CompileInfo" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir6D45B4870BAE3F1C8EA49B21F5A63C46">
-            <Directory Id="dirCBE2C178DA0C0BF99FB818ED98E23064" Name="_CompileInfo" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dirB7093FBFD2056F7044D3D26039E8DBDE">
-            <Directory Id="dirD2D76AD9B16114D8556E6C8E0A8C7A99" Name="PLC" />
-        </DirectoryRef>
-    </Fragment>
-    <Fragment>
-        <DirectoryRef Id="dir5D4D20A4B0F121241CB1A354A3B93CB7">
-            <Directory Id="dirF138C53E3ECD72E17A2F59AD5B3BAD2C" Name="_CompileInfo" />
+        <DirectoryRef Id="dirFC1A5E713BF09CBDF473DD65BE5A56F3">
+            <Directory Id="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Name="PLC" />
         </DirectoryRef>
     </Fragment>
 </Wix>

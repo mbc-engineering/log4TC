@@ -2,12 +2,95 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="DIR_Log4TcServicePlugin">
+            <Directory Id="dirEF9F235C43184E489D97E7260F2794F7" Name="graylog" />
             <Directory Id="dir61209DD9EB0E49FD7AB1D226E27561FC" Name="influxdb" />
             <Directory Id="dir4FAB1ED4D0079C049AA7F244A646EA1D" Name="nlog" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
         <ComponentGroup Id="Cmp_Log4TcServicePlugins">
+            <Component Id="cmpAA903D47B9F37C6805B65889E493F558" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil7D47618C46AF1C200D595F93C0DB02C6" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Mbc.Log4Tc.Model.dll" />
+            </Component>
+            
+            <Component Id="cmp48BD97DD949B8287D33429CBC9989651" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil18FBCEE30E3864D580476F50BC8E9274" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Mbc.Log4Tc.Output.dll" />
+            </Component>
+            <Component Id="cmpFF317C6E99105D114F77DE8CF3C8FDB8" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil409178B5BF57304E2E16BDF193C9E5E6" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Mbc.Log4Tc.Output.Graylog.deps.json" />
+            </Component>
+            <Component Id="cmp59CECDF79BFE80E94815335E007F2089" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filF82FA42FE5BBB6DE9DD6774A89EF850C" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Mbc.Log4Tc.Output.Graylog.dll" />
+            </Component>
+            
+            
+            <Component Id="cmp8F1347566E9A656E43C672EA97DEDDB3" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filB254CE8661321A1380FD772790400F85" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Mbc.Log4Tc.Plugin.dll" />
+            </Component>
+            
+            <Component Id="cmp921837CE023BA4A4B239A75FE2F4C68A" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil402469F8637357654493219DD974F8EC" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Bcl.AsyncInterfaces.dll" />
+            </Component>
+            <Component Id="cmp7E9E86C3DCC8FC6144C2D7658CDC2D60" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filD2E0F3BFC05272F92AFF9C8473CA2EAC" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Configuration.Abstractions.dll" />
+            </Component>
+            <Component Id="cmpD7F5A8ED39A89B32EB819C83D99A4C5E" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filC8570F0FF154AB713E87C56542D22F77" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Configuration.Binder.dll" />
+            </Component>
+            <Component Id="cmp279AEEE62F13DB3C30FBBA9099B2E005" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filC85C81DB621F603EA8A7C593D32E63C4" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Configuration.dll" />
+            </Component>
+            <Component Id="cmpC34F48D086B1123E872DFEBD2EE8EB4C" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil569683B7733F0392A045E091E100CAD3" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+            </Component>
+            <Component Id="cmpE560C5E740F2C7B51DBBCC8CA3E69489" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil3A02F981B6632167999064A0BE8A6F0B" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.FileProviders.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp03CEBD312BD2B1732E218E8EB9593032" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil5713C640E69B469DAA371AE3C647F907" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Hosting.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp4B40E8939F4052A3898FDA6A4B3A86F8" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filCE2398BB7FE678737962D6D24359E08A" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Logging.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp9A5ACAF611B6D58E04645527BF636F3C" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filA942F99D89431B5A3A4B98A072AC9424" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
+            </Component>
+            <Component Id="cmp8EC0D751984099DE43FFEC697E821E04" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filC2BD5AB0C83ADB80D1011923691FBB80" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Options.DataAnnotations.dll" />
+            </Component>
+            <Component Id="cmp8A6160CC87FCA01D8D7071EC5A02A5B5" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filA1F294C39EE755018FA35908A48484B2" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Options.dll" />
+            </Component>
+            <Component Id="cmpE4FA3E4D12DD5B16F2390AA588E42917" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filF9AEE3DA3600CB61744E0A5F277557FD" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Microsoft.Extensions.Primitives.dll" />
+            </Component>
+            <Component Id="cmp17295C534A123F7034C057EB5491CCD4" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filE510ACDCD8F5525A851D5EFCF37C70C2" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\Optional.dll" />
+            </Component>
+            <Component Id="cmpF705C66B670AC98C6076012707E3455E" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filDC193CF1673F90395A02685135FE42B2" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.Buffers.dll" />
+            </Component>
+            <Component Id="cmpE5A37352C653F2F0CB53D850634919FC" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil0245F28C3E02A291780551ACC821940F" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.ComponentModel.Annotations.dll" />
+            </Component>
+            <Component Id="cmp73AC9DB55DF3D8589821E4A90E873721" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil97F9C288F5A317CF70D37039BB27E48E" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.Memory.dll" />
+            </Component>
+            <Component Id="cmp920A5957E32276C181F7F1750CE4DE15" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filE466B5EA33CAAB6D271D45F0E2A3C063" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.Numerics.Vectors.dll" />
+            </Component>
+            <Component Id="cmpCE19F5A8B5E988C04246C83BB52F7B96" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="filB29BDBB364830D863392D03086D977A3" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.Runtime.CompilerServices.Unsafe.dll" />
+            </Component>
+            <Component Id="cmpE3B660815B1F8733FD6F83867E8E9DED" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil64422264101A9C86E5A8405EA8E93800" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.Text.Encodings.Web.dll" />
+            </Component>
+            <Component Id="cmpBF2DCA196A1F3FB9688514CCDC54747C" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil6BD3CB37B23656FE50A77297DFE5C017" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.Text.Json.dll" />
+            </Component>
+            <Component Id="cmp160AD235610536353027470567FF6951" Directory="dirEF9F235C43184E489D97E7260F2794F7" Guid="*">
+                <File Id="fil66DC41B2E796AF47A57361CD2A84B9BC" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\graylog\System.Threading.Tasks.Extensions.dll" />
+            </Component>
             <Component Id="cmp4B25C10CCDED891BA593390878DFD824" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="filD00B4B82575CDD92F805EBC42EF945C1" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\CsvHelper.dll" />
             </Component>
@@ -20,6 +103,13 @@
             <Component Id="cmpCB4BE54F8EDB1EC630BD3C88358703F5" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="fil0C5A03F57B8913E3B2D52D1A3C97400C" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\JsonSubTypes.dll" />
             </Component>
+            <Component Id="cmp684C222D9F045FFE8FF344FBEF8C54AC" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil094C33993E1B4A34ACBAB6A039B6345E" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Mbc.Log4Tc.Model.dll" />
+            </Component>
+            
+            <Component Id="cmp2835246381728302994A6083A2EC6159" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="filE2B72E1DDA8B0231DC2294CA5E38E174" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Mbc.Log4Tc.Output.dll" />
+            </Component>
             <Component Id="cmpD2989FA6527ADAAE1E0FA269967F9806" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="filB36F6CBD24B381810A516A40E880E6D4" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Mbc.Log4Tc.Output.InfluxDb.deps.json" />
             </Component>
@@ -27,11 +117,46 @@
                 <File Id="fil088CB828B3C6C4E339AD5668320E6B68" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Mbc.Log4Tc.Output.InfluxDb.dll" />
             </Component>
             
+            
+            <Component Id="cmp7CEA729B4504FEE00484209DF1A7378F" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="filE1F0C6AF32D8969F56421A0D2BE71E37" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Mbc.Log4Tc.Plugin.dll" />
+            </Component>
+            
             <Component Id="cmp33A94B30BDB758DAD44B59C1622C6E92" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="fil97B3288ADC24407AE9D8758DD9E209B6" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Bcl.AsyncInterfaces.dll" />
             </Component>
             <Component Id="cmpE1FFE817866B48C1E2DAF9C4FAF6B8B9" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="filCD84D61086E41B22C0AE0CF343F49E32" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.CSharp.dll" />
+            </Component>
+            <Component Id="cmp6A66AF449A1A1325EC7D0738F8CEC312" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil3283D9276AD8019FFAD323821D8EB68D" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Configuration.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp2D1C1A89C8D9930DBC84A81B9E4B8AB4" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil7F51EE18E0CD67A0D74AA81F6D88DF58" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Configuration.Binder.dll" />
+            </Component>
+            <Component Id="cmpBE158BAA5035B0F4F05E38B6D65E069A" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="filF001BCF83E6602972EE251EDB4FE732F" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Configuration.dll" />
+            </Component>
+            <Component Id="cmp29D0F85668958BD5FB4302ACD5294768" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil91E76656FA7AF1F91A8DDCDC7458492C" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+            </Component>
+            <Component Id="cmpEC4C8ED8B8D6EC9B8685FB4F2B777AFA" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil691A10F98900182E24ED6888F0BDD586" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.FileProviders.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp726B2D7440C9CFBBCE0DF00DA0974F0C" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="filD87B737A1CF90E8C3ADEC40D539C815D" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Hosting.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp288D21073E06D41565FC66A0E76BEEF8" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil2F4995A6575BCB9658D0660A824C40C7" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Logging.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp29620DD63FDB1B5565B21147FFAC3124" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil56D52C499B5CFB10607B6AD62CECA18E" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
+            </Component>
+            <Component Id="cmp44673533232C20E49A35A5314304EEDA" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil1AFB62EAE447950964DFA7FD95C29629" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Options.DataAnnotations.dll" />
+            </Component>
+            <Component Id="cmpD02324E6175ED498053A96B2DE4C79F3" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil2CB3CDF4B5B432FE08964FD2F82FD32C" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Options.dll" />
             </Component>
             <Component Id="cmp61AE16767C49F560A477B30EB5F8C979" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="filAE171684FB55AEB4825A04309E64DC00" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Microsoft.Extensions.Primitives.dll" />
@@ -48,6 +173,9 @@
             <Component Id="cmp384D829E75F873D92A6238CB11081894" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="fil0A0E53DA9018BEAC421A9B2B8FE120F2" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\NodaTime.Serialization.JsonNet.dll" />
             </Component>
+            <Component Id="cmpB86F591F947DE884C512E210A0B7A49A" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="filE9AE84DB425F43BBBF2CD722EE199383" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\Optional.dll" />
+            </Component>
             <Component Id="cmp2930968584B82E0735D7E5EDAAEE5012" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="filAE08F2B93DD646217EB9D749BDCCE985" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\RestSharp.dll" />
             </Component>
@@ -59,6 +187,9 @@
             </Component>
             <Component Id="cmpE868F61EDDF203BE953A3B2445203DF3" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="fil939DCF29E0FD20F92B05AECEEFFE769F" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\System.Collections.Immutable.dll" />
+            </Component>
+            <Component Id="cmpE867A216C61AE91D2D6D0AFF09B3A5F9" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
+                <File Id="fil10075A4EAE1429DEBCE7052ACAC28556" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\System.ComponentModel.Annotations.dll" />
             </Component>
             <Component Id="cmpBE62C51E1D53DB3C8CC729EF43FE9BEB" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="filF907E84B9B04D2B7578A4ACB345BFEA5" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\System.Configuration.ConfigurationManager.dll" />
@@ -114,6 +245,13 @@
             <Component Id="cmpAD33B24B15BB4E8367A6EB4A47A87639" Directory="dir61209DD9EB0E49FD7AB1D226E27561FC" Guid="*">
                 <File Id="filD0396251725A73C9D5F4D2F555F792A4" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\influxdb\System.Threading.Tasks.Extensions.dll" />
             </Component>
+            <Component Id="cmp389B7DDE6380F0C249607BF984DD5F63" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filE00357D8CE0474277E7B34843088E85F" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Mbc.Log4Tc.Model.dll" />
+            </Component>
+            
+            <Component Id="cmpEBF0A23A1CDC9A94748226B2D1FE171A" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil1A7E39D7A092CFF2C579B5651473476D" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Mbc.Log4Tc.Output.dll" />
+            </Component>
             <Component Id="cmpE536597173F7DA96711A67052CFFC20F" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
                 <File Id="filCB3E36687BD31F7323B74722EA7E9A67" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Mbc.Log4Tc.Output.NLog.deps.json" />
             </Component>
@@ -121,8 +259,70 @@
                 <File Id="filCCA477F47AC48F6891C463E52214F6FA" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Mbc.Log4Tc.Output.NLog.dll" />
             </Component>
             
+            
+            <Component Id="cmpCD0D184A8BC2D0F6207D9C0740E1E9A2" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil5FD9A1534D19A8B72FC7FF0DA9096214" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Mbc.Log4Tc.Plugin.dll" />
+            </Component>
+            
+            <Component Id="cmpC0909ACF73EDA0AF929FA10A59C81F61" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filA64227388EAF6BD202CA5DEA7569D11F" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Bcl.AsyncInterfaces.dll" />
+            </Component>
+            <Component Id="cmpB5ACAF23CD0567797DF70AE97AFD743A" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil573BF8882034563D325AFD0A86D0BD9F" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Configuration.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp6625CBCDE0D2C5B0E24C66BD41D6353B" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filC82CDE01466A9A5093363FE318C8808E" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Configuration.Binder.dll" />
+            </Component>
+            <Component Id="cmp36B1067A6C80A1DD3EC3D42F774E175B" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filA3BB840080C551671C2311B67B70AE21" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Configuration.dll" />
+            </Component>
+            <Component Id="cmpE0C2247CB245A578C3E071D41E1C8753" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil6722D787ED05AE9D9939C04A582F2408" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp871451724F9A4B535CAFE131FF8BF1A1" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil014F7E7B5DBE424A32272A7E0C1139DE" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.FileProviders.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp1D4CAD6B2811F313918ACBB9D255EB3A" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil45C00B426AD2F03AA48BCA249E14B4A9" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Hosting.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp2ACE880833020B3675C48C7A7CE05D7C" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil89F3257676C38C952AD1DED8EAF3D796" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Logging.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp4207A6C58311066DD23A0AB33C5A7931" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil4C48FEFDC4D09D677E3AAA1CB5E2E5C9" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
+            </Component>
+            <Component Id="cmp30EC51AC7F5416F1ADBC9CF10F7C2995" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil635FEE1ECA8F3447FC5F2C045C838B86" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Options.DataAnnotations.dll" />
+            </Component>
+            <Component Id="cmpEC66D7F960F99A53A933C9E43B9F4B8A" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil2DDA53008BD18BA56524A926DD290B78" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Options.dll" />
+            </Component>
+            <Component Id="cmp51A0E603B6DC9E15D811442DA5DDEE3E" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filC984E20BAE65BF330256D9EE1228BE3F" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Microsoft.Extensions.Primitives.dll" />
+            </Component>
             <Component Id="cmp594ED99EE8C0630567B7437CEE47BD22" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
                 <File Id="filF187248BA2AEE85FDA38E14EE0477122" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\NLog.dll" />
+            </Component>
+            <Component Id="cmp9BCB05C62339299CD9799E5FED06B474" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil16F0DCC2C179876F97792893FF92F993" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\Optional.dll" />
+            </Component>
+            <Component Id="cmp2CE977BCF3F7754F6114AA68EB2C88C2" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filE35324714C594885D3633044FC97B848" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\System.Buffers.dll" />
+            </Component>
+            <Component Id="cmp610F6A0DF3E455D22512E8B18EC6FED5" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filECDBD105A3A3ED9E8B23630334023119" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\System.ComponentModel.Annotations.dll" />
+            </Component>
+            <Component Id="cmpDC449DA0AD0C1978396A3275EA52B30B" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filEC828E36581B12EEF2282B9A44D626A5" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\System.Memory.dll" />
+            </Component>
+            <Component Id="cmpFE4DE8D989403AE2A70B57577F47FCD6" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil279E79D2B9258D56C1C565D061A12213" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\System.Numerics.Vectors.dll" />
+            </Component>
+            <Component Id="cmp599282225272F18308717111C13B628F" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="filD92BC7D800867B8CB06EF03088D3C37A" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\System.Runtime.CompilerServices.Unsafe.dll" />
+            </Component>
+            <Component Id="cmp1EC46C46F64C79CD66B26F419B894DED" Directory="dir4FAB1ED4D0079C049AA7F244A646EA1D" Guid="*">
+                <File Id="fil4596C62FF2DD6AF1757E566E6FFC58E6" KeyPath="yes" Source="$(var.Log4TcServicePluginFilesHarvestPath)\nlog\System.Threading.Tasks.Extensions.dll" />
             </Component>
         </ComponentGroup>
     </Fragment>
