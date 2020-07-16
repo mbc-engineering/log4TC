@@ -11,7 +11,8 @@ namespace Mbc.Log4Tc.Output.InfluxDb
     {
         public override PointData CreatePoint(LogEntry logEntry)
         {
-            if (logEntry.Arguments.Count == 0)
+            // only log if arguments are present and named arguments are used.
+            if (logEntry.Arguments.Count == 0 || logEntry.MessageFormatter.PositionalArguments.HasValue)
                 return null;
 
             var point = PointData.Measurement(logEntry.Logger);
@@ -32,13 +33,10 @@ namespace Mbc.Log4Tc.Output.InfluxDb
                 .Tag("projectName", logEntry.ProjectName);
 
             // add fields from all arguments if named arguments are used
-            logEntry.MessageFormatter.PositionalArguments.MatchNone(() =>
-                {
-                    foreach ((string name, object value) in logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => (x, y)))
-                    {
-                        point = WriteField(point, name, value);
-                    }
-                });
+            foreach ((string name, object value) in logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => (x, y)))
+            {
+                point = WriteField(point, name, value);
+            }
 
             return point;
         }
