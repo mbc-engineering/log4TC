@@ -1,9 +1,7 @@
 ﻿using Mbc.Log4Tc.Model;
 using NLog;
-using NLog.Config;
 using NLog.MessageTemplates;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Log4TcLevel = Mbc.Log4Tc.Model.LogLevel;
@@ -13,12 +11,6 @@ namespace Mbc.Log4Tc.Output.NLog
 {
     public class NLogLog4TcOutput : IOutputHandler
     {
-        static NLogLog4TcOutput()
-        {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "log4tc", "config", "NLog.config");
-            LogManager.Configuration = new XmlLoggingConfiguration(path);
-        }
-
         private readonly Logger _dispatchLogger = LogManager.GetLogger("TwinCat");
 
         public NLogLog4TcOutput(NLogLog4TcOutputConfiguration configuration)

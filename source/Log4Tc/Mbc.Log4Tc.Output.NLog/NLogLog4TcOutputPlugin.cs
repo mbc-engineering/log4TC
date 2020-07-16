@@ -8,6 +8,8 @@ namespace Mbc.Log4Tc.Output.NLog
     {
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            NLogLog4TcOutputInitializer.Setup();
+
             services.AddSingleton<IOutputFactory, NLogLog4TcOutputFactory>();
         }
     }

@@ -2,18 +2,17 @@
 using Mbc.Log4Tc.Model;
 using NLog;
 using NLog.Config;
+using NLog.MessageTemplates;
 using NLog.Targets;
 using System;
 using System.Collections.Generic;
 using Xunit;
-
-using NLogLevel = NLog.LogLevel;
 using Log4TcLevel = Mbc.Log4Tc.Model.LogLevel;
-using NLog.MessageTemplates;
+using NLogLevel = NLog.LogLevel;
 
 namespace Mbc.Log4Tc.Output.NLog.Test
 {
-    public class NLogLog4TcOutputTest
+    public class NLogLog4TcOutputTest : IDisposable
     {
         private readonly NLogLogEventTarget _target = new NLogLogEventTarget();
         private readonly NLogLog4TcOutput _output;
@@ -29,7 +28,11 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             config.AddRule(NLogLevel.Trace, NLogLevel.Fatal, "target");
 
             LogManager.Configuration = config;
+        }
 
+        public void Dispose()
+        {
+            _target.Dispose();
         }
 
         [Fact]
@@ -58,6 +61,7 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             _output.ProcesLogEntry(logEntry);
 
             // Assert
+            LogManager.Flush();
             var logs = _target.Logs;
             logs.Should().HaveCount(1);
             logs[0].Message.Should().Be("message with {args} {1}");
@@ -94,6 +98,7 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             logger.Info("message with {args} {1}", "first arg", 4242);
 
             // Assert
+            LogManager.Flush();
             var logs = _target.Logs;
             logs.Should().HaveCount(1);
             logs[0].Message.Should().Be("message with {args} {1}");
@@ -120,6 +125,7 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             logger.Info("{args} {2} {1} {4} {foo}", 1, 2, 3, 4, 5);
 
             // Assert
+            LogManager.Flush();
             var logs = _target.Logs;
             logs.Should().HaveCount(1);
             logs[0].FormattedMessage.Should().Be("1 2 3 4 5");
@@ -153,6 +159,7 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             logger.Info("{0} {2} {1} {4} {0}", 1, 2, 3, 4, 5);
 
             // Assert
+            LogManager.Flush();
             var logs = _target.Logs;
             logs.Should().HaveCount(1);
             logs[0].FormattedMessage.Should().Be("1 3 2 5 1");

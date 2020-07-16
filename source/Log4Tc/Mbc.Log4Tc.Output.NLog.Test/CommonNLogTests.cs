@@ -3,7 +3,6 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Mbc.Log4Tc.Output.NLog.Test
@@ -27,13 +26,14 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             testLogger.Log(LogLevel.Info, "Arg1={0:N2}", 42.0);
             testLogger.Log(LogLevel.Info, "Arg1={arg1:N2}", 42.0);
 
+            LogManager.Flush();
             target.Logs.Should().HaveCount(2);
 
             target.Logs[0].Should().Be("Arg1=42.00");
             target.Logs[1].Should().Be("Arg1=42.00");
         }
 
-        private class MockTarget : Target
+        private class MockTarget : TargetWithLayout // Same as NullTarget
         {
             public List<string> Logs { get; } = new List<string>();
 
