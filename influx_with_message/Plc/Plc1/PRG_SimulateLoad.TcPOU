@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="PRG_SimulateLoad" Id="{00b963e5-c7fd-4008-99f1-82ed8cf06ed7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SimulateLoad
+VAR
+	nIdx	: UDINT;
+	fResult	: REAL;
+	fbRand	: DRAND := (Seed:=42);
+	fRandom	: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbRand(Num=>fRandom);
+
+FOR nIdx := 0 TO LREAL_TO_UDINT(fRandom * 10000) + 10000 DO
+	fResult := SIN(UDINT_TO_REAL(nIdx));
+END_FOR]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

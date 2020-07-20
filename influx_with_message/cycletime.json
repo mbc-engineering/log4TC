@@ -1,0 +1,124 @@
+{
+	"id": "e3b8951c-c2b2-11ea-b3de-0242ac130004",
+	"measurement": "cycletime",
+	"app": "cycletime",
+    "cells": [
+        {
+            "i": "b0d71cce-b776-4637-ade4-eca1c94b3d72",
+            "x": 0,
+            "y": 0,
+            "w": 12,
+            "h": 9,
+            "name": "Zykluszeithistorie",
+            "queries": [
+                {
+                    "query": "SELECT mean(\"avg\") / 10000 AS \"Durchschnitt\", mean(\"max\") / 10000 AS \"Max\", mean(\"min\") / 10000 AS \"Min\" FROM \"cycletime\".\"autogen\".\"FB_LogTaskCycleTime\" WHERE time > :dashboardTime: AND time < :upperDashboardTime: AND \"taskName\"='Plc1_PlcTask' GROUP BY time(:interval:) FILL(null)",
+                    "queryConfig": {
+                        "database": "",
+                        "measurement": "",
+                        "retentionPolicy": "",
+                        "fields": [],
+                        "tags": {},
+                        "groupBy": {
+                            "time": "",
+                            "tags": []
+                        },
+                        "areTagsAccepted": false,
+                        "rawText": "SELECT mean(\"avg\") / 10000 AS \"Durchschnitt\", mean(\"max\") / 10000 AS \"Max\", mean(\"min\") / 10000 AS \"Min\" FROM \"cycletime\".\"autogen\".\"FB_LogTaskCycleTime\" WHERE time > :dashboardTime: AND time < :upperDashboardTime: AND \"taskName\"='Plc1_PlcTask' GROUP BY time(:interval:) FILL(null)",
+                        "range": null,
+                        "shifts": null
+                    },
+                    "source": "",
+                    "type": "influxql"
+                }
+            ],
+            "axes": {
+                "x": {
+                    "bounds": [
+                        "",
+                        ""
+                    ],
+                    "label": "",
+                    "prefix": "",
+                    "suffix": "",
+                    "base": "10",
+                    "scale": "linear"
+                },
+                "y": {
+                    "bounds": [
+                        "0",
+                        "10"
+                    ],
+                    "label": "Zykluszeithistorie",
+                    "prefix": "",
+                    "suffix": "ms",
+                    "base": "10",
+                    "scale": "linear"
+                },
+                "y2": {
+                    "bounds": [
+                        "",
+                        ""
+                    ],
+                    "label": "",
+                    "prefix": "",
+                    "suffix": "",
+                    "base": "10",
+                    "scale": "linear"
+                }
+            },
+            "type": "line",
+            "colors": [
+                {
+                    "id": "0839d041-fc84-4f9c-aaa6-f3e2ac800d13",
+                    "type": "scale",
+                    "hex": "#31C0F6",
+                    "name": "Nineteen Eighty Four",
+                    "value": "0"
+                },
+                {
+                    "id": "41a5693b-e7d3-4493-a0e1-cacb9bd40e69",
+                    "type": "scale",
+                    "hex": "#A500A5",
+                    "name": "Nineteen Eighty Four",
+                    "value": "0"
+                },
+                {
+                    "id": "b7a83835-9bc5-43d6-8c96-9e0758dbccd0",
+                    "type": "scale",
+                    "hex": "#FF7E27",
+                    "name": "Nineteen Eighty Four",
+                    "value": "0"
+                }
+            ],
+            "legend": {},
+            "tableOptions": {
+                "verticalTimeAxis": true,
+                "sortBy": {
+                    "internalName": "time",
+                    "displayName": "",
+                    "visible": true
+                },
+                "wrapping": "truncate",
+                "fixFirstColumn": true
+            },
+            "fieldOptions": [
+                {
+                    "internalName": "time",
+                    "displayName": "",
+                    "visible": true
+                }
+            ],
+            "timeFormat": "MM/DD/YYYY HH:mm:ss",
+            "decimalPlaces": {
+                "isEnforced": true,
+                "digits": 2
+            },
+            "note": "",
+            "noteVisibility": "default",
+            "links": {
+                "self": "/chronograf/v1/dashboards/1/cells/b0d71cce-b776-4637-ade4-eca1c94b3d72"
+            }
+        }
+    ]
+}

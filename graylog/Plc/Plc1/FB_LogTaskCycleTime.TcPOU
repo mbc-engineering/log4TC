@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="FB_LogTaskCycleTime" Id="{20c7a6e5-3c4d-4e2e-b27c-4477544f85e7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LogTaskCycleTime
+VAR_INPUT
+	nCycleInterval	: UDINT;
+END_VAR
+VAR
+	nTaskIndex		: DINT;
+	nCycleCount		: UDINT;
+	nExecTimeSum	: UDINT;
+	nMaxExecTime	: UDINT := 0;
+	nMinExecTime	: UDINT := 16#FFFFFFFF;
+END_VAR
+VAR_TEMP
+	fExecAvg		: REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nTaskIndex := Tc2_System.GETCURTASKINDEXEX();
+
+
+nExecTimeSum := nExecTimeSum + _TaskInfo[nTaskIndex].LastExecTime;
+nMaxExecTime := MAX(nMaxExecTime, _TaskInfo[nTaskIndex].LastExecTime);
+nMinExecTime := MIN(nMinExecTime, _TaskInfo[nTaskIndex].LastExecTime);
+
+nCycleCount := nCycleCount + 1;
+IF nCycleCount > nCycleInterval THEN
+	fExecAvg := UDINT_TO_REAL(nExecTimeSum) / UDINT_TO_REAL(nCycleCount);
+	F_LogLA3(
+		E_LogLevel.eDebug, 
+		'FB_LogTaskCycleTime',
+		'Cycle time statistic avg={avg}, min={min}, max={max}.',
+		fExecAvg,
+		nMinExecTime,
+		nMaxExecTime
+	);
+
+	nCycleCount := 0;
+	nMaxExecTime := 0;
+	nMinExecTime := 16#FFFFFFFF;
+	nExecTimeSum := 0;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

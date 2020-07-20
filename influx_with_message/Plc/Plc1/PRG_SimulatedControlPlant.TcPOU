@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="PRG_SimulatedControlPlant" Id="{0c6e0345-83cc-41ab-aea6-fad651f72aa9}" SpecialFunc="None">
+    <Declaration><![CDATA[(* Simulation eines PI-Reglers mit Regelstrecke. *)
+PROGRAM PRG_SimulatedControlPlant
+VAR CONSTANT
+	fInRangeWindow		: REAL := 0.1;
+END_VAR
+VAR
+	fbPlant				: FB_Plant;
+	fbController		: Tc2_Utilities.FB_BasicPID := (fKp:=0.7, fTn:=50, fTv:=0, fTd:=1E38);
+	nLastControlError	: UINT;	
+	bInRange			: BOOL;
+	fbLogInterval		: TON := (PT:=T#1s);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _TaskInfo[1].FirstCycle THEN	
+	// simualte a new setpoint value
+	fbController.fSetpointValue := 10;
+END_IF
+
+// PI-Control
+fbController(
+	fActualValue	:= fbPlant.fActualOutput,
+	fCtrlCycleTime  := 0.1,
+);
+
+// Logs the error code of the FB_BasicPID
+IF fbController.nErrorStatus <> nLastControlError THEN
+	nLastControlError := fbController.nErrorStatus;
+	
+	IF fbController.nErrorStatus > 0 THEN
+		F_LogLA1(
+			E_LogLevel.eError,
+			'PRG_SimulatedControlPlant',
+			'Error calling Basic-PID controller. Error={nErrorStatus}',
+			fbController.nErrorStatus
+		);
+	END_IF
+END_IF
+
+// logs if the actual value is outside/inside of the setpoint
+IF bInRange THEN
+	IF ABS(fbController.fSetpointValue - fbController.fActualValue) > fInRangeWindow THEN
+		F_LogLA1(
+			E_LogLevel.eWarn,
+			'PRG_SimulatedControlPlant',
+			'Actual value is out of range ({setpoint}).',
+			fbController.fSetpointValue
+		);
+		bInRange := FALSE;
+	END_IF
+ELSE
+	IF ABS(fbController.fSetpointValue - fbController.fActualValue) <= fInRangeWindow THEN
+		F_LogLA1(
+			E_LogLevel.eInfo,
+			'PRG_SimulatedControlPlant',
+			'Actual value is in range of setpoint ({setpoint}).',
+			fbController.fSetpointValue
+		);
+		bInRange := TRUE;
+	END_IF
+END_IF
+
+// logs setpoint/actual value
+fbLogInterval(IN:=NOT fbLogInterval.Q);
+IF fbLogInterval.Q THEN
+	F_LogLA2(
+		E_LogLevel.eDebug, 
+		'PRG_SimulatedControlPlant.Values', 
+		'Setpoint={setpoint} Actual Value={actualvalue}',
+		fbController.fSetpointValue,
+		fbController.fActualValue
+	);
+END_IF
+	
+// Plant (simulated)
+fbPlant(
+	fControlInput	:= fbController.fCtrlOutput,
+);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
