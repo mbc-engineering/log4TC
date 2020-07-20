@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="PRG_SimulateLogs" Id="{2f3e6f0b-3888-42b8-9af6-8bdb033b8664}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SimulateLogs
+VAR
+	fbRand	: DRAND := (Seed:=4242);
+	nError	: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbRand();
+
+IF fbRand.Num > 0.95 THEN
+	IF fbRand.Num > 0.99 THEN
+		nError := LREAL_TO_INT((1 - fbRand.Num) * 10000);
+		F_LogLA1(E_LogLevel.eWarn, 'PRG_SimulatedLogs', 'Something bad happens. ErrorCode={code}', nError);
+	ELSE
+		F_LogL(E_LogLevel.eInfo, 'PRG_SimulatedLogs', 'Execution succeeded.');
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

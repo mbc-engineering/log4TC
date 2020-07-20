@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="FB_Plant" Id="{707443b2-b8a8-492f-9046-0ace2b83d533}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Plant
+VAR_INPUT
+	fControlInput		: REAL;
+END_VAR
+VAR_OUTPUT
+	fActualOutput		: REAL;
+END_VAR
+VAR
+	fbPart1				: FB_PT1 := (fT1 := T#3S);
+	fbPart2				: FB_PT1 := (fP := 2.4, fT1 := T#10s);				
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+fbPart1(
+	fInput := fControlInput
+);
+
+fbPart2(
+	fInput := fbPart1.fOutput
+);
+
+fActualOutput := fbPart2.fOutput;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
