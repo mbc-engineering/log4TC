@@ -33,6 +33,7 @@ namespace Mbc.Log4Tc.Output.InfluxDb
 
         public void Dispose()
         {
+            _writeApi?.Flush();
             _writeApi?.Dispose();
             _writeApi = null;
 

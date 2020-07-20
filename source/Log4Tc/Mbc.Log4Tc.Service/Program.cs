@@ -2,6 +2,7 @@
 using Mbc.Log4Tc.Output.Graylog;
 using Mbc.Log4Tc.Output.InfluxDb;
 using Mbc.Log4Tc.Output.NLog;
+using Mbc.Log4Tc.Plugin;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -53,14 +54,17 @@ namespace Mbc.Log4Tc.Service
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    var nlogPlugin = new NLogLog4TcOutputPlugin();
-                    nlogPlugin.ConfigureServices(services, hostContext.Configuration);
+                    var plugins = new IPlugin[]
+                    {
+                        new NLogLog4TcOutputPlugin(),
+                        new GraylogLog4TcOutputPlugin(),
+                        new InfluxDbLog4TcOutputPlugin(),
+                    };
 
-                    var graylogPlugin = new GraylogLog4TcOutputPlugin();
-                    graylogPlugin.ConfigureServices(services, hostContext.Configuration);
-
-                    var influxPlugin = new InfluxDbLog4TcOutputPlugin();
-                    influxPlugin.ConfigureServices(services, hostContext.Configuration);
+                    foreach (var plugin in plugins)
+                    {
+                        plugin.ConfigureServices(services, hostContext.Configuration);
+                    }
 
                     // TODO plugin funktioniert momentan nicht mit dritt-Nugets
                     //services
