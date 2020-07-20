@@ -12,7 +12,7 @@ namespace Mbc.Log4Tc.Output
     {
         public static IEnumerable<IPlugin> LoadPlugins(string pluginFolder)
         {
-            var assemblyFilePaths = GetPluginPaths(pluginFolder);
+             var assemblyFilePaths = GetPluginPaths(pluginFolder);
 
             return assemblyFilePaths.SelectMany(assemblyFilePath =>
             {

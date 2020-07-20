@@ -1,4 +1,7 @@
 ﻿using Mbc.Log4Tc.Dispatcher;
+using Mbc.Log4Tc.Output.Graylog;
+using Mbc.Log4Tc.Output.InfluxDb;
+using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -50,10 +53,20 @@ namespace Mbc.Log4Tc.Service
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services
-                        .AddPlugins(GetPluginPath())
-                        // ToDo: Differenziate output / input / ... configuration in PluginBuilder
-                        .AddOutputs(hostContext.Configuration);
+                    var nlogPlugin = new NLogLog4TcOutputPlugin();
+                    nlogPlugin.ConfigureServices(services, hostContext.Configuration);
+
+                    var graylogPlugin = new GraylogLog4TcOutputPlugin();
+                    graylogPlugin.ConfigureServices(services, hostContext.Configuration);
+
+                    var influxPlugin = new InfluxDbLog4TcOutputPlugin();
+                    influxPlugin.ConfigureServices(services, hostContext.Configuration);
+
+                    // TODO plugin funktioniert momentan nicht mit dritt-Nugets
+                    //services
+                    //    .AddPlugins(GetPluginPath())
+                    //    // ToDo: Differenziate output / input / ... configuration in PluginBuilder
+                    //    .AddOutputs(hostContext.Configuration);
 
                     services
                         .AddLog4TcAdsLogReceiver()
@@ -111,7 +124,7 @@ namespace Mbc.Log4Tc.Service
             {
                 if (IsLocalConfig())
                 {
-                    return @"../../plugins";
+                    return @".";
                 }
                 else
                 {

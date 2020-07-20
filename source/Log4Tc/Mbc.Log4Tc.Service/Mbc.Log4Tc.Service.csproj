@@ -7,7 +7,7 @@
     <SelfContained>true</SelfContained>
     <!-- Only supported for .net core app-->
     <PublishSingleFile>false</PublishSingleFile>
-    
+
     <UserSecretsId>dotnet-Mbc.Log4Tc.Service-A8F619B6-166D-4E1E-9671-59E91544F2C0</UserSecretsId>
   </PropertyGroup>
 
@@ -29,7 +29,7 @@
     <None Include="appsettings.Production.json" />
   </ItemGroup>
 
-  <ItemGroup>    
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.3" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.5" />
@@ -40,21 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Plugins -->
-    <ProjectReference Include="..\Mbc.Log4Tc.Output.InfluxDb\Mbc.Log4Tc.Output.InfluxDb.csproj">
-      <!-- Do not copy dependencies to the output, it is only a build dependencies -->
-      <Private>false</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </ProjectReference>
-    <ProjectReference Include="..\Mbc.Log4Tc.Output.NLog\Mbc.Log4Tc.Output.NLog.csproj">
-      <!-- Do not copy dependencies to the output, it is only a build dependencies -->
-      <Private>false</Private>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </ProjectReference>
-      
-    <!-- other dependencies -->
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.Graylog\Mbc.Log4Tc.Output.Graylog.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.InfluxDb\Mbc.Log4Tc.Output.InfluxDb.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.NLog\Mbc.Log4Tc.Output.NLog.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Receiver\Mbc.Log4Tc.Receiver.csproj" />
   </ItemGroup>
