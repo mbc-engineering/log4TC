@@ -5,11 +5,23 @@
     </Fragment>
     <Fragment>
         <ComponentGroup Id="Cmp_Log4TcService">
+            <Component Id="cmp84CE441125152D2CB6DAE602F3653991" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil0BD5DCF07E3CB6148E79F69F602297D0" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\CsvHelper.dll" />
+            </Component>
             <Component Id="cmpF1E3B58D5196EC214441C1A9570D38F0" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="filA6F74BE835B173880A5498CF6E94EB07" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Ensure.That.dll" />
             </Component>
+            <Component Id="cmpE7D636DB889A37123F720A3492375689" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil6F8DFB3A580EA7367B0766BF5B067619" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\InfluxDB.Client.Core.dll" />
+            </Component>
+            <Component Id="cmp44B527964A1FA44844FAEF37C59B6E57" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil72DA7EA44900ED45C1BA14F994892C2A" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\InfluxDB.Client.dll" />
+            </Component>
             <Component Id="cmp10A5890FE3C90EAF67BC43A43A685F8F" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil9C780F4AC02F4E3CC1195D1373D85761" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\InstallService.ps1" />
+            </Component>
+            <Component Id="cmpBC4A88BCD6078BCA2D4BD8C1BD435CB0" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="filF79F9CB3BFAEB02120D8F05F05A2791C" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\JsonSubTypes.dll" />
             </Component>
             <Component Id="cmp87E797A106830BE385C9C2CF0580D8F4" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="filAC957D70D92854E3E2FAB1C4A9EEBCD5" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Mbc.Log4Tc.Dispatcher.dll" />
@@ -22,6 +34,18 @@
             <Component Id="cmp9FD995358F5BC957C4E206B125D1848B" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil3796796ED41A5B03010CB341073C7D92" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Mbc.Log4Tc.Output.dll" />
             </Component>
+            <Component Id="cmp51DBF6299E3EFC5D200C79D561F6F281" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil02C4BCD4C675CE3B1F80456CB0471352" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Mbc.Log4Tc.Output.Graylog.dll" />
+            </Component>
+            
+            <Component Id="cmpB08A7BE7D34EA83838B9AC0C232A0267" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil9370B194814E08D5AE8A4DE47FD93299" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Mbc.Log4Tc.Output.InfluxDb.dll" />
+            </Component>
+            
+            <Component Id="cmp0AB29A51C1F15504F5E97E6801E141FF" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil1574765FB72A7AB7A517450CF05E938C" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Mbc.Log4Tc.Output.NLog.dll" />
+            </Component>
+            
             
             <Component Id="cmp542783CC62FA1184D96F7CEC7EBA37FB" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="filB6A0B5AF08329F55E05BB13B19D0F18E" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Mbc.Log4Tc.Plugin.dll" />
@@ -125,17 +149,32 @@
             <Component Id="cmp2D46D9F4AC1ED6D8AFE3800460648115" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil9F2FE250E243FC1E1AC0EA551AAA57D2" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Microsoft.Extensions.Primitives.dll" />
             </Component>
+            <Component Id="cmp0826D6E90E7B963254C7EB4B5D4E01BE" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil0995C65856F43BB73C581D6F95BF5290" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Microsoft.Net.Http.Headers.dll" />
+            </Component>
             <Component Id="cmpCE580D3477CDF7F8FC8362F0B31933AB" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil06E58B3AE5AF929F0F433806F9D909F6" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Microsoft.Win32.Primitives.dll" />
             </Component>
             <Component Id="cmp92BF946E47F1F35FEA37FAFAF1D5B6D0" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil987F8C87F3A8F30E145CA2572104F6A9" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\netstandard.dll" />
             </Component>
+            <Component Id="cmpDC38FB843274C3611ACE06B1435DE536" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil8DEC93694ED81389087BC279E8A0134B" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Newtonsoft.Json.dll" />
+            </Component>
             <Component Id="cmp82EED9BB593DDD90E84A4D77A8879DC7" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil262B360EEC457CEC6863014037E6B071" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\NLog.dll" />
             </Component>
+            <Component Id="cmp2ACB0A7F5E737E4427C66E97802DF7AF" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="filDE984911CE4C95D7E3C95127AC32BD44" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\NodaTime.dll" />
+            </Component>
+            <Component Id="cmpF556F4630580D1CA0080CFE03B57C3BD" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil8DB88B17E60D8331C0E7CE671A226863" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\NodaTime.Serialization.JsonNet.dll" />
+            </Component>
             <Component Id="cmp2374153E71B1F93BAECD4FFD41BA284F" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil13C519700ADDF911669B463F85300CD0" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Optional.dll" />
+            </Component>
+            <Component Id="cmp379F2703ECE0E7F6260F8573E0918DE8" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil4D51D0812BC5F6EC8CF0B6414CD5780D" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\RestSharp.dll" />
             </Component>
             <Component Id="cmp8403CCF2F752C927985666169BE9E474" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="filA9B5C610D574F0DC60D89E145E353FC0" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\Serilog.dll" />
@@ -176,6 +215,9 @@
             <Component Id="cmpF9A76EF7F17A8DAD925755DE5B7819C0" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="filBF79665EC7593AB8C00090FC3F22EAAD" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Collections.dll" />
             </Component>
+            <Component Id="cmp71A1E1DCFD160B899F8A2485B8B64F99" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="filBE3C4CA11900D4E5D74464B436E6EF16" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Collections.Immutable.dll" />
+            </Component>
             <Component Id="cmp628EE30140ECED1811C4ABB54B5D9BC1" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil696E8FED30D271B787260B60F28A5E0A" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Collections.NonGeneric.dll" />
             </Component>
@@ -196,6 +238,9 @@
             </Component>
             <Component Id="cmpDC57B1230722E58A7F393E6B25025560" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil809564584566F57061B748439EF3FC79" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.ComponentModel.TypeConverter.dll" />
+            </Component>
+            <Component Id="cmpAF32A2E1278CFD8663307C7C9D6BDCAF" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil3D751A585B143E5C9812F759F5EFE960" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Configuration.ConfigurationManager.dll" />
             </Component>
             <Component Id="cmpB79F4466F23559965EDDADA02BF58E47" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil9C6D4AE3CDEF6F02B8846C2A2EDB39E7" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Console.dll" />
@@ -335,6 +380,9 @@
             <Component Id="cmp2F8817C08BF054F55DA7B4C367C4B3BC" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil76119BFF41B581257151EAD48D589D0E" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.ObjectModel.dll" />
             </Component>
+            <Component Id="cmp870D39405780432BBC2C273003530DA5" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil03AF6B3C7556E4407ABA31278CD2F576" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Reactive.dll" />
+            </Component>
             <Component Id="cmp0666BDE6BF02EC98CEEE58998513308E" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="filA2E9B80C84383033A06B7C1467992775" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Reflection.dll" />
             </Component>
@@ -389,6 +437,9 @@
             <Component Id="cmp44871337A39DF4E0EA9BEC0E4A44440A" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil1DDE5FF17FBBD0646DAC885CEBA67EC1" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Runtime.Serialization.Xml.dll" />
             </Component>
+            <Component Id="cmp8A0BD80DAF79808367B7A189CEBB4C09" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil9F9370FD6FA12C7F3E07A9BE41BD1DA6" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Security.AccessControl.dll" />
+            </Component>
             <Component Id="cmpF52104C894375ADF73BCBDCA7F3778FF" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil8CDA1CC1EE54B1C32541A9736020A883" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Security.Claims.dll" />
             </Component>
@@ -406,6 +457,9 @@
             </Component>
             <Component Id="cmpC3187BD7D1E0F8E34DF7A8EDAF835065" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil376C26744DCDD152B73EEBCB73823CDF" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Security.Cryptography.X509Certificates.dll" />
+            </Component>
+            <Component Id="cmp9642CE530C0079183BFB92734ADF33F5" Directory="DIR_Log4TcService" Guid="*">
+                <File Id="fil7FE61D85B2C688965CFBDC6E116A64F4" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Security.Permissions.dll" />
             </Component>
             <Component Id="cmp6E8D6FC12BD45ACE7FF2AAEB481753F6" Directory="DIR_Log4TcService" Guid="*">
                 <File Id="fil4E59C0960D671D93E6BC11068C65C6B2" KeyPath="yes" Source="$(var.Mbc.Log4Tc.Service.TargetDir)\System.Security.Principal.dll" />
