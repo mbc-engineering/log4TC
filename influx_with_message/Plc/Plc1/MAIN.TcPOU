@@ -10,7 +10,7 @@ END_VAR
       <ST><![CDATA[IF _TaskInfo[1].FirstCycle THEN
 	// Change AMS id if log service runs on different server than
 	// plc. Remove if plc and service runs on the same machine.
-	PRG_TaskLog.Init('192.168.56.1.1.1');
+	//PRG_TaskLog.Init('192.168.56.1.1.1');
 	F_Log(E_LogLevel.eInfo, 'Plc started.');
 END_IF
 
