@@ -8,5 +8,7 @@
   href: nlog_output.md
 - name: Graylog-Ausgabeplugin
   href: graylog_output.md
+- name: InfluxDB-Ausgabeplugin
+  href: influx_output.md
 - name: Installation
   href: installation.md
