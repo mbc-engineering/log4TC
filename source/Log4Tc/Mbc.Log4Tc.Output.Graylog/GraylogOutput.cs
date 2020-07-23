@@ -78,6 +78,7 @@ namespace Mbc.Log4Tc.Output.Graylog
             gelf.Add("logger", logEntry.Logger);
             gelf.Add("clockTimestamp", logEntry.ClockTimestamp.ToString("o"));
             gelf.Add("onlineChangeCount", logEntry.OnlineChangeCount);
+            gelf.Add("hostname", logEntry.Hostname);
 
             foreach (var ctx in logEntry.Context)
             {
