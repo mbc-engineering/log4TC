@@ -12,3 +12,6 @@
   href: influx_output.md
 - name: Installation
   href: installation.md
+- name: log4TC Servicekonfiguration
+  href: service_config.md
+  

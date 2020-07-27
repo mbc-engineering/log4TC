@@ -1,6 +1,7 @@
 # Referenz
 
 * [Installation](installation.md)
+* [log4TC Servicekonfiguration](service_config.md)
 * [Log-Level](loglevel.md)
 * [NLog-Ausgabe](nlog_output.md)
 * [Graylog-Ausgabe](graylog_output.md)
