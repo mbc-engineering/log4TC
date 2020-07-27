@@ -3,10 +3,10 @@
 ## [vNext]
 ### Added
 
-* Logging für Service aktiviert (%ProgramData%/log4Tc/internal/service-*.log)
+* Logging für Service aktiviert (`%ProgramData%/log4Tc/internal/service-*.log`)
 * Konfiguration des log4TC Dispatcher (Ausgabe-Plugins)
 * Neue Ausgabe für Influx-DB (>= 1.8)
-* Neues Beispielprojekt für Logging nach Influx
+* Neue Ausgabe für Graylog
 
 ### Changed
 

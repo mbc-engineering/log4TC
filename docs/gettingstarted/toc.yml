@@ -17,5 +17,3 @@
       href: tools_log4view.md
     - name: Protokollierung von strukturierten Werten
       href: write_structured_values.md
-    - name: Logging nach Influx
-      href: logging_to_influx.md
