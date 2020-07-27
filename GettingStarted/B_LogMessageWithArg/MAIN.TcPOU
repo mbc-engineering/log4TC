@@ -9,8 +9,6 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
-	// For Remote Log4TC Server change the AMS net ID and configure a route
-	PRG_TaskLog.Init('127.0.0.1.1.1');
 	F_Log(E_LogLevel.eInfo, 'SPS Task gestartet.');
 END_IF
 

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
   <POU Name="MAIN" Id="{7b83f1d2-54a8-4262-a80f-694995005516}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR CONSTANT
@@ -14,8 +14,6 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
-	// For Remote Log4TC Server change the AMS net ID and configure a route
-	PRG_TaskLog.Init('127.0.0.1.1.1');
 	F_LogL(E_LogLevel.eInfo, sLogger, 'SPS Task gestartet.');
 END_IF
 
