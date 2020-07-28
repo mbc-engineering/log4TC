@@ -1,6 +1,6 @@
 # Changelog
 
-## [20.07.27]
+## [20.07.28]
 ### Added
 
 * Logging für Service aktiviert (`%ProgramData%/log4Tc/internal/service-*.log`)
