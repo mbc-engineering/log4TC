@@ -85,7 +85,7 @@ namespace Mbc.Log4Tc.Output.InfluxDb
                 .Field("message", logEntry.FormattedMessage)
                 .Field("procid", logEntry.OnlineChangeCount.ToString())
                 .Field("severity_code", LevelToSyslogSeverityCode(logEntry.Level))
-                .Field("timestamp", new DateTimeOffset(logEntry.PlcTimestamp).ToUnixTimeMilliseconds() * 1000000)
+                .Field("timestamp", new DateTimeOffset(logEntry.PlcTimestamp.ToUniversalTime()).ToUnixTimeMilliseconds() * 1000000)
                 .Field("version", 1);
 
             return point;
