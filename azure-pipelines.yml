@@ -23,6 +23,9 @@ variables:
 
 # Build steps
 steps:
+- checkout: self
+  submodules: recursive
+
 - task: NuGetToolInstaller@1
 
 - task: Cake@0
