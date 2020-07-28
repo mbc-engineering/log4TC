@@ -229,6 +229,11 @@
     <Placeholder>log4TC</Placeholder>
     <CompilerVersion>3.1.4022.0</CompilerVersion>
     <Licenses>
+      <License>
+        <Key>{9bddb874-8f39-4d26-90bb-4237ed0644fb}</Key>
+        <OemId>{de17856a-0074-30cc-e016-6eaa651c27c7}</OemId>
+        <Comment />
+      </License>
     </Licenses>
   </PropertyGroup>
   <ItemGroup>
