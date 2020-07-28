@@ -11,7 +11,7 @@
 ### Changed
 
 * Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host
-* Neue PLC-Library mit der Version 0.0.4
+* Neue PLC-Library mit der Version 0.0.5
 
 ### Fixed
 

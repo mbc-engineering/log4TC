@@ -16,9 +16,9 @@
     <Implicit_Jitter_Distribution>{84071a80-9789-41db-b27e-27e3ab204fa1}</Implicit_Jitter_Distribution>
     <LibraryReferences>{b74f17a3-49cb-46e0-b639-d8e1c2b0c59a}</LibraryReferences>
     <Company>mbc engineering GmbH</Company>
-    <Released>false</Released>
+    <Released>true</Released>
     <Title>log4TC</Title>
-    <ProjectVersion>0.0.4</ProjectVersion>
+    <ProjectVersion>0.0.5</ProjectVersion>
     <CompilerDefines>DEBUG</CompilerDefines>
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
@@ -229,11 +229,6 @@
     <Placeholder>log4TC</Placeholder>
     <CompilerVersion>3.1.4022.0</CompilerVersion>
     <Licenses>
-      <License>
-        <Key>{9bddb874-8f39-4d26-90bb-4237ed0644fb}</Key>
-        <OemId>{de17856a-0074-30cc-e016-6eaa651c27c7}</OemId>
-        <Comment />
-      </License>
     </Licenses>
   </PropertyGroup>
   <ItemGroup>

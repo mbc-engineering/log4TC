@@ -8,3 +8,4 @@ source/**/obj/
 *.~u
 # Visual Studio 2015 cache/options directory
 .vs/
+LineIDs.dbg
