@@ -34,10 +34,12 @@
       <Component Id="Cmp_Log4TcServiceInstallConfig" 
                  Directory="DIR_CommonAppDataFolderLog4TcConfig" 
                  Guid="BC1B0DA4-DDF7-4DCE-AC7E-A79BBC92BEAC"
-                 NeverOverwrite="yes">
+                 NeverOverwrite="yes"
+                 Permanent="yes">
         <!-- Configuration sample file -->
         <File Id="FILE_Log4TcServiceAppsettings" 
-              KeyPath="yes" 
+              KeyPath="yes"
+              DefaultVersion="1"
               Name="appsettings.json" 
               Source="..\Mbc.Log4Tc.Service\appsettingsSample.json" />
       </Component>

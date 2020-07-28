@@ -7,7 +7,6 @@
             <Directory Id="dirA57FF57C06AF934BB51E3ED856713734" Name="C_LogWithLogger" />
             <Directory Id="dir497D8E622813FFE24CB616C9A5FFB30C" Name="D_LogWithContext" />
             <Directory Id="dirD78B082D3959139F2A4AF57F18094764" Name="E_StructuredLogging" />
-            <Directory Id="dirC7C7BA4FB32B9093F646FC34632959B5" Name="F_LogToInflux" />
             <Directory Id="dirFC1A5E713BF09CBDF473DD65BE5A56F3" Name="_Config" />
         </DirectoryRef>
     </Fragment>
@@ -67,15 +66,6 @@
             <Component Id="cmpD98B1069351DAD86E943A15368611695" Directory="dirD78B082D3959139F2A4AF57F18094764" Guid="*">
                 <File Id="fil94535F56F4E983D388CE65544143C55D" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\E_StructuredLogging\PlcTask.TcTTO" />
             </Component>
-            <Component Id="cmp9E0D86AABD4594F7ED161AA79F3A478C" Directory="dirC7C7BA4FB32B9093F646FC34632959B5" Guid="*">
-                <File Id="fil26357B171774C4E59C8A2533C7174323" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\F_LogToInflux\F_LogToInflux.plcproj" />
-            </Component>
-            <Component Id="cmpAD1D5C33D0180B5359D1D845288B764A" Directory="dirC7C7BA4FB32B9093F646FC34632959B5" Guid="*">
-                <File Id="fil1FBEF201566E8F6C7024AAD7BD488F69" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\F_LogToInflux\MAIN.TcPOU" />
-            </Component>
-            <Component Id="cmpD52A0DFC02021A7B34A75BEDDCC5C1AF" Directory="dirC7C7BA4FB32B9093F646FC34632959B5" Guid="*">
-                <File Id="filA436D9CD72DCF1DE4F27EAD6B077B558" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\F_LogToInflux\PlcTask.TcTTO" />
-            </Component>
             <Component Id="cmp30AE4F27961A3227475CDB79C37A240B" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
                 <File Id="fil05BA1C30B76622104E4082DF7F4124C0" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\A_SimpleLogMessage.xti" />
             </Component>
@@ -90,9 +80,6 @@
             </Component>
             <Component Id="cmp12D603D3A731B09F59AB9DADA0398E78" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
                 <File Id="filD9E898E843A0E39B0F726FA3F7AC4600" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\E_StructuredLogging.xti" />
-            </Component>
-            <Component Id="cmp15C9291A0FD2C98F3AB3D413C99C8B57" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
-                <File Id="fil3B3971F830A1A69F9FCF8ED5B8DC4973" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\F_LogToInflux.xti" />
             </Component>
             <Component Id="cmp3F7542204EE05BA40C3B154FCDD48DC2" Directory="dir5A01AF60DDDA23854F1B4B81CF3EAB6B" Guid="*">
                 <File Id="fil3733EAC06F09E7BA74857A46AEC8D711" KeyPath="yes" Source="$(var.Log4TcTwinCatLibFeatureHarvestPath)\_Config\PLC\LoggingExample.xti" />
