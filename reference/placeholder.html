@@ -20,6 +20,8 @@
     
     <meta property="docfx:rel" content="../">
     
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-127632729-2"></script>
   </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
@@ -79,17 +81,17 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="format-strings-für-meldungstexte">Format Strings für Meldungstexte</h1>
 
-<p>log4TC unterstütz mehrer Arten von Platzhaltern in Meldungstexten.</p>
-<h2 id="positions-argumente">Positions Argumente</h2>
-<p>Positions Argumente werden im Meldungstext mit Nummer in geschweiften Klammern angegeben. Die Zählung startet bei 0.</p>
+<p>log4TC unterstütz mehrer Arten von Platzhaltern in Meldungstexten, entweder Positionsargumente oder benannte Argumente. Es gelten folgende Regeln:</p>
+<ul>
+<li>Argumten werden zwischen <code>{</code> und <code>}</code> Klammern geschrieben</li>
+<li>Die Klammern selbst können durch Verdopplung geschützt werden; <code>{{</code> wird zu <code>{</code></li>
+<li>Wenn alle Argumente nummeriert sind, wie z.B. <code>{0}</code>, <code>{1}</code> usw., dann werden die Argumentwerte gemäss der Nummer zugeordnet, also <code>{0}</code> verwendet den 1. Wert usw.</li>
+<li>Ist mindestens ein benanntest Argumente dabei wie z.B. <code>{index}</code> dann werden die Argumentwerte gemäss der Reihenfolge wie sie im Text vorkommen zugeordnet.</li>
+<li>Argumente können noch mit Optionen formatiert werden</li>
+</ul>
 <p>Beispiel:</p>
-<p><code>'Die Verarbeitung von {0} wurde {1} abgeschlossen'</code></p>
-<p>Dieser Meldungstext hat zwei positions Argumente, die bei der Ausgabe ersetzt werden können.</p>
-<h2 id="benannte-argumente">Benannte Argumente</h2>
-<p>Argumente können auch mit einem Namen benannt werden.</p>
-<p>Beispiel:</p>
-<p><code>'Die Verarbeitung von {typ} wurde {status} abgeschlossen'</code></p>
-<p>Auch hier können im Meldungstext zwei Argumente ersetzt werden. Die Nummerierung erfolgt implizit immer von links nach rechts, also der Platzhalter <code>{typ}</code> ist das 1. Argumente, <code>{status}</code> das 2. Argument.</p>
+<p><code>'Die Verarbeitung von {0} wurde {1} abgeschlossen'</code>
+<code>'Die Verarbeitung von {typ} wurde {status} abgeschlossen'</code></p>
 <h2 id="optionen-für-argumente">Optionen für Argumente</h2>
 <p>Sowohl für positions als auch für benannte Argumente können noch weiter Optionen angegeben werden. Details dazu finden sich in <a href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting?view=netframework-4.8">Composite Format String</a>, nachfolgend aber eine Übersicht mit den wichtigsten Optionen.</p>
 <p>Der grundlegende Aufbau ist wie folgt:</p>
@@ -107,12 +109,12 @@
 <p>Die Option <em>Format</em> bestimmt wie der Typ des Arguments formattiert wird.</p>
 <p>Beispiel für Zahlen:</p>
 <ul>
-<li>Decimal:     <code>({0D4})' {0}=42 =&gt; '(0042)'</code>     Nur für Ganzzahltypen. Parameter: Minium Anzahl Ziffern.</li>
-<li>Exponential: <code>({0E2})' {0}=42 =&gt; '(4.20E+1)'</code>  Parameter: Anzahl Nachkommastellen</li>
-<li>Fixed-point: <code>({0F2})' {0}=42 =&gt; '(42.00)'</code>    Parameter: Anzahl Nachkommastellen</li>
-<li>Number:      <code>({0N2})' {0}=4200 =&gt; '(4'200.00)'</code> Gruppentrenner ist Sprachabhängig. Parameter: Anzahl * achkommstellen</li>
-<li>Percent:     <code>({0P1})' {0}=0.42 =&gt; '(42.0 %)'</code>   Parameter: Anzahl Nachkommstellen</li>
-<li>Hexadecimal: <code>({0X4})' {0}=42 =&gt; '(002A)'</code>     Nur für Ganzzahltypen.</li>
+<li>Decimal:     <code>({0:D4})' {0}=42 =&gt; '(0042)'</code>       Nur für Ganzzahltypen. Parameter: Minium Anzahl Ziffern.</li>
+<li>Exponential: <code>({0:E2})' {0}=42 =&gt; '(4.20E+001)'</code>  Parameter: Anzahl Nachkommastellen</li>
+<li>Fixed-point: <code>({0:F2})' {0}=42 =&gt; '(42.00)'</code>      Parameter: Anzahl Nachkommastellen</li>
+<li>Number:      <code>({0:N2})' {0}=4200 =&gt; '(4’200.00)'</code>   Mit Gruppentrenner. Parameter: Anzahl Nachkommstellen</li>
+<li>Percent:     <code>({0:P1})' {0}=0.42 =&gt; '(42.0%)'</code>     Parameter: Anzahl Nachkommstellen</li>
+<li>Hexadecimal: <code>({0:X4})' {0}=42 =&gt; '(002A)'</code>       Nur für Ganzzahltypen.</li>
 </ul>
 </article>
           </div>

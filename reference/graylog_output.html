@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Installationsanleitung von log4TC | Dokumentation mbc Log4Tc </title>
+    <title>Graylog Ausgabe-Plugin | Dokumentation mbc Log4Tc </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Installationsanleitung von log4TC | Dokumentation mbc Log4Tc ">
+    <meta name="title" content="Graylog Ausgabe-Plugin | Dokumentation mbc Log4Tc ">
     <meta name="generator" content="docfx 2.52.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -79,60 +79,60 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="installationsanleitung-von-log4tc">Installationsanleitung von log4TC</h1>
+<h1 id="graylog-ausgabe-plugin">Graylog Ausgabe-Plugin</h1>
 
-<h2 id="setup">Setup</h2>
-<p>Den aktuellen Release von Log4TC kann <a href="https://github.com/mbc-engineering/log4TC/releases">hier</a> geladen werden. Achten sie auf die Ziel Architektur x86 bzw x64!</p>
-<h2 id="voraussetzungen">Voraussetzungen</h2>
+<p>Graylog ist ein Log-Managementsystem, das zentrall Log-Meldungen entgegennimmt, speichert und zur Echtzeitanalyse bereitstellt. Graylog benutzt intern Elasticsearch und lässt sich horizontal skalieren, aber auch nur auf einem einzelnen Rechner installieren. Graylog kann als Open Source oder als Enterprise Version eingesetzt werden.</p>
+<p>Log4TC wird standardmässig mit dem Graylog Ausgabe-Plugin ausgeliefert. Details zur Graylog können auf <a href="https://docs.graylog.org/">https://docs.graylog.org/</a> nachgelesen werden.</p>
+<h2 id="konfiguration-in-log4tc">Konfiguration in log4TC</h2>
+<p>Um Meldungen an Graylog ausgeben zu können, muss der log4TC-Service zuerst konfiguriert werden. Eine einfache Konfiguration (<code>%ProgramData%\log4TC\confg\appsettings.json</code>) sieht wie folgt aus:</p>
+<pre><code class="lang-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;Default&quot;: &quot;Information&quot;,
+      &quot;Microsoft&quot;: &quot;Warning&quot;,
+      &quot;Microsoft.Hosting.Lifetime&quot;: &quot;Information&quot;
+    }
+  },
+  &quot;Outputs&quot;: [
+    {
+      &quot;Type&quot;: &quot;graylog&quot;,
+      &quot;Config&quot;: {
+        &quot;GraylogHostname&quot;: &quot;localhost&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>Die wesentliche Konfiguration der Graylogausgabe befindet sich in der <code>Outputs</code>-Liste.</p>
+<pre><code class="lang-json">{
+    &quot;Type&quot;: &quot;graylog&quot;,
+    &quot;Config&quot;: {
+        &quot;GraylogHostname&quot;: &quot;localhost&quot;, # Hostname oder IP, optional, Default &quot;localhost&quot;
+        &quot;GraylogPort&quot;: 12201,           # UDP-Port auf Graylog-Server, optional, Default 12201
+        &quot;GelfCompression&quot;: &quot;Gzip&quot;,      # GELF-Kompression, optional, Default gzip. Alternativen: &quot;None&quot;
+    }
+}
+</code></pre>
+<p>Log4TC kommuniziert mit dem Graylog-Server über Gelf-UDP, daher muss auf dem Server ein enstprechender Input konfiguriert werden, was häufig schon der Fall ist.</p>
+<p>Graylog kann nativ installiert werden, wir empfehlen aber den Betrieb über Docker, zumindest wenn Graylog abseits der TwinCAT-Runtime installiert werden kann (Docker läuft nicht zusammen mit der TwinCAT-Runtime bzw. umgekehrt). Ein Beispiel Docker-Compose befindet sich auf Github im Graylog-Beispielordner <a href="https://github.com/mbc-engineering/log4TC/blob/master/graylog/docker-compose.yml">https://github.com/mbc-engineering/log4TC/blob/master/graylog/docker-compose.yml</a>.</p>
+<h2 id="log4tc-log-meldungen-in-graylog">log4TC Log-Meldungen in Graylog</h2>
+<p>Log4TC versucht bei der Ausgabe in Graylog alle strukturierten Elemente zu erhalten. Eine Graylog-Meldung hat folgende Felder:</p>
 <ul>
-<li><a href="https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm">TwinCat 3.1 (min. 4022.00)</a></li>
-<li>Administrationsrechte für die Installation</li>
+<li><strong><code>appName</code></strong> - Der Name der TwinCAT Application (z.B. <code>Port_851</code>)</li>
+<li><strong><code>clockTimestamp</code></strong> - Der Zeitstempel der Windowsuhr (geringe Genaugikeit)</li>
+<li><strong><code>fullMessage</code></strong> - Die Log-Meldung ohne Variablenersetzung. Kann für Suche und Selektion verwendet werden um gleichartige Meldungen zu selektieren.</li>
+<li><strong><code>level</code></strong> - Der Log-Level als Syslog-Wert. Graylog kann diesen Wert mit Decorators in Text umwandeln</li>
+<li><strong><code>logger</code></strong> - Der Loggername der Log-Meldung.</li>
+<li><strong><code>message</code></strong> - Die Log-Meldung mit Variablenersetzungen.</li>
+<li><strong><code>onlineChangeCount</code></strong> - Anzahl der Online-Changes</li>
+<li><strong><code>projectName</code></strong> - Der Name des SPS-Projekts.</li>
+<li><strong><code>source</code></strong> - Die Ads-Net-Id von der die Log-Message empfangen wurde.</li>
+<li><strong><code>hostname</code></strong> - Der Hostname von dem die Log-Message empfangen wurde.</li>
+<li><strong><code>taskCycleCounter</code></strong> - Der Wert des Task-Zykluszähler (alle Meldungen vom gleichen Zyklus haben den gleichen Wert)</li>
+<li><strong><code>taskIndex</code></strong> - Der TwinCAT Task-Index (1-x)</li>
+<li><strong><code>taskName</code></strong> - Der Name der TwinCAT Application</li>
+<li><strong><code>timestamp</code></strong> - Der PLC-Zeitstempel (hone Genauigkeit)</li>
 </ul>
-<p><strong>Nur Service:</strong></p>
-<ul>
-<li>min Windows 7 SP1 / Windows Embedded Standard 2009</li>
-<li><a href="https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer">Microsoft .NET Framework (mindestends 4.6.1, empfohlen 4.8)</a></li>
-<li><a href="https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm">ADS Router - TC1000 | TC3 ADS</a></li>
-</ul>
-<h2 id="beispiel-installation">Beispiel Installation</h2>
-<p>Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 und einer x64 Architektur.</p>
-<ol>
-<li>Stellen Sie sicher das alle Anwendungen geschlossen sind.</li>
-<li>Kopieren des MSI <a href="https://github.com/mbc-engineering/log4TC/releases">Mbc.Log4Tc.Setup(x64)v20.5.6.0</a> auf den Zielrechner. Führen Sie das MSI setup aus.</li>
-<li>Akzeptieren Sie den <code>log4TC Software-Lizenzvertrag</code>.</li>
-<li>Wählen sie die gewünschten Features. (Nähere Beschreibeung <a href="#features">hier</a></li>
-<li>Durch Klicken auf <code>Install</code> werden alle notwendigen Dateien auf das System kopiert und der log4TC Windows Service mit dem Namen <code>mbc log4TC Service</code> gestartet.</li>
-</ol>
-<p><img src="assets/setup_successfull.png" alt=""></p>
-<h2 id="features">Features</h2>
-<h3 id="log4tc-service">log4TC Service</h3>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Dieses Feature erscheint nur wenn sie ein ADS Router - TC1000 | TC3 ADS installiert haben.</p>
-</div>
-<p><strong>Beinhaltet</strong></p>
-<ul>
-<li>Windows Service zum schreiben der generierten Logmeldungen aus TwinCat</li>
-<li>Konfiguration Links im Startmenü</li>
-</ul>
-<p><img src="assets/setup_service_links.png" alt="links"></p>
-<h3 id="log4tc-twincat-3-bibliothek">log4TC TwinCat 3 Bibliothek</h3>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4022.00 installiert haben.</p>
-</div>
-<p><strong>Beinhaltet</strong></p>
-<ul>
-<li>Installiert die log4TC Twincat 3 Bibliothek lokal</li>
-<li>Bereitet die OEM Lizenz zur Registrierung für die Produktive Benutzung vor</li>
-<li>Kopiert das getting starded Projekt unter <code>C:\ProgramData\log4TC\gettingstarded</code></li>
-<li>Hilfe Links im Startmenü</li>
-</ul>
-<h2 id="bekannte-fehler">Bekannte Fehler</h2>
-<h2 id="setup-endet-mit-dem-fehler--setup-wizard-endet-prematurely-because-of-an-error-your-system-has-not-been-modified-">Setup endet mit dem Fehler: <code>... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...</code></h2>
-<p>In diesem Fall ist ein Fehler aufgetreten.</p>
-<p><img src="assets/setup_endwitherror.png" alt="setup end with error"></p>
-<p>Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ortner mit dem MSI Setup per <code>cd [folder]</code>. Geben Sie folgendes ein: <code>msiexec.exe /i &quot;[setup].msi&quot; /l*v install.log</code>. Wenden Sie sich anschliessend mit dem <code>install.log</code> an uns.</p>
 </article>
           </div>
           

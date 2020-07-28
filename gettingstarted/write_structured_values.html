@@ -20,6 +20,8 @@
     
     <meta property="docfx:rel" content="../">
     
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-127632729-2"></script>
   </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
@@ -111,7 +113,8 @@ VAR
 END_VAR
 ----------------------------------------------------------------------
 IF _TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
-	PRG_TaskLog.Init('192.168.56.1.1.1');
+	// For Remote Log4TC Server change the AMS net ID and configure a route
+	PRG_TaskLog.Init('127.0.0.1.1.1');
 	F_LogL(E_LogLevel.eInfo, sLogger, 'SPS Task gestartet.');
 END_IF
 

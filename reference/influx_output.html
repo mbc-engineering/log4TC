@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>InfluxDB Ausgabe-Plugin | Dokumentation mbc Log4Tc </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="InfluxDB Ausgabe-Plugin | Dokumentation mbc Log4Tc ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-127632729-2"></script>
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="influxdb-ausgabe-plugin">InfluxDB Ausgabe-Plugin</h1>
+
+<p>InfluxDB ist eine auf Zeitreihendaten spezialisierte Datenbank. Dies ermöglicht es zeitlich anfallende Daten (zyklisch und azyklisch) zu speichern und mit einer SQL-artigen Sprache abzufragen. InfluxDB ist OpenSource, eine Cloud-Lösung ist in Vorbereitung.</p>
+<p>Zur Anzeige der Daten in InfluxDB wird eine zusätzliche Anwendung mitgeliefert, Chronograf. Hierbei handelt es sich um eine Web-Anwendung, mit dem Queries oder andere Anfragen abgesetzt werden und auch in Charts visualisiert werden können. Wir empfehlen aber für weitergehende Anwendung Grafana, das ein Influx-DB Input besitzt und zur Visualisierung mehr möglichkeiten bietet.</p>
+<p>Log4TC wird standardmässig mit dem InfluxDB Ausgabe-Plugin ausgeliefert. Details zu InfluxDB können aufhttps://www.influxdata.com/ nachgelesen werden.</p>
+<h2 id="konfiguration-in-log4tc">Konfiguration in log4TC</h2>
+<p>Um Meldungen an Influx ausgeben zu können, muss der log4TC-Service zuerst konfiguriert werden. Eine einfache Konfiguration (<code>%ProgramData%\log4TC\confg\appsettings.json</code>) sieht wie folgt aus:</p>
+<pre><code class="lang-json">{
+  &quot;Logging&quot;: {
+    &quot;LogLevel&quot;: {
+      &quot;Default&quot;: &quot;Information&quot;,
+      &quot;Microsoft&quot;: &quot;Warning&quot;,
+      &quot;Microsoft.Hosting.Lifetime&quot;: &quot;Information&quot;
+    }
+  },
+  &quot;Outputs&quot;: [
+    {
+      &quot;Type&quot;: &quot;influxdb&quot;,
+      &quot;Filter&quot;: { &quot;Logger&quot;: &quot;influx.*&quot; },
+      &quot;Config&quot;: {
+        &quot;Url&quot;: &quot;http://localhost:8086&quot;,
+        &quot;Database&quot;: &quot;log4tc&quot;,
+        &quot;Format&quot;: &quot;arguments&quot;
+      }
+    }
+  ]
+}
+</code></pre>
+<p>Die wesentliche Konfiguration von Influx befindet sich in der <code>Outputs</code>-Liste.</p>
+<pre><code class="lang-json">{
+  &quot;Type&quot;: &quot;influxdb&quot;,
+  &quot;Filter&quot;: { &quot;Logger&quot;: &quot;influx.*&quot; },   # optional zur Selektioni der Meldungen
+  &quot;Config&quot;: {
+    &quot;Url&quot;: &quot;http://localhost:8086&quot;,     # Adresse und Port, auf dem InfluxDB Daten entgegenimmt
+    &quot;Username&quot;: &quot;&quot;,                     # Benutzername, optional, Default kein Benutzer
+    &quot;Password&quot;: &quot;&quot;,                     # Passwort, optional, Default kein Passwort
+    &quot;Database&quot;: &quot;log4tc&quot;,               # Datenbank, erforderlich
+    &quot;RetentionPolicy&quot;: &quot;&quot;,              # Retention-Policy, optional, Default Standard-Retention des Servers
+    &quot;WriteBatchSize&quot;: 1,                # Anzahl Meldungen, die zusammen geschrieben werden, optional, Default 1
+    &quot;WriteFlushIntervalMillis&quot;: 1000,   # Max. Wartezeit bevor ein nicht vollständiger Batch geschrieben wird, optional, Default 1000
+    &quot;Format&quot;: &quot;arguments&quot;,              # Format, mit dem die Daten geschrieben werden, optiona, Default &quot;arguments&quot;, Alternativen: &quot;syslog&quot;
+    &quot;SyslogFacilityCode&quot;: 16           # Nummer der verwendeten Syslog-Facility bei Format &quot;syslog&quot;
+  }
+}
+</code></pre>
+<p>InfluxDB kann nativ installiert werden, wir empfehlen aber den Betrieb über Docker, zumindest wenn Docker abseits der TwinCAT-Runtime installiert werden kann (Docker läuft nicht zusammen mit der TwinCAT-Runtime bzw. umgekehrt). Ein Beispiel Docker-Compose befindet sich auf Github im InfluxDB-Beispielordner <a href="https://github.com/mbc-engineering/log4TC/blob/master/influx_with_message/docker-compose.yml">https://github.com/mbc-engineering/log4TC/blob/master/influx_with_message/docker-compose.yml</a>.</p>
+<h2 id="log4tc-log-meldungen-in-influxdb">log4TC Log-Meldungen in InfluxDB</h2>
+<p>Log4TC kann Log-Meldungen in zwei Formaten in die InfluxDB schreiben.</p>
+<h3 id="format-syslog">Format <code>syslog</code></h3>
+<p>Bei diesen Format wird die komplette Log-Message im Syslog-Format geschrieben. In diesen Fall können die Meldungen mit dem in Chronograf integrierten LogViewer angezeigt, gefilter und gesucht werden.</p>
+<blockquote>
+<p>Die Möglichkeiten zur Anzeige und Verarbeitung der Log-Messages ist relativ einfach und kann für viele Anwendungen ausreichen, vor allem wenn aus anderen Gründen Influx vorhanden ist. Für mehr Möglichkeiten zur Log-Message analyse empfehlen wir aber Graylog.</p>
+</blockquote>
+<h3 id="format-arguments">Format <code>arguments</code></h3>
+<p>Bei diesen Format werden nur die strukturierten Argumente einer Log-Message in die Influx-DB geschrieben. Dieses Format bietet sich an, wenn man die Daten in Charts anzeigen möchte.</p>
+<p>Der Ablauf ist wie folgt:</p>
+<ul>
+<li>Sobald eine Meldung in der Ausgabe ankommt, wird geprüft ob sie strukturierte Argumente enthält (z.B. <code>Anfrage mit ErrorCode={code} abgeschlossen</code>). Wenn nicht, wird diese Meldung übersprungen.</li>
+<li>Es wird ein Measurement erzeugt mit dem Namen des Loggers.</li>
+<li>Der Zeitstempel entspricht dem PLC-Zeitstempel in us-Auflösung.</li>
+<li>Alle Context-Attribute der Log-Message werden als Tags hinzugefügt.</li>
+<li>Zusätzlich werden folgende Standard-Tags gesetzt:
+<ul>
+<li><strong><code>level</code></strong> - Der Log-Level</li>
+<li><strong><code>source</code></strong> - Die Ads-Net-Id von der die Log-Message empfangen wurde.</li>
+<li><strong><code>hostname</code></strong> - Der Hostname von dem die Log-Message empfangen wurde.</li>
+<li><strong><code>taskName</code></strong> - Der Name der TwinCAT Application</li>
+<li><strong><code>taskIndex</code></strong> - Der TwinCAT Task-Index (1-x)</li>
+<li><strong><code>appName</code></strong> - Der Name der TwinCAT Application (z.B. <code>Port_851</code>)</li>
+<li><strong><code>projectName</code></strong> - Der Name des SPS-Projekts.</li>
+</ul>
+</li>
+<li>Alle strukturierten Argumente werden mit ihren Namen und Wert als Felder zur Messung hinzugefügt. Im einleitenden Beispiel wäre das das Feld <code>code</code> mit dem Wert des Arguments.</li>
+</ul>
+<p>Wir empfehlen alle Werte die zusammengehören in der gleichen Log-Meldung zu verschicken, da sie dann zusammen in die Messung geschrieben werden.</p>
+<blockquote>
+<p>Soll eine Log-Meldung nur an Influx ausgegeben werden, kann die Meldung nur aus den Platzhaltern bestehen z.B. <code>{code}</code> anstatt <code>Anfrage mit ErrorCode={code} abgeschlossen</code>.</p>
+</blockquote>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
