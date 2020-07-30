@@ -1,8 +1,8 @@
 # log4TC Servicekonfiguration
 
-Der log4TC Service wird über eine JSON-Konfigurationsdatei im Pfad `%ProgramData%\log4TC\confg\appsettings.json` konfiguriert. Nach der Installation von log4TC wird eine Standardkonfiguration installiert, die alle Log-Meldungen auf NLog ausgibt.
+Der log4TC Service wird über eine JSON-Konfigurationsdatei im Pfad `%ProgramData%\log4TC\config\appsettings.json` konfiguriert. Nach der Installation von log4TC wird eine Standardkonfiguration installiert, die alle Log-Meldungen auf NLog ausgibt.
 
-Die Standardkonfiguration wie wie folgt aus:
+Die Standardkonfiguration sieht wie folgt aus:
 
 ```json
 {
@@ -64,6 +64,7 @@ Mit `Filter` und `ExcludeFilter` können Log-Meldungen selektiert werden. Eine L
 Mit dem Objekt `Config` können die Ausgaben spezifisch konfiguriert werden, die Inhalte können bei der Beschreibung der Ausgaben nachgelesen werden.
 
 Siehe dazu die Dokumentation der Ausgaben:
+
 * [NLog](nlog_output.md)
 * [Graylog](graylog_output.md)
 * [InfluxDb](influx_output.md)

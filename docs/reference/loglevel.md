@@ -50,6 +50,3 @@ Beispiel: Der Aufruf des Sendebaustein hat 3.2s benötigt.
 ## Level: `Trace`
 
 Der `Trace`-Level wird ebenfalls von Entwickler verwendet um weitergehende interne Zustände zu verfolgen. Entwickler verwenden diesen Level für die Analyse von bestehenden Problemen. Log-Messages dieses Levels werden häufig nicht dauerhaft abgespeichert.
-
-
-

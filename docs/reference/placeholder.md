@@ -10,8 +10,8 @@ log4TC unterstütz mehrer Arten von Platzhaltern in Meldungstexten, entweder Pos
 
 Beispiel:
 
-`'Die Verarbeitung von {0} wurde {1} abgeschlossen'`
-`'Die Verarbeitung von {typ} wurde {status} abgeschlossen'`
+    'Die Verarbeitung von {0} wurde {1} abgeschlossen'
+    'Die Verarbeitung von {typ} wurde {status} abgeschlossen'
 
 ## Optionen für Argumente
 
@@ -19,10 +19,10 @@ Sowohl für positions als auch für benannte Argumente können noch weiter Optio
 
 Der grundlegende Aufbau ist wie folgt:
 
-    `{Index[,Ausrichtung][:Format]}
+    {Index[,Ausrichtung][:Format]}
 bzw.
 
-    `{Name[,Ausrichtung][:Format]}
+    {Name[,Ausrichtung][:Format]}
 
 *Index* oder *Name* ist entweder die Argument-Nr (0-basiert) oder der Argument Name. Beispiel: `Von {0} bis {1}`; `Von {startTime} bis {endTime}`.
 

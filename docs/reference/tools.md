@@ -33,9 +33,9 @@ Eine Beispiel-Konfiguration könnte so aussehen:
 
 #### Logging
 
-Log4View bietet sehr gute Selektionsmöglichkeiten auf dem Logger und dem Level. Es lohnt sicher daher diese beiden Konsequenzt im Code einzusetzen.
+[Log4View](https://www.log4view.com/) bietet sehr gute Selektionsmöglichkeiten auf dem Logger und dem Level. Es lohnt sicher daher diese beiden Konsequenzt im Code einzusetzen.
 
-Leider bietet Log4View bis jetzt noch keine Unterstützung von Context-Properties und/oder structured Logging.
+Leider bietet [Log4View](https://www.log4view.com/) bis jetzt noch keine Unterstützung von Context-Properties und/oder structured Logging.
 
 ### Notepad++
 
@@ -51,9 +51,3 @@ Leider bietet Log4View bis jetzt noch keine Unterstützung von Context-Propertie
 Eines davon *Log Viewer* bietet einfache Möglichkeiten für Log-Files:
 
 ![Log Viewer Extension für VS-Code](assets/vscode_log_viewer.png)
-
-
-### TODO
-
-* https://www.logviewplus.com/
-* Compact Log Viewer in Verbindung CLEF-Format
