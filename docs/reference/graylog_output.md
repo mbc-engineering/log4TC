@@ -6,17 +6,11 @@ Log4TC wird standardmässig mit dem Graylog Ausgabe-Plugin ausgeliefert. Details
 
 ## Konfiguration in log4TC
 
-Um Meldungen an Graylog ausgeben zu können, muss der log4TC-Service zuerst konfiguriert werden. Eine einfache Konfiguration (`%ProgramData%\log4TC\confg\appsettings.json`) sieht wie folgt aus:
+Um Meldungen an Graylog ausgeben zu können, muss der log4TC-Service zuerst konfiguriert werden. Eine einfache Konfiguration (`%ProgramData%\log4TC\config\appsettings.json`) sieht wie folgt aus:
 
 ```json
 {
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
-    }
-  },
+  ...
   "Outputs": [
     {
       "Type": "graylog",
@@ -43,8 +37,10 @@ Die wesentliche Konfiguration der Graylogausgabe befindet sich in der `Outputs`-
 
 Log4TC kommuniziert mit dem Graylog-Server über Gelf-UDP, daher muss auf dem Server ein enstprechender Input konfiguriert werden, was häufig schon der Fall ist.
 
-Graylog kann nativ installiert werden, wir empfehlen aber den Betrieb über Docker, zumindest wenn Graylog abseits der TwinCAT-Runtime installiert werden kann (Docker läuft nicht zusammen mit der TwinCAT-Runtime bzw. umgekehrt). Ein Beispiel Docker-Compose befindet sich auf Github im Graylog-Beispielordner https://github.com/mbc-engineering/log4TC/blob/master/graylog/docker-compose.yml.
+Graylog kann nativ installiert werden, wir empfehlen aber den Betrieb über Docker, zumindest wenn Graylog abseits der TwinCAT-Runtime installiert werden kann (Docker läuft nicht zusammen mit der TwinCAT-Runtime bzw. umgekehrt). 
 
+> [!NOTE]
+> Ein Beispiel Docker-Compose befindet sich auf Github im Graylog-Beispielordner https://github.com/mbc-engineering/log4TC/blob/master/graylog/docker-compose.yml.
 
 ## log4TC Log-Meldungen in Graylog
 
