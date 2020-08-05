@@ -87,8 +87,8 @@
             <article class="content wrap" id="_content" data-uid="">
 <h1 id="log4tc-servicekonfiguration">log4TC Servicekonfiguration</h1>
 
-<p>Der log4TC Service wird über eine JSON-Konfigurationsdatei im Pfad <code>%ProgramData%\log4TC\confg\appsettings.json</code> konfiguriert. Nach der Installation von log4TC wird eine Standardkonfiguration installiert, die alle Log-Meldungen auf NLog ausgibt.</p>
-<p>Die Standardkonfiguration wie wie folgt aus:</p>
+<p>Der log4TC Service wird über eine JSON-Konfigurationsdatei im Pfad <code>%ProgramData%\log4TC\config\appsettings.json</code> konfiguriert. Nach der Installation von log4TC wird eine Standardkonfiguration installiert, die alle Log-Meldungen auf NLog ausgibt.</p>
+<p>Die Standardkonfiguration sieht wie folgt aus:</p>
 <pre><code class="lang-json">{
     &quot;Logging&quot;: {
         &quot;LogLevel&quot;: {
@@ -107,7 +107,7 @@
 <p>Die Konfigurationsdatei wird auf Änderungen überwacht und automatisch neu geladen.</p>
 <h2 id="konfigurationsabschnitte">Konfigurationsabschnitte</h2>
 <h3 id="internes-logging">Internes Logging</h3>
-<p>Über den Abschnitt <code>Logging</code> wird das log4TC interne Logging konfiguriert. Wir empfehlen hier die Standardkonfiguration beizubehalten. Intere Logs werden in die Datei <code>service.log</code> geschrieben. Bei Problemen kann hier kontrolliert werden, ob der Service korrekt arbeitet.</p>
+<p>Über den Abschnitt <code>Logging</code> wird das log4TC interne Logging konfiguriert. Wir empfehlen hier die Standardkonfiguration beizubehalten. Intere Logs werden in die Datei <code>%ProgramData%\log4TC\internal\service.log</code> geschrieben. Bei Problemen kann hier kontrolliert werden, ob der Service korrekt arbeitet.</p>
 <h3 id="ausgaben">Ausgaben</h3>
 <p>Der Abschnitt <code>Outputs</code> enthält die Konfiguration aller Ausgaben. Es können ein oder mehrere Ausgaben konfiguriert werden. Das Schema ist für eine Ausgabe ist wie folgt:</p>
 <pre><code class="lang-json">&quot;Outputs&quot;: [
@@ -133,9 +133,9 @@
 ]
 </code></pre>
 <p>Mit <code>Type</code> wird die Ausgabe ausgewählt, wie z.B. <code>nlog</code>, <code>graylog</code>, <code>influxdb</code>. Ausgaben können mehrfach konfiguriert werden. Dieses Feld muss zwingend angegeben werden.</p>
-<p>Mit <code>Filter</code> und <code>ExcludeFilter</code> können Log-Meldungen selektiert werden. Eine Log-Meldung muss den <code>Filter</code>-Kriterien entsprechen und nicht den <code>ExcludeFilter</code>-Kriterien, damit sie an die Ausgabe weitergeleitet wird. Das Kriterium <code>Logger</code> selektiert nach dem Loggernamen, es können Platzhalter am Anfang und Ende verwendet werden, wie z.B. <code>&quot;Logger&quot;: &quot;influxdb.*&quot;</code>. Mit <code>Level</code> wird der Loglevel geprüft, er muss gleich oder höher sein.</p>
+<p>Mit <code>Filter</code> und <code>ExcludeFilter</code> können Log-Meldungen selektiert werden. Eine Log-Meldung muss den <code>Filter</code>-Kriterien entsprechen und nicht den <code>ExcludeFilter</code>-Kriterien, damit sie an die Ausgabe weitergeleitet wird. Das Kriterium <code>Logger</code> selektiert nach dem Loggernamen, es können wildcard (*) Platzhalter am Anfang und Ende verwendet werden, wie z.B. <code>&quot;Logger&quot;: &quot;influxdb.*&quot;</code>. Mit <code>Level</code> wird der <a href="loglevel.html">Loglevel</a> geprüft, er muss gleich oder höher sein.</p>
 <p>Mit dem Objekt <code>Config</code> können die Ausgaben spezifisch konfiguriert werden, die Inhalte können bei der Beschreibung der Ausgaben nachgelesen werden.</p>
-<p>Siehe auch:</p>
+<p>Siehe dazu die Dokumentation der Ausgaben:</p>
 <ul>
 <li><a href="nlog_output.html">NLog</a></li>
 <li><a href="graylog_output.html">Graylog</a></li>

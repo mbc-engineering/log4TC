@@ -96,15 +96,16 @@
 <li>Argumente können noch mit Optionen formatiert werden</li>
 </ul>
 <p>Beispiel:</p>
-<p><code>'Die Verarbeitung von {0} wurde {1} abgeschlossen'</code>
-<code>'Die Verarbeitung von {typ} wurde {status} abgeschlossen'</code></p>
+<pre><code>'Die Verarbeitung von {0} wurde {1} abgeschlossen'
+'Die Verarbeitung von {typ} wurde {status} abgeschlossen'
+</code></pre>
 <h2 id="optionen-für-argumente">Optionen für Argumente</h2>
 <p>Sowohl für positions als auch für benannte Argumente können noch weiter Optionen angegeben werden. Details dazu finden sich in <a href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting?view=netframework-4.8">Composite Format String</a>, nachfolgend aber eine Übersicht mit den wichtigsten Optionen.</p>
 <p>Der grundlegende Aufbau ist wie folgt:</p>
-<pre><code>`{Index[,Ausrichtung][:Format]}
+<pre><code>{Index[,Ausrichtung][:Format]}
 </code></pre>
 <p>bzw.</p>
-<pre><code>`{Name[,Ausrichtung][:Format]}
+<pre><code>{Name[,Ausrichtung][:Format]}
 </code></pre>
 <p><em>Index</em> oder <em>Name</em> ist entweder die Argument-Nr (0-basiert) oder der Argument Name. Beispiel: <code>Von {0} bis {1}</code>; <code>Von {startTime} bis {endTime}</code>.</p>
 <p>Die Option <em>Ausrichtung</em> ist eine Ganzzahl mit Vorzeichen, welche die bevorzugte Grösse in Zeichen für die Ausgabe angibt. Positive Werte führen zu einer rechtsbündigen Ausrichtung, negative Werte zu einer linksbündigen. Beispiel:</p>
