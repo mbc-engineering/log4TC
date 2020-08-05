@@ -12,7 +12,14 @@ Um Meldungen an Influx ausgeben zu können, muss der log4TC-Service zuerst konfi
 
 ```json
 {
-  ...
+  {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
   "Outputs": [
     {
       "Type": "influxdb",

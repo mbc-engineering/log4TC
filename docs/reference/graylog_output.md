@@ -10,15 +10,24 @@ Um Meldungen an Graylog ausgeben zu können, muss der log4TC-Service zuerst konf
 
 ```json
 {
-  ...
-  "Outputs": [
-    {
-      "Type": "graylog",
-      "Config": {
-        "GraylogHostname": "localhost"
-      }
+  {
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
     }
-  ]
+  },
+  {
+    "Outputs": [
+      {
+        "Type": "graylog",
+        "Config": {
+          "GraylogHostname": "localhost"
+        }
+      }
+    ]
+  }
 }
 ```
 
