@@ -19,9 +19,11 @@
     <Content Remove="appsettings.Production.json" />
     <Content Remove="appsettingsInflux.json" />
     <Content Remove="appsettingsSample.json" />
+    <Content Remove="appsettingssql.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="appsettingsSql.json" />
     <None Include="appsettingsInflux.json" />
     <None Include="appsettingsSample.json" />
     <None Include="appsettings.Development.json" />
@@ -45,6 +47,7 @@
     <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.NLog\Mbc.Log4Tc.Output.NLog.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.Sql\Mbc.Log4Tc.Output.Sql.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Receiver\Mbc.Log4Tc.Receiver.csproj" />
   </ItemGroup>

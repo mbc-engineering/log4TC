@@ -2,6 +2,7 @@
 using Mbc.Log4Tc.Output.Graylog;
 using Mbc.Log4Tc.Output.InfluxDb;
 using Mbc.Log4Tc.Output.NLog;
+using Mbc.Log4Tc.Output.Sql;
 using Mbc.Log4Tc.Plugin;
 using Mbc.Log4Tc.Receiver;
 using Microsoft.Extensions.Configuration;
@@ -59,6 +60,7 @@ namespace Mbc.Log4Tc.Service
                         new NLogLog4TcOutputPlugin(),
                         new GraylogLog4TcOutputPlugin(),
                         new InfluxDbLog4TcOutputPlugin(),
+                        new SqlLog4TcOutputPlugin(),
                     };
 
                     foreach (var plugin in plugins)
