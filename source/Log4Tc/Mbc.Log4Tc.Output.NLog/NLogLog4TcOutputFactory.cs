@@ -10,6 +10,8 @@ namespace Mbc.Log4Tc.Output.NLog
 
         public IOutputHandler Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration)
         {
+            NLogLog4TcOutputInitializer.Setup();
+
             var config = new NLogLog4TcOutputConfiguration();
             outputConfiguration.Bind(config);
             return ActivatorUtilities.CreateInstance<NLogLog4TcOutput>(serviceProvider, config);
