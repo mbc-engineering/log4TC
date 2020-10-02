@@ -82,7 +82,7 @@ namespace Mbc.Log4Tc.Dispatcher
 
             foreach (var logEntry in logEntries)
             {
-                await Task.WhenAll(_outputs.Select(x => x.Dispatch(logEntry))).ConfigureAwait(false);
+                await Task.WhenAll(_outputs.Select(x => x.Dispatch(logEntry)).ToArray()).ConfigureAwait(false);
             }
         }
 

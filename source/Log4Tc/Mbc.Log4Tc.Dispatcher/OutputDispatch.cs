@@ -53,16 +53,15 @@ namespace Mbc.Log4Tc.Dispatcher
             }
         }
 
-        public Task Dispatch(LogEntry logEntry)
+        public async Task Dispatch(LogEntry logEntry)
         {
             try
             {
                 if (!_logExcludeFilter.Matches(logEntry) && _logFilter.Matches(logEntry))
                 {
-                    return _output.ProcesLogEntry(logEntry);
+                    await _output.ProcesLogEntry(logEntry);
+                    _hasError = false;
                 }
-
-                _hasError = false;
             }
             catch (Exception e)
             {
@@ -73,8 +72,6 @@ namespace Mbc.Log4Tc.Dispatcher
 
                 _hasError = true;
             }
-
-            return Task.CompletedTask;
         }
     }
 }
