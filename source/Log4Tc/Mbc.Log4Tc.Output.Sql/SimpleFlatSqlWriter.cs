@@ -1,4 +1,5 @@
 ﻿using Mbc.Log4Tc.Model;
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Mbc.Log4Tc.Output.Sql
         {
             using (DbCommand command = connection.CreateCommand())
             {
-                command.CommandText = "INSERT INTO LogEntry (Source, Hostname, FormattedMessage, Logger, Level, PlcTimeStamp, ClockTimeStamp, TaskIndex, TaskName, TaskCycleCounter, AppName, ProjectName, OnlineChangeCount) VALUES (@Source, @Hostname, @FormattedMessage, @Logger, @Level, @PlcTimeStamp, @ClockTimeStamp, @TaskIndex, @TaskName, @TaskCycleCounter, @AppName, @ProjectName, @OnlineChangeCount)";
+                command.CommandText = "INSERT INTO log_entry (source, hostname, formatted_message, logger, level, plc_timestamp, clock_timestamp, task_index, task_name, task_cycle_counter, app_name, project_name, onlinechange_count) VALUES (@Source, @Hostname, @FormattedMessage, @Logger, @Level, @PlcTimeStamp, @ClockTimeStamp, @TaskIndex, @TaskName, @TaskCycleCounter, @AppName, @ProjectName, @OnlineChangeCount)";
                 command.CommandType = CommandType.Text;
 
                 command.Parameters.Add(CreateParameter(command, "@Source", logEntry.Source));
@@ -28,15 +29,15 @@ namespace Mbc.Log4Tc.Output.Sql
                 }
                 else
                 {
-                    command.Parameters.Add(CreateParameter(command, "@ClockTimeStamp", null));
+                    command.Parameters.Add(CreateParameter(command, "@ClockTimeStamp", DBNull.Value));
                 }
 
-                command.Parameters.Add(CreateParameter(command, "@TaskIndex", logEntry.TaskIndex));
+                command.Parameters.Add(CreateParameter(command, "@TaskIndex", (short)logEntry.TaskIndex));
                 command.Parameters.Add(CreateParameter(command, "@TaskName", logEntry.TaskName));
-                command.Parameters.Add(CreateParameter(command, "@TaskCycleCounter", logEntry.TaskCycleCounter));
+                command.Parameters.Add(CreateParameter(command, "@TaskCycleCounter", (int)logEntry.TaskCycleCounter));
                 command.Parameters.Add(CreateParameter(command, "@AppName", logEntry.AppName));
                 command.Parameters.Add(CreateParameter(command, "@ProjectName", logEntry.ProjectName));
-                command.Parameters.Add(CreateParameter(command, "@OnlineChangeCount", logEntry.OnlineChangeCount));
+                command.Parameters.Add(CreateParameter(command, "@OnlineChangeCount", (int)logEntry.OnlineChangeCount));
 
                 await command.ExecuteNonQueryAsync();
             }

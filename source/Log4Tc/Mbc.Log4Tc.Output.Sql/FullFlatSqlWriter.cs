@@ -13,13 +13,14 @@ namespace Mbc.Log4Tc.Output.Sql
         {
             long logEntryId = await InsertLogEntryAsync(connection, logEntry);
             await InsertArguments(connection, logEntryId, logEntry.Arguments);
+            await InsertContext(connection, logEntryId, logEntry.Context);
         }
 
         private async Task<long> InsertLogEntryAsync(DbConnection connection, LogEntry logEntry)
         {
             using (DbCommand command = connection.CreateCommand())
             {
-                command.CommandText = "INSERT INTO LogEntry (Source, Hostname, FormattedMessage, Message, Logger, Level, PlcTimeStamp, ClockTimeStamp, TaskIndex, TaskName, TaskCycleCounter, AppName, ProjectName, OnlineChangeCount) VALUES (@Source, @Hostname, @FormattedMessage, @Message, @Logger, @Level, @PlcTimeStamp, @ClockTimeStamp, @TaskIndex, @TaskName, @TaskCycleCounter, @AppName, @ProjectName, @OnlineChangeCount)";
+                command.CommandText = "INSERT INTO log_entry (source, hostname, formatted_message, message, logger, level, plc_timestamp, clock_timestamp, task_index, task_name, task_cycle_counter, app_name, project_name, onlinechange_count) VALUES (@Source, @Hostname, @FormattedMessage, @Message, @Logger, @Level, @PlcTimeStamp, @ClockTimeStamp, @TaskIndex, @TaskName, @TaskCycleCounter, @AppName, @ProjectName, @OnlineChangeCount)";
                 command.CommandType = CommandType.Text;
 
                 command.Parameters.Add(CreateParameter(command, "@Source", logEntry.Source));
@@ -37,20 +38,25 @@ namespace Mbc.Log4Tc.Output.Sql
                 }
                 else
                 {
-                    command.Parameters.Add(CreateParameter(command, "@ClockTimeStamp", null));
+                    command.Parameters.Add(CreateParameter(command, "@ClockTimeStamp", DBNull.Value));
                 }
 
-                command.Parameters.Add(CreateParameter(command, "@TaskIndex", logEntry.TaskIndex));
+                command.Parameters.Add(CreateParameter(command, "@TaskIndex", (short)logEntry.TaskIndex));
                 command.Parameters.Add(CreateParameter(command, "@TaskName", logEntry.TaskName));
-                command.Parameters.Add(CreateParameter(command, "@TaskCycleCounter", logEntry.TaskCycleCounter));
+                command.Parameters.Add(CreateParameter(command, "@TaskCycleCounter", (int)logEntry.TaskCycleCounter));
                 command.Parameters.Add(CreateParameter(command, "@AppName", logEntry.AppName));
                 command.Parameters.Add(CreateParameter(command, "@ProjectName", logEntry.ProjectName));
-                command.Parameters.Add(CreateParameter(command, "@OnlineChangeCount", logEntry.OnlineChangeCount));
+                command.Parameters.Add(CreateParameter(command, "@OnlineChangeCount", (int)logEntry.OnlineChangeCount));
 
                 if (command is MySql.Data.MySqlClient.MySqlCommand mySqlCommand)
                 {
                     await mySqlCommand.ExecuteNonQueryAsync();
                     return mySqlCommand.LastInsertedId;
+                }
+                else if (command is Npgsql.NpgsqlCommand npsqlCommand)
+                {
+                    command.CommandText += " RETURNING id";
+                    return Convert.ToInt64(await command.ExecuteScalarAsync());
                 }
                 else
                 {
@@ -67,6 +73,29 @@ namespace Mbc.Log4Tc.Output.Sql
             return value.ToString();
         }
 
+        private DbValueType ValueToType(object value)
+        {
+            if (value == null)
+                return DbValueType.Null;
+
+            return value switch
+            {
+                float _ => DbValueType.Real,
+                double _ => DbValueType.LReal,
+                sbyte _ => DbValueType.SInt,
+                short _ => DbValueType.Int,
+                int _ => DbValueType.Int,
+                byte _ => DbValueType.USInt,
+                ushort _ => DbValueType.UInt,
+                uint _ => DbValueType.UDint,
+                string _ => DbValueType.String,
+                bool _ => DbValueType.Bool,
+                ulong _ => DbValueType.ULarge,
+                long _ => DbValueType.Large,
+                _ => DbValueType.Null,
+            };
+        }
+
         private async Task InsertArguments(DbConnection connection, long logEntryId, IDictionary<int, object> arguments)
         {
             if (arguments.Count == 0)
@@ -74,15 +103,16 @@ namespace Mbc.Log4Tc.Output.Sql
 
             using (DbCommand command = connection.CreateCommand())
             {
-                command.CommandText = "INSERT INTO LogArgument (LogEntryId, Index, Value) VALUES (@LogEntryId, @Index, @Value)";
+                command.CommandText = "INSERT INTO log_argument (log_entry_id, idx, value, type) VALUES (@LogEntryId, @Idx, @Value, @Type)";
                 command.CommandType = CommandType.Text;
 
                 command.Parameters.Add(CreateParameter(command, "@LogEntryId", logEntryId));
 
                 foreach (var argumentEntry in arguments)
                 {
-                    command.Parameters.Add(CreateParameter(command, "@Index", argumentEntry.Key));
-                    command.Parameters.Add(CreateParameter(command, "@Value", ValueToString(argumentEntry.Value));
+                    AddOrReplace(command, "@Idx", argumentEntry.Key);
+                    AddOrReplace(command, "@Value", ValueToString(argumentEntry.Value));
+                    AddOrReplace(command, "@Type", ValueToType(argumentEntry.Value));
                     await command.ExecuteNonQueryAsync();
                 }
             }
@@ -95,15 +125,16 @@ namespace Mbc.Log4Tc.Output.Sql
 
             using (DbCommand command = connection.CreateCommand())
             {
-                command.CommandText = "INSERT INTO LogContext (LogEntryId, Name, Value) VALUES (@LogEntryId, @Name, @Value)";
+                command.CommandText = "INSERT INTO log_context (log_entry_id, name, value, type) VALUES (@LogEntryId, @Name, @Value, @Type)";
                 command.CommandType = CommandType.Text;
 
                 command.Parameters.Add(CreateParameter(command, "@LogEntryId", logEntryId));
 
                 foreach (var contextEntry in context)
                 {
-                    command.Parameters.Add(CreateParameter(command, "@Name", contextEntry.Key));
-                    command.Parameters.Add(CreateParameter(command, "@Value", ValueToString(contextEntry.Value));
+                    AddOrReplace(command, "@Name", contextEntry.Key);
+                    AddOrReplace(command, "@Value", ValueToString(contextEntry.Value));
+                    AddOrReplace(command, "@Type", ValueToType(contextEntry.Value));
                     await command.ExecuteNonQueryAsync();
                 }
             }

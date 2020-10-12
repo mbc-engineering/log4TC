@@ -1,19 +1,28 @@
-﻿using Mbc.Log4Tc.Service.DataAnnotations;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Common;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Mbc.Log4Tc.Output.Sql
 {
     internal class SqlOutputSettings
     {
-        /// <summary>
-        /// Typ der die Klasse <see cref="DbConnection"/> implementiert.
-        /// </summary>
+        public enum DbDriver
+        {
+            MySql,
+            Postgres,
+            SqlServer,
+        }
+
+        public enum DbScheme
+        {
+            SimpleFlat,
+            FullFlat,
+        }
+
         [Required]
-        [TypeClassValidation]
-        public string ConnectionType { get; set; }
+        public DbDriver Driver { get; set; }
 
         [Required]
         public string ConnectionString { get; set; }
+
+        public DbScheme Scheme { get; set; } = DbScheme.SimpleFlat;
     }
 }
