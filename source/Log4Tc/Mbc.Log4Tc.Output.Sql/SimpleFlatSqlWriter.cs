@@ -8,10 +8,11 @@ namespace Mbc.Log4Tc.Output.Sql
 {
     internal class SimpleFlatSqlWriter : BaseSqlWriter
     {
-        internal override async Task WriteLogEntryAsync(DbConnection connection, LogEntry logEntry)
+        internal override async Task WriteLogEntryAsync(DbTransaction transaction, LogEntry logEntry)
         {
-            using (DbCommand command = connection.CreateCommand())
+            using (DbCommand command = transaction.Connection.CreateCommand())
             {
+                command.Transaction = transaction;
                 command.CommandText = "INSERT INTO log_entry (source, hostname, formatted_message, logger, level, plc_timestamp, clock_timestamp, task_index, task_name, task_cycle_counter, app_name, project_name, onlinechange_count) VALUES (@Source, @Hostname, @FormattedMessage, @Logger, @Level, @PlcTimeStamp, @ClockTimeStamp, @TaskIndex, @TaskName, @TaskCycleCounter, @AppName, @ProjectName, @OnlineChangeCount)";
                 command.CommandType = CommandType.Text;
 
@@ -19,7 +20,7 @@ namespace Mbc.Log4Tc.Output.Sql
                 command.Parameters.Add(CreateParameter(command, "@Hostname", logEntry.Hostname));
                 command.Parameters.Add(CreateParameter(command, "@FormattedMessage", logEntry.FormattedMessage));
                 command.Parameters.Add(CreateParameter(command, "@Logger", logEntry.Logger));
-                command.Parameters.Add(CreateParameter(command, "@Level", logEntry.Level));
+                command.Parameters.Add(CreateEnumParameter(command, "@Level", logEntry.Level));
                 command.Parameters.Add(CreateParameter(command, "@PlcTimeStamp", logEntry.PlcTimestamp));
 
                 if (logEntry.ClockTimestamp.Year > 1970)

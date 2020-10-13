@@ -51,7 +51,7 @@ namespace Mbc.Log4Tc.Output.Sql
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    await _sqlWriter.WriteLogEntryAsync(connection, logEntry);
+                    await _sqlWriter.WriteLogEntryAsync(transaction, logEntry);
 
                     transaction.Commit();
                 }

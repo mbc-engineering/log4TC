@@ -3,23 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Mbc.Log4Tc.Output.Sql
 {
     internal class FullFlatSqlWriter : BaseSqlWriter
     {
-        internal override async Task WriteLogEntryAsync(DbConnection connection, LogEntry logEntry)
+        internal override async Task WriteLogEntryAsync(DbTransaction transaction, LogEntry logEntry)
         {
-            long logEntryId = await InsertLogEntryAsync(connection, logEntry);
-            await InsertArguments(connection, logEntryId, logEntry.Arguments);
-            await InsertContext(connection, logEntryId, logEntry.Context);
+            long logEntryId = await InsertLogEntryAsync(transaction, logEntry);
+            await InsertArguments(transaction, logEntryId, logEntry.Arguments);
+            await InsertContext(transaction, logEntryId, logEntry.Context);
         }
 
-        private async Task<long> InsertLogEntryAsync(DbConnection connection, LogEntry logEntry)
+        private async Task<long> InsertLogEntryAsync(DbTransaction transaction, LogEntry logEntry)
         {
-            using (DbCommand command = connection.CreateCommand())
+            using (DbCommand command = transaction.Connection.CreateCommand())
             {
+                command.Transaction = transaction;
                 command.CommandText = "INSERT INTO log_entry (source, hostname, formatted_message, message, logger, level, plc_timestamp, clock_timestamp, task_index, task_name, task_cycle_counter, app_name, project_name, onlinechange_count) VALUES (@Source, @Hostname, @FormattedMessage, @Message, @Logger, @Level, @PlcTimeStamp, @ClockTimeStamp, @TaskIndex, @TaskName, @TaskCycleCounter, @AppName, @ProjectName, @OnlineChangeCount)";
                 command.CommandType = CommandType.Text;
 
@@ -28,7 +30,7 @@ namespace Mbc.Log4Tc.Output.Sql
                 command.Parameters.Add(CreateParameter(command, "@FormattedMessage", logEntry.FormattedMessage));
                 command.Parameters.Add(CreateParameter(command, "@Message", logEntry.Message));
                 command.Parameters.Add(CreateParameter(command, "@Logger", logEntry.Logger));
-                command.Parameters.Add(CreateParameter(command, "@Level", logEntry.Level));
+                command.Parameters.Add(CreateEnumParameter(command, "@Level", logEntry.Level));
                 command.Parameters.Add(CreateParameter(command, "@PlcTimeStamp", logEntry.PlcTimestamp));
 
                 if (logEntry.ClockTimestamp.Year > 1970)
@@ -58,6 +60,11 @@ namespace Mbc.Log4Tc.Output.Sql
                     command.CommandText += " RETURNING id";
                     return Convert.ToInt64(await command.ExecuteScalarAsync());
                 }
+                else if (command is System.Data.SqlClient.SqlCommand sqlCommand)
+                {
+                    command.CommandText += "; SELECT SCOPE_IDENTITY()";
+                    return Convert.ToInt64(await command.ExecuteScalarAsync());
+                }
                 else
                 {
                     throw new NotImplementedException();
@@ -70,7 +77,7 @@ namespace Mbc.Log4Tc.Output.Sql
             if (value == null)
                 return "null";
 
-            return value.ToString();
+            return Convert.ToString(value, CultureInfo.InvariantCulture);
         }
 
         private DbValueType ValueToType(object value)
@@ -96,13 +103,14 @@ namespace Mbc.Log4Tc.Output.Sql
             };
         }
 
-        private async Task InsertArguments(DbConnection connection, long logEntryId, IDictionary<int, object> arguments)
+        private async Task InsertArguments(DbTransaction transaction, long logEntryId, IDictionary<int, object> arguments)
         {
             if (arguments.Count == 0)
                 return;
 
-            using (DbCommand command = connection.CreateCommand())
+            using (DbCommand command = transaction.Connection.CreateCommand())
             {
+                command.Transaction = transaction;
                 command.CommandText = "INSERT INTO log_argument (log_entry_id, idx, value, type) VALUES (@LogEntryId, @Idx, @Value, @Type)";
                 command.CommandType = CommandType.Text;
 
@@ -110,21 +118,22 @@ namespace Mbc.Log4Tc.Output.Sql
 
                 foreach (var argumentEntry in arguments)
                 {
-                    AddOrReplace(command, "@Idx", argumentEntry.Key);
-                    AddOrReplace(command, "@Value", ValueToString(argumentEntry.Value));
-                    AddOrReplace(command, "@Type", ValueToType(argumentEntry.Value));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@Idx", argumentEntry.Key));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@Value", ValueToString(argumentEntry.Value)));
+                    AddOrReplace(command.Parameters, CreateEnumParameter(command, "@Type", ValueToType(argumentEntry.Value)));
                     await command.ExecuteNonQueryAsync();
                 }
             }
         }
 
-        private async Task InsertContext(DbConnection connection, long logEntryId, IDictionary<string, object> context)
+        private async Task InsertContext(DbTransaction transaction, long logEntryId, IDictionary<string, object> context)
         {
             if (context.Count == 0)
                 return;
 
-            using (DbCommand command = connection.CreateCommand())
+            using (DbCommand command = transaction.Connection.CreateCommand())
             {
+                command.Transaction = transaction;
                 command.CommandText = "INSERT INTO log_context (log_entry_id, name, value, type) VALUES (@LogEntryId, @Name, @Value, @Type)";
                 command.CommandType = CommandType.Text;
 
@@ -132,9 +141,9 @@ namespace Mbc.Log4Tc.Output.Sql
 
                 foreach (var contextEntry in context)
                 {
-                    AddOrReplace(command, "@Name", contextEntry.Key);
-                    AddOrReplace(command, "@Value", ValueToString(contextEntry.Value));
-                    AddOrReplace(command, "@Type", ValueToType(contextEntry.Value));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@Name", contextEntry.Key));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@Value", ValueToString(contextEntry.Value)));
+                    AddOrReplace(command.Parameters, CreateEnumParameter(command, "@Type", ValueToType(contextEntry.Value)));
                     await command.ExecuteNonQueryAsync();
                 }
             }
