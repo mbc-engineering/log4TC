@@ -1,5 +1,18 @@
 # Changelog
 
+## [next]
+### Added
+* Neuer Output für SQL-Datenbanken
+
+### Changed
+* `LogEntry` können jetzt als Collection im Output statt einzeln verarbeitet werden
+* Influx-DB Output wurde angepasst, dass mehr als eine LogEntry gesendet wird
+
+### Fixed
+* Fehler im async-Handling beim Verarbeiten der Meldungen behoben; der Bug führte dazu, das im Fehlerfall Exceptions nicht geloggt wurden
+* NLog wurde initialisiert, auch wenn das Output-Plugin nicht konfiguriert wurde
+  
+
 ## [20.07.28]
 ### Added
 
