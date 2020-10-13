@@ -4,7 +4,7 @@ using System;
 namespace Mbc.Log4Tc.Output
 {
     /// <summary>
-    /// A interface for factories which creates <see cref="IOutputHandler"/> instances
+    /// A interface for factories which creates <see cref="OutputHandlerBase"/> instances
     /// for specific outputs.
     /// </summary>
     public interface IOutputFactory
@@ -16,6 +16,6 @@ namespace Mbc.Log4Tc.Output
         /// <paramref name="serviceProvider">The service provider of the DI framework to inject objects for example logging.</paramref>
         /// <paramref name="outputConfiguration">The output specific configuration section.</paramref>
         /// </summary>
-        IOutputHandler Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration);
+        OutputHandlerBase Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration);
     }
 }

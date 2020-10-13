@@ -3,6 +3,8 @@ using InfluxDB.Client.Writes;
 using Mbc.Log4Tc.Model;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Mbc.Log4Tc.Output.InfluxDb
@@ -10,7 +12,7 @@ namespace Mbc.Log4Tc.Output.InfluxDb
     /// <summary>
     /// Outputs message arguments to InfluxDB (>= 1.8).
     /// </summary>
-    public class InfluxDbOutput : IOutputHandler, IDisposable
+    public class InfluxDbOutput : OutputHandlerBase, IDisposable
     {
         private readonly InfluxDbOutputSettings _settings;
         private readonly ILogger<InfluxDbOutput> _logger;
@@ -41,14 +43,19 @@ namespace Mbc.Log4Tc.Output.InfluxDb
             _client = null;
         }
 
-        public Task ProcesLogEntry(LogEntry logEntry)
+        public override Task ProcesLogEntriesAsync(IEnumerable<LogEntry> logEntries)
         {
             Initialize();
 
-            PointData point = _pointFactory.CreatePoint(logEntry);
-            if (point != null)
+            List<PointData> points = logEntries
+                .AsParallel()
+                .Select(x => _pointFactory.CreatePoint(x))
+                .Where(x => x != null)
+                .ToList();
+
+            if (points.Any())
             {
-                _writeApi.WritePoint(point);
+                _writeApi.WritePoints(points);
             }
 
             return Task.CompletedTask;

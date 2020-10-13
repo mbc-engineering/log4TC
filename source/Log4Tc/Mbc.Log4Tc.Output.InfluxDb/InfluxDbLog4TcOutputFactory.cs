@@ -9,7 +9,7 @@ namespace Mbc.Log4Tc.Output.InfluxDb
     {
         public string ShortTypeName => "influxdb";
 
-        public IOutputHandler Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration)
+        public OutputHandlerBase Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration)
         {
             var config = new InfluxDbOutputSettings();
 

@@ -17,7 +17,7 @@ namespace Mbc.Log4Tc.Dispatcher
     public class LogDispatcherService : IHostedService, IDisposable
     {
         private readonly List<ILogReceiver> _receivers;
-        private readonly BufferBlock<IEnumerable<LogEntry>> _logEntryBuffer = new BufferBlock<IEnumerable<LogEntry>>();
+        private readonly BufferBlock<List<LogEntry>> _logEntryBuffer = new BufferBlock<List<LogEntry>>();
         private readonly ILogger<LogDispatcherService> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly IConfiguration _outputsConfiguration;
@@ -48,7 +48,7 @@ namespace Mbc.Log4Tc.Dispatcher
             // Initialize on startup
             InitializeOutputs();
 
-            _logEntryBuffer.LinkTo(new ActionBlock<IEnumerable<LogEntry>>(ProcessLogEntries));
+            _logEntryBuffer.LinkTo(new ActionBlock<List<LogEntry>>(ProcessLogEntries));
             foreach (var receiver in _receivers)
             {
                 receiver.LogsReceived += OnLogDispatch;
@@ -76,14 +76,16 @@ namespace Mbc.Log4Tc.Dispatcher
             _logEntryBuffer.Post(e.LogEntries);
         }
 
-        private async Task ProcessLogEntries(IEnumerable<LogEntry> logEntries)
+        private Task ProcessLogEntries(List<LogEntry> logEntries)
         {
             InitializeOutputs();
 
-            foreach (var logEntry in logEntries)
-            {
-                await Task.WhenAll(_outputs.Select(x => x.Dispatch(logEntry)).ToArray()).ConfigureAwait(false);
-            }
+            Task[] dispatchTasks =
+                _outputs.AsParallel()
+                .Select(x => x.DispatchAsync(logEntries))
+                .ToArray();
+
+            return Task.WhenAll(dispatchTasks);
         }
 
         private void InitializeOutputs()

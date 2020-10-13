@@ -17,7 +17,7 @@ namespace Mbc.Log4Tc.Output.InfluxDb
 
         public string RetentionPolicy { get; set; }
 
-        public int WriteBatchSize { get; set; } = 1;
+        public int WriteBatchSize { get; set; } = 20;
 
         public int WriteFlushIntervalMillis { get; set; } = 1000;
 

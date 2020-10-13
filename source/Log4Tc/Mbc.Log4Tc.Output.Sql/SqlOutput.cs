@@ -1,11 +1,12 @@
 ﻿using Mbc.Log4Tc.Model;
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
 
 namespace Mbc.Log4Tc.Output.Sql
 {
-    internal class SqlOutput : IOutputHandler, IDisposable
+    internal class SqlOutput : OutputHandlerBase, IDisposable
     {
         private readonly SqlOutputSettings _settings;
         private readonly Type _connectionType;
@@ -42,7 +43,7 @@ namespace Mbc.Log4Tc.Output.Sql
 
         private DbConnection CreateConnection() => (DbConnection)Activator.CreateInstance(_connectionType);
 
-        public async Task ProcesLogEntry(LogEntry logEntry)
+        public override async Task ProcesLogEntriesAsync(IEnumerable<LogEntry> logEntries)
         {
             using (DbConnection connection = CreateConnection())
             {
@@ -51,7 +52,7 @@ namespace Mbc.Log4Tc.Output.Sql
 
                 using (var transaction = connection.BeginTransaction())
                 {
-                    await _sqlWriter.WriteLogEntryAsync(transaction, logEntry);
+                    await _sqlWriter.WriteLogEntryAsync(transaction, logEntries);
 
                     transaction.Commit();
                 }

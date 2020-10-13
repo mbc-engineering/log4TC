@@ -9,7 +9,7 @@ namespace Mbc.Log4Tc.Output.Sql
     {
         public string ShortTypeName => "sql";
 
-        public IOutputHandler Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration)
+        public OutputHandlerBase Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration)
         {
             var config = new SqlOutputSettings();
             outputConfiguration.Bind(config);

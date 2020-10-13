@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Mbc.Log4Tc.SmokeTest
 {
-    public class TestRecordingOutput : IOutputHandler
+    public class TestRecordingOutput : OutputHandlerBase
     {
         private readonly List<LogEntry> loggedEntries = new List<LogEntry>();
 
@@ -13,7 +13,7 @@ namespace Mbc.Log4Tc.SmokeTest
 
         public List<LogEntry> LoggedEntries => loggedEntries;
 
-        public Task ProcesLogEntry(LogEntry logEntry)
+        protected override Task ProcesLogEntryAsync(LogEntry logEntry)
         {
             loggedEntries.Add(logEntry);
             return Task.CompletedTask;

@@ -58,7 +58,7 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             logEntry.Context.Add("foo", "baz");
 
             // Act
-            _output.ProcesLogEntry(logEntry);
+            _output.ProcesLogEntriesAsync(new List<LogEntry> { logEntry }).GetAwaiter().GetResult();
 
             // Assert
             LogManager.Flush();

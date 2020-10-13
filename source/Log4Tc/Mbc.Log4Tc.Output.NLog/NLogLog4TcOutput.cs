@@ -9,7 +9,7 @@ using NLogLevel = NLog.LogLevel;
 
 namespace Mbc.Log4Tc.Output.NLog
 {
-    public class NLogLog4TcOutput : IOutputHandler
+    public class NLogLog4TcOutput : OutputHandlerBase
     {
         private readonly Logger _dispatchLogger = LogManager.GetLogger("TwinCat");
 
@@ -17,7 +17,7 @@ namespace Mbc.Log4Tc.Output.NLog
         {
         }
 
-        public Task ProcesLogEntry(LogEntry logEntry)
+        protected override Task ProcesLogEntryAsync(LogEntry logEntry)
         {
             var messageTemplateParameters = logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => new MessageTemplateParameter(x, y, null, CaptureType.Normal)).ToList();
 

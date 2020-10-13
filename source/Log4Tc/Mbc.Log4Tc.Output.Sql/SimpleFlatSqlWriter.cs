@@ -1,5 +1,6 @@
 ﻿using Mbc.Log4Tc.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Mbc.Log4Tc.Output.Sql
 {
     internal class SimpleFlatSqlWriter : BaseSqlWriter
     {
-        internal override async Task WriteLogEntryAsync(DbTransaction transaction, LogEntry logEntry)
+        internal override async Task WriteLogEntryAsync(DbTransaction transaction, IEnumerable<LogEntry> logEntries)
         {
             using (DbCommand command = transaction.Connection.CreateCommand())
             {
@@ -16,31 +17,42 @@ namespace Mbc.Log4Tc.Output.Sql
                 command.CommandText = "INSERT INTO log_entry (source, hostname, formatted_message, logger, level, plc_timestamp, clock_timestamp, task_index, task_name, task_cycle_counter, app_name, project_name, onlinechange_count) VALUES (@Source, @Hostname, @FormattedMessage, @Logger, @Level, @PlcTimeStamp, @ClockTimeStamp, @TaskIndex, @TaskName, @TaskCycleCounter, @AppName, @ProjectName, @OnlineChangeCount)";
                 command.CommandType = CommandType.Text;
 
-                command.Parameters.Add(CreateParameter(command, "@Source", logEntry.Source));
-                command.Parameters.Add(CreateParameter(command, "@Hostname", logEntry.Hostname));
-                command.Parameters.Add(CreateParameter(command, "@FormattedMessage", logEntry.FormattedMessage));
-                command.Parameters.Add(CreateParameter(command, "@Logger", logEntry.Logger));
-                command.Parameters.Add(CreateEnumParameter(command, "@Level", logEntry.Level));
-                command.Parameters.Add(CreateParameter(command, "@PlcTimeStamp", logEntry.PlcTimestamp));
-
-                if (logEntry.ClockTimestamp.Year > 1970)
+                int count = 0;
+                foreach (var logEntry in logEntries)
                 {
-                    // SQL unterstütz Zeitstempel ab 1970
-                    command.Parameters.Add(CreateParameter(command, "@ClockTimeStamp", logEntry.ClockTimestamp));
-                }
-                else
-                {
-                    command.Parameters.Add(CreateParameter(command, "@ClockTimeStamp", DBNull.Value));
-                }
+                    if (count == 1)
+                    {
+                        // nur dann ein Prepare ausführen, wenn mehr als eine Ausführung
+                        command.Prepare();
+                    }
 
-                command.Parameters.Add(CreateParameter(command, "@TaskIndex", (short)logEntry.TaskIndex));
-                command.Parameters.Add(CreateParameter(command, "@TaskName", logEntry.TaskName));
-                command.Parameters.Add(CreateParameter(command, "@TaskCycleCounter", (int)logEntry.TaskCycleCounter));
-                command.Parameters.Add(CreateParameter(command, "@AppName", logEntry.AppName));
-                command.Parameters.Add(CreateParameter(command, "@ProjectName", logEntry.ProjectName));
-                command.Parameters.Add(CreateParameter(command, "@OnlineChangeCount", (int)logEntry.OnlineChangeCount));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@Source", logEntry.Source));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@Hostname", logEntry.Hostname));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@FormattedMessage", logEntry.FormattedMessage));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@Logger", logEntry.Logger));
+                    AddOrReplace(command.Parameters, CreateEnumParameter(command, "@Level", logEntry.Level));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@PlcTimeStamp", logEntry.PlcTimestamp));
 
-                await command.ExecuteNonQueryAsync();
+                    if (logEntry.ClockTimestamp.Year > 1970)
+                    {
+                        // SQL unterstütz Zeitstempel ab 1970
+                        AddOrReplace(command.Parameters, CreateParameter(command, "@ClockTimeStamp", logEntry.ClockTimestamp));
+                    }
+                    else
+                    {
+                        AddOrReplace(command.Parameters, CreateParameter(command, "@ClockTimeStamp", DBNull.Value));
+                    }
+
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@TaskIndex", (short)logEntry.TaskIndex));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@TaskName", logEntry.TaskName));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@TaskCycleCounter", (int)logEntry.TaskCycleCounter));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@AppName", logEntry.AppName));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@ProjectName", logEntry.ProjectName));
+                    AddOrReplace(command.Parameters, CreateParameter(command, "@OnlineChangeCount", (int)logEntry.OnlineChangeCount));
+
+                    await command.ExecuteNonQueryAsync();
+                    count++;
+                }
             }
         }
     }

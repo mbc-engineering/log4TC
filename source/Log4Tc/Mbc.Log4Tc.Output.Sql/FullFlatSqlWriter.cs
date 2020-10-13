@@ -10,11 +10,14 @@ namespace Mbc.Log4Tc.Output.Sql
 {
     internal class FullFlatSqlWriter : BaseSqlWriter
     {
-        internal override async Task WriteLogEntryAsync(DbTransaction transaction, LogEntry logEntry)
+        internal override async Task WriteLogEntryAsync(DbTransaction transaction, IEnumerable<LogEntry> logEntries)
         {
-            long logEntryId = await InsertLogEntryAsync(transaction, logEntry);
-            await InsertArguments(transaction, logEntryId, logEntry.Arguments);
-            await InsertContext(transaction, logEntryId, logEntry.Context);
+            foreach (var logEntry in logEntries)
+            {
+                long logEntryId = await InsertLogEntryAsync(transaction, logEntry);
+                await InsertArguments(transaction, logEntryId, logEntry.Arguments);
+                await InsertContext(transaction, logEntryId, logEntry.Context);
+            }
         }
 
         private async Task<long> InsertLogEntryAsync(DbTransaction transaction, LogEntry logEntry)

@@ -1,5 +1,6 @@
 ﻿using Mbc.Log4Tc.Model;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
@@ -11,14 +12,13 @@ namespace Mbc.Log4Tc.Output.Sql
     /// </summary>
     internal abstract class BaseSqlWriter
     {
-        internal abstract Task WriteLogEntryAsync(DbTransaction transaction, LogEntry logEntry);
+        internal abstract Task WriteLogEntryAsync(DbTransaction transaction, IEnumerable<LogEntry> logEntry);
 
         /// <summary>
         /// Erzeugt einen <see cref="DbParameter"/> mit dem angegbenen Namen und Wert.
         /// </summary>
         protected DbParameter CreateParameter(DbCommand command, string name, object value, DbType? dbType = null)
         {
-
             DbParameter parameter = command.CreateParameter();
             parameter.ParameterName = name;
             parameter.Value = value;

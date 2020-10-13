@@ -18,7 +18,7 @@ namespace Mbc.Log4Tc.Dispatcher
     {
         private readonly ILogger<OutputDispatch> _logger;
         private readonly IConfiguration _outputConfig;
-        private readonly IOutputHandler _output;
+        private readonly OutputHandlerBase _output;
         private readonly ILogFilter _logFilter;
         private readonly ILogFilter _logExcludeFilter;
         private bool _hasError;
@@ -53,13 +53,14 @@ namespace Mbc.Log4Tc.Dispatcher
             }
         }
 
-        public async Task Dispatch(LogEntry logEntry)
+        public async Task DispatchAsync(List<LogEntry> logEntries)
         {
             try
             {
-                if (!_logExcludeFilter.Matches(logEntry) && _logFilter.Matches(logEntry))
+                var filteredLogEntries = logEntries.Where(x => !_logExcludeFilter.Matches(x) && _logFilter.Matches(x)).ToList();
+                if (filteredLogEntries.Count > 0)
                 {
-                    await _output.ProcesLogEntry(logEntry);
+                    await _output.ProcesLogEntriesAsync(filteredLogEntries);
                     _hasError = false;
                 }
             }

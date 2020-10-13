@@ -12,7 +12,7 @@ namespace Mbc.Log4Tc.Output.Graylog
     /// <summary>
     /// Writes LogEntry to Graylog via UDP/Gelf.
     /// </summary>
-    internal class GraylogOutput : IOutputHandler, IDisposable
+    internal class GraylogOutput : OutputHandlerBase, IDisposable
     {
         private const int MaxCachedStreamSize = 8192;
 
@@ -31,7 +31,7 @@ namespace Mbc.Log4Tc.Output.Graylog
             _udpClient = null;
         }
 
-        public async Task ProcesLogEntry(LogEntry logEntry)
+        protected override async Task ProcesLogEntryAsync(LogEntry logEntry)
         {
             var gelf = CreateGelf(logEntry);
 

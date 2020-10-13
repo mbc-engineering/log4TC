@@ -8,7 +8,7 @@ namespace Mbc.Log4Tc.Output.NLog
     {
         public string ShortTypeName => "nlog";
 
-        public IOutputHandler Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration)
+        public OutputHandlerBase Create(IServiceProvider serviceProvider, IConfigurationSection outputConfiguration)
         {
             NLogLog4TcOutputInitializer.Setup();
 

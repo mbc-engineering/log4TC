@@ -13,9 +13,9 @@ namespace Mbc.Log4Tc.Model
 
         public LogEntry()
         {
-            _messageFormatter = new Lazy<MessageFormatter>(() => new MessageFormatter(Message));
-            _argValues = new Lazy<object[]>(CreateArgumentList);
-            _formattedMessage = new Lazy<string>(CreateFormattedMessage);
+            _messageFormatter = new Lazy<MessageFormatter>(() => new MessageFormatter(Message), isThreadSafe: true);
+            _argValues = new Lazy<object[]>(CreateArgumentList, isThreadSafe: true);
+            _formattedMessage = new Lazy<string>(CreateFormattedMessage, isThreadSafe: true);
         }
 
         public string Source { get; set; }
@@ -66,7 +66,7 @@ namespace Mbc.Log4Tc.Model
         {
             if (Arguments.Count == 0)
             {
-                return new object[0];
+                return Array.Empty<object>();
             }
 
             var count = Arguments.Keys.Max();
