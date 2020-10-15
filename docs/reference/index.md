@@ -6,5 +6,6 @@
 * [NLog-Ausgabe](nlog_output.md)
 * [Graylog-Ausgabe](graylog_output.md)
 * [InfluxDB-Ausgabe](influx_output.md)
+* [SQL-Ausgabe](sql_output.md)
 * [Platzhaler in Meldungen](placeholder.md)
 * [Tools](tools.md)

@@ -140,10 +140,10 @@ CREATE TABLE IF NOT EXISTS log_entry (
 
 CREATE TABLE IF NOT EXISTS log_argument (
     Id                  BIGINT AUTO_INCREMENT PRIMARY KEY,
-    LogEntryId          BIGINT NOT NULL REFERENCES log_entry(id),
-    Idx                 TINYINT NOT NULL,
-    Value               TINYTEXT NOT NULL,
-    Type                ENUM('null', 'byte', 'word', 'dword', 'real', 'lreal', 'sint', 'int', 'dint', 'usint', 'uint', 'udint', 'string', 'bool', 'ularge', 'large') NOT NULL,
+    log_entry_id        BIGINT NOT NULL REFERENCES log_entry(id),
+    idx                 TINYINT NOT NULL,
+    value               TINYTEXT NOT NULL,
+    type                ENUM('null', 'byte', 'word', 'dword', 'real', 'lreal', 'sint', 'int', 'dint', 'usint', 'uint', 'udint', 'string', 'bool', 'ularge', 'large') NOT NULL,
     UNIQUE (log_entry_id, idx)
 );
 

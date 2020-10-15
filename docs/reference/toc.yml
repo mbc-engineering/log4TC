@@ -10,6 +10,8 @@
   href: graylog_output.md
 - name: InfluxDB-Ausgabeplugin
   href: influx_output.md
+- name: SQL-Ausgabeplugin
+  href: sql_output.md
 - name: Installation
   href: installation.md
 - name: log4TC Servicekonfiguration
