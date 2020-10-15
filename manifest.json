@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "d:/a/1/s/docs",
+  "source_base_path": "D:/a/1/s/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -18,7 +18,7 @@
       "output": {
         ".html": {
           "relative_path": "Changelog.html",
-          "hash": "G8SRfr/tWEBM4fMBK8gHOA=="
+          "hash": "GU9b5NIcIcX1UR0iCtep5A=="
         }
       },
       "is_incremental": false,
@@ -428,7 +428,7 @@
       "output": {
         ".html": {
           "relative_path": "reference/index.html",
-          "hash": "8xwxLETWQlJx+S+smVbgXA=="
+          "hash": "gPLkuQbLpusIn5L6E+pRkA=="
         }
       },
       "is_incremental": false,
@@ -507,12 +507,24 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "reference/sql_output.md",
+      "output": {
+        ".html": {
+          "relative_path": "reference/sql_output.html",
+          "hash": "50LKNkSV1HXKJ9yTjcSpbQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Toc",
       "source_relative_path": "reference/toc.yml",
       "output": {
         ".html": {
           "relative_path": "reference/toc.html",
-          "hash": "ZQ+PYOdUyuOSTQwGv9zH0w=="
+          "hash": "T3O2/mlbpJxkCsKrz0u0oA=="
         }
       },
       "is_incremental": false,
@@ -557,7 +569,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 20,
+          "total_file_count": 21,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
