@@ -1,6 +1,6 @@
 # Changelog
 
-## [next]
+## [20.10.15]
 ### Added
 * Neuer Output für SQL-Datenbanken
 
