@@ -71,75 +71,137 @@ VAR_STAT
 	{attribute 'TcNoSymbol'}
 	{attribute 'hide'}	
 	stLog4TcGuid 	: GUID;	
+	
+	{attribute 'TcNoSymbol'}
+	{attribute 'hide'}
+	nState			: UINT;			
+
+	fbGetDeviceId	: Tc2_Utilities.FB_GetDeviceIdentificationEx;	
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF bInit THEN
 	RETURN;
 END_IF
 
-fbLicense(
-	bExecute := TRUE,
-	stLicenseId := Tc2_Utilities.STRING_TO_GUID('9BDDB874-8F39-4D26-90BB-4237ED0644FB'),
-);
 
-IF NOT fbLicense.bBusy THEN
-	bInit := TRUE;
-	IF NOT fbLicense.bError THEN
-		F_InternalLog(
-			E_LogLevel.eDebug,
-			'Licensing',
-			'Licenses successfully read. Result=%d Expiration=%s.',
-			Tc2_Utilities.F_DINT(fbLicense.stCheckLicense.eResult),
-			Tc2_Utilities.F_STRINGEx(fbLicense.stCheckLicense.sExpirationTime),
-			Tc2_Utilities.EMPTY_ARG_VALUE,
-			Tc2_Utilities.EMPTY_ARG_VALUE
-		);
-
-		CASE fbLicense.stCheckLicense.eResult OF
-			Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK,
-			Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_OEM:
-				bValidLicense := TRUE;
-				
-			Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_Demo:
+CASE nState OF
+	0:
+		fbGetDeviceId(bExecute:=FALSE);
+		nState := 10;
+		
+	10:
+		fbGetDeviceId(bExecute:=TRUE);
+		IF NOT fbGetDeviceId.bBusy THEN
+			IF NOT fbGetDeviceId.bError THEN
+				IF fbGetDeviceId.stDevIdent.strImageOsName = 'Windows CE' THEN
+					nState := 40;
+				ELSE
+					nState := 20;
+				END_IF
+			ELSE
 				F_InternalLog(
-					E_LogLevel.eWarn,
+					E_LogLevel.eFatal,
 					'Licensing',
-					'Demo license active - log4TC stops working in 24h. Visit http://mbc.dev/log4tc to order a licencse.',
-					Tc2_Utilities.EMPTY_ARG_VALUE,
+					'Error reading device id. Result=%d',
+					Tc2_Utilities.F_UDINT(fbGetDeviceId.nErrorID),
 					Tc2_Utilities.EMPTY_ARG_VALUE,
 					Tc2_Utilities.EMPTY_ARG_VALUE,
 					Tc2_Utilities.EMPTY_ARG_VALUE
 				);
-				bValidLicense := FALSE;					
-			
+				nState := 100;
+			END_IF
+		END_IF
+		
+	20:
+		// non Windows-CE
+		fbLicense(
+			bExecute := FALSE,
+			stLicenseId := Tc2_Utilities.STRING_TO_GUID('9BDDB874-8F39-4D26-90BB-4237ED0644FB'),
+		);		
+		nState := 30;
+		
+	30:
+		fbLicense(bExecute:=TRUE);
+		IF NOT fbLicense.bBusy THEN
+			IF NOT fbLicense.bError THEN
+				F_InternalLog(
+					E_LogLevel.eDebug,
+					'Licensing',
+					'Licenses successfully read. Result=%d Expiration=%s.',
+					Tc2_Utilities.F_DINT(fbLicense.stCheckLicense.eResult),
+					Tc2_Utilities.F_STRINGEx(fbLicense.stCheckLicense.sExpirationTime),
+					Tc2_Utilities.EMPTY_ARG_VALUE,
+					Tc2_Utilities.EMPTY_ARG_VALUE
+				);
+		
+				CASE fbLicense.stCheckLicense.eResult OF
+					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK,
+					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_OEM:
+						bValidLicense := TRUE;
+						
+					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_Demo:
+						F_InternalLog(
+							E_LogLevel.eWarn,
+							'Licensing',
+							'Demo license active - log4TC stops working in 24h. Visit http://mbc.dev/log4tc to order a licencse.',
+							Tc2_Utilities.EMPTY_ARG_VALUE,
+							Tc2_Utilities.EMPTY_ARG_VALUE,
+							Tc2_Utilities.EMPTY_ARG_VALUE,
+							Tc2_Utilities.EMPTY_ARG_VALUE
+						);
+						bValidLicense := FALSE;					
+					
+					ELSE
+						F_InternalLog(
+							E_LogLevel.eWarn,
+							'Licensing',
+							'Error reading log4TC license - log4TC stops working in 24h. Result code: %d (E_LicenseHResult)',
+							Tc2_Utilities.F_DINT(fbLicense.stCheckLicense.eResult),
+							Tc2_Utilities.EMPTY_ARG_VALUE,
+							Tc2_Utilities.EMPTY_ARG_VALUE,
+							Tc2_Utilities.EMPTY_ARG_VALUE
+						);
+						bValidLicense := FALSE;					
+				END_CASE
+				
+				// fbLicense.aOemLicenses[1].
+				// TODO read OEM Lizenz
+				// bValidLicense := TRUE or FALSE;
 			ELSE
 				F_InternalLog(
 					E_LogLevel.eWarn,
 					'Licensing',
-					'Error reading log4TC license - log4TC stops working in 24h. Result code: %d (E_LicenseHResult)',
-					Tc2_Utilities.F_DINT(fbLicense.stCheckLicense.eResult),
+					'Error reading licensing information. %x',
+					Tc2_Utilities.F_UDINT(fbLicense.nErrorId),
 					Tc2_Utilities.EMPTY_ARG_VALUE,
 					Tc2_Utilities.EMPTY_ARG_VALUE,
 					Tc2_Utilities.EMPTY_ARG_VALUE
-				);
-				bValidLicense := FALSE;					
-		END_CASE
+				);				
+			END_IF
+			nState := 100;
+		END_IF
 		
-		// fbLicense.aOemLicenses[1].
-		// TODO read OEM Lizenz
-		// bValidLicense := TRUE or FALSE;
-	ELSE
-		F_InternalLog(
-			E_LogLevel.eWarn,
-			'Licensing',
-			'Error reading licensing information. %x',
-			Tc2_Utilities.F_UDINT(fbLicense.nErrorId),
-			Tc2_Utilities.EMPTY_ARG_VALUE,
-			Tc2_Utilities.EMPTY_ARG_VALUE,
-			Tc2_Utilities.EMPTY_ARG_VALUE
-		);				
-	END_IF
-END_IF
+	40:
+		// Windows-CE
+		IF Config.sLicenseActivation = 'fUVKSbeoy8X1' THEN
+			bValidLicense := TRUE;
+		ELSE
+			F_InternalLog(
+				E_LogLevel.eWarn,
+				'Licensing',
+				'Demo license active - log4TC stops working in 24h. Visit http://mbc.dev/log4tc to order a licencse.',
+				Tc2_Utilities.EMPTY_ARG_VALUE,
+				Tc2_Utilities.EMPTY_ARG_VALUE,
+				Tc2_Utilities.EMPTY_ARG_VALUE,
+				Tc2_Utilities.EMPTY_ARG_VALUE
+			);			
+		END_IF
+		nState := 100;
+		
+		
+	100: 
+		bInit := TRUE;
+END_CASE
 
 
 ]]></ST>
