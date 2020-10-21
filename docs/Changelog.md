@@ -1,5 +1,9 @@
 # Changelog
 
+## [20.10.21]
+### SPS-Library 0.0.6
+* Lizenzierung für Windows-CE Geräte (keine OEM möglich)
+
 ## [20.10.15]
 ### Added
 * Neuer Output für SQL-Datenbanken
@@ -11,7 +15,7 @@
 ### Fixed
 * Fehler im async-Handling beim Verarbeiten der Meldungen behoben; der Bug führte dazu, das im Fehlerfall Exceptions nicht geloggt wurden
 * NLog wurde initialisiert, auch wenn das Output-Plugin nicht konfiguriert wurde
-  
+
 
 ## [20.07.28]
 ### Added
