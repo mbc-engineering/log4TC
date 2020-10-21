@@ -1,5 +1,11 @@
 # Changelog
 
+## [Vnext]
+
+### SPS-Library 0.0.7
+
+- Neue Funktion zum einfachen loggen mit ContextBuilder jedoch ohne Angabe des Loggers: `F_LogC`
+
 ## [20.10.21]
 ### SPS-Library 0.0.6
 * Lizenzierung für Windows-CE Geräte (keine OEM möglich)
