@@ -5,6 +5,7 @@
 ### SPS-Library 0.0.7
 
 - Neue Funktion zum einfachen loggen mit ContextBuilder jedoch ohne Angabe des Loggers: `F_LogC`
+- Erlauben E_LogLevel Wert als String zu konvertieren mit `{attribute 'to_string'}`
 
 ## [20.10.21]
 ### SPS-Library 0.0.6
