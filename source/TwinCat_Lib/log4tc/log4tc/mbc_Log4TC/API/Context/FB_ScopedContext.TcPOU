@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
   <POU Name="FB_ScopedContext" Id="{01352ada-ce14-48e5-b21f-83c98419f019}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 :Description: Provide nested scoped context properties. 
@@ -21,7 +21,7 @@ The default level is 4.
 	
 	IF bInit THEN
 		fbMachine1Ctx.ContextBuilder.WithInt('MachineNo', 1);
-		fbMachine1Ctx.ContextBuilder.WithInt('MachineNo', 2);
+		fbMachine2Ctx.ContextBuilder.WithInt('MachineNo', 2);
 	END_IF
 	
     fbMachine1Ctx.Begin();
@@ -172,36 +172,5 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_ScopedContext">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ScopedContext.Begin">
-      <LineId Id="22" Count="0" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="28" Count="1" />
-      <LineId Id="8" Count="2" />
-      <LineId Id="12" Count="9" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="30" Count="9" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ScopedContext.ContextBuilder.Get">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_ScopedContext.End">
-      <LineId Id="41" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="49" Count="1" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="7" Count="1" />
-      <LineId Id="61" Count="1" />
-      <LineId Id="9" Count="29" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="51" Count="7" />
-      <LineId Id="45" Count="1" />
-    </LineIds>
   </POU>
 </TcPlcObject>
