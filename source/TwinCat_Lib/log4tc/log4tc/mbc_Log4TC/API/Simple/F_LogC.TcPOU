@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_LogC" Id="{b31d8637-a870-42f5-9d59-de6cbeaf3239}" SpecialFunc="None">
+    <Declaration><![CDATA[(*
+:Description: Writes the given message at the specific level, on the Global logger name and with
+	the given context properties. 
+
+**Logger**
+
+The logger is used to give the message a scope. Although not enforced, it is
+recommended to use a hierarchical structure which reflects the code. For example
+if the method ``CheckTemp`` of a program block ``PRG_Alarms`` is writing a log message,
+the logger name could be ``'PRG_Alarms.CheckTemp'``.
+
+**Example**
+
+.. code:: 
+
+    F_LogC(E_LogLevel.eWarn, 'Something important happened.', F_LogContext().AddInt('serial', 1234));
+	
+*)
+FUNCTION F_LogC : BOOL
+VAR_INPUT
+	eLogLevel		: E_LogLevel;		(* The level of this log. *)
+	sMessage		: T_MaxString;		(* The message to log. *)
+	iContextBuilder	: I_ContextBuilder;	(* A context builder (or 0) *)
+END_VAR
+VAR 
+	aEmptyArg		: BYTE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_LogA(eLogLevel, Const.sGlobalLogger, sMessage, 0, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, aEmptyArg, iContextBuilder);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

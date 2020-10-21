@@ -373,6 +373,9 @@
     <Compile Include="API\Simple\F_LogLC.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Simple\F_LogC.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="API\Simple\I_LogBuilder.TcIO">
       <SubType>Code</SubType>
     </Compile>
