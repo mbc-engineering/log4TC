@@ -117,14 +117,7 @@ END_VAR
 		iLogEntryAdder.AddToLogEntry(E_Scope.eLog, fbLogEntry);
 	END_IF
 	
-	IF fbLogEntry.End() THEN
-		// Add to task ring buffer
-		fbLogEntry.GetBuffer(
-			pBuffer			=> pBuffer,
-			nBufferCount	=> nBufferCount
-		);
-		PRG_TaskLog.TaskLogger.AddLog(pBuffer, nBufferCount);
-	END_IF
+	fbLogEntry.End();
 END_IF
 
 // reset arguments to default values
