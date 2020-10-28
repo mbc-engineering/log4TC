@@ -20,8 +20,8 @@ The default level is 4.
 	fbMachine2Ctx	: FB_ScopedContext;
 	
 	IF bInit THEN
-		fbMachine1Ctx.ContextBuilder.WithInt('MachineNo', 1);
-		fbMachine2Ctx.ContextBuilder.WithInt('MachineNo', 2);
+		fbMachine1Ctx.ContextBuilder.AddInt('MachineNo', 1);
+		fbMachine2Ctx.ContextBuilder.AddInt('MachineNo', 2);
 	END_IF
 	
     fbMachine1Ctx.Begin();
