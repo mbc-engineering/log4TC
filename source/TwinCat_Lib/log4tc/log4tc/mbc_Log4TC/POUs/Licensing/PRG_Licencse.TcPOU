@@ -213,6 +213,7 @@ CASE nState OF
 				CASE fbLicense.stCheckLicense.eResult OF
 					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK,
 					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_OEM:
+					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_Pending:
 						bValidLicense := TRUE;
 						
 					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_Demo:
@@ -220,7 +221,7 @@ CASE nState OF
 					
 					ELSE
 						F_InternalLog(
-							E_LogLevel.eDebug,
+							E_LogLevel.eWarn,
 							'Licensing',
 							'Error reading log4TC license. Result code: %d (E_LicenseHResult)',
 							Tc2_Utilities.F_DINT(fbLicense.stCheckLicense.eResult),
