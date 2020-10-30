@@ -18,7 +18,7 @@
     <Company>mbc engineering GmbH</Company>
     <Released>false</Released>
     <Title>log4TC</Title>
-    <ProjectVersion>0.0.8</ProjectVersion>
+    <ProjectVersion>0.1.0</ProjectVersion>
     <CompilerDefines>DEBUG</CompilerDefines>
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
@@ -407,6 +407,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Simple\TArg\F_LogL8.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\E_CustomTypes.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\E_Scope.TcDUT">

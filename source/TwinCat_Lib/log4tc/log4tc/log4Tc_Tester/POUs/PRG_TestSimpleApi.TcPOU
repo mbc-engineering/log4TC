@@ -10,6 +10,14 @@ VAR
 	sArg			: T_MaxString := 'foo';
 	fArg			: REAL := 4.2;
 	
+	tTime			: TIME :=  T#12H34M15S;
+	tLTime			: LTIME := LTIME#1000D15H23M12S34MS2US44NS;
+	dDate			: DATE := DATE#1996-05-06;
+	dDT				: DT := DATE_AND_TIME#1996-05-06-15:36:30;
+	tTOD			: TOD := TIME_OF_DAY#15:36:30.123;
+	eEnum			: E_LogLevel := E_LogLevel.eFatal;
+	wStr			: WSTRING := "fooöäaΘ𝄞";
+	
 	fbScope			: FB_ScopedContext;
 END_VAR
 ]]></Declaration>
@@ -26,6 +34,22 @@ IF bExecute OR bExecuteSingle THEN
 		fArg, 
 		F_LogContext().AddBool('csv', TRUE)
 	);
+	
+	
+	F_LogA7(
+		E_LogLevel.eInfo, 
+		'Neue Datentypen TIME={time} LTIME={ltime} DATE={date} DT={date_and_time} TOD={time_of_day} ENUM={enum} WSTRING={wstring}',
+		tTime,
+		tLTime,
+		dDate,
+		dDT,
+		tTOD,
+		eEnum,
+		wStr
+	);
+		
+		
+	
 	(*
 	
 	fbScope.Begin();

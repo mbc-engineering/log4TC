@@ -175,6 +175,28 @@ namespace Mbc.Log4Tc.Receiver
                 case 17: // LARGE
                     value = reader.ReadInt64();
                     break;
+                case 20000: // Custom Type TIME
+                    value = TimeSpan.FromMilliseconds(reader.ReadUInt32());
+                    break;
+                case 20001: // Custom Type LTIME
+                    // TimeSpan might loose nanoseconds precision
+                    value = TimeSpan.FromTicks((long)(reader.ReadUInt64() / (1000000 / TimeSpan.TicksPerMillisecond)));
+                    break;
+                case 20002: // Custom Type DATE
+                case 20003: // Custom Type DATE_AND_TIME
+                    value = DateTimeOffset.FromUnixTimeSeconds(reader.ReadUInt32());
+                    break;
+                case 20004: // Custom Type TIME_OF_DAY
+                    // C# has no time only type
+                    value = TimeSpan.FromMilliseconds(reader.ReadUInt32());
+                    break;
+                case 20005: // Custom Type ENUM
+                    // enum values contains its integer value
+                    value = ReadObject(reader);
+                    break;
+                case 20006: // Custom Type WSTRING
+                    value = ReadWString(reader);
+                    break;
                 default:
                     throw new NotImplementedException($"type {type}");
             }
@@ -187,6 +209,13 @@ namespace Mbc.Log4Tc.Receiver
             var len = reader.ReadByte();
             var data = reader.ReadBytes(len);
             return Encoding.GetEncoding(1252).GetString(data);
+        }
+
+        private string ReadWString(AdsBinaryReader reader)
+        {
+            var len = reader.ReadByte();
+            var data = reader.ReadBytes(len * 2);
+            return Encoding.Unicode.GetString(data);
         }
 
         private LogLevel ReadLogLevel(AdsBinaryReader reader)

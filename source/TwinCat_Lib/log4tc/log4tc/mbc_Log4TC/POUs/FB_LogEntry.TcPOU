@@ -165,6 +165,47 @@ END_VAR
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="_WriteWString" Id="{dc0dfbaf-9456-4b98-98e8-0bfdf2eb4895}">
+      <Declaration><![CDATA[METHOD PRIVATE _WriteWString
+VAR_INPUT
+	pValue		: POINTER TO WSTRING(255);
+END_VAR
+VAR
+	nLen			: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pValue <> 0 THEN
+	nLen := Tc2_Standard.WLEN(pValue^);
+	IF nLen >= 0 AND nLen <= 255 THEN
+		_WriteByte(INT_TO_BYTE(nLen)); 
+		_Copy(pValue, INT_TO_UINT(nLen) * 2);
+	ELSE
+		// should not happen because T_MaxString is <= 255 bytes long
+		bError := TRUE;
+		F_InternalLog(
+			E_LogLevel.eError,
+			'FB_LogEntry._WriteWString',
+			'String longer than 255 bytes (actual=%d) - missin 0-byte?',
+			Tc2_Utilities.F_INT(nLen),
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+	END_IF
+ELSE
+		bError := TRUE;
+		F_InternalLog(
+			E_LogLevel.eError,
+			'FB_LogEntry._WriteWString',
+			'String null pointer',
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE,
+			Tc2_Utilities.EMPTY_ARG_VALUE
+		);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="AddAnyArg" Id="{8d510acf-92fd-4561-af25-430687de9976}">
       <Declaration><![CDATA[METHOD INTERNAL AddAnyArg : BOOL
 VAR_INPUT
@@ -256,27 +297,49 @@ CASE stArg.TypeClass OF
 		_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_STRING);
 		_WriteString(stArg.pValue);
 
-	//__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
-		// TODO
+	__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
+		_WriteInt(E_CustomTypes.eType_WSTRING);
+		_WriteWString(stArg.pValue);
 
-	//__SYSTEM.TYPE_CLASS.TYPE_TIME:
-		//_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_TIME);
-		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(TIME)));
+	__SYSTEM.TYPE_CLASS.TYPE_TIME:
+		_WriteInt(E_CustomTypes.eType_TIME);
+		_Copy(stArg.pValue, SIZEOF(TIME));	
 
-	//__SYSTEM.TYPE_CLASS.TYPE_DATE:
-		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(DATE)));
+	__SYSTEM.TYPE_CLASS.TYPE_DATE:
+		_WriteInt(E_CustomTypes.eType_DATE);
+		_Copy(stArg.pValue, SIZEOF(DATE));		
 
-	//__SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME:
-		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(Date_)));
+	__SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME:
+		_WriteInt(E_CustomTypes.eType_DATE_AND_TIME);
+		_Copy(stArg.pValue, SIZEOF(DATE_AND_TIME));		
 
-	//__SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY:
-		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(TIMEOFDAY)));
+	__SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY:
+		_WriteInt(E_CustomTypes.eType_TIME_OF_DAY);
+		_Copy(stArg.pValue, SIZEOF(TIME_OF_DAY));		
 
-	//__SYSTEM.TYPE_CLASS.TYPE_ENUM:
-		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, 8));
+	__SYSTEM.TYPE_CLASS.TYPE_ENUM:
+		_WriteInt(E_CustomTypes.eType_ENUM);
+		// First write the integer value of the enumeration, expected 1 to 8 bytes
+		CASE stArg.diSize OF
+			1: 
+				_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_BYTE);
+				_Copy(stArg.pValue, SIZEOF(BYTE));
+			2:
+				_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_WORD);
+				_Copy(stArg.pValue, SIZEOF(WORD));
+			4:
+				_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_DWORD);
+				_Copy(stArg.pValue, SIZEOF(DWORD));
+			5:
+				_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_LWORD);
+				_Copy(stArg.pValue, SIZEOF(LWORD));
+			ELSE
+				_WriteInt(Tc2_Utilities.E_ArgType.ARGTYPE_UNKNOWN);
+		END_CASE
 
-	//__SYSTEM.TYPE_CLASS.TYPE_LTIME:
-		//_Copy(stArg.pValue, F_DINT_TO_UINT_MAX(stArg.diSize, SIZEOF(LTIME)));
+	__SYSTEM.TYPE_CLASS.TYPE_LTIME:
+		_WriteInt(E_CustomTypes.eType_LTIME);
+		_Copy(stArg.pValue, SIZEOF(LTIME));		
 		
 	ELSE
 		F_InternalLog(

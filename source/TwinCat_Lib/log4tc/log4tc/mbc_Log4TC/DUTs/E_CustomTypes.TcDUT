@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="E_CustomTypes" Id="{b3e882b9-6cea-4166-ba56-65b2b14659c4}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE INTERNAL E_CustomTypes :
+(
+	eType_TIME				:= 20000,
+	eType_LTIME				:= 20001,
+	eType_DATE				:= 20002,
+	eType_DATE_AND_TIME		:= 20003,
+	eType_TIME_OF_DAY		:= 20004,
+	eType_ENUM				:= 20005,
+	eType_WSTRING			:= 20006
+) INT;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

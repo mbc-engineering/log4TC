@@ -1,12 +1,15 @@
 # Changelog
 
 ## [Vnext]
+### Added
+- Neue ANY-Datentypen fürs Logging: TIME, LTIME, DATE, DATE_AND_TIME, TIME_OF_DAY, ENUM (numerisch), WSTRING
 
-### SPS-Library 0.0.7
+### SPS-Library 0.1.0
 
 - Neue Funktion zum einfachen loggen mit ContextBuilder jedoch ohne Angabe des Loggers: `F_LogC`
 - Erlauben E_LogLevel Wert als String zu konvertieren mit `{attribute 'to_string'}`
 - 0-Copy Logging: Log-Meldungen werden direkt in den Sendebuffer geschrieben
+- Neue ANY-Datentypen fürs Logging: TIME, LTIME, DATE, DATE_AND_TIME, TIME_OF_DAY, ENUM (numerisch), WSTRING
 
 ## [20.10.21]
 ### SPS-Library 0.0.6
