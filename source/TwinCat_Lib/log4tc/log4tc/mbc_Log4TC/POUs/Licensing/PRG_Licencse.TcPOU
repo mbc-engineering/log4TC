@@ -212,7 +212,7 @@ CASE nState OF
 		
 				CASE fbLicense.stCheckLicense.eResult OF
 					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK,
-					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_OEM:
+					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_OEM,
 					Tc2_Utilities.E_LicenseHResult.E_LHR_LicenseOK_Pending:
 						bValidLicense := TRUE;
 						

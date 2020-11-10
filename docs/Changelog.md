@@ -3,6 +3,8 @@
 ## [20.10.21]
 ### SPS-Library 0.0.6
 * Lizenzierung für Windows-CE Geräte (keine OEM möglich)
+### SPS-Library 0.0.8
+* Lizenzierung Bugfix für Lizenzierungsklemme
 
 ## [20.10.15]
 ### Added
