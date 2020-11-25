@@ -11,14 +11,14 @@ namespace Mbc.Log4Tc.Output.NLog
 {
     public class NLogLog4TcOutput : OutputHandlerBase
     {
-        private readonly Logger _dispatchLogger = LogManager.GetLogger("TwinCat");
-
         public NLogLog4TcOutput(NLogLog4TcOutputConfiguration configuration)
         {
         }
 
         protected override Task ProcesLogEntryAsync(LogEntry logEntry)
         {
+            var logger = LogManager.GetLogger(logEntry.Logger);
+
             var messageTemplateParameters = logEntry.MessageFormatter.Arguments.Zip(logEntry.ArgumentValues, (x, y) => new MessageTemplateParameter(x, y, null, CaptureType.Normal)).ToList();
 
             var logEvent = new LogEventInfo(ConvertToNLogLevel(logEntry.Level), logEntry.Logger, logEntry.Message, messageTemplateParameters)
@@ -43,7 +43,7 @@ namespace Mbc.Log4Tc.Output.NLog
             logEvent.Properties.Add("_TcLogSource_", logEntry.Source);
             logEvent.Properties.Add("_TcHostname_", logEntry.Hostname);
 
-            _dispatchLogger.Log(logEvent);
+            logger.Log(logEvent);
 
             return Task.CompletedTask;
         }
