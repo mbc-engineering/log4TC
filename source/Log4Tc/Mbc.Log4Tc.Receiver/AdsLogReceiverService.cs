@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Mbc.Log4Tc.Receiver
 {
-    public class AdsLogReceiverService : IHostedService, IDisposable
+    public class AdsLogReceiverService : BackgroundService, IDisposable
     {
-        private readonly CancellationTokenSource _stopToken = new CancellationTokenSource();
-        private readonly ILogger<AdsLogReceiver> _logger;
+        private readonly ILogger _logger;
         private readonly AdsLogReceiver _adsLogReceiver;
-        private Task _connectTask;
 
         public AdsLogReceiverService(ILogger<AdsLogReceiver> logger, AdsLogReceiver adsLogReceiver)
         {
@@ -19,37 +17,28 @@ namespace Mbc.Log4Tc.Receiver
             _adsLogReceiver = adsLogReceiver;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
             _adsLogReceiver.Dispose();
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _connectTask = Task.Run(() => ConnectAsync(_stopToken.Token));
-            return Task.CompletedTask;
+            await ConnectAsync(stoppingToken);
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            _stopToken.Cancel();
-            if (_connectTask != null && !_connectTask.IsCompleted)
-            {
-                try
-                {
-                    await _connectTask;
-                }
-                catch (Exception)
-                {
-                    // ignored - we just want to ensure no task is running
-                }
-            }
+            await base.StopAsync(cancellationToken);
 
             _adsLogReceiver.Disconnect();
         }
 
         private async Task ConnectAsync(CancellationToken ct)
         {
+            int delaySeconds = 1;
+
             while (!ct.IsCancellationRequested)
             {
                 try
@@ -60,11 +49,16 @@ namespace Mbc.Log4Tc.Receiver
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e, "Error connecting log receiver. Waiting for next retry.");
+                    _logger.LogError(e, "Error connecting log receiver. Waiting for next retry in {seconds} second.", delaySeconds);
                 }
 
                 // Wait for next connect
-                await Task.Delay(TimeSpan.FromSeconds(30), ct);
+                await Task.Delay(TimeSpan.FromSeconds(delaySeconds), ct);
+
+                if (delaySeconds < 64)
+                {
+                    delaySeconds *= 2;
+                }
             }
         }
     }
