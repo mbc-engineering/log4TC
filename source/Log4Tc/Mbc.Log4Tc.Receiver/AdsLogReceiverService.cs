@@ -25,14 +25,14 @@ namespace Mbc.Log4Tc.Receiver
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.LogInformation("Starting ADS log receiver.");
             await ConnectAsync(stoppingToken);
         }
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            await base.StopAsync(cancellationToken);
-
             _adsLogReceiver.Disconnect();
+            await base.StopAsync(cancellationToken);
         }
 
         private async Task ConnectAsync(CancellationToken ct)

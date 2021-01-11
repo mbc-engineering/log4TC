@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Core;
 using System;
 using System.IO;
 using System.Linq;
@@ -23,12 +24,28 @@ namespace Mbc.Log4Tc.Service
 
         public static async Task Main(string[] args)
         {
-            await CreateHostBuilder(args)
-                .Build()
-                .RunAsync();
+            var logPath = Path.Combine(GetInternalBasePath(), "service.log");
+            var logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.RollingFile(logPath, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] ({SourceContext}) {Message}{NewLine}{Exception}", fileSizeLimitBytes: 1024 * 1024 * 10, retainedFileCountLimit: 5)
+                .CreateLogger();
+
+            try
+            {
+                logger.Information("Starting log4TC service.");
+
+                await CreateHostBuilder(args, logger)
+                    .Build()
+                    .RunAsync();
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Error starting log4TC service.");
+            }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args)
+        public static IHostBuilder CreateHostBuilder(string[] args, Logger logger)
         {
             CmdArgs = args;
             var hostBuilder = Host.CreateDefaultBuilder(args)
@@ -43,14 +60,6 @@ namespace Mbc.Log4Tc.Service
                 .ConfigureLogging(loggingBuilder =>
                 {
                     loggingBuilder.ClearProviders();
-
-                    var logPath = Path.Combine(GetInternalBasePath(), "service.log");
-                    var logger = new LoggerConfiguration()
-                        .Enrich.FromLogContext()
-                        .WriteTo.Console()
-                        .WriteTo.RollingFile(logPath, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] ({SourceContext}) {Message}{NewLine}{Exception}", fileSizeLimitBytes: 1024 * 1024 * 10, retainedFileCountLimit: 5)
-                        .CreateLogger();
-
                     loggingBuilder.AddSerilog(logger: logger, dispose: true);
                 })
                 .ConfigureServices((hostContext, services) =>
