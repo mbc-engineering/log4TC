@@ -37,7 +37,7 @@ namespace Mbc.Log4Tc.SmokeTest
         public void Start()
         {
             _logDispatcher.StartAsync(CancellationToken.None).GetAwaiter().GetResult();
-            _adsLogReceiver.Connect();
+            _adsLogReceiver.ConnectServer();
         }
 
         public void Stop()

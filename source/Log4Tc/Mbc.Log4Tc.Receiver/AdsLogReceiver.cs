@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using TwinCAT.Ads;
 using TwinCAT.Ads.Server;
 
@@ -10,7 +12,7 @@ using LogLevel = Mbc.Log4Tc.Model.LogLevel;
 
 namespace Mbc.Log4Tc.Receiver
 {
-    public class AdsLogReceiver : TcAdsServer, ILogReceiver
+    public class AdsLogReceiver : AdsServer, ILogReceiver
     {
         private readonly ILogger<AdsLogReceiver> _logger;
         private readonly AdsHostnameService _adsHostnameService;
@@ -24,6 +26,54 @@ namespace Mbc.Log4Tc.Receiver
             _adsHostnameService = adsHostnameService;
         }
 
+        protected override Task<AdsErrorCode> WriteConfirmationAsync(AmsAddress sender, uint invokeId, AdsErrorCode result, CancellationToken cancel)
+        {
+            return base.WriteConfirmationAsync(sender, invokeId, result, cancel);
+        }
+
+        protected override async Task<AdsErrorCode> WriteIndicationAsync(AmsAddress target, uint invokeId, uint indexGroup, uint indexOffset, ReadOnlyMemory<byte> writeData, CancellationToken cancel)
+        {
+            // send response as soon as possible
+            var result = await base.WriteIndicationAsync(target, invokeId, indexGroup, indexOffset, writeData, cancel);
+
+            try
+            {
+                var entries = new List<LogEntry>();
+                var dataReader = new AdsDataCompatibilityReader(writeData);
+
+                while (!dataReader.Eof)
+                {
+                    LogEntry logEntry;
+
+                    // Read the first byte in block for version
+                    var version = dataReader.ReadByte();
+                    if (version == 1)
+                    {
+                        logEntry = ReadLogEntryV1(dataReader);
+                    }
+                    else
+                    {
+                        throw new NotImplementedException($"Version {version}");
+                    }
+
+                    logEntry.Source = target.ToString();
+                    logEntry.Hostname = _adsHostnameService.GetHostname(target.NetId).ValueOr(string.Empty);
+
+                    entries.Add(logEntry);
+                }
+
+                LogsReceived?.Invoke(this, new LogEntryEventArgs(entries));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error parsing log message from plc.");
+            }
+
+            return result;
+        }
+
+        // ToDo: Remove old version
+        /*
         public override void AdsWriteInd(AmsAddress rAddr, uint invokeId, uint indexGroup, uint indexOffset, uint cbLength, byte[] data)
         {
             // send response as soon as possible
@@ -61,40 +111,41 @@ namespace Mbc.Log4Tc.Receiver
                 _logger.LogError(e, "Error parsing log message from plc.");
             }
         }
+        */
 
-        private LogEntry ReadLogEntryV1(AdsBinaryReader reader)
+        private LogEntry ReadLogEntryV1(AdsDataCompatibilityReader dataReader)
         {
             var logEntry = new LogEntry
             {
-                Message = ReadString(reader),
-                Logger = ReadString(reader),
-                Level = ReadLogLevel(reader),
-                PlcTimestamp = ReadFiletime(reader),
-                ClockTimestamp = ReadFiletime(reader),
-                TaskIndex = reader.ReadInt32(),
-                TaskName = ReadString(reader),
-                TaskCycleCounter = reader.ReadUInt32(),
-                AppName = ReadString(reader),
-                ProjectName = ReadString(reader),
-                OnlineChangeCount = reader.ReadUInt32(),
+                Message = dataReader.ReadString(),
+                Logger = dataReader.ReadString(),
+                Level = ReadLogLevel(dataReader),
+                PlcTimestamp = ReadFiletime(dataReader),
+                ClockTimestamp = ReadFiletime(dataReader),
+                TaskIndex = dataReader.ReadInt32(),
+                TaskName = dataReader.ReadString(),
+                TaskCycleCounter = dataReader.ReadUInt32(),
+                AppName = dataReader.ReadString(),
+                ProjectName = dataReader.ReadString(),
+                OnlineChangeCount = dataReader.ReadUInt32(),
             };
 
             var end = false;
             while (!end)
             {
-                var type = reader.ReadByte();
+                var type = dataReader.ReadByte();
                 switch (type)
                 {
                     case 1:
-                        var argIdx = (int)reader.ReadByte();
-                        var argValue = ReadObject(reader);
+                        var argIdx = (int)dataReader.ReadByte();
+                        var argValue = ReadObject(dataReader);
                         logEntry.Arguments.Add(argIdx, argValue);
                         break;
                     case 2:
                         // context
-                        var ctxScope = reader.ReadByte(); // TODO
-                        var ctxName = ReadString(reader);
-                        var ctxValue = ReadObject(reader);
+                        var ctxScope = dataReader.ReadByte(); // TODO
+                        var ctxName = dataReader.ReadString();
+                        var ctxValue = ReadObject(dataReader);
                         logEntry.Context[ctxName] = ctxValue;
                         break;
                     case 255:
@@ -108,9 +159,9 @@ namespace Mbc.Log4Tc.Receiver
             return logEntry;
         }
 
-        private DateTime ReadFiletime(AdsBinaryReader reader)
+        private DateTime ReadFiletime(AdsDataCompatibilityReader dataReader)
         {
-            var filetime = reader.ReadInt64();
+            var filetime = dataReader.ReadInt64();
             try
             {
                 return DateTime.FromFileTime(filetime);
@@ -121,9 +172,9 @@ namespace Mbc.Log4Tc.Receiver
             }
         }
 
-        private object ReadObject(AdsBinaryReader reader)
+        private object ReadObject(AdsDataCompatibilityReader dataReader)
         {
-            var type = reader.ReadInt16();
+            var type = dataReader.ReadInt16();
             object value;
             switch (type)
             {
@@ -131,71 +182,71 @@ namespace Mbc.Log4Tc.Receiver
                     value = null;
                     break;
                 case 1: // BYTE
-                    value = reader.ReadByte();
+                    value = dataReader.ReadByte();
                     break;
                 case 2: // WORD
-                    value = reader.ReadUInt16();
+                    value = dataReader.ReadUInt16();
                     break;
                 case 3: // DWORD
-                    value = reader.ReadUInt32();
+                    value = dataReader.ReadUInt32();
                     break;
                 case 4: // REAL
-                    value = reader.ReadSingle();
+                    value = dataReader.ReadSingle();
                     break;
                 case 5: // LREAL
-                    value = reader.ReadDouble();
+                    value = dataReader.ReadDouble();
                     break;
                 case 6: // SINT
-                    value = reader.ReadSByte();
+                    value = dataReader.ReadSByte();
                     break;
                 case 7: // INT
-                    value = reader.ReadInt16();
+                    value = dataReader.ReadInt16();
                     break;
                 case 8: // DINT
-                    value = reader.ReadInt32();
+                    value = dataReader.ReadInt32();
                     break;
                 case 9: // USINT
-                    value = reader.ReadByte();
+                    value = dataReader.ReadByte();
                     break;
                 case 10: // UINT
-                    value = reader.ReadUInt16();
+                    value = dataReader.ReadUInt16();
                     break;
                 case 11: // UDINT
-                    value = reader.ReadUInt32();
+                    value = dataReader.ReadUInt32();
                     break;
                 case 12: // String
-                    value = ReadString(reader);
+                    value = dataReader.ReadString();
                     break;
                 case 13: // BOOL
-                    value = reader.ReadByte() != 0;
+                    value = dataReader.ReadByte() != 0;
                     break;
                 case 15: // ULARGE
-                    value = reader.ReadUInt64();
+                    value = dataReader.ReadUInt64();
                     break;
                 case 17: // LARGE
-                    value = reader.ReadInt64();
+                    value = dataReader.ReadInt64();
                     break;
                 case 20000: // Custom Type TIME
-                    value = TimeSpan.FromMilliseconds(reader.ReadUInt32());
+                    value = TimeSpan.FromMilliseconds(dataReader.ReadUInt32());
                     break;
                 case 20001: // Custom Type LTIME
                     // TimeSpan might loose nanoseconds precision
-                    value = TimeSpan.FromTicks((long)(reader.ReadUInt64() / (1000000 / TimeSpan.TicksPerMillisecond)));
+                    value = TimeSpan.FromTicks((long)(dataReader.ReadUInt64() / (1000000 / TimeSpan.TicksPerMillisecond)));
                     break;
                 case 20002: // Custom Type DATE
                 case 20003: // Custom Type DATE_AND_TIME
-                    value = DateTimeOffset.FromUnixTimeSeconds(reader.ReadUInt32());
+                    value = DateTimeOffset.FromUnixTimeSeconds(dataReader.ReadUInt32());
                     break;
                 case 20004: // Custom Type TIME_OF_DAY
                     // C# has no time only type
-                    value = TimeSpan.FromMilliseconds(reader.ReadUInt32());
+                    value = TimeSpan.FromMilliseconds(dataReader.ReadUInt32());
                     break;
                 case 20005: // Custom Type ENUM
                     // enum values contains its integer value
-                    value = ReadObject(reader);
+                    value = ReadObject(dataReader);
                     break;
                 case 20006: // Custom Type WSTRING
-                    value = ReadWString(reader);
+                    value = dataReader.ReadWString();
                     break;
                 default:
                     throw new NotImplementedException($"type {type}");
@@ -204,23 +255,9 @@ namespace Mbc.Log4Tc.Receiver
             return value;
         }
 
-        private string ReadString(AdsBinaryReader reader)
+        private LogLevel ReadLogLevel(AdsDataCompatibilityReader dataReader)
         {
-            var len = reader.ReadByte();
-            var data = reader.ReadBytes(len);
-            return Encoding.GetEncoding(1252).GetString(data);
-        }
-
-        private string ReadWString(AdsBinaryReader reader)
-        {
-            var len = reader.ReadByte();
-            var data = reader.ReadBytes(len * 2);
-            return Encoding.Unicode.GetString(data);
-        }
-
-        private LogLevel ReadLogLevel(AdsBinaryReader reader)
-        {
-            var value = reader.ReadUInt16();
+            var value = dataReader.ReadUInt16();
             return (LogLevel)Enum.ToObject(typeof(LogLevel), value);
         }
     }

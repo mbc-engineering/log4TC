@@ -21,7 +21,7 @@ namespace Mbc.Log4Tc.Receiver
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _adsLogReceiver.Connect();
+            _adsLogReceiver.ConnectServer();
             return Task.CompletedTask;
         }
 
