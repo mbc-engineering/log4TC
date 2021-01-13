@@ -50,10 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" />
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8" />
-    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="2.9.8" />
-    <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="2.9.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" />
+    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="3.3.2" />
+    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="3.3.2" />
+    <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="3.3.2" />
   </ItemGroup>
 
 </Project>

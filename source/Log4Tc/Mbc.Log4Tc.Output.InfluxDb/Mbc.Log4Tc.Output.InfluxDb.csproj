@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="InfluxDB.Client" Version="1.9.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
