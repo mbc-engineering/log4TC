@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="FB_Log4TcTask" Id="{7a1ab82d-e3cd-4e48-96e0-5ca76f3c5915}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Main code of Log4TC which manages log messages of a single task.
@@ -86,7 +86,8 @@ END_VAR
 	RETURN;
 END_IF
 
-PRG_Licencse.InitializeLicenseFromAnyTask();
+// Deactivate Licence
+// PRG_Licencse.InitializeLicenseFromAnyTask();
 
 CASE nState OF
 	0: // Init
@@ -207,5 +208,34 @@ END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
+    <LineIds Name="FB_Log4TcTask">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask._InitAndCheckTask">
+      <LineId Id="3" Count="15" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask._ReadBuffer.Get">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.Call">
+      <LineId Id="3" Count="2" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="6" Count="80" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.Init">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.TaskContext.Get">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Log4TcTask.WriteBuffer.Get">
+      <LineId Id="3" Count="3" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

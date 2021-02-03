@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="FB_LogEntry" Id="{fdc002f1-7166-489a-9e27-9853cb239b8c}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'no_explicit_call' := 'no direct call necessary'} 
 {attribute 'conditionalshow'}
@@ -466,6 +466,7 @@ END_IF
 
 _WriteByte(255);
 
+(* Deactivate Licence check
 IF NOT PRG_Licencse.IsLicensed THEN
 	F_InternalLog(
 		E_LogLevel.eError,
@@ -478,6 +479,7 @@ IF NOT PRG_Licencse.IsLicensed THEN
 	);
 	RETURN;	
 END_IF
+*)
 
 nActTaskIndex := GETCURTASKINDEXEX();
 
@@ -593,5 +595,76 @@ Start := NOT bError;
 ]]></ST>
       </Implementation>
     </Method>
+    <LineIds Name="FB_LogEntry">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._Copy">
+      <LineId Id="3" Count="16" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._Reset">
+      <LineId Id="3" Count="5" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteByte">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteDInt">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteInt">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteLInt">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteString">
+      <LineId Id="3" Count="28" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteUDInt">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteUInt">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry._WriteWString">
+      <LineId Id="3" Count="28" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.AddAnyArg">
+      <LineId Id="3" Count="143" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.AddBuffer">
+      <LineId Id="3" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.AddContext">
+      <LineId Id="3" Count="2" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.AddTArg">
+      <LineId Id="3" Count="46" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.End">
+      <LineId Id="3" Count="4" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="8" Count="12" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="21" Count="49" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LogEntry.Start">
+      <LineId Id="3" Count="44" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
   </POU>
 </TcPlcObject>

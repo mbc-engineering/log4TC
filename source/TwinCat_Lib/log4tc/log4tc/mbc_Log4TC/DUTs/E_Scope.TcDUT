@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <DUT Name="E_Scope" Id="{0cb1f182-209d-44d8-b9c4-d492da6de2ee}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
 {attribute 'conditionalshow'}
 {attribute 'to_string'}
-TYPE INTERNAL E_Scope :
+TYPE E_Scope :
 (
 	eLog			:= 0,
 	eLogger			:= 1,

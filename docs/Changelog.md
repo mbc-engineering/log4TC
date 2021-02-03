@@ -1,8 +1,14 @@
 # Changelog
 
-## [Vnext]
+## [21.02.03]
 ### Added
 - Neue ANY-Datentypen fürs Logging: TIME, LTIME, DATE, DATE_AND_TIME, TIME_OF_DAY, ENUM (numerisch), WSTRING
+
+### Fixed
+- Einige Startup Probleme behoben
+
+### SPS-Library 0.2.0
+- Lizenz Prüfung entfernt
 
 ### SPS-Library 0.1.0
 

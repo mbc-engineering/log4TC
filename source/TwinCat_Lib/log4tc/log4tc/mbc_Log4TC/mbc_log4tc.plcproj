@@ -18,7 +18,7 @@
     <Company>mbc engineering GmbH</Company>
     <Released>false</Released>
     <Title>log4TC</Title>
-    <ProjectVersion>0.1.0</ProjectVersion>
+    <ProjectVersion>0.2.0</ProjectVersion>
     <CompilerDefines>DEBUG</CompilerDefines>
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
