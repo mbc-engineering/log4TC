@@ -1,4 +1,0 @@
-[submodule "source/TwinCat_Examples"]
-	path = source/TwinCat_Examples
-	url = https://github.com/mbc-engineering/log4TC.git
-	branch = master
