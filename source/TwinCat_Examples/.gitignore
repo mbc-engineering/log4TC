@@ -1,0 +1,10 @@
+**/*.tpy
+**/_Libraries/
+*.suo
+LineIDs.dbg
+*.tmc
+_CompileInfo/
+_Boot/
+TrialLicense.tclrs
+*.~u
+

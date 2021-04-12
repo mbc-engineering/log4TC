@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4022.10">
+  <POU Name="MAIN" Id="{21bfe353-a59a-4092-b9d6-97dae9bf59b4}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbCycleTimeLogger	: FB_LogTaskCycleTime := (nCycleInterval:=1000);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF _TaskInfo[1].FirstCycle THEN
+	// Change AMS id if log service runs on different server than
+	// plc. Remove if plc and service runs on the same machine.
+	//PRG_TaskLog.Init('192.168.56.1.1.1');
+	F_Log(E_LogLevel.eInfo, 'Plc started.');
+END_IF
+
+// simulates load on the task
+PRG_SimulateLoad();
+
+// simulate logs
+PRG_SimulateLogs();
+
+// logs the cycle time statistics
+fbCycleTimeLogger();
+
+PRG_TaskLog.Call();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

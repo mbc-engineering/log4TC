@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmItem" TcSmVersion="1.0" TcVersion="3.1.4022.16" ClassName="CNestedPlcProjDef">
+	<Project Disabled="true" GUID="{6F419694-B36E-4BAB-90AC-F4A6B024B617}" Name="D_LogWithContext" PrjFilePath="..\..\D_LogWithContext\D_LogWithContext.plcproj" TmcFilePath="..\..\D_LogWithContext\D_LogWithContext.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance Id="#x085020c0" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="D_LogWithContext\D_LogWithContext.tmc">
+			<Name>D_LogWithContext Instance</Name>
+			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+			<TaskPouOids>
+				<TaskPouOid Prio="21" OTCID="#x085020c1"/>
+			</TaskPouOids>
+		</Instance>
+	</Project>
+</TcSmItem>
