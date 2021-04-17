@@ -466,21 +466,6 @@ END_IF
 
 _WriteByte(255);
 
-(* Deactivate Licence check
-IF NOT PRG_Licencse.IsLicensed THEN
-	F_InternalLog(
-		E_LogLevel.eError,
-		'Log4TcTask.AddLog',
-		'log4TC license missing or expired.',
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE,
-		Tc2_Utilities.EMPTY_ARG_VALUE
-	);
-	RETURN;	
-END_IF
-*)
-
 nActTaskIndex := GETCURTASKINDEXEX();
 
 // end buffer write access

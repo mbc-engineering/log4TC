@@ -4,7 +4,6 @@
     <Declaration><![CDATA[PROGRAM INTERNAL PRG_Test
 VAR
 	fbContextBuilder_Test	: FB_ContextBuilder_Test;
-	fbSha256_Test			: FB_SHA256_Test;
 	
 	fbLog			: FB_LoggerLAC(Const.sLoggerFromInstance);
 	

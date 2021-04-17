@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.12" ClassName="CNestedPlcProjDef">
-	<Project GUID="{BE380BFA-BE18-45AC-98AA-FF1ACCC650C5}" Name="log4Tc_Tester" PrjFilePath="..\..\log4Tc_Tester\log4Tc_Tester.plcproj" TmcFilePath="..\..\log4Tc_Tester\log4Tc_Tester.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
-		<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="log4Tc_Tester\log4Tc_Tester.tmc">
-			<Name>log4Tc_Tester Instance</Name>
+	<Project GUID="{04FDCB5E-8373-4851-A688-CBAB70CD7D8E}" Name="mbc_Log4TC" PrjFilePath="..\..\mbc_Log4TC\mbc_Log4TC.plcproj" TmcFilePath="..\..\mbc_Log4TC\mbc_Log4TC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="mbc_Log4TC\mbc_Log4TC.tmc">
+			<Name>mbc_Log4TC Instance</Name>
 			<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 			<Contexts>
 				<Context>
@@ -16,7 +16,7 @@
 				</Context>
 			</Contexts>
 			<TaskPouOids>
-				<TaskPouOid Prio="20" OTCID="#x08502041"/>
+				<TaskPouOid Prio="20" OTCID="#x08502001"/>
 			</TaskPouOids>
 		</Instance>
 	</Project>
