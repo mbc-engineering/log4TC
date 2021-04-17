@@ -1,17 +1,19 @@
 # Changelog
 
-## [21.02.03]
+## [21.04.17]
 ### Added
 - Neue ANY-Datentypen fürs Logging: TIME, LTIME, DATE, DATE_AND_TIME, TIME_OF_DAY, ENUM (numerisch), WSTRING
 
 ### Fixed
 - Einige Startup Probleme behoben
+- Setup of the library works now with TwinCat 4024 shell 
 
 ### Changed
 - Einige Logeinträge
 
-### SPS-Library 0.2.0
+### SPS-Library 0.2.1
 - Lizenz Prüfung entfernt
+- Library ist nun mbc_Log4TC.library anstelle von mbc_Log4TC.compiled-library
 - E_Scope nun public verwendbar
 
 ### SPS-Library 0.1.0
