@@ -9,7 +9,7 @@
                  NeverOverwrite="no"
                  KeyPath="yes"
                  Guid="DA0DAA54-1D99-4301-9B8C-33A85D4A2B0A">
-        <File Id="Log4TcTwinCatLibFile" Source="..\..\..\library\mbc_Log4TC.compiled-library" />
+        <File Id="Log4TcTwinCatLibFile" Source="..\..\..\library\mbc_Log4TC.library" />
       </Component>
 
       <Component Id="Cmp_Log4TcTwinCatLibLicense"
