@@ -19,8 +19,8 @@ namespace Mbc.Log4Tc.Receiver
 
         public override void Dispose()
         {
-            base.Dispose();
             _adsLogReceiver.Dispose();
+            base.Dispose();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

@@ -7,8 +7,12 @@
 ### Fixed
 - Einige Startup Probleme behoben
 
+### Changed
+- Einige Logeinträge
+
 ### SPS-Library 0.2.0
 - Lizenz Prüfung entfernt
+- E_Scope nun public verwendbar
 
 ### SPS-Library 0.1.0
 
