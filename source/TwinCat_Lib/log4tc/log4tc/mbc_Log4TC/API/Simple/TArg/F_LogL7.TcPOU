@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="F_LogL7" Id="{f17588ed-6fcc-430b-9223-e0097d9a6647}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_LogL7 
 VAR_INPUT
@@ -35,9 +35,5 @@ END_VAR
 	0
 );]]></ST>
     </Implementation>
-    <LineIds Name="F_LogL7">
-      <LineId Id="7" Count="0" />
-      <LineId Id="52" Count="14" />
-    </LineIds>
   </POU>
 </TcPlcObject>

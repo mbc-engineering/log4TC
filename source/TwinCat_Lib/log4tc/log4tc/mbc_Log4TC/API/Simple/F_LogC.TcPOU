@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="F_LogC" Id="{b31d8637-a870-42f5-9d59-de6cbeaf3239}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 :Description: Writes the given message at the specific level, on the Global logger name and with

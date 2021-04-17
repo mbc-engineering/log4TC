@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <DUT Name="ST_SHA256_BufferState" Id="{10b6f0bb-8d4e-4c6b-b966-b6da468fcb44}">
     <Declaration><![CDATA[TYPE ST_SHA256_BufferState :
 STRUCT

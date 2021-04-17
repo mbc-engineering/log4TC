@@ -208,34 +208,5 @@ END_IF]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <LineIds Name="FB_Log4TcTask">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask._InitAndCheckTask">
-      <LineId Id="3" Count="15" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask._ReadBuffer.Get">
-      <LineId Id="3" Count="3" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.Call">
-      <LineId Id="3" Count="2" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="6" Count="80" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.Init">
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.TaskContext.Get">
-      <LineId Id="3" Count="0" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Log4TcTask.WriteBuffer.Get">
-      <LineId Id="3" Count="3" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

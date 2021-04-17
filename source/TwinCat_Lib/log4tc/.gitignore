@@ -1,2 +1,10 @@
+# TwinCAT 3 projects
 LineIDs.dbg
 **/_Libraries
+*.tmc
+*.compileinfo
+*.tizip
+*.project.~u
+*.tpy
+**/_Boot
+/TwinCat/Samples/Mbc.Tc3.Pcs.Samples/*.tclrs

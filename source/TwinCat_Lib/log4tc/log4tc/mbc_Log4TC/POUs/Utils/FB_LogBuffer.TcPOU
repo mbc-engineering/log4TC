@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="FB_LogBuffer" Id="{375f315b-e151-40c4-ad95-8fb8cec0ccad}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'no_explicit_call' := 'no direct call necessary'}
 FUNCTION_BLOCK INTERNAL FB_LogBuffer

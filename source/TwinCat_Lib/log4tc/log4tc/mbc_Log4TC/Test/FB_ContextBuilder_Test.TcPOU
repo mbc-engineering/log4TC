@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="FB_ContextBuilder_Test" Id="{503b98b2-d59e-4322-ac81-c79c92d0993a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_ContextBuilder_Test EXTENDS TcUnit.FB_TestSuite
 ]]></Declaration>

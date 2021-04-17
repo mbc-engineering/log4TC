@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <Itf Name="I_LogEntryAdder" Id="{93ca55f7-f14e-4dce-856e-2efe317067e7}">
     <Declaration><![CDATA[{attribute 'conditionalshow'}
 INTERFACE INTERNAL I_LogEntryAdder EXTENDS __System.IQueryInterface
