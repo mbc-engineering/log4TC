@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <Itf Name="I_LogBuilder" Id="{7cc70285-5d0d-45bd-9ca5-5fc75d169d66}">
     <Declaration><![CDATA[INTERFACE I_LogBuilder
 ]]></Declaration>

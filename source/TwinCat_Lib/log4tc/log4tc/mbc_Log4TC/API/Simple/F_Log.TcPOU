@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="F_Log" Id="{000f3ef1-efd9-4a4d-9a1f-6ebbe7a6fe8d}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 :Description: Writes the given message at the specific level. 
@@ -26,9 +26,5 @@ END_VAR]]></Declaration>
       <ST><![CDATA[F_LogL(eLogLevel, Const.sGlobalLogger, sMessage);
 ]]></ST>
     </Implementation>
-    <LineIds Name="F_Log">
-      <LineId Id="85" Count="0" />
-      <LineId Id="84" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

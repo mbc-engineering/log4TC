@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="F_LogA7" Id="{86eed1dc-d43a-43e3-9e0f-2e5e8642dd28}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_LogA7 
 VAR_INPUT
@@ -19,9 +19,5 @@ END_VAR
       <ST><![CDATA[F_LogLA7(eLogLevel, Const.sGlobalLogger, sMessage, aArg1, aArg2, aArg3, aArg4, aArg5, aArg6, aArg7);
 ]]></ST>
     </Implementation>
-    <LineIds Name="F_LogA7">
-      <LineId Id="46" Count="0" />
-      <LineId Id="44" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -47,8 +47,12 @@
                       Win64="no" />
     </Property>
     <Property Id="WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED" Secure="yes" />
-    <SetProperty Id="WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED" Value="1" After="AppSearch">
-      WIX_TWINCAT3_BUILD_INSTALLED >= "#$(var.Twincat3MinBuild4022)"
+    <SetProperty  Action="SetTc3BuildInstalledCondition1" Id="WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED" Value="1" After="AppSearch">
+      <![CDATA[WIX_TWINCAT3_BUILD_INSTALLED >= "#$(var.Twincat3MinBuild4022)"]]>
+    </SetProperty>
+    <!-- in twincat 2024 shell the value is 0 -->
+    <SetProperty Action="SetTc3BuildInstalledCondition2" Id="WIX_IS_TWINCAT3_BUILD_4022_OR_LATER_INSTALLED" Value="1" After="AppSearch">
+      <![CDATA[WIX_TWINCAT3_BUILD_INSTALLED = "#0"]]>
     </SetProperty>
 
     <!-- Exist twincat Alarm & Event v1 TcEventLogger as service -->

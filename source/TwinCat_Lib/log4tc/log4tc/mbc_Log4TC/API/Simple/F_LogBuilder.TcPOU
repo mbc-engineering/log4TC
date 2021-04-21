@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="F_LogBuilder" Id="{c970aefe-3199-4c53-b630-5acb322a775a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_LogBuilder : I_LogBuilder
 VAR_INPUT
@@ -10,8 +10,5 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <LineIds Name="F_LogBuilder">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

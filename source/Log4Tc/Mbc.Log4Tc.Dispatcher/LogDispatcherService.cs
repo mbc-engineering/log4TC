@@ -45,6 +45,8 @@ namespace Mbc.Log4Tc.Dispatcher
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Starting log dispatcher.");
+
             // Initialize on startup
             InitializeOutputs();
 

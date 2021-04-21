@@ -18,7 +18,7 @@
     <Company>mbc engineering GmbH</Company>
     <Released>false</Released>
     <Title>log4TC</Title>
-    <ProjectVersion>0.1.0</ProjectVersion>
+    <ProjectVersion>0.2.1</ProjectVersion>
     <CompilerDefines>DEBUG</CompilerDefines>
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
@@ -241,7 +241,6 @@
     <Folder Include="GVLs" />
     <Folder Include="ITFs" />
     <Folder Include="DUTs" />
-    <Folder Include="POUs\Licensing" />
     <Folder Include="Test" />
     <Folder Include="POUs" />
     <Folder Include="POUs\Utils" />
@@ -454,15 +453,6 @@
     <Compile Include="POUs\F_LogTArg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Licensing\FB_SHA256.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Licensing\PRG_Licencse.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Licensing\ST_SHA256_BufferState.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\PRG_ScopedContextStack.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -484,9 +474,6 @@
     <Compile Include="Test\FB_ContextBuilder_Test.TcPOU">
       <SubType>Code</SubType>
       <CompilerDefines>DEBUG</CompilerDefines>
-    </Compile>
-    <Compile Include="Test\FB_SHA256_Test.TcPOU">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Test\PlcTask.TcTTO">
       <SubType>Code</SubType>

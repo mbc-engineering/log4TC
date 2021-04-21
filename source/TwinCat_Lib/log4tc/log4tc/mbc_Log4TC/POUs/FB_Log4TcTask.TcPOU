@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
   <POU Name="FB_Log4TcTask" Id="{7a1ab82d-e3cd-4e48-96e0-5ca76f3c5915}" SpecialFunc="None">
     <Declaration><![CDATA[(*
 Main code of Log4TC which manages log messages of a single task.
@@ -85,8 +85,6 @@ END_VAR
         <ST><![CDATA[IF NOT _InitAndCheckTask() THEN
 	RETURN;
 END_IF
-
-PRG_Licencse.InitializeLicenseFromAnyTask();
 
 CASE nState OF
 	0: // Init
