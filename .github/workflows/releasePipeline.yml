@@ -39,6 +39,7 @@
 name: Pipeline log4TC
 
 on:
+  workflow_dispatch  
   push:
     tags:
       - v*
