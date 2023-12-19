@@ -146,7 +146,7 @@ Damit NLog die Ausgabe für [Azure ApplicationInsight](https://docs.microsoft.co
 
   <targets>
     <target xsi:type="ApplicationInsightsTargetLog4Tc" name="appi">
-      <instrumentationKey>f3daeda0-f7c0-44de-81e8-8b77abe8637e</instrumentationKey>
+      <instrumentationKey>[YourAppiInstrementationKey]</instrumentationKey>
       <!-- Can be repeated with more Custom Properties -->
       <contextproperty name="instance" layout="plc1" />
     </target>
