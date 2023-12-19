@@ -39,10 +39,12 @@
 name: Pipeline log4TC
 
 on:
-  workflow_dispatch  
+  workflow_dispatch:
+  
   push:
     tags:
       - v*
+  
   pull_request:
     branches: 
       - 'master'
