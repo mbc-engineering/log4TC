@@ -1,0 +1,107 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will build, test, sign and package a WPF or Windows Forms desktop application
+# built on .NET Core.
+# To learn how to migrate your existing application to .NET Core,
+# refer to https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework
+#
+# To configure this workflow:
+#
+# 1. Configure environment variables
+# GitHub sets default environment variables for every workflow run.
+# Replace the variables relative to your project in the "env" section below.
+#
+# 2. Signing
+# Generate a signing certificate in the Windows Application
+# Packaging Project or add an existing signing certificate to the project.
+# Next, use PowerShell to encode the .pfx file using Base64 encoding
+# by running the following Powershell script to generate the output string:
+#
+# $pfx_cert = Get-Content '.\SigningCertificate.pfx' -Encoding Byte
+# [System.Convert]::ToBase64String($pfx_cert) | Out-File 'SigningCertificate_Encoded.txt'
+#
+# Open the output file, SigningCertificate_Encoded.txt, and copy the
+# string inside. Then, add the string to the repo as a GitHub secret
+# and name it "Base64_Encoded_Pfx."
+# For more information on how to configure your signing certificate for
+# this workflow, refer to https://github.com/microsoft/github-actions-for-desktop-apps#signing
+#
+# Finally, add the signing certificate password to the repo as a secret and name it "Pfx_Key".
+# See "Build the Windows Application Packaging project" below to see how the secret is used.
+#
+# For more information on GitHub Actions, refer to https://github.com/features/actions
+# For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
+# refer to https://github.com/microsoft/github-actions-for-desktop-apps
+
+name: Pipeline log4TC
+
+on:
+  push:
+    tags:
+      - v*
+  pull_request:
+    branches: 
+      - 'master'
+      - 'dev'
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Release]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    env:
+      Solution_Name: your-solution-name                         # Replace with your solution name, i.e. MyWpfApp.sln.
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Cake Action
+      # You may pin to the exact commit or the version.
+      # uses: cake-build/cake-action@a6eb054329257c9e70a6c6bf01747ad6e1d9d52b
+      uses: cake-build/cake-action@v1.4.1
+      with:
+        # The path of the Cake script to run.
+        script-path: 'source/Log4Tc/build.cake' # optional, default is build.cake
+        # The name of the task to execute. Note that this argument must be supported by the script.
+        target: 'Default' # optional
+        # The verbosity level with which to run the script. Valid values are: Quiet, Minimal, Normal, Verbose or Diagnostic.
+        verbosity: 'Verbose' # optional, default is Normal
+        # Tells Cake to do a dry run of the script.
+        #dry-run: # optional, default is false
+        # Any custom parameters to pass to the script. Multiple parameters are defined on separate lines.
+        arguments:  '-configuration=${{ matrix.configuration }}' # optional
+        # The version of Cake to install. Either a specific version, "latest" (default) or "tool-manifest".
+        #cake-version: # optional, default is latest
+        # Flag for if Cake modules should be installed/bootstrapped.
+        #cake-bootstrap: # optional, default is false            
+
+# ToDo: update test results
+
+    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts 
+      uses: actions/upload-artifact@v3
+      with:
+        name: MSI Setup
+        path: '**/*.msi'
