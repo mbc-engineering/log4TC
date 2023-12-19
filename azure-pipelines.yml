@@ -15,11 +15,12 @@ pr:
       - master
       - dev
 
+# Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2019'
 
-variables:
-  buildConfiguration: 'Release'
+#variables:
+#  buildConfiguration: 'Release'
 
 # Build steps
 steps:
@@ -28,14 +29,20 @@ steps:
 
 - task: NuGetToolInstaller@1
 
-- task: Cake@0
-  displayName: 'Build with Cake Build tool'
+- task: PowerShell@2
   inputs:
-    script: 'source/Log4Tc/build.cake'
-    target: 'Default'
-    verbosity: 'Verbose'
-    arguments: '-configuration=$(buildConfiguration)'
-    useBuildAgentNuGetExe: true
+    filePath: '$(System.DefaultWorkingDirectory)/source/Log4Tc/build.ps1'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/source/Log4Tc'
+
+#- task: Cake@2
+#  displayName: 'Build with Cake Build tool'
+#  inputs:
+#    script: 'source/Log4Tc/build.cake'
+#    target: 'Default'
+#    verbosity: 'Verbose'
+#    # is set in build.cake as default to Release
+#    #arguments: '-configuration=$(buildConfiguration)'
+#    useBuildAgentNuGetExe: true
 
 - task: PublishTestResults@2
   displayName: 'Publish testresult'
