@@ -42,3 +42,13 @@ By contributing, you agree that your contributions will be licensed under its Ap
 
 ## References
 This document was adapted from briandk's excellent [contribution guidelines template](https://gist.github.com/briandk/3d2e8b3ec8daf5a27a62).
+
+## Build
+
+**Requirements**
+- VS2019
+
+```powershell
+cd .\source\Log4Tc\
+.\build.cake
+```
