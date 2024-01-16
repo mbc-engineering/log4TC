@@ -1,6 +1,7 @@
 ﻿using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Output.Graylog;
 using Mbc.Log4Tc.Output.InfluxDb;
+// using Mbc.Log4Tc.Output.Redis;
 using Mbc.Log4Tc.Output.NLog;
 using Mbc.Log4Tc.Output.Sql;
 using Mbc.Log4Tc.Plugin;
