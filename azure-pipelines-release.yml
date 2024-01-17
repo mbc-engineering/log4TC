@@ -1,0 +1,66 @@
+##############################################################
+# Description:
+# This Pipeline is used to build and release the application
+# the artifacts are stored in GitHub Releases based on Tags
+# with the pattern v*.*.* (e.g. V24.01.17)
+#
+# Also the documentation is generated and updated to the 
+# github-pages branch with the name `github-pages` for the url
+# https://mbc-engineering.github.io/log4TC/
+##############################################################
+
+# Build Trigger
+trigger:
+  tags:
+    include:
+      - v*
+
+# Cake script uses MSBuild and has set .UseToolVersion(MSBuildToolVersion.VS2019)
+pool:
+  vmImage: 'windows-2019'
+
+stages:
+# # ╔════════════════════════╗
+# # ║ Build Stage            ║
+# # ╚════════════════════════╝
+# - stage: 'Build'
+#   displayName: 'Build the application'
+#   jobs: 
+#   - job: 'Build'
+#     displayName: 'Build job'
+#     # Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
+#     pool:
+#       vmImage: 'windows-2019'
+#     steps:
+#     - checkout: self
+#       submodules: recursive      
+#     - template: .azure-pipelines/templates/build.yml
+
+# ╔════════════════════════╗
+# ║ PublishTag Stage       ║
+# ╚════════════════════════╝
+
+- stage: 'PublishTag'
+  displayName: 'Publish to github Tag'
+  dependsOn: Build
+  condition:  succeeded()
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-2019'
+    environment: publish-github
+    # see: https://learn.microsoft.com/en-us/azure/devops/pipelines/process/create-multistage-pipeline?view=azure-devops#add-instance-variables
+    variables:
+    - group: publish-github-vg
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none          
+          #- download: current
+          #  artifact: drop
+          - download: mbc-engineering.log4TC
+            artifact: drop
+          - powershell: ls $(Pipeline.Workspace)/drop/release/release.zip
+            displayName: 'list artifact files'            
+          

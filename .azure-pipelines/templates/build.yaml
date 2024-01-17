@@ -1,0 +1,57 @@
+##############################################################
+# Description:
+# This Pipeline is used to test and build log4TC
+# It generates all the artefacts
+##############################################################
+
+parameters:
+# no need for parameters
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: PowerShell@2
+  displayName: 'Build with Cake Build tool'
+  inputs:
+    filePath: '$(System.DefaultWorkingDirectory)/source/Log4Tc/build.ps1'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/source/Log4Tc'
+
+- task: PublishTestResults@2
+  displayName: 'Publish testresult'
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '**/testresults.trx'
+    searchFolder: '$(System.DefaultWorkingDirectory)/source/Log4Tc'
+    failTaskOnFailedTests: true
+  condition: always() # this step will always run, even if the pipeline is canceled
+
+- task: CopyFiles@2
+  displayName: 'Copy MSI Setup files'
+  inputs:
+    Contents: '**/*.msi'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/msi'
+    CleanTargetFolder: true
+    flattenFolders: true
+
+- task: CopyFiles@2
+  displayName: 'Copy generated docfx docs files'
+  inputs:
+    SourceFolder: 'docs/_site'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/docs'
+    CleanTargetFolder: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish MSI Setup files'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/msi'
+    ArtifactName: 'msi'
+    publishLocation: 'Container'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish docs files'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/docs'
+    ArtifactName: 'docs'
+    publishLocation: 'Container'
+
