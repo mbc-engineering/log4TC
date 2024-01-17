@@ -14,6 +14,17 @@ trigger:
   tags:
     include:
       - v*
+
+# Define repositories that can be used 
+resources:
+  repositories:
+  - repository: gh-pages-repo
+    type: github
+    endpoint: github.com_bqstony
+    name: mbc-engineering/log4TC
+    ref: gh-pages
+  # self is the trigger repo + branch
+
 stages:
 # # ╔════════════════════════╗
 # # ║ Build Stage            ║
@@ -32,10 +43,9 @@ stages:
 #     - template: .azure-pipelines/templates/build.yml
 
 # ╔════════════════════════╗
-# ║ PublishTag Stage       ║
+# ║ PublishRelease         ║
 # ╚════════════════════════╝
-
-- stage: 'PublishTag'
+- stage: 'PublishRelease'
   displayName: 'Publish to github Tag'
   #dependsOn: Build
   #condition:  succeeded()
@@ -44,18 +54,14 @@ stages:
     pool:
       vmImage: 'windows-latest'
     environment: publish-github
-    # see: https://learn.microsoft.com/en-us/azure/devops/pipelines/process/create-multistage-pipeline?view=azure-devops#add-instance-variables
-    variables:
-    - group: publish-github-vg
     strategy:
       runOnce:
         deploy:
-          steps:
-          - checkout: none          
+          steps:          
+          - checkout: none
           #- download: current
           #  artifact: drop
-          #- download: mbc-engineering.log4TC
-          #  artifact: drop
+          # For easy testing comment out the above and uncomment the below
           - task: DownloadBuildArtifacts@1
             inputs:
               buildType: 'specific'
@@ -64,10 +70,11 @@ stages:
               specificBuildWithTriggering: true
               buildVersionToDownload: 'latest'
               downloadType: 'specific'
-              downloadPath: '$(Pipeline.Workspace)/drop'
+              downloadPath: '$(Build.ArtifactStagingDirectory)/drop'
               cleanDestinationFolder: true
-          - powershell: ls $(Pipeline.Workspace)/drop
-            displayName: 'list artifact files'            
+
+          - powershell: Get-ChildItem -Force -Path $(Build.ArtifactStagingDirectory)/drop
+            displayName: 'list artifact files'
           - task: GitHubRelease@1
             displayName: 'Create GitHub Releases'
             inputs:
@@ -75,10 +82,81 @@ stages:
               repositoryName: 'mbc-engineering/log4TC'
               action: 'create'
               target: '$(Build.SourceVersion)'
-              #tagSource: 'gitTag'
-              #tagPattern: 'v*'
-              tagSource: 'userSpecifiedTag'
-              tag: 'vTest'
+              tagSource: 'gitTag'
+              tagPattern: 'v*'
+              # For easy testing comment out the above and uncomment the below
+              #tagSource: 'userSpecifiedTag'
+              #tag: '$(Build.SourceBranchName)' # The PR, Branch or Tag Name
               releaseNotesSource: 'inline'
-              assets: '$(Pipeline.Workspace)/drop/msi/**'
-              addChangeLog: false
+              assets: '$(Build.ArtifactStagingDirectory)/drop/msi/**'
+              changeLogCompareToRelease: 'lastFullRelease'
+              changeLogType: 'commitBased'
+
+- stage: 'PublishGitHubPages'
+  displayName: 'Publish to github pages'
+  #dependsOn: PublishRelease
+  #condition:  succeeded()
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: publish-github
+    strategy:
+      runOnce:
+        deploy:
+          steps:          
+          - checkout: gh-pages-repo
+            submodules: recursive
+            persistCredentials: true
+          #- download: current
+          #  artifact: drop
+          # For easy testing comment out the above and uncomment the below
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'specific'
+              project: '5542496b-1239-4d74-a233-9da3b0388d39'
+              pipeline: '20'
+              specificBuildWithTriggering: true
+              buildVersionToDownload: 'latest'
+              downloadType: 'specific'
+              downloadPath: '$(Build.ArtifactStagingDirectory)/drop'
+              cleanDestinationFolder: true
+
+          - powershell: Get-ChildItem -Force -Path $(Build.ArtifactStagingDirectory)/drop
+            displayName: 'list artifact files'
+          - script: |
+              git config user.email "AutomatedDeploy@bot.com"
+              git config user.name "AutomatedDeploy"
+              git fetch
+              git status
+              git branch -a
+              git remote -v
+              git checkout gh-pages
+            displayName: 'prepare git repo'
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+          - task: PowerShell@2
+            displayName: 'Clear old files in gh-pages branch'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Get all files and subdirectories except the .git directory
+                $itemsToDelete = Get-ChildItem | Where-Object { $_.Name -ne ".git" }
+                
+                # Delete files and subdirectories
+                foreach ($item in $itemsToDelete) {
+                    Remove-Item -Path $item.FullName -Recurse -Force
+                }
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+          - powershell: Get-ChildItem -Force -Path $(System.DefaultWorkingDirectory)
+            displayName: 'list gh-pages repo files'
+          - script: |
+              xcopy "$(Build.ArtifactStagingDirectory)/drop/docs" "$(System.DefaultWorkingDirectory)" /E /Y
+            displayName: 'Copy docs to gh-pages branch'
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+          - script: |
+              git add .
+              git status
+              git commit -m "Update documentation from Release-$(Build.SourceBranchName)"
+              git push
+            displayName: 'Push changes to origin gh-pages branch'
+            workingDirectory: '$(System.DefaultWorkingDirectory)'          
