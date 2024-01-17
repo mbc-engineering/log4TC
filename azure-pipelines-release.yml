@@ -14,11 +14,6 @@ trigger:
   tags:
     include:
       - v*
-
-# Cake script uses MSBuild and has set .UseToolVersion(MSBuildToolVersion.VS2019)
-pool:
-  vmImage: 'windows-2019'
-
 stages:
 # # ╔════════════════════════╗
 # # ║ Build Stage            ║
@@ -42,12 +37,12 @@ stages:
 
 - stage: 'PublishTag'
   displayName: 'Publish to github Tag'
-  dependsOn: Build
-  condition:  succeeded()
+  #dependsOn: Build
+  #condition:  succeeded()
   jobs:
   - deployment: Deploy
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'windows-latest'
     environment: publish-github
     # see: https://learn.microsoft.com/en-us/azure/devops/pipelines/process/create-multistage-pipeline?view=azure-devops#add-instance-variables
     variables:
@@ -59,8 +54,31 @@ stages:
           - checkout: none          
           #- download: current
           #  artifact: drop
-          - download: mbc-engineering.log4TC
-            artifact: drop
-          - powershell: ls $(Pipeline.Workspace)/drop/release/release.zip
+          #- download: mbc-engineering.log4TC
+          #  artifact: drop
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'specific'
+              project: '5542496b-1239-4d74-a233-9da3b0388d39'
+              pipeline: '20'
+              specificBuildWithTriggering: true
+              buildVersionToDownload: 'latest'
+              downloadType: 'specific'
+              downloadPath: '$(Pipeline.Workspace)/drop'
+              cleanDestinationFolder: true
+          - powershell: ls $(Pipeline.Workspace)/drop
             displayName: 'list artifact files'            
-          
+          - task: GitHubRelease@1
+            displayName: 'Create GitHub Releases'
+            inputs:
+              gitHubConnection: 'github.com_bqstony'
+              repositoryName: 'mbc-engineering/log4TC'
+              action: 'create'
+              target: '$(Build.SourceVersion)'
+              #tagSource: 'gitTag'
+              #tagPattern: 'v*'
+              tagSource: 'userSpecifiedTag'
+              tag: 'vTest'
+              releaseNotesSource: 'inline'
+              assets: '$(Pipeline.Workspace)/drop/msi/**'
+              addChangeLog: false
