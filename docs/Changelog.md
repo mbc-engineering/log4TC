@@ -1,5 +1,12 @@
 # Changelog
 
+## [vnext]
+### Added
+- NLog unterstützt nun auch die Ausgabe für Azure ApplicationInsight über das neue nlog Target `ApplicationInsightsTargetLog4Tc`.
+
+### Security
+- Update SQLClient
+
 ## [21.04.17]
 ### Added
 - Neue ANY-Datentypen fürs Logging: TIME, LTIME, DATE, DATE_AND_TIME, TIME_OF_DAY, ENUM (numerisch), WSTRING
