@@ -58,9 +58,7 @@ stages:
       runOnce:
         deploy:
           steps:
-          # requires checkout to valiadat the tag pattern in GitHubRelease task
-          - checkout: self
-            submodules: recursive
+          - checkout: none
           - download: current
             artifact: msi
           # For easy testing comment out the above and uncomment the below
@@ -84,11 +82,11 @@ stages:
               repositoryName: 'mbc-engineering/log4TC'
               action: 'create'
               target: '$(Build.SourceVersion)'
-              tagSource: 'gitTag'
-              tagPattern: 'v*'
-              # For easy testing comment out the above and uncomment the below
-              #tagSource: 'userSpecifiedTag'
-              #tag: '$(Build.SourceBranchName)' # The PR, Branch or Tag Name
+              # Pattern check does not work for me
+              #tagSource: 'gitTag'
+              #tagPattern: 'v*'
+              tagSource: 'userSpecifiedTag'
+              tag: '$(Build.SourceBranchName)' # The PR, Branch or Tag Name
               releaseNotesSource: 'inline'
               assets: '$(Pipeline.Workspace)/msi/**'
               changeLogCompareToRelease: 'lastFullRelease'
