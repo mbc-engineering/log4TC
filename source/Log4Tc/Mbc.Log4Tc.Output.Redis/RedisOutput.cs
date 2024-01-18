@@ -1,5 +1,8 @@
 ﻿using Mbc.Log4Tc.Model;
+using System.Collections.Generic;
 using NRedisStack;
+using NRedisStack.RedisStackCommands;
+using NRedisStack.DataTypes;
 using System;
 using System.Threading.Tasks;
 using StackExchange.Redis;
@@ -11,41 +14,36 @@ namespace Mbc.Log4Tc.Output.Redis
     /// </summary>
     public class RedisOutput : OutputHandlerBase, IDisposable
     {
-        private readonly ConfigurationOptions _configuration; // TODO: check if this should be configurationOptions
-        private IDatabase _redisClient;
+        private readonly ConfigurationOptions _configuration;
+        private ConnectionMultiplexer? _redisConnection;
+        private IDatabase? _redisDb;
+        private TimeSeriesCommands _timeSeriesCommands;
 
         public RedisOutput(ConfigurationOptions configuration)
         {
-            ConfigurationOptions configuration;
+            _configuration = configuration;
             InitializeRedisClient();
         }
 
         public void Dispose()
         {
-            _redisClient?.Dispose();
-            _redisClient = null;
+            _redisConnection?.Close();
+            _redisConnection = null;
         }
 
-        protected override async Task ProcesLogEntriesAsync(IEnumerable<LogEntry> logEntries)
+        public override async Task ProcesLogEntriesAsync(IEnumerable<LogEntry> logEntries)
         {
-            var key = $"log:{logEntry.Logger}:{logEntry.Level}";
-            var timestamp = new TimeStamp(logEntry.PlcTimestamp.ToUniversalTime().Ticks / TimeSpan.TicksPerMillisecond);
-
-            var labels = new TimeSeriesLabel[]
+            foreach (var logEntry in logEntries)
             {
-            new TimeSeriesLabel("Source", logEntry.Source),
-            new TimeSeriesLabel("Hostname", logEntry.Hostname),
-                // ... other labels like TaskName, AppName, etc.
-            };
-
-            var value = logEntry.FormattedMessage; // or any other numerical value relevant to your log
-
-            await timeSeriesClient.AddAsync(key, timestamp, value, labels, duplicatePolicy: TsDuplicatePolicy.LAST);
+                // TODO: process log entry and write to redis time series.
+            }
         }
-    }
 
-    private void InitializeRedisClient()
-    {
-        _redisClient = ConnectionMultiplexer.Connect(_configuration);
+        private void InitializeRedisClient()
+        {
+            _redisConnection = ConnectionMultiplexer.Connect(_configuration);
+            _redisDb = _redisConnection.GetDatabase();
+            _timeSeriesCommands = _redisDb.TS();
+        }
     }
 }
