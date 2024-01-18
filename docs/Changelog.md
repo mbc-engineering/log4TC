@@ -1,6 +1,6 @@
 # Changelog
 
-## [vnext]
+## [24.01.18]
 ### Added
 - NLog unterstützt nun auch die Ausgabe für Azure ApplicationInsight über das neue nlog Target `ApplicationInsightsTargetLog4Tc`.
 

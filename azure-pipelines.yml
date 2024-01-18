@@ -1,8 +1,8 @@
 # Build Trigger
-trigger:
-  tags:
-    include:
-      - v*
+# trigger:
+#   tags:
+#     include:
+#       - v*
 # not required yet
 #  branches:
 #    include:

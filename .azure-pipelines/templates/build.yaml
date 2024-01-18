@@ -4,8 +4,8 @@
 # It generates all the artefacts
 ##############################################################
 
-parameters:
 # no need for parameters
+# parameters:
 
 steps:
 - task: NuGetToolInstaller@1

@@ -40,7 +40,7 @@ stages:
     steps:
     - checkout: self
       submodules: recursive      
-    - template: .azure-pipelines/templates/build.yml
+    - template: .azure-pipelines/templates/build.yaml
 
 # ╔════════════════════════╗
 # ║ PublishRelease         ║
@@ -59,19 +59,19 @@ stages:
         deploy:
           steps:          
           - checkout: none
-          #- download: current
-          #  artifact: drop
+          - download: current
+            artifact: drop
           # For easy testing comment out the above and uncomment the below
-          - task: DownloadBuildArtifacts@1
-            inputs:
-              buildType: 'specific'
-              project: '5542496b-1239-4d74-a233-9da3b0388d39'
-              pipeline: '20'
-              specificBuildWithTriggering: true
-              buildVersionToDownload: 'latest'
-              downloadType: 'specific'
-              downloadPath: '$(Build.ArtifactStagingDirectory)/drop'
-              cleanDestinationFolder: true
+          # - task: DownloadBuildArtifacts@1
+          #   inputs:
+          #     buildType: 'specific'
+          #     project: '5542496b-1239-4d74-a233-9da3b0388d39'
+          #     pipeline: '20'
+          #     specificBuildWithTriggering: true
+          #     buildVersionToDownload: 'latest'
+          #     downloadType: 'specific'
+          #     downloadPath: '$(Build.ArtifactStagingDirectory)/drop'
+          #     cleanDestinationFolder: true
 
           - powershell: Get-ChildItem -Force -Path $(Build.ArtifactStagingDirectory)/drop
             displayName: 'list artifact files'
