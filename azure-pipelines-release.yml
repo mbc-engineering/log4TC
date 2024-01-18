@@ -57,10 +57,12 @@ stages:
     strategy:
       runOnce:
         deploy:
-          steps:          
-          - checkout: none
+          steps:
+          # requires checkout to valiadat the tag pattern in GitHubRelease task
+          - checkout: self
+            submodules: recursive
           - download: current
-            artifact: drop
+            artifact: msi
           # For easy testing comment out the above and uncomment the below
           # - task: DownloadBuildArtifacts@1
           #   inputs:
@@ -70,10 +72,10 @@ stages:
           #     specificBuildWithTriggering: true
           #     buildVersionToDownload: 'latest'
           #     downloadType: 'specific'
-          #     downloadPath: '$(Build.ArtifactStagingDirectory)/drop'
+          #     downloadPath: '$(Pipeline.Workspace)/msi'
           #     cleanDestinationFolder: true
 
-          - powershell: Get-ChildItem -Force -Path $(Build.ArtifactStagingDirectory)/drop
+          - powershell: Get-ChildItem -Force -Path $(Pipeline.Workspace)/msi
             displayName: 'list artifact files'
           - task: GitHubRelease@1
             displayName: 'Create GitHub Releases'
@@ -88,42 +90,42 @@ stages:
               #tagSource: 'userSpecifiedTag'
               #tag: '$(Build.SourceBranchName)' # The PR, Branch or Tag Name
               releaseNotesSource: 'inline'
-              assets: '$(Build.ArtifactStagingDirectory)/drop/msi/**'
+              assets: '$(Pipeline.Workspace)/msi/**'
               changeLogCompareToRelease: 'lastFullRelease'
               changeLogType: 'commitBased'
 
 - stage: 'PublishGitHubPages'
   displayName: 'Publish to github pages'
-  #dependsOn: PublishRelease
-  #condition:  succeeded()
+  dependsOn: PublishRelease
+  condition:  succeeded()
   jobs:
   - deployment: Deploy
     pool:
       vmImage: 'windows-latest'
-    environment: publish-github
+    environment: publish-github-pages
     strategy:
       runOnce:
         deploy:
           steps:          
+          - download: current
+            artifact: docs
+          # For easy testing comment out the above and uncomment the below
+          # - task: DownloadBuildArtifacts@1
+          #   inputs:
+          #     buildType: 'specific'
+          #     project: '5542496b-1239-4d74-a233-9da3b0388d39'
+          #     pipeline: '20'
+          #     specificBuildWithTriggering: true
+          #     buildVersionToDownload: 'latest'
+          #     downloadType: 'specific'
+          #     downloadPath: '$(Pipeline.Workspace)/docs'
+          #     cleanDestinationFolder: true
+
+          - powershell: Get-ChildItem -Force -Path $(Pipeline.Workspace)/docs
+            displayName: 'list artifact files in workspace=$(Pipeline.Workspace)'
           - checkout: gh-pages-repo
             submodules: recursive
             persistCredentials: true
-          #- download: current
-          #  artifact: drop
-          # For easy testing comment out the above and uncomment the below
-          - task: DownloadBuildArtifacts@1
-            inputs:
-              buildType: 'specific'
-              project: '5542496b-1239-4d74-a233-9da3b0388d39'
-              pipeline: '20'
-              specificBuildWithTriggering: true
-              buildVersionToDownload: 'latest'
-              downloadType: 'specific'
-              downloadPath: '$(Build.ArtifactStagingDirectory)/drop'
-              cleanDestinationFolder: true
-
-          - powershell: Get-ChildItem -Force -Path $(Build.ArtifactStagingDirectory)/drop
-            displayName: 'list artifact files'
           - script: |
               git config user.email "AutomatedDeploy@bot.com"
               git config user.name "AutomatedDeploy"
@@ -133,7 +135,7 @@ stages:
               git remote -v
               git checkout gh-pages
             displayName: 'prepare git repo'
-            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            workingDirectory: '$(Build.SourcesDirectory)'
           - task: PowerShell@2
             displayName: 'Clear old files in gh-pages branch'
             inputs:
@@ -146,17 +148,17 @@ stages:
                 foreach ($item in $itemsToDelete) {
                     Remove-Item -Path $item.FullName -Recurse -Force
                 }
-              workingDirectory: '$(System.DefaultWorkingDirectory)'
-          - powershell: Get-ChildItem -Force -Path $(System.DefaultWorkingDirectory)
-            displayName: 'list gh-pages repo files'
+              workingDirectory: '$(Build.SourcesDirectory)'
+          - powershell: Get-ChildItem -Force -Path $(Build.SourcesDirectory)
+            displayName: 'list gh-pages repo files in sourceDir=$(Build.SourcesDirectory)'
           - script: |
-              xcopy "$(Build.ArtifactStagingDirectory)/drop/docs" "$(System.DefaultWorkingDirectory)" /E /Y
+              xcopy "$(Pipeline.Workspace)/docs" "$(Build.SourcesDirectory)" /E /Y
             displayName: 'Copy docs to gh-pages branch'
-            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            workingDirectory: '$(Build.SourcesDirectory)'
           - script: |
               git add .
               git status
               git commit -m "Update documentation from Release-$(Build.SourceBranchName)"
               git push
             displayName: 'Push changes to origin gh-pages branch'
-            workingDirectory: '$(System.DefaultWorkingDirectory)'          
+            workingDirectory: '$(Build.SourcesDirectory)'          

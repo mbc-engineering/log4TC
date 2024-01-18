@@ -41,17 +41,11 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)/docs'
     CleanTargetFolder: true
 
-- task: PublishBuildArtifacts@1
+- publish: $(Build.ArtifactStagingDirectory)/msi
   displayName: 'Publish MSI Setup files'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/msi'
-    ArtifactName: 'msi'
-    publishLocation: 'Container'
+  artifact: 'msi'
 
-- task: PublishBuildArtifacts@1
+- publish: $(Build.ArtifactStagingDirectory)/docs
   displayName: 'Publish docs files'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/docs'
-    ArtifactName: 'docs'
-    publishLocation: 'Container'
+  artifact: 'docs'
 
