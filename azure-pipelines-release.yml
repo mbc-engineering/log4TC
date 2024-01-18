@@ -1,0 +1,154 @@
+##############################################################
+# Description:
+# This Pipeline is used to build and release the application
+# the artifacts are stored in GitHub Releases based on Tags
+# with the pattern v*.*.* (e.g. V24.01.17)
+#
+# Also the documentation is generated and updated to the
+# github-pages branch with the name `github-pages` for the url
+# https://mbc-engineering.github.io/log4TC/
+##############################################################
+
+# Build Trigger when new tag created that starts with v
+trigger:
+  tags:
+    include:
+    - v*
+
+# Disable PR Trigger
+pr: none
+
+# Define repositories that can be used
+resources:
+  repositories:
+  - repository: gh-pages-repo
+    type: github
+    endpoint: github.com_bqstony
+    name: mbc-engineering/log4TC
+    ref: gh-pages
+  # self is the trigger repo + branch
+
+stages:
+# ╔════════════════════════╗
+# ║ Build Stage            ║
+# ╚════════════════════════╝
+- template: .azure-pipelines/templates/build-stage.yaml
+
+# ╔════════════════════════╗
+# ║ PublishRelease         ║
+# ╚════════════════════════╝
+- stage: 'PublishRelease'
+  displayName: 'Publish to github Tag'
+  dependsOn: Build
+  condition:  succeeded()
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: publish-github
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
+          - download: current
+            artifact: msi
+          # For easy testing comment out the above and uncomment the below
+          # - task: DownloadBuildArtifacts@1
+          #   inputs:
+          #     buildType: 'specific'
+          #     project: '5542496b-1239-4d74-a233-9da3b0388d39'
+          #     pipeline: '20'
+          #     specificBuildWithTriggering: true
+          #     buildVersionToDownload: 'latest'
+          #     downloadType: 'specific'
+          #     downloadPath: '$(Pipeline.Workspace)/msi'
+          #     cleanDestinationFolder: true
+
+          - powershell: Get-ChildItem -Force -Path $(Pipeline.Workspace)/msi
+            displayName: 'list artifact files'
+          - task: GitHubRelease@1
+            displayName: 'Create GitHub Releases'
+            inputs:
+              gitHubConnection: 'github.com_bqstony'
+              repositoryName: 'mbc-engineering/log4TC'
+              action: 'create'
+              target: '$(Build.SourceVersion)'
+              # Pattern check does not work for me
+              #tagSource: 'gitTag'
+              #tagPattern: 'v*'
+              tagSource: 'userSpecifiedTag'
+              tag: '$(Build.SourceBranchName)' # The PR, Branch or Tag Name
+              releaseNotesSource: 'inline'
+              assets: '$(Pipeline.Workspace)/msi/**'
+              changeLogCompareToRelease: 'lastFullRelease'
+              changeLogType: 'commitBased'
+
+- stage: 'PublishGitHubPages'
+  displayName: 'Publish to github pages'
+  dependsOn: PublishRelease
+  condition:  succeeded()
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: publish-github-pages
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: docs
+          # For easy testing comment out the above and uncomment the below
+          # - task: DownloadBuildArtifacts@1
+          #   inputs:
+          #     buildType: 'specific'
+          #     project: '5542496b-1239-4d74-a233-9da3b0388d39'
+          #     pipeline: '20'
+          #     specificBuildWithTriggering: true
+          #     buildVersionToDownload: 'latest'
+          #     downloadType: 'specific'
+          #     downloadPath: '$(Pipeline.Workspace)/docs'
+          #     cleanDestinationFolder: true
+
+          - powershell: Get-ChildItem -Force -Path $(Pipeline.Workspace)/docs
+            displayName: 'list artifact files in workspace=$(Pipeline.Workspace)'
+          - checkout: gh-pages-repo
+            submodules: recursive
+            persistCredentials: true
+          - script: |
+              git config user.email "AutomatedDeploy@bot.com"
+              git config user.name "AutomatedDeploy"
+              git fetch
+              git status
+              git branch -a
+              git remote -v
+              git checkout gh-pages
+            displayName: 'prepare git repo'
+            workingDirectory: '$(Build.SourcesDirectory)'
+          - task: PowerShell@2
+            displayName: 'Clear old files in gh-pages branch'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Get all files and subdirectories except the .git directory
+                $itemsToDelete = Get-ChildItem | Where-Object { $_.Name -ne ".git" }
+
+                # Delete files and subdirectories
+                foreach ($item in $itemsToDelete) {
+                    Remove-Item -Path $item.FullName -Recurse -Force
+                }
+              workingDirectory: '$(Build.SourcesDirectory)'
+          - powershell: Get-ChildItem -Force -Path $(Build.SourcesDirectory)
+            displayName: 'list gh-pages repo files in sourceDir=$(Build.SourcesDirectory)'
+          - script: |
+              xcopy "$(Pipeline.Workspace)/docs" "$(Build.SourcesDirectory)" /E /Y
+            displayName: 'Copy docs to gh-pages branch'
+            workingDirectory: '$(Build.SourcesDirectory)'
+          - script: |
+              git add .
+              git status
+              git commit -m "Update documentation from Release-$(Build.SourceBranchName)"
+              git push
+            displayName: 'Push changes to origin gh-pages branch'
+            workingDirectory: '$(Build.SourcesDirectory)'
