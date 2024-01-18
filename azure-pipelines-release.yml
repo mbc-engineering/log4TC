@@ -13,7 +13,12 @@
 trigger:
   tags:
     include:
-      - v*
+    - v*
+  branches:
+    exclude:
+    - master
+    - main
+    - dev
 
 # Define repositories that can be used
 resources:
