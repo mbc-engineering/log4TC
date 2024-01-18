@@ -26,29 +26,29 @@ resources:
   # self is the trigger repo + branch
 
 stages:
-# # ╔════════════════════════╗
-# # ║ Build Stage            ║
-# # ╚════════════════════════╝
-# - stage: 'Build'
-#   displayName: 'Build the application'
-#   jobs: 
-#   - job: 'Build'
-#     displayName: 'Build job'
-#     # Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
-#     pool:
-#       vmImage: 'windows-2019'
-#     steps:
-#     - checkout: self
-#       submodules: recursive      
-#     - template: .azure-pipelines/templates/build.yml
+# ╔════════════════════════╗
+# ║ Build Stage            ║
+# ╚════════════════════════╝
+- stage: 'Build'
+  displayName: 'Build the application'
+  jobs: 
+  - job: 'Build'
+    displayName: 'Build job'
+    # Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+    - checkout: self
+      submodules: recursive      
+    - template: .azure-pipelines/templates/build.yml
 
 # ╔════════════════════════╗
 # ║ PublishRelease         ║
 # ╚════════════════════════╝
 - stage: 'PublishRelease'
   displayName: 'Publish to github Tag'
-  #dependsOn: Build
-  #condition:  succeeded()
+  dependsOn: Build
+  condition:  succeeded()
   jobs:
   - deployment: Deploy
     pool:
