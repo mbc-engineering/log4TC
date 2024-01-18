@@ -195,6 +195,43 @@
 <li>Im Meldungstext werden noch zusätzlich alle Context-Properties eingefügt, sofern welche vorhanden sind.</li>
 <li>Es werden alle Meldungen ab Level <code>Debug</code> und höher geloggt.</li>
 </ul>
+<h3 id="ausgabe-für-azure-applicationinsight">Ausgabe für Azure ApplicationInsight</h3>
+<p>Damit NLog die Ausgabe für <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/ilogger">Azure ApplicationInsight</a> unterstütz, muss ein <code>ApplicationInsightsTargetLog4Tc</code> target wie folgt konfiguriert werden.</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;nlog
+	xmlns=&quot;http://www.nlog-project.org/schemas/NLog.xsd&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	throwConfigExceptions=&quot;true&quot;
+	autoReload=&quot;true&quot;
+	internalLogLevel=&quot;Info&quot;
+	throwExceptions=&quot;true&quot;&gt;
+
+  &lt;!--
+	See https://github.com/nlog/nlog/wiki/Configuration-file
+	for information on customizing logging rules and outputs.
+
+  See also for targets: https://nlog-project.org/config/?tab=targets
+  See also for placeholders: https://nlog-project.org/config/?tab=layout-renderers
+	--&gt;
+
+  &lt;extensions&gt;
+    &lt;add assembly=&quot;Mbc.Log4Tc.Output.NLog&quot;/&gt;
+  &lt;/extensions&gt;
+
+  &lt;targets&gt;
+    &lt;target xsi:type=&quot;ApplicationInsightsTargetLog4Tc&quot; name=&quot;appi&quot;&gt;
+      &lt;instrumentationKey&gt;[YourAppiInstrementationKey]&lt;/instrumentationKey&gt;
+      &lt;!-- Can be repeated with more Custom Properties --&gt;
+      &lt;contextproperty name=&quot;instance&quot; layout=&quot;plc1&quot; /&gt;
+    &lt;/target&gt;
+  &lt;/targets&gt;
+
+  &lt;rules&gt;
+    &lt;!--Levels: Trace, Debug, Info, Warn, Error, Fatal, Off--&gt;
+    &lt;logger name=&quot;*&quot; minlevel=&quot;Trace&quot; writeTo=&quot;appi&quot; /&gt;
+  &lt;/rules&gt;
+&lt;/nlog&gt;
+</code></pre>
 <h2 id="nlog-erweiterungen">NLog-Erweiterungen</h2>
 <p>Log4TC liefert einige Erweiterungen für NLog mit.</p>
 <h3 id="layout-mbclog4jxmlevent-erweiterung-für-log4jxmlevent">Layout <code>mbclog4jxmlevent</code> (Erweiterung für <code>log4jxmlevent</code>)</h3>
