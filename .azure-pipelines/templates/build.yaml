@@ -1,11 +1,8 @@
 ##############################################################
 # Description:
-# This Pipeline is used to test and build log4TC
-# It generates all the artefacts
+# This Stage is used to build and test log4TC
+# It generates all the artifacts msi & docs
 ##############################################################
-
-# no need for parameters
-# parameters:
 
 steps:
 - task: NuGetToolInstaller@1
@@ -48,4 +45,3 @@ steps:
 - publish: $(Build.ArtifactStagingDirectory)/docs
   displayName: 'Publish docs files'
   artifact: 'docs'
-

@@ -1,0 +1,39 @@
+# Author: michael.helfenstein@noser.com
+# Updated: 2024-01-11
+# Handle the Line Endings in git correctly
+# see: https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings#per-repository-settings
+#
+# Set the default behavior, if Git thinks a file is text (as opposed to binary), 
+# also in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout. E.g.,
+#*.c text
+
+# Declare files that will always have LF line endings on checkout.
+*.py text eol=lf
+*.azcli text eol=lf
+*.sh text eol=lf
+Jenkinsfile text eol=lf
+*.Jenkinsfile text eol=lf
+# Terraform stuff
+*.tf text eol=lf
+*.tfvars text eol=lf
+*.tfstate text eol=lf
+*.hcl text eol=lf
+
+
+# Denote all files that should not have line endings normalized, should not be
+# merged, and should not show in a textual diff.
+*.docm binary
+*.docx binary
+*.ico binary
+*.lib binary
+*.png binary
+*.pptx binary
+*.snk binary
+*.vsdx binary
+*.xps binary
+*.dll binary
+*.exe binary

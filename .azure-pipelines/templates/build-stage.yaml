@@ -1,0 +1,18 @@
+##############################################################
+# Description:
+# This Stage is used to build and test log4TC
+##############################################################
+
+stages:
+- stage: 'Build'
+  displayName: 'Build the application'
+  jobs:
+  - job: 'Build'
+    displayName: 'Build job'
+    # Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+    - checkout: self
+      submodules: recursive
+    - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/build.yaml

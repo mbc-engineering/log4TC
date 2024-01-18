@@ -4,7 +4,7 @@
 # the artifacts are stored in GitHub Releases based on Tags
 # with the pattern v*.*.* (e.g. V24.01.17)
 #
-# Also the documentation is generated and updated to the 
+# Also the documentation is generated and updated to the
 # github-pages branch with the name `github-pages` for the url
 # https://mbc-engineering.github.io/log4TC/
 ##############################################################
@@ -15,7 +15,7 @@ trigger:
     include:
       - v*
 
-# Define repositories that can be used 
+# Define repositories that can be used
 resources:
   repositories:
   - repository: gh-pages-repo
@@ -29,18 +29,7 @@ stages:
 # ╔════════════════════════╗
 # ║ Build Stage            ║
 # ╚════════════════════════╝
-- stage: 'Build'
-  displayName: 'Build the application'
-  jobs: 
-  - job: 'Build'
-    displayName: 'Build job'
-    # Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
-    pool:
-      vmImage: 'windows-2019'
-    steps:
-    - checkout: self
-      submodules: recursive      
-    - template: .azure-pipelines/templates/build.yaml
+- template: .azure-pipelines/templates/build-stage.yaml
 
 # ╔════════════════════════╗
 # ║ PublishRelease         ║
@@ -104,7 +93,7 @@ stages:
     strategy:
       runOnce:
         deploy:
-          steps:          
+          steps:
           - download: current
             artifact: docs
           # For easy testing comment out the above and uncomment the below
@@ -141,7 +130,7 @@ stages:
               script: |
                 # Get all files and subdirectories except the .git directory
                 $itemsToDelete = Get-ChildItem | Where-Object { $_.Name -ne ".git" }
-                
+
                 # Delete files and subdirectories
                 foreach ($item in $itemsToDelete) {
                     Remove-Item -Path $item.FullName -Recurse -Force
@@ -159,4 +148,4 @@ stages:
               git commit -m "Update documentation from Release-$(Build.SourceBranchName)"
               git push
             displayName: 'Push changes to origin gh-pages branch'
-            workingDirectory: '$(Build.SourcesDirectory)'          
+            workingDirectory: '$(Build.SourcesDirectory)'
