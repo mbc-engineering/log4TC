@@ -9,11 +9,14 @@
 # https://mbc-engineering.github.io/log4TC/
 ##############################################################
 
-# Build Trigger
+# Build Trigger when new tag created that starts with v
 trigger:
   tags:
     include:
-      - v*
+    - v*
+
+# Disable PR Trigger
+pr: none
 
 # Define repositories that can be used
 resources:

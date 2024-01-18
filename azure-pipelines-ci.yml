@@ -8,8 +8,9 @@
 pr:
   branches:
     include:
-      - master
-      - dev
+    - master
+    - main
+    - dev
 
 stages:
 # ╔════════════════════════╗
