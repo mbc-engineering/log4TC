@@ -1,5 +1,12 @@
 # Changelog
 
+## [VNext]
+### Added
+- Dokumentation steht nun auch als PDF zur Verfügung
+
+### Fixed 
+- #15 - Links in Dokumentation korrigiert
+
 ## [24.01.18]
 ### Added
 - NLog unterstützt nun auch die Ausgabe für Azure ApplicationInsight über das neue nlog Target `ApplicationInsightsTargetLog4Tc`.

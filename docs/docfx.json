@@ -4,15 +4,6 @@
     "content": [
       {
         "files": [
-          "api/**.yml",
-          "api/index.md"
-        ],
-        "exclude": [
-          "internal/**"
-        ]
-      },
-      {
-        "files": [
           "**/**.md",
           "**/**/toc.yml",
           "toc.yml",
@@ -31,6 +22,7 @@
           "**/images/**",
           "**/res/*.png",
           "**/assets/*.png",
+          "**/assets/*.svg",
           "favicon.ico",
           "logo.svg"
         ],
@@ -51,18 +43,28 @@
         ]
       }
     ],
-    "dest": "_site",
     "globalMetadata": {
       "_appTitle": "Dokumentation mbc Log4Tc",
-      "_appFooter": "<span>Copyright © 2020 <br><strong>mbc</strong>-engineering GmbH</span>",
+      "_appFooter": "<span>Help us on <a href=\"https://github.com/mbc-engineering/log4TC\"><br><strong>github</strong></a></span>",
       "_enableSearch": "true",
-      "_appFaviconPath": "favicon.ico"
+      "_appFaviconPath": "favicon.ico",
+      "pdf": true,
+      "pdfTocPage": true,
+      "pdfFileName": "log4TC.pdf",
+      "pdfCoverPage": "index.html"
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
+    "sitemap": {
+      "baseUrl": "https://mbc-engineering.github.io/log4TC",
+      "priority": 0.5,
+      "changefreq": "daily"
+    },
+    "dest": "_site",
     "template": [
       "default",
-      "template/material"
+      "modern",
+      "template"
     ],
     "postProcessors": [
       "ExtractSearchIndex"
