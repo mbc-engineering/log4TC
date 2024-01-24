@@ -57,7 +57,7 @@ Die wesentliche Konfiguration von Influx befindet sich in der `Outputs`-Liste.
 InfluxDB kann nativ installiert werden, wir empfehlen aber den Betrieb über Docker, zumindest wenn Docker abseits der TwinCAT-Runtime installiert werden kann (Docker läuft nicht zusammen mit der TwinCAT-Runtime bzw. umgekehrt).
 
 > [!NOTE]
-> Ein Beispiel Docker-Compose befindet sich auf Github im InfluxDB-Beispielordner https://github.com/mbc-engineering/log4TC/blob/master/influx_with_message/docker-compose.yml.
+> Ein Beispiel Docker-Compose befindet sich auf Github im InfluxDB-Beispielordner https://github.com/mbc-engineering/log4TC/blob/master/source/TwinCat_Examples/influx_with_message/docker-compose.yml.
 
 ## log4TC Log-Meldungen in InfluxDB
 
