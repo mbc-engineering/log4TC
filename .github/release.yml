@@ -1,0 +1,22 @@
+# .github/release.yml to create Automatically generated release notes
+# https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+
+changelog:
+  categories:
+    - title: 🏕 Features
+      labels:
+        - '*'
+      exclude:
+        labels:
+          - dependencies
+          - bug
+    - title: 🏕 Bugs
+      labels:
+        - bug
+      exclude:
+        labels:
+          - dependencies
+    # separate dependabot updates
+    - title: 👒 Dependencies
+      labels:
+        - dependencies

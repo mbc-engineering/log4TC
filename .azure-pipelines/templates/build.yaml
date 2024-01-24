@@ -1,32 +1,10 @@
-# Build Trigger
-trigger:
-  tags:
-    include:
-      - v*
-# not required yet
-#  branches:
-#    include:
-#      - master
+##############################################################
+# Description:
+# This Stage is used to build and test log4TC
+# It generates all the artifacts msi & docs
+##############################################################
 
-# Pull Request Trigger
-pr:
-  branches:
-    include:
-      - master
-      - dev
-
-# Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
-pool:
-  vmImage: 'windows-2019'
-
-#variables:
-#  buildConfiguration: 'Release'
-
-# Build steps
 steps:
-- checkout: self
-  submodules: recursive
-
 - task: NuGetToolInstaller@1
 
 - task: PowerShell@2
@@ -34,16 +12,6 @@ steps:
   inputs:
     filePath: '$(System.DefaultWorkingDirectory)/source/Log4Tc/build.ps1'
     workingDirectory: '$(System.DefaultWorkingDirectory)/source/Log4Tc'
-
-#- task: Cake@2
-#  displayName: 'Build with Cake Build tool'
-#  inputs:
-#    script: 'source/Log4Tc/build.cake'
-#    target: 'Default'
-#    verbosity: 'Verbose'
-#    # is set in build.cake as default to Release
-#    #arguments: '-configuration=$(buildConfiguration)'
-#    useBuildAgentNuGetExe: true
 
 - task: PublishTestResults@2
   displayName: 'Publish testresult'
@@ -70,17 +38,10 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)/docs'
     CleanTargetFolder: true
 
-- task: PublishBuildArtifacts@1
+- publish: $(Build.ArtifactStagingDirectory)/msi
   displayName: 'Publish MSI Setup files'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/msi'
-    ArtifactName: 'msi'
-    publishLocation: 'Container'
+  artifact: 'msi'
 
-- task: PublishBuildArtifacts@1
+- publish: $(Build.ArtifactStagingDirectory)/docs
   displayName: 'Publish docs files'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/docs'
-    ArtifactName: 'docs'
-    publishLocation: 'Container'
-
+  artifact: 'docs'
