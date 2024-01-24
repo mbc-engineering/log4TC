@@ -36,7 +36,7 @@ Bei Bedarf können wir auch kundenspezifische Ausgaben erstellen.
 
 ## Nächste Schritte
 
-* [Download, Lizenzierung und Dokumentation](https://www.mbc-engineering.ch/log4tc)
+* [Download](https://github.com/mbc-engineering/log4TC/releases/latest)
 * [Erste Schritte](gettingstarted/intro.md)
 * [Referenz](reference/index.md)
 

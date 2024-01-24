@@ -49,7 +49,7 @@ Log4TC kommuniziert mit dem Graylog-Server über Gelf-UDP, daher muss auf dem Se
 Graylog kann nativ installiert werden, wir empfehlen aber den Betrieb über Docker, zumindest wenn Graylog abseits der TwinCAT-Runtime installiert werden kann (Docker läuft nicht zusammen mit der TwinCAT-Runtime bzw. umgekehrt). 
 
 > [!NOTE]
-> Ein Beispiel Docker-Compose befindet sich auf Github im Graylog-Beispielordner https://github.com/mbc-engineering/log4TC/blob/master/graylog/docker-compose.yml.
+> Ein Beispiel Docker-Compose befindet sich auf Github im Graylog-Beispielordner https://github.com/mbc-engineering/log4TC/blob/master/source/TwinCat_Examples/graylog/docker-compose.yml.
 
 ## log4TC Log-Meldungen in Graylog
 
