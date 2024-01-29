@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <!-- Sobald Release von Beckhoff.TwinCAT.Ads in 5 Ready ist, kann auf netstandard2.0 gewechselt werden -->
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="4.4.4" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.3" />
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.1.154" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.*" />
     <PackageReference Include="Optional" Version="4.0.0" />
+    <PackageReference Include="System.IO.Pipelines" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

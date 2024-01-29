@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using TwinCAT;
 using TwinCAT.Ads;
 
 namespace Mbc.Log4Tc.SmokeTest
@@ -15,7 +11,7 @@ namespace Mbc.Log4Tc.SmokeTest
         public PlcControl(AmsAddress addr)
         {
             _session = new AdsSession(addr);
-            _connection = (IAdsConnection) _session.Connect();
+            _connection = (IAdsConnection)_session.Connect();
         }
 
         public void Dispose()

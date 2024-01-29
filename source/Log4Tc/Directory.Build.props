@@ -10,7 +10,7 @@
     <Description>Logging ADS Master für Beckhoff TwinCat 3 mit mehreren Ausgabe Plugins</Description>
     <Authors>stgm, joge, mihe</Authors>
     <Company>mbc Engineering GmbH</Company>
-    <Copyright>Copyright © mbc Engineering GmbH 2020</Copyright>
+    <Copyright>Copyright © mbc Engineering GmbH 2024</Copyright>
 
     <Version>24.01.18</Version>
 
@@ -42,6 +42,7 @@
     <!-- Not need if Roslyn analysis is used (https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/2122)
     <RunCodeAnalysis>true</RunCodeAnalysis> -->
     <CodeAnalysisRuleSet>$(SolutionDir)\Mbc.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
   <ItemGroup>
     <!-- https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md -->
@@ -50,10 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" />
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8" />
-    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="2.9.8" />
-    <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="2.9.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
+    <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="3.3.4" />
   </ItemGroup>
 
 </Project>

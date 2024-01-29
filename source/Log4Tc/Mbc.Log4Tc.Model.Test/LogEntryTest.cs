@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -120,7 +121,7 @@ namespace Mbc.Log4Tc.Model.Test
             var values = logEntry.ArgumentValues;
 
             // Assert
-            values.Should().BeEquivalentTo(10, 20, 30);
+            values.Should().BeEquivalentTo([10, 20, 30]);
         }
 
         [Fact]
@@ -135,7 +136,7 @@ namespace Mbc.Log4Tc.Model.Test
             var values = logEntry.ArgumentValues;
 
             // Assert
-            values.Should().BeEquivalentTo(10, null, 30);
+            values.Should().BeEquivalentTo(new List<object>() { 10, null, 30 });
         }
     }
 }

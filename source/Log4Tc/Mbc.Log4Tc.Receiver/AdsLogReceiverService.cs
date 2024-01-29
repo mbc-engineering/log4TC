@@ -43,8 +43,9 @@ namespace Mbc.Log4Tc.Receiver
             {
                 try
                 {
-                    _adsLogReceiver.Connect();
                     _logger.LogInformation("Log receiver connected.");
+                    await _adsLogReceiver.ConnectServerAndWaitAsync(ct);
+                    _logger.LogInformation("Log receiver shutdown.");
                     return;
                 }
                 catch (Exception e)
