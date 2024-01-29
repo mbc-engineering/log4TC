@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly:InternalsVisibleTo("Mbc.Log4TcDispatcher.Test")]
+[assembly:InternalsVisibleTo("Mbc.Log4Tc.Dispatcher.Test")]

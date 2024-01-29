@@ -1,5 +1,4 @@
 ﻿using FakeItEasy;
-using Mbc.Common;
 using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Receiver;

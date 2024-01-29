@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Prefer32Bit>false</Prefer32Bit>
-    <RuntimeIdentifier>win</RuntimeIdentifier>
     <SelfContained>true</SelfContained>
     <!-- Only supported for .net core app-->
     <PublishSingleFile>false</PublishSingleFile>
@@ -32,9 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.*" />
     <PackageReference Include="NLog" Version="4.7.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
@@ -42,9 +41,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.Graylog\Mbc.Log4Tc.Output.Graylog.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.InfluxDb\Mbc.Log4Tc.Output.InfluxDb.csproj" />
-    <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.NLog\Mbc.Log4Tc.Output.NLog.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.Sql\Mbc.Log4Tc.Output.Sql.csproj" />

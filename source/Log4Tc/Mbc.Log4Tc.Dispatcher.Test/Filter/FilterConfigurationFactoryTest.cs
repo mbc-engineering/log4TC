@@ -13,7 +13,7 @@ namespace Mbc.Log4TcDispatcher.Test.Filter
         public void Create_EmptyFilter_ShouldReturnAllFilter()
         {
             // Arrange
-            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4TcDispatcher.Test.Filter.assets.EmptyFilter.json")).Build();
+            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4Tc.Dispatcher.Test.Filter.assets.EmptyFilter.json")).Build();
 
             // Act
             var filter = FilterConfigurationFactory.Create(configuration.GetSection("Filter"), AllMatchFilter.Default);
@@ -26,7 +26,7 @@ namespace Mbc.Log4TcDispatcher.Test.Filter
         public void Create_WithStringFilter_ShouldReturnAllFilter()
         {
             // Arrange
-            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4TcDispatcher.Test.Filter.assets.StringFilter.json")).Build();
+            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4Tc.Dispatcher.Test.Filter.assets.StringFilter.json")).Build();
 
             // Act
             var filter = FilterConfigurationFactory.Create(configuration.GetSection("Filter"), AllMatchFilter.Default);
@@ -39,7 +39,7 @@ namespace Mbc.Log4TcDispatcher.Test.Filter
         public void Create_WithSingleSimpleFilter_ShouldReturnSimpleFilter()
         {
             // Arrange
-            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4TcDispatcher.Test.Filter.assets.SingleSimpleFilter.json")).Build();
+            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4Tc.Dispatcher.Test.Filter.assets.SingleSimpleFilter.json")).Build();
 
             // Act
             var filter = FilterConfigurationFactory.Create(configuration.GetSection("Filter"), null);
@@ -53,7 +53,7 @@ namespace Mbc.Log4TcDispatcher.Test.Filter
         public void Create_WithMultipleSimpleFilter_ShouldReturnOrWithSimpleFilter()
         {
             // Arrange
-            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4TcDispatcher.Test.Filter.assets.MultipleSimpleFilter.json")).Build();
+            var configuration = new ConfigurationBuilder().AddJsonStream(GetType().Assembly.GetManifestResourceStream("Mbc.Log4Tc.Dispatcher.Test.Filter.assets.MultipleSimpleFilter.json")).Build();
 
             // Act
             var filter = FilterConfigurationFactory.Create(configuration.GetSection("Filter"), null);
