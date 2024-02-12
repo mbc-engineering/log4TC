@@ -1,0 +1,24 @@
+---
+version: "3.8"
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    networks:
+      - redis
+    command: sleep infinity
+    environment:
+      REDIS: "redis-stack-7.2.0:6379" # default targeted Redis version
+
+  redis-stack:
+    image: redis/redis-stack-server:7.2.0-RC3
+    restart: unless-stopped
+    networks:
+      - redis
+
+networks:
+  # defines shared network for communicating with Redis
+  redis:
