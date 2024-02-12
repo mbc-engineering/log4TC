@@ -118,6 +118,48 @@ Die Konfiguration hat folgende Eigenschaften:
 * Im Meldungstext werden noch zusätzlich alle Context-Properties eingefügt, sofern welche vorhanden sind.
 * Es werden alle Meldungen ab Level `Debug` und höher geloggt.
 
+### Ausgabe für Azure ApplicationInsight
+
+Damit NLog die Ausgabe für [Azure ApplicationInsight](https://docs.microsoft.com/en-us/azure/azure-monitor/app/ilogger) unterstütz, muss ein `ApplicationInsightsTargetLog4Tc` target wie folgt konfiguriert werden.
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog
+	xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	throwConfigExceptions="true"
+	autoReload="true"
+	internalLogLevel="Info"
+	throwExceptions="true">
+
+  <!--
+	See https://github.com/nlog/nlog/wiki/Configuration-file
+	for information on customizing logging rules and outputs.
+
+  See also for targets: https://nlog-project.org/config/?tab=targets
+  See also for placeholders: https://nlog-project.org/config/?tab=layout-renderers
+	-->
+
+  <extensions>
+    <add assembly="Mbc.Log4Tc.Output.NLog"/>
+  </extensions>
+
+  <targets>
+    <target xsi:type="ApplicationInsightsTargetLog4Tc" name="appi">
+      <instrumentationKey>[YourAppiInstrementationKey]</instrumentationKey>
+      <!-- Can be repeated with more Custom Properties -->
+      <contextproperty name="instance" layout="plc1" />
+    </target>
+  </targets>
+
+  <rules>
+    <!--Levels: Trace, Debug, Info, Warn, Error, Fatal, Off-->
+    <logger name="*" minlevel="Trace" writeTo="appi" />
+  </rules>
+</nlog>
+```
+
+
 ## NLog-Erweiterungen
 
 Log4TC liefert einige Erweiterungen für NLog mit.

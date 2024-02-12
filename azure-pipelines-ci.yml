@@ -1,0 +1,19 @@
+##############################################################
+# Description:
+# This Pipeline is used to CI build the application
+# It should check the code and run the tests in Pull Requests
+##############################################################
+
+# Pull Request Trigger
+pr:
+  branches:
+    include:
+    - master
+    - main
+    - dev
+
+stages:
+# ╔════════════════════════╗
+# ║ Build Stage            ║
+# ╚════════════════════════╝
+- template: .azure-pipelines/templates/build-stage.yaml

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.7.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" />
   </ItemGroup>
 
   <ItemGroup>

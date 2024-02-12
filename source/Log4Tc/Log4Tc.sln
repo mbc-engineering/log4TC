@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29728.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Dispatcher", "Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj", "{45FFB77C-1099-441A-9B1B-190ECFD0C2CA}"
 EndProject
@@ -56,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Output.InfluxDb.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Output.Sql", "Mbc.Log4Tc.Output.Sql\Mbc.Log4Tc.Output.Sql.csproj", "{05DE9C7D-431C-4387-9A9E-D515C7294E3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mbc.Log4Tc.Utils", "Mbc.Log4Tc.Utils\Mbc.Log4Tc.Utils.csproj", "{FD6A76FF-6A47-45E8-B08B-6C429DAF1975}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mbc.Log4Tc.Utils", "Mbc.Log4Tc.Utils\Mbc.Log4Tc.Utils.csproj", "{FD6A76FF-6A47-45E8-B08B-6C429DAF1975}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
