@@ -1,11 +1,12 @@
 ﻿using Mbc.Log4Tc.Model;
 using System.Collections.Generic;
-using NRedisStack;
-using NRedisStack.RedisStackCommands;
-using NRedisStack.DataTypes;
 using System;
 using System.Threading.Tasks;
 using StackExchange.Redis;
+using NRedisStack;
+using NRedisStack.RedisStackCommands;
+using NRedisStack.DataTypes;
+
 
 namespace Mbc.Log4Tc.Output.Redis
 {
@@ -27,23 +28,42 @@ namespace Mbc.Log4Tc.Output.Redis
 
         public void Dispose()
         {
-            _redisConnection?.Close();
+            // _redisConnection?.Close();
             _redisConnection = null;
         }
 
         public override async Task ProcesLogEntriesAsync(IEnumerable<LogEntry> logEntries)
         {
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+            IDatabase db = redis.GetDatabase();
+            var ts = db.TS();
+            // ts.Create(logEntries.First().Logger);
+            TimeSeriesLabel[] labels;
             foreach (var logEntry in logEntries)
             {
-                // TODO: process log entry and write to redis time series.
+                labels =
+                new TimeSeriesLabel[]
+                {
+                    new TimeSeriesLabel("source", logEntry.Source ?? string.Empty),
+                    new TimeSeriesLabel("hostname", logEntry.Hostname ?? string.Empty),
+                    new TimeSeriesLabel("logger", logEntry.Logger ?? string.Empty),
+                    new TimeSeriesLabel("level", logEntry.Level.ToString()),
+                    new TimeSeriesLabel("appName", logEntry.AppName ?? string.Empty),
+                    new TimeSeriesLabel("projectName", logEntry.ProjectName ?? string.Empty),
+                    new TimeSeriesLabel("taskName", logEntry.TaskName ?? string.Empty),
+                    new TimeSeriesLabel("taskIndex", logEntry.TaskIndex.ToString()),
+                    new TimeSeriesLabel("taskCycleCounter", logEntry.TaskCycleCounter.ToString()),
+                    new TimeSeriesLabel("onlineChangeCount", logEntry.OnlineChangeCount.ToString()),
+                };
+                await ts.AddAsync(logEntry.Logger, logEntry.PlcTimestamp, 1.1, labels: labels);
             }
         }
 
         private void InitializeRedisClient()
         {
-            _redisConnection = ConnectionMultiplexer.Connect(_configuration);
-            _redisDb = _redisConnection.GetDatabase();
-            _timeSeriesCommands = _redisDb.TS();
+            this._redisConnection = ConnectionMultiplexer.Connect(this._configuration);
+            this._redisDb = this._redisConnection.GetDatabase();
+            this._timeSeriesCommands = this._redisDb.TS();
         }
     }
 }
