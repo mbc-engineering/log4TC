@@ -1,5 +1,4 @@
 ﻿using FakeItEasy;
-using Mbc.Common;
 using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Receiver;
@@ -37,7 +36,7 @@ namespace Mbc.Log4Tc.SmokeTest
         public void Start()
         {
             _logDispatcher.StartAsync(CancellationToken.None).GetAwaiter().GetResult();
-            _adsLogReceiver.Connect();
+            _adsLogReceiver.ConnectServer();
         }
 
         public void Stop()
