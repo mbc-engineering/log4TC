@@ -45,3 +45,12 @@ We can also create custom outputs upon request.
 * [Download](https://github.com/mbc-engineering/log4TC/releases/latest)
 * [Getting Started](gettingstarted/intro.md)
 * [Reference](reference/index.md)
+
+
+## build
+
+see: setup: https://wixtoolset.org/docs/releasenotes/#v4
+
+dotnet msbuild -p:Configuration=Release -p:Platform=x64 -Restore
+
+dotnet msbuild -p:Configuration=Release -p:Platform=x64 -t:Publish

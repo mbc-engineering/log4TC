@@ -11,7 +11,7 @@ stages:
     displayName: 'Build job'
     # Cake script uses MSBuild .UseToolVersion(MSBuildToolVersion.VS2019)
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'windows-2022'
     steps:
     - checkout: self
       submodules: recursive

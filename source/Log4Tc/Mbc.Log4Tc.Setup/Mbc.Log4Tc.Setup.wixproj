@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\WiX.3.11.1\build\wix.props" Condition="Exists('..\packages\WiX.3.11.1\build\wix.props')" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="WixToolset.Sdk/4.0.3" ToolsVersion="4.0">
   <PropertyGroup>
     <DefineConstants>ProductVersion=$(ProductVersion)</DefineConstants>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -51,6 +50,10 @@
     <Compile Include="Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" />
     <Compile Include="Fragments\TwinCat3.wxs" />
     <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Util.wixext" Version="4.*" />
+    <PackageReference Include="WixToolset.Netfx.wixext" Version="4.*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mbc.Log4Tc.Service\Mbc.Log4Tc.Service.csproj">
@@ -109,7 +112,7 @@
   -->
   <Target Name="AfterResolveReferences">
     <!-- Set Build Version from exe assembly version -->
-    <GetAssemblyIdentity AssemblyFiles="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net461\win\publish\Mbc.Log4Tc.Service.exe">
+    <GetAssemblyIdentity AssemblyFiles="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-x64\publish\Mbc.Log4Tc.Service.exe">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
     </GetAssemblyIdentity>
     <PropertyGroup>
@@ -119,7 +122,7 @@
       <BuildVersion>%(AssemblyVersion.Version)</BuildVersion>
     </PropertyGroup>
     <!-- harvest wxs file from publish folder of Mbc.Log4Tc.Service project -->
-    <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" Directory="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net461\win\publish" Transforms="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcService" DirectoryRefId="DIR_Log4TcService" AutogenerateGuids="true" PreprocessorVariable="var.Mbc.Log4Tc.Service.TargetDir" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
+    <HeatDirectory OutputFile="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFiles.wxs" Directory="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-x64\publish" Transforms="$(ProjectDir)\Fragments\Log4TcServiceFeature\Log4TcServiceFilesFilter.xslt" ComponentGroupName="Cmp_Log4TcService" DirectoryRefId="DIR_Log4TcService" AutogenerateGuids="true" PreprocessorVariable="var.Mbc.Log4Tc.Service.TargetDir" SuppressRegistry="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" NoLogo="true" />
     <!-- harvest wxs file from GettingStarted TwinCat3 Example folder of \source\TwinCat_Examples\GettingStarted -->
     <PropertyGroup>
       <DefineConstants>$(DefineConstants);Log4TcTwinCatLibFeatureHarvestPath=$(ProjectDir)..\..\TwinCat_Examples\GettingStarted</DefineConstants>
