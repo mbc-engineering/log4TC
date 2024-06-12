@@ -44,6 +44,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Mbc.Log4Tc.Output.Graylog\Mbc.Log4Tc.Output.Graylog.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.InfluxDb\Mbc.Log4Tc.Output.InfluxDb.csproj" />
+    <ProjectReference Include="..\Mbc.Log4Tc.Output.Redis\Mbc.Log4Tc.Output.Redis.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Model\Mbc.Log4Tc.Model.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.NLog\Mbc.Log4Tc.Output.NLog.csproj" />

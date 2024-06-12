@@ -1,0 +1,17 @@
+{
+    "name": "Log4TC",
+
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devcontainer",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-dotnettools.csharp",
+                "ms-dotnettools.csdevkit",
+                "ms-dotnettools.vscodeintellicode-csharp"
+                // Add any additional extensions specific to Log4TC here
+            ]
+        }
+    }
+}
