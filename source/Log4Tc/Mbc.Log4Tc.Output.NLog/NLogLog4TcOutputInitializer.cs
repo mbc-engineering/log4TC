@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using Mbc.Log4Tc.Model;
+using NLog;
 using NLog.Config;
 using System;
 using System.IO;
@@ -13,7 +14,7 @@ namespace Mbc.Log4Tc.Output.NLog
         {
             if (!SetupDone)
             {
-                var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "log4tc", "config", "NLog.config");
+                var path = Path.Combine(OsPaths.GetConfigBasePath(), "NLog.config");
                 LogManager.Configuration = new XmlLoggingConfiguration(path);
                 SetupDone = true;
             }

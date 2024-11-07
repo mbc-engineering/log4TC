@@ -20,6 +20,8 @@ namespace Mbc.Log4Tc.Receiver
 
         public event EventHandler<LogEntryEventArgs> LogsReceived;
 
+        // Der Port sollte zwischen TwinCAT.Ads.AmsPortRange.CUSTOMERPRIVATE_FIRST and TwinCAT.Ads.AmsPortRange.CUSTOMERPRIVATE_LAST
+        // also First usable port for private networks (0x6590) and Last usable port for private networks (0x6977)
         public AdsLogReceiver(ILogger<AdsLogReceiver> logger, AdsHostnameService adsHostnameService)
             : base(16150, "Log4Tc", logger)
         {

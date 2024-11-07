@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log4tc
+spec:
+  containers:
+  - name: influxdb
+    image: docker.io/influxdb:1.8-alpine
+    volumeMounts:
+    - name: log4tc-influxdb-storage
+      mountPath: /var/lib/influxdb
+    - name: log4tc-influxdb-initdb
+      # All files in /docker-entrypoint-initdb.d werden beim neuen Containerstart ausgeführt
+      mountPath: /docker-entrypoint-initdb.d/initdb.iql
+    ports:
+    - containerPort: 8086
+      hostPort: 8086
+  - name: chronograf
+    image: docker.io/chronograf:1.8-alpine
+    env:
+    - name: INFLUXDB_URL
+      value: http://localhost:8086
+    ports:
+    - containerPort: 8888
+      hostPort: 8888
+    volumeMounts:
+    - name: log4tc-chronograf-storage
+      mountPath: /var/lib/chronograf
+  - name: log4tc-service
+    image: log4tc:24.11.08-beta
+    # activate influxdb logging
+    # volumeMounts:
+    # - name: log4tc-appsetings
+    #   mountPath: /etc/log4tc/config/appsettings.json
+    ports:
+    - containerPort: 16150
+      hostPort: 16150
+  volumes:
+  - name: log4tc-influxdb-storage
+    # Mounte ein lokales Verzeichnis bei lokalen kubernetes-Umgebungen
+    hostPath:
+      path: ./data/log4tc-influxdb-storage
+      type: DirectoryOrCreate
+  - name: log4tc-influxdb-initdb
+    hostPath:
+      path: ./initdb.iql
+      type: File
+  - name: log4tc-chronograf-storage
+    hostPath:
+      path: ./data/log4tc-chronograf-storage
+      type: DirectoryOrCreate
+  - name: log4tc-appsetings
+    # Mount appsettings.json to store messages into InfluxDB
+    hostPath:
+      path: ./appsettings.json
+      type: File

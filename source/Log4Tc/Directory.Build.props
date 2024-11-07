@@ -8,11 +8,11 @@
     <Title>Log4Tc</Title>
     <Product>mbc Log4Tc</Product>
     <Description>Logging ADS Master für Beckhoff TwinCat 3 mit mehreren Ausgabe Plugins</Description>
-    <Authors>stgm, joge, mihe</Authors>
-    <Company>mbc Engineering GmbH</Company>
-    <Copyright>Copyright © mbc Engineering GmbH 2024</Copyright>
+    <Authors>stegm;bqstony</Authors>
+    <Company>mbc-engineering</Company>
+    <Copyright>Copyright © mbc-engineering</Copyright>
 
-    <Version>24.01.18</Version>
+    <Version>24.11.08</Version>
 
   </PropertyGroup>
 

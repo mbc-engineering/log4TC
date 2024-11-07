@@ -3,6 +3,8 @@
 ## [VNext]
 ### Added
 - Dokumentation steht nun auch als PDF zur Verfügung
+- Es wird nun Linux unterstützt, der Configuration Pfad ist `/etc/log4tc/config` anstelle `%programdata%/log4TC/config` und für alle Logdateien `/var/log/log4tc` anstelle `%programdata%/log4TC/log` und `%programdata%/log4TC/internal`
+- Es wird ein Docker Image für Log4TC bereitgestellt mit dem Namen `ghcr.io/mbc-engineering/log4tc:[VNEXT]`
 
 ### Fixed 
 - #15 - Links in Dokumentation korrigiert
