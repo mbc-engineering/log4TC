@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: log4tc
 spec:
+  #hostNetwork: true
   containers:
   - name: influxdb
     image: docker.io/influxdb:1.8-alpine
@@ -26,12 +27,17 @@ spec:
     volumeMounts:
     - name: log4tc-chronograf-storage
       mountPath: /var/lib/chronograf
+  - name: log4tc-adsrouter
+    image: log4tc-adsrouter:24.11.08-beta
+    ports:
+    - containerPort: 48898
+      hostPort: 48898
   - name: log4tc-service
     image: log4tc:24.11.08-beta
     # activate influxdb logging
-    # volumeMounts:
-    # - name: log4tc-appsetings
-    #   mountPath: /etc/log4tc/config/appsettings.json
+    volumeMounts:
+    - name: log4tc-appsetings
+      mountPath: /etc/log4tc/config/appsettings.json
     ports:
     - containerPort: 16150
       hostPort: 16150
