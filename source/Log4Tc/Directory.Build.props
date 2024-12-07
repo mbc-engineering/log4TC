@@ -12,7 +12,7 @@
     <Company>mbc-engineering</Company>
     <Copyright>Copyright © mbc-engineering</Copyright>
 
-    <Version>24.11.08</Version>
+    <Version>24.12.07</Version>
 
   </PropertyGroup>
 
@@ -49,10 +49,11 @@
     <None Include="$(SolutionDir)\stylecop.json">
     </None>
   </ItemGroup>
+  <!--
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
     <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="3.3.4" />
   </ItemGroup>
-
+  -->
 </Project>
