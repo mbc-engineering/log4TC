@@ -1,4 +1,7 @@
 ﻿<Project Sdk="WixToolset.Sdk/5.0.2">
+  <PropertyGroup>
+    <SignOutput>true</SignOutput>
+  </PropertyGroup>
   <ItemGroup>
     <Content Include="EULA.rtf" />
     <Content Include="Fragments\Log4TcTwinCatLibFeature\mbc_engineering_log4tc.tmc" />
