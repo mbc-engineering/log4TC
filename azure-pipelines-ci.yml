@@ -4,6 +4,9 @@
 # It should check the code and run the tests in Pull Requests
 ##############################################################
 
+trigger:
+  batch: true
+
 # Pull Request Trigger
 pr:
   branches:
