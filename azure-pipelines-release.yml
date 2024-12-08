@@ -39,6 +39,8 @@ stages:
   - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/build-job.yaml
   # Documentation
   - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/docs/build-job.yaml
+  # tclibrary
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/tclibrary/build-job.yaml
 
 # ╔════════════════════════╗
 # ║ PublishRelease         ║
@@ -59,6 +61,12 @@ stages:
           - checkout: none
           - download: current
             artifact: msi
+          - download: current
+            artifact: tclibrary
+          - download: current
+            artifact: log4TC-linux-x64
+          - download: current
+            artifact: log4TC-linux-arm64
           # For easy testing comment out the above and uncomment the below
           # - task: DownloadBuildArtifacts@1
           #   inputs:
@@ -73,6 +81,21 @@ stages:
 
           - powershell: Get-ChildItem -Force -Path $(Pipeline.Workspace)/msi
             displayName: 'list artifact files'
+
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: '$(Pipeline.Workspace)/log4TC-linux-x64'
+              archiveType: 'tar'
+              tarCompression: 'gz'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/log4TC-linux-x64.tgz'
+
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: '$(Pipeline.Workspace)/log4TC-linux-arm64'
+              archiveType: 'tar'
+              tarCompression: 'gz'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/log4TC-linux-arm64.tgz'
+
           - task: GitHubRelease@1
             displayName: 'Create GitHub Releases'
             inputs:
@@ -86,7 +109,10 @@ stages:
               tagSource: 'userSpecifiedTag'
               tag: '$(Build.SourceBranchName)' # The PR, Branch or Tag Name
               releaseNotesSource: 'inline'
-              assets: '$(Pipeline.Workspace)/msi/**'
+              assets: |
+                $(Pipeline.Workspace)/msi/**
+                $(Pipeline.Workspace)/tclibrary/**
+                $(Build.ArtifactStagingDirectory)/**
               changeLogCompareToRelease: 'lastFullRelease'
               changeLogType: 'commitBased'
 

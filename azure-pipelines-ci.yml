@@ -23,3 +23,5 @@ stages:
   - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/build-job.yaml
   # Documentation
   - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/docs/build-job.yaml
+  # tclibrary
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/tclibrary/build-job.yaml

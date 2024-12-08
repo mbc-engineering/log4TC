@@ -23,7 +23,7 @@
   <!--#####################################
      Product definition
      ######################################-->
-  <Package Name="mbc engineering log4TC v$(var.ProductVersion) $(var.bitness)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="mbc engineering GmbH" UpgradeCode="$(var.UpgradeCode)">
+  <Package Name="mbc engineering log4TC v$(var.ProductVersion) $(var.bitness)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="mbc engineering" UpgradeCode="$(var.UpgradeCode)">
     <SummaryInformation Description="mbc engineering log4Tc" Manufacturer="mbc engineering" />
     <MediaTemplate EmbedCab="yes" />
 

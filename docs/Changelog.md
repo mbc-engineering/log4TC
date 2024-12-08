@@ -1,13 +1,27 @@
 # Changelog
 
-## [VNext]
+## [24.12.08]
 ### Added
 - Dokumentation steht nun auch als PDF zur Verfügung
-- Es wird nun Linux unterstützt, der Configuration Pfad ist `/etc/log4tc/config` anstelle `%programdata%/log4TC/config` und für alle Logdateien `/var/log/log4tc` anstelle `%programdata%/log4TC/log` und `%programdata%/log4TC/internal`
-- Es wird ein Docker Image für Log4TC bereitgestellt mit dem Namen `ghcr.io/mbc-engineering/log4tc:[VNEXT]`
+
+### Changed
+- Es wird nun .NET 8.0 verwendet und es ist keine Abhängigkeiten mehr zum .NET Full Framework notwendig. Die unterstützten Windows Versionen sind ab Windows 10 1607. Siehe Microsoft [Dokumentation](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#windows)
+- Neuste Beckhoff ADS Library 6.1.304 wird verwendet
+- Für das Windows MSI wird neu WIX 5 verwendet
 
 ### Fixed 
 - #15 - Links in Dokumentation korrigiert
+
+### Security
+- vulnerabilities behoben
+
+### Added BETA
+- Es wird nun Linux x64 und ARM-x64 unterstützt. Der Configuration Pfad ist `/etc/log4tc/config` anstelle `%programdata%/log4TC/config` und für alle Logdateien `/var/log/log4tc` anstelle `%programdata%/log4TC/log` und `%programdata%/log4TC/internal`. Ausserdem wird auf Linux die [AdsRouterConsoleApp](https://github.com/Beckhoff/TF6000_ADS_DOTNET_V5_Samples/tree/main/Sources/RouterSamples/AdsRouterConsoleApp) notwendig um auf Log4TC zuzugreifen. Es ist eine Source code Kopie von Beckhoff unter 'source/AdsRouterConsoleApp' verfügbar. Die theoretisch unterstütze Linux Versionen sind in der [Microsoft Dokumentation](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#linux) aufgeführt.
+- Es wird ein experimentelles Docker Image für Log4TC bereitgestellt mit dem Namen `ghcr.io/mbc-engineering/log4tc:latest`.
+- Siehe Beispiel `influx_on_beckhoff-rt-linux`
+
+### Known Issues
+- Das MSI Setup unterstütz TwinCAT 4026 nicht.
 
 ## [24.01.18]
 ### Added
