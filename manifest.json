@@ -4,7 +4,7 @@
     "changefreq": "daily",
     "priority": 0.5
   },
-  "source_base_path": "D:/a/1/s/docs",
+  "source_base_path": "/home/vsts/work/1/s/docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {

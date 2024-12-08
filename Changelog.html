@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -29,15 +29,15 @@
       <meta name="loc:changeTheme" content="Change theme">
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
   </head>
-
-  <script type="module" src="./public/docfx.min.js"></script>
-
-  <script>
-    const theme = localStorage.getItem('theme') || 'auto'
-    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
-  </script>
-
 
   <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
     <header class="bg-body border-bottom">
@@ -54,7 +54,7 @@
             <div id="navbar">
               <form class="search" role="search" id="search">
                 <i class="bi bi-search"></i>
-                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
               </form>
             </div>
           </div>
@@ -63,23 +63,9 @@
     </header>
 
     <main class="container-xxl">
-      <div class="toc-offcanvas">
-        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            <nav class="toc" id="toc"></nav>
-          </div>
-        </div>
-      </div>
 
       <div class="content">
         <div class="actionbar">
-          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
-            <i class="bi bi-list"></i>
-          </button>
 
           <nav id="breadcrumb"></nav>
         </div>
@@ -87,21 +73,41 @@
         <article data-uid="">
 <h1 id="changelog">Changelog</h1>
 
-<h2 id="vnext">[VNext]</h2>
+<h2 id="241208">[24.12.08]</h2>
 <h3 id="added">Added</h3>
 <ul>
 <li>Dokumentation steht nun auch als PDF zur Verfügung</li>
 </ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Es wird nun .NET 8.0 verwendet und es ist keine Abhängigkeiten mehr zum .NET Full Framework notwendig. Die unterstützten Windows Versionen sind ab Windows 10 1607. Siehe Microsoft <a href="https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#windows">Dokumentation</a></li>
+<li>Neuste Beckhoff ADS Library 6.1.304 wird verwendet</li>
+<li>Für das Windows MSI wird neu WIX 5 verwendet</li>
+</ul>
 <h3 id="fixed">Fixed</h3>
 <ul>
 <li>#15 - Links in Dokumentation korrigiert</li>
+</ul>
+<h3 id="security">Security</h3>
+<ul>
+<li>vulnerabilities behoben</li>
+</ul>
+<h3 id="added-beta">Added BETA</h3>
+<ul>
+<li>Es wird nun Linux x64 und ARM-x64 unterstützt. Der Configuration Pfad ist <code>/etc/log4tc/config</code> anstelle <code>%programdata%/log4TC/config</code> und für alle Logdateien <code>/var/log/log4tc</code> anstelle <code>%programdata%/log4TC/log</code> und <code>%programdata%/log4TC/internal</code>. Ausserdem wird auf Linux die <a href="https://github.com/Beckhoff/TF6000_ADS_DOTNET_V5_Samples/tree/main/Sources/RouterSamples/AdsRouterConsoleApp">AdsRouterConsoleApp</a> notwendig um auf Log4TC zuzugreifen. Es ist eine Source code Kopie von Beckhoff unter 'source/AdsRouterConsoleApp' verfügbar. Die theoretisch unterstütze Linux Versionen sind in der <a href="https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#linux">Microsoft Dokumentation</a> aufgeführt.</li>
+<li>Es wird ein experimentelles Docker Image für Log4TC bereitgestellt mit dem Namen <code>ghcr.io/mbc-engineering/log4tc:latest</code>.</li>
+<li>Siehe Beispiel <code>influx_on_beckhoff-rt-linux</code></li>
+</ul>
+<h3 id="known-issues">Known Issues</h3>
+<ul>
+<li>Das MSI Setup unterstütz TwinCAT 4026 nicht.</li>
 </ul>
 <h2 id="240118">[24.01.18]</h2>
 <h3 id="added-1">Added</h3>
 <ul>
 <li>NLog unterstützt nun auch die Ausgabe für Azure ApplicationInsight über das neue nlog Target <code>ApplicationInsightsTargetLog4Tc</code>.</li>
 </ul>
-<h3 id="security">Security</h3>
+<h3 id="security-1">Security</h3>
 <ul>
 <li>Update SQLClient</li>
 </ul>
@@ -115,7 +121,7 @@
 <li>Einige Startup Probleme behoben</li>
 <li>Setup of the library works now with TwinCat 4024 shell</li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Einige Logeinträge</li>
 </ul>
@@ -146,7 +152,7 @@
 <ul>
 <li>Neuer Output für SQL-Datenbanken</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><code>LogEntry</code> können jetzt als Collection im Output statt einzeln verarbeitet werden</li>
 <li>Influx-DB Output wurde angepasst, dass mehr als eine LogEntry gesendet wird</li>
@@ -164,7 +170,7 @@
 <li>Neue Ausgabe für Influx-DB (&gt;= 1.8)</li>
 <li>Neue Ausgabe für Graylog</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host</li>
 <li>Neue PLC-Library mit der Version 0.0.5</li>
