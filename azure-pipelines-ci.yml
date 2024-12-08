@@ -4,6 +4,9 @@
 # It should check the code and run the tests in Pull Requests
 ##############################################################
 
+trigger:
+  batch: true
+
 # Pull Request Trigger
 pr:
   branches:
@@ -13,7 +16,12 @@ pr:
     - dev
 
 stages:
-# ╔════════════════════════╗
-# ║ Build Stage            ║
-# ╚════════════════════════╝
-- template: .azure-pipelines/templates/build-stage.yaml
+- stage: 'build'
+  displayName: 'Build the applications'
+  jobs:
+  # log4TC
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/build-job.yaml
+  # Documentation
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/docs/build-job.yaml
+  # tclibrary
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/tclibrary/build-job.yaml

@@ -8,11 +8,11 @@
     <Title>Log4Tc</Title>
     <Product>mbc Log4Tc</Product>
     <Description>Logging ADS Master für Beckhoff TwinCat 3 mit mehreren Ausgabe Plugins</Description>
-    <Authors>stgm, joge, mihe</Authors>
-    <Company>mbc Engineering GmbH</Company>
-    <Copyright>Copyright © mbc Engineering GmbH 2020</Copyright>
+    <Authors>stegm;bqstony</Authors>
+    <Company>mbc-engineering</Company>
+    <Copyright>Copyright © mbc-engineering</Copyright>
 
-    <Version>24.01.18</Version>
+    <Version>24.12.08</Version>
 
   </PropertyGroup>
 
@@ -42,18 +42,18 @@
     <!-- Not need if Roslyn analysis is used (https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/2122)
     <RunCodeAnalysis>true</RunCodeAnalysis> -->
     <CodeAnalysisRuleSet>$(SolutionDir)\Mbc.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
   <ItemGroup>
     <!-- https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/Configuration.md -->
     <None Include="$(SolutionDir)\stylecop.json">
     </None>
   </ItemGroup>
+  <!--
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.0.0" />
-    <PackageReference Include="Microsoft.CodeQuality.Analyzers" Version="2.9.8" />
-    <PackageReference Include="Microsoft.NetFramework.Analyzers" Version="2.9.8" />
-    <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="2.9.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
+    <PackageReference Include="Roslyn.Diagnostics.Analyzers" Version="3.3.4" />
   </ItemGroup>
-
+  -->
 </Project>

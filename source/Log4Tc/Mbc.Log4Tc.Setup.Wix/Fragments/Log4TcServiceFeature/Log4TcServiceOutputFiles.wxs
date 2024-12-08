@@ -1,0 +1,9 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <ComponentGroup Id="Cmp_Log4TcServiceOutputFiles">
+      <Component Id="Cmp_Log4TcServiceOutputNlog" Directory="DIR_CommonAppDataFolderLog4TcConfig" Guid="7387C8E9-ABE0-455B-BC47-025C7B6032B8" NeverOverwrite="yes" Permanent="yes">
+        <File Id="FILE_OutputNlogConfig" KeyPath="yes" DefaultVersion="1" Source="..\Mbc.Log4Tc.Output.NLog\NLog.config" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

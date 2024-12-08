@@ -1,0 +1,54 @@
+# Build Context to this file is ./
+#
+# Build the image with the following command:
+# log4TCversion=$(sed -n 's|.*<Version>\([^<]*\)</Version>.*|\1|p' Directory.Build.props) && \
+# podman build \
+#   --build-arg BUILD_VERSION="$log4TCversion" \
+#   --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+#   --build-arg SOURCECOMMITID="$(git rev-parse HEAD)" \
+#   -t log4tc:$log4TCversion-beta .
+
+# Base Image stage
+########################
+FROM mcr.microsoft.com/dotnet/runtime:8.0-bookworm-slim AS base
+ARG BUILD_VERSION
+ARG BUILD_DATE
+ARG SOURCECOMMITID
+WORKDIR /app
+# The ADS server port for this server. For custom Servers, the port range should
+EXPOSE 16150
+
+# The OCI Spec Labels https://github.com/opencontainers/image-spec/blob/main/annotations.md
+LABEL org.opencontainers.image.version=$BUILD_VERSION
+LABEL org.opencontainers.image.created=$BUILD_DATE
+LABEL org.opencontainers.image.title=log4TC
+LABEL org.opencontainers.image.authors=stegm;bqstony
+LABEL org.opencontainers.image.source=https://github.com/mbc-engineering/log4TC
+LABEL org.opencontainers.image.revision=$SOURCECOMMITID
+LABEL org.opencontainers.image.base.name=mcr.microsoft.com/dotnet/runtime:8.0-bookworm-slim
+LABEL org.opencontainers.image.vendor="mbc-engineering"
+
+# Default configuration for the log4TC service
+RUN mkdir -p /var/log/log4tc /etc/log4tc/config
+COPY Mbc.Log4Tc.Service/appsettingsSample.json /etc/log4tc/config/appsettings.json
+COPY Mbc.Log4Tc.Output.NLog/NLogLinux.config /etc/log4tc/config/NLog.config
+
+# Stages for building and test the app
+########################
+FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS test-stage
+WORKDIR /src
+COPY . .
+RUN dotnet test --framework net8.0 --configuration Release --logger trx --results-directory /app/testresults
+
+FROM test-stage AS publish-stage
+WORKDIR /src/Mbc.Log4Tc.Service
+RUN dotnet publish --framework net8.0 --configuration Release --self-contained false --runtime linux-x64 --output /app/publish
+
+# Stage for pack the binary to deploymnd container
+########################
+FROM base AS final
+WORKDIR /app
+COPY --from=publish-stage /app/testresults ./testresults
+COPY --from=publish-stage /app/publish .
+ENTRYPOINT ["dotnet", "Mbc.Log4Tc.Service.dll"]
+

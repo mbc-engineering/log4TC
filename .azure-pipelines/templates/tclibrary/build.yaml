@@ -1,0 +1,18 @@
+##############################################################
+# Description:
+# This Stage is used to build and test log4TC for Windows
+# It generates all the artifacts msi & docs
+##############################################################
+
+steps:
+- task: CopyFiles@2
+  displayName: 'Copy generated docfx docs files'
+  inputs:
+    SourceFolder: 'library'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/tclibrary'
+    CleanTargetFolder: true
+
+- publish: $(Build.ArtifactStagingDirectory)/tclibrary
+  displayName: 'Publish tclibrary files'
+  artifact: 'tclibrary'

@@ -1,0 +1,14 @@
+##############################################################
+# Description:
+# This Job is used to build the log4TC documentation
+##############################################################
+
+jobs:
+- job: 'build_library'
+  displayName: 'Create the TC Library'
+  pool:
+    vmImage: 'ubuntu-24.04'
+  steps:
+  - checkout: self
+    submodules: recursive
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/tclibrary/build.yaml

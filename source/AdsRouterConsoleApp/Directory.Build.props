@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- CSPROJ Reference see: https://docs.microsoft.com/en-us/dotnet/core/tools/csproj -->
+
+  <!-- Solution wide Project infos
+       ############################ -->
+  <PropertyGroup>
+    <Title>Log4Tc-AdsRouter</Title>
+    <Product>mbc Log4Tc-adsRouter</Product>
+    <Description>
+      Simple TCP/IP ADS Router Console Application for use on systems without TwinCAT installation / setup.
+      Console ADS Router with AdsServer that is required to connect from log4TC Service
+    </Description>
+    <Authors>bqstony</Authors>
+    <Company>mbc-engineering</Company>
+    <Copyright>Copyright © mbc-engineering</Copyright>
+
+    <Version>24.11.08</Version>
+
+  </PropertyGroup>
+
+</Project>

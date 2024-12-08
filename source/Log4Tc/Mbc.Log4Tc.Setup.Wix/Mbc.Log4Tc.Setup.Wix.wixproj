@@ -1,0 +1,49 @@
+﻿<Project Sdk="WixToolset.Sdk/5.0.2">
+  <PropertyGroup>
+    <SignOutput>true</SignOutput>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="EULA.rtf" />
+    <Content Include="Fragments\Log4TcTwinCatLibFeature\mbc_engineering_log4tc.tmc" />
+    <Content Include="Includes\DefinitionsPlatform.wxi" />
+    <Content Include="Resources\favicon.ico" />
+    <Content Include="Resources\log4TcBackground.png" />
+    <Content Include="Resources\mbcBackground.png" />
+    <Content Include="Resources\mbcBanner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Netfx.wixext" Version="5.0.2" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="5.0.2" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
+    <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
+  </ItemGroup>
+  <PropertyGroup>
+    <!-- Define constant for using in wix-->
+    <DefineConstants>$(DefineConstants);BuildVersion=$(Version)</DefineConstants>
+    <DefineConstants>$(DefineConstants);Log4TcTwinCatLibFeatureHarvestPath=$(Log4TcTwinCatLibFeatureHarvestPath)</DefineConstants>
+    <DefineConstants>$(DefineConstants);ServiceExePath=$(SolutionDir)Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-$(Platform)\Mbc.Log4Tc.Service.exe</DefineConstants>
+    <!-- Define varialbe for using in csproj -->
+    <Log4TcTwinCatLibFeatureHarvestPath>$(ProjectDir)..\..\TwinCat_Examples\GettingStarted</Log4TcTwinCatLibFeatureHarvestPath>
+    <BuildVersion>$(Version)</BuildVersion>
+  </PropertyGroup>
+  <!--Harvesting Files-->
+  <ItemGroup>
+    <HarvestDirectory Include="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-$(Platform)\">
+      <ComponentGroupName>Cmp_Log4TcService</ComponentGroupName>
+      <DirectoryRefId>DIR_Log4TcService</DirectoryRefId>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+    </HarvestDirectory>
+    <BindPath Include="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-$(Platform)\" />
+    <HarvestDirectory Include="..\..\TwinCat_Examples\GettingStarted\">
+      <ComponentGroupName>Cmp_Log4TcTwinCatLibGettingStartedFiles</ComponentGroupName>
+      <DirectoryRefId>DIR_CommonAppDataFolderLog4TcGettingStarted</DirectoryRefId>
+      <SuppressRootDirectory>true</SuppressRootDirectory>
+    </HarvestDirectory>
+    <BindPath Include="..\..\TwinCat_Examples\GettingStarted\" />
+  </ItemGroup>
+  <Target Name="AfterAfterBuild" AfterTargets="AfterBuild">
+    <!-- Add the Version to the builded MSI -->
+    <Copy SourceFiles=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName).msi" DestinationFiles=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName).$(Platform).v$(BuildVersion).msi" />
+    <Delete Files=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName).msi" />
+  </Target>
+</Project>

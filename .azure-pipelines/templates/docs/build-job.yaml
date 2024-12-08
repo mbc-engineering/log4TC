@@ -1,0 +1,14 @@
+##############################################################
+# Description:
+# This Job is used to build the log4TC documentation
+##############################################################
+
+jobs:
+- job: 'build_docs'
+  displayName: 'Create the documentation'
+  pool:
+    vmImage: 'ubuntu-24.04'
+  steps:
+  - checkout: self
+    submodules: recursive
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/docs/build.yaml

@@ -1,4 +1,5 @@
 ﻿using Mbc.Log4Tc.Dispatcher;
+using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Output.Graylog;
 using Mbc.Log4Tc.Output.InfluxDb;
 using Mbc.Log4Tc.Output.NLog;
@@ -24,7 +25,7 @@ namespace Mbc.Log4Tc.Service
 
         public static async Task Main(string[] args)
         {
-            var logPath = Path.Combine(GetInternalBasePath(), "service.log");
+            var logPath = Path.Combine(OsPaths.GetInternalLogBasePath(), "service.log");
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
@@ -54,7 +55,7 @@ namespace Mbc.Log4Tc.Service
                     if (!IsLocalConfig())
                     {
                         // The place to find the appsettings.json
-                        configure.SetBasePath(GetAppsettingsBasePath());
+                        configure.SetBasePath(OsPaths.GetConfigBasePath());
                     }
                 })
                 .ConfigureLogging(loggingBuilder =>
@@ -107,30 +108,6 @@ namespace Mbc.Log4Tc.Service
             }
 
             return hostBuilder;
-        }
-
-        private static string GetAppsettingsBasePath()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return Path.Combine(Environment.ExpandEnvironmentVariables("%programdata%"), "log4TC", "config");
-            }
-            else
-            {
-                throw new PlatformNotSupportedException("Service still in windows system supported.");
-            }
-        }
-
-        private static string GetInternalBasePath()
-        {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return Path.Combine(Environment.ExpandEnvironmentVariables("%programdata%"), "log4TC", "internal");
-            }
-            else
-            {
-                throw new PlatformNotSupportedException("Service still in windows system supported.");
-            }
         }
 
         private static string GetPluginPath()

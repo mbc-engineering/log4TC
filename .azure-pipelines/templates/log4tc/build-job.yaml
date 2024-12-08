@@ -1,0 +1,23 @@
+##############################################################
+# Description:
+# This Job is used to build and test log4TC
+##############################################################
+
+jobs:
+- job: 'build_windows'
+  displayName: 'Build the windows application'
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - checkout: self
+    submodules: recursive
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/build-windows.yaml
+
+- job: 'build_linux'
+  displayName: 'Build the linux application'
+  pool:
+    vmImage: 'ubuntu-24.04'
+  steps:
+  - checkout: self
+    submodules: recursive
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/build-linux.yaml

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+	<!-- 32-bit / 64-bit variables (use now ProgramFiles6432Folder) -->
+  <?if $(var.Platform)=x64 ?>
+    <?define Win64 = "yes" ?>
+    <?define bitness = "(64 bit)" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+    <?define PlatformSystemFolder = "System64Folder" ?>
+    <?define PlatformRegistry = "always32" ?>
+  <?else ?>
+    <?define Win64 = "no" ?>
+    <?define bitness = "(32 bit)" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+    <?define PlatformRegistry = "always64" ?>
+  <?endif ?>
+</Include>

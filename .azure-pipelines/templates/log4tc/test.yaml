@@ -1,0 +1,43 @@
+##############################################################
+# Description:
+# This steps are used to test a solution and create a
+# code coverage report
+##############################################################
+
+parameters:
+- name: solution_path
+  type: string
+  default: '$(System.DefaultWorkingDirectory)/source/Log4Tc/'
+- name: solution_file
+  type: string
+  default: 'Log4Tc.sln'
+- name: dotnet_framework
+  type: string
+  default: 'net8.0'
+- name: dotnet_configuration
+  type: string
+  default: 'Release'
+
+steps:
+- script: dotnet test ${{ parameters.solution_path }}${{ parameters.solution_file }} --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --logger trx --collect:"XPlat Code Coverage"
+  displayName: "dotnet test ${{ parameters.dotnet_framework }} ${{ parameters.dotnet_configuration }}"
+
+- task: PublishTestResults@2
+  displayName: "Publish testresults for summary"
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '**/*.trx'
+    searchFolder: '${{ parameters.solution_path }}'
+    mergeTestResults: true
+    testRunTitle: '${{ parameters.solution_file }}-$(Agent.OS)-$(Agent.OSArchitecture)'
+    buildPlatform: '$(Agent.OSArchitecture)'
+    buildConfiguration: '${{ parameters.dotnet_configuration }}'
+    failTaskOnFailedTests: true
+  condition: always()
+
+- task: PublishCodeCoverageResults@2
+  displayName: "Publish code coverage"
+  inputs:
+    summaryFileLocation: "$(System.DefaultWorkingDirectory)/source/Log4Tc/**/coverage.cobertura.xml"
+    pathToSources: "$(System.DefaultWorkingDirectory)/source/Log4Tc/"
+  condition: always()
