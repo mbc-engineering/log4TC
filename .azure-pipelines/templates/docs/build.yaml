@@ -1,0 +1,21 @@
+##############################################################
+# Description:
+# This Stage is used to build and test log4TC for Windows
+# It generates all the artifacts msi & docs
+##############################################################
+
+steps:
+- script: dotnet build $(System.DefaultWorkingDirectory)/docs/docfx.csproj
+  displayName: "build docfx documentation"
+
+- task: CopyFiles@2
+  displayName: 'Copy generated docfx docs files'
+  inputs:
+    SourceFolder: 'docs/_site'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/docs'
+    CleanTargetFolder: true
+
+- publish: $(Build.ArtifactStagingDirectory)/docs
+  displayName: 'Publish docs files'
+  artifact: 'docs'

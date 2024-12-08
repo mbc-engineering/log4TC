@@ -1,0 +1,72 @@
+##############################################################
+# Description:
+# This Stage is used to build and test log4TC for Windows
+# It generates all the artifacts msi & docs
+##############################################################
+
+parameters:
+- name: solution_path
+  type: string
+  default: '$(System.DefaultWorkingDirectory)/source/Log4Tc/'
+- name: solution_file
+  type: string
+  default: 'Log4Tc.sln'
+- name: dotnet_framework
+  type: string
+  default: 'net8.0'
+- name: dotnet_configuration
+  type: string
+  default: 'Release'
+
+steps:
+- template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/test.yaml
+  parameters:
+    solution_path: '${{ parameters.solution_path }}'
+    solution_file: '${{ parameters.solution_file }}'
+    dotnet_framework: '${{ parameters.dotnet_framework }}'
+    dotnet_configuration: '${{ parameters.dotnet_configuration }}'
+
+- script: dotnet publish ${{ parameters.solution_path }}Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --self-contained true --runtime win-x64 --output $(Build.ArtifactStagingDirectory)/log4TC/win-x64
+  displayName: "publish log4TC win-x64 self-contained"
+
+- script: dotnet publish ${{ parameters.solution_path }}Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --self-contained true --runtime win-x86 --output $(Build.ArtifactStagingDirectory)/log4TC/win-x86
+  displayName: "publish log4TC win-x86 self-contained"
+
+# for the same behavior in VS2022 for testing and building the msi and the .net CLI copy the artifacts to the build directory
+- task: CopyFiles@2
+  displayName: 'Copy published win-x64 files to build directory'
+  inputs:
+    Contents: '$(Build.ArtifactStagingDirectory)/log4TC/win-x64/**/*.*'
+    TargetFolder: '${{ parameters.solution_path }}Mbc.Log4Tc.Service/bin/Release/${{ parameters.dotnet_framework }}/win-x64'
+    CleanTargetFolder: true
+    flattenFolders: false
+- powershell: Get-ChildItem -Force -Path ${{ parameters.solution_path }}Mbc.Log4Tc.Service/bin/Release/${{ parameters.dotnet_framework }}/win-x64
+  displayName: 'list files win-x64 for analyzing'
+
+- task: CopyFiles@2
+  displayName: 'Copy published win-x86 files to build directory'
+  inputs:
+    Contents: '$(Build.ArtifactStagingDirectory)/log4TC/win-x86/**/*.*'
+    TargetFolder: '${{ parameters.solution_path }}Mbc.Log4Tc.Service/bin/Release/${{ parameters.dotnet_framework }}/win-x86'
+    CleanTargetFolder: true
+    flattenFolders: false
+- powershell: Get-ChildItem -Force -Path ${{ parameters.solution_path }}Mbc.Log4Tc.Service/bin/Release/${{ parameters.dotnet_framework }}/win-x86
+  displayName: 'list files win-x86 for analyzing'
+
+- script: dotnet build ${{ parameters.solution_path }}${{ parameters.solution_file }} --configuration wix -p Platform=x64
+  displayName: "build MSI with wix log4TC win-x64"
+
+- script: dotnet build ${{ parameters.solution_path }}${{ parameters.solution_file }} --configuration wix -p Platform=x86
+  displayName: "build MSI with wix log4TC win-x86"
+
+- task: CopyFiles@2
+  displayName: 'Copy MSI Setup files'
+  inputs:
+    Contents: '**/bin/**/*.msi'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/msi'
+    CleanTargetFolder: false
+    flattenFolders: true
+
+- publish: $(Build.ArtifactStagingDirectory)/msi
+  displayName: 'Publish MSI Setup files'
+  artifact: 'msi'

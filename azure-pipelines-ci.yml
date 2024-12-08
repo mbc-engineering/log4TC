@@ -13,7 +13,10 @@ pr:
     - dev
 
 stages:
-# ╔════════════════════════╗
-# ║ Build Stage            ║
-# ╚════════════════════════╝
-- template: .azure-pipelines/templates/build-stage.yaml
+- stage: 'build'
+  displayName: 'Build the applications'
+  jobs:
+  # log4TC
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/build-job.yaml
+  # Documentation
+  - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/docs/build-job.yaml

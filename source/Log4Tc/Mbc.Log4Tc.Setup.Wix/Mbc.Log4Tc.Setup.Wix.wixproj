@@ -18,19 +18,19 @@
     <!-- Define constant for using in wix-->
     <DefineConstants>$(DefineConstants);BuildVersion=$(Version)</DefineConstants>
     <DefineConstants>$(DefineConstants);Log4TcTwinCatLibFeatureHarvestPath=$(Log4TcTwinCatLibFeatureHarvestPath)</DefineConstants>
-    <DefineConstants>$(DefineConstants);ServiceExePath=$(SolutionDir)Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-x64\Mbc.Log4Tc.Service.exe</DefineConstants>
+    <DefineConstants>$(DefineConstants);ServiceExePath=$(SolutionDir)Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-$(Platform)\Mbc.Log4Tc.Service.exe</DefineConstants>
     <!-- Define varialbe for using in csproj -->
     <Log4TcTwinCatLibFeatureHarvestPath>$(ProjectDir)..\..\TwinCat_Examples\GettingStarted</Log4TcTwinCatLibFeatureHarvestPath>
     <BuildVersion>$(Version)</BuildVersion>
   </PropertyGroup>
   <!--Harvesting Files-->
   <ItemGroup>
-    <HarvestDirectory Include="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-x64\">
+    <HarvestDirectory Include="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-$(Platform)\">
       <ComponentGroupName>Cmp_Log4TcService</ComponentGroupName>
       <DirectoryRefId>DIR_Log4TcService</DirectoryRefId>
       <SuppressRootDirectory>true</SuppressRootDirectory>
     </HarvestDirectory>
-    <BindPath Include="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-x64\" />
+    <BindPath Include="..\Mbc.Log4Tc.Service\bin\$(Configuration)\net8.0\win-$(Platform)\" />
     <HarvestDirectory Include="..\..\TwinCat_Examples\GettingStarted\">
       <ComponentGroupName>Cmp_Log4TcTwinCatLibGettingStartedFiles</ComponentGroupName>
       <DirectoryRefId>DIR_CommonAppDataFolderLog4TcGettingStarted</DirectoryRefId>
@@ -40,7 +40,7 @@
   </ItemGroup>
   <Target Name="AfterAfterBuild" AfterTargets="AfterBuild">
     <!-- Add the Version to the builded MSI -->
-    <Copy SourceFiles=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName).msi" DestinationFiles=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName)v$(BuildVersion).msi" />
+    <Copy SourceFiles=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName).msi" DestinationFiles=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName).$(Platform).v$(BuildVersion).msi" />
     <Delete Files=".\bin\$(Platform)\$(Configuration)\en-US\$(OutputName).msi" />
   </Target>
 </Project>

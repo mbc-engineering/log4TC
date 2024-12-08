@@ -1,0 +1,41 @@
+##############################################################
+# Description:
+# This Stage is used to build and test log4TC for Linux
+# It generates all the artifacts
+##############################################################
+
+parameters:
+- name: solution_path
+  type: string
+  default: '$(System.DefaultWorkingDirectory)/source/Log4Tc/'
+- name: solution_file
+  type: string
+  default: 'Log4Tc.sln'
+- name: dotnet_framework
+  type: string
+  default: 'net8.0'
+- name: dotnet_configuration
+  type: string
+  default: 'Release'
+
+steps:
+- template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/test.yaml
+  parameters:
+    solution_path: '${{ parameters.solution_path }}'
+    solution_file: '${{ parameters.solution_file }}'
+    dotnet_framework: '${{ parameters.dotnet_framework }}'
+    dotnet_configuration: '${{ parameters.dotnet_configuration }}'
+
+- script: dotnet publish ${{ parameters.solution_path }}Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --self-contained true --runtime linux-x64 --output $(Build.ArtifactStagingDirectory)/log4TC/linux-x64
+  displayName: "publish log4TC linux-x64 self-contained"
+
+- publish: $(Build.ArtifactStagingDirectory)/log4TC/linux-x64
+  displayName: 'publish linux-x64 files'
+  artifact: 'log4TC-linux-x64'
+
+- script: dotnet publish ${{ parameters.solution_path }}Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --self-contained true --runtime linux-arm64 --output $(Build.ArtifactStagingDirectory)/log4TC/linux-arm64
+  displayName: "publish log4TC linux-arm64 self-contained"
+
+- publish: $(Build.ArtifactStagingDirectory)/log4TC/linux-arm64
+  displayName: 'publish linux-arm64 files'
+  artifact: 'log4TC-linux-arm64'
