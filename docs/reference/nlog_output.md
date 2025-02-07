@@ -64,7 +64,7 @@ Die Konfiguration hat folgende Eigenschaften:
 * Das Ausgabeformat ist: `<PLC-Zeitstempel>|<Level>|<Logger>|<Log-Message>|[<Context-Attribute>]`.
 * Es werden alle Meldungen ab Level `Debug` und höher geloggt.
 
-### Ausgabe für Log4View
+### Ausgabe für Log4View (XML-Logging)
 
 Diese Konfiguration schreibt die Log-Meldungen in ein XML-Format, dass von [Log4View](https://www.log4view.com/) gelesen werden kann.
 
@@ -117,6 +117,54 @@ Die Konfiguration hat folgende Eigenschaften:
 * Das Log-File wird max. 10 MByte gross, danach wird es archiviert. Es werden max. 5 Archive aufbewahrt, bevor endgültig gelöscht wird.
 * Im Meldungstext werden noch zusätzlich alle Context-Properties eingefügt, sofern welche vorhanden sind.
 * Es werden alle Meldungen ab Level `Debug` und höher geloggt.
+
+### Ausgabe für Log4View (Network-Stream)
+
+Diese Konfiguration schreibt die Log-Meldungen in einen UDP stream im XML-Format, dass von [Log4View](https://www.log4view.com/) gelesen werden kann.
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog
+	xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	throwConfigExceptions="true"
+	autoReload="true"
+	internalLogLevel="Info"
+	throwExceptions="true">
+
+  <!--
+	See https://github.com/nlog/nlog/wiki/Configuration-file
+	for information on customizing logging rules and outputs.
+
+  See also for targets: https://nlog-project.org/config/?tab=targets
+  See also for placeholders: https://nlog-project.org/config/?tab=layout-renderers
+	-->
+
+  <extensions>
+    <add assembly="Mbc.Log4Tc.Output.NLog"/>
+  </extensions>
+
+  <targets>
+    <target name="network" 
+        xsi:type="Network" 
+        address="udp://127.0.0.2:878" 
+        newLine="false" 
+        maxMessageSize="65000" 
+        encoding="utf-8"
+        layout="${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}" />    
+    </target>
+  </targets>
+
+  <rules>
+    <!--Levels: Trace, Debug, Info, Warn, Error, Fatal, Off-->
+    <logger name="*" minlevel="Debug" writeTo="network" />
+  </rules>
+</nlog>
+```
+
+Log4View muss wie folgt konfiguriert werden:
+
+![](assets/stup_log4View_networkstream.png)
 
 ### Ausgabe für Azure ApplicationInsight
 

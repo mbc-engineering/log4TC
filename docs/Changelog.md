@@ -1,5 +1,9 @@
 # Changelog
 
+## [25.02.07]
+### Fixed
+- Fixed System.MethodAccessException in Log4JXmlEventLayoutRenderer
+
 ## [24.12.08]
 ### Added
 - Dokumentation steht nun auch als PDF zur Verfügung

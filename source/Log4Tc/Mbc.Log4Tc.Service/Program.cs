@@ -34,7 +34,8 @@ namespace Mbc.Log4Tc.Service
 
             try
             {
-                logger.Information("Starting log4TC service.");
+                Version version = typeof(Program).Assembly.GetName().Version;
+                logger.Information("Starting log4TC service {version}.", version.ToString());
 
                 await CreateHostBuilder(args, logger)
                     .Build()

@@ -171,12 +171,12 @@ namespace Mbc.Log4Tc.Output.NLog.Extensions
             using (XmlWriter xtw = XmlWriter.Create(sb, _xmlWriterSettings))
             {
                 xtw.WriteStartElement("log4j", "event", DummyNamespace);
-                xtw.WriteAttributeSafeString("logger", LoggerName != null ? LoggerName.Render(logEvent) : logEvent.LoggerName);
+                xtw.WriteAttributeString("logger", LoggerName != null ? LoggerName.Render(logEvent) : logEvent.LoggerName);
                 xtw.WriteAttributeString("level", logEvent.Level.Name.ToUpperInvariant());
                 xtw.WriteAttributeString("timestamp", Convert.ToString((long)(logEvent.TimeStamp.ToUniversalTime() - Log4jDateBase).TotalMilliseconds, CultureInfo.InvariantCulture));
                 xtw.WriteAttributeString("thread", Convert.ToString(GetTaskId(logEvent)));
 
-                xtw.WriteElementSafeString("log4j", "message", DummyNamespace, Message != null ? RenderLogEvent(Message, logEvent) : logEvent.FormattedMessage);
+                xtw.WriteElementString("log4j", "message", DummyNamespace, Message != null ? RenderLogEvent(Message, logEvent) : logEvent.FormattedMessage);
 
                 xtw.WriteStartElement("log4j", "properties", DummyNamespace);
 
@@ -189,12 +189,12 @@ namespace Mbc.Log4Tc.Output.NLog.Extensions
 
                 xtw.WriteStartElement("log4j", "data", DummyNamespace);
                 xtw.WriteAttributeString("name", "log4japp");
-                xtw.WriteAttributeSafeString("value", AppInfo?.Render(logEvent) ?? GetApplication(logEvent));
+                xtw.WriteAttributeString("value", AppInfo?.Render(logEvent) ?? GetApplication(logEvent));
                 xtw.WriteEndElement();
 
                 xtw.WriteStartElement("log4j", "data", DummyNamespace);
                 xtw.WriteAttributeString("name", "log4jmachinename");
-                xtw.WriteAttributeSafeString("value", GetSource(logEvent));
+                xtw.WriteAttributeString("value", GetSource(logEvent));
                 xtw.WriteEndElement();
 
                 xtw.WriteEndElement();  // properties
@@ -223,8 +223,8 @@ namespace Mbc.Log4Tc.Output.NLog.Extensions
                     continue;
 
                 xtw.WriteStartElement("log4j", "data", DummyNamespace);
-                xtw.WriteAttributeSafeString("name", parameter.Name);
-                xtw.WriteAttributeSafeString("value", parameterValue);
+                xtw.WriteAttributeString("name", parameter.Name);
+                xtw.WriteAttributeString("value", parameterValue);
                 xtw.WriteEndElement();
             }
         }
@@ -244,8 +244,8 @@ namespace Mbc.Log4Tc.Output.NLog.Extensions
                         continue;
 
                     xtw.WriteStartElement(prefix, "data", propertiesNamespace);
-                    xtw.WriteAttributeSafeString("name", propertyKey);
-                    xtw.WriteAttributeSafeString("value", propertyValue);
+                    xtw.WriteAttributeString("name", propertyKey);
+                    xtw.WriteAttributeString("value", propertyValue);
                     xtw.WriteEndElement();
                 }
             }
