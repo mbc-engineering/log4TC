@@ -8,7 +8,7 @@
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>log4Tc_Tester</Name>
-    <ProgramVersion>3.1.4023.0</ProgramVersion>
+    <ProgramVersion>3.1.4026.12</ProgramVersion>
     <Application>{62fec726-b61d-45f9-8f13-9593cf9fc6f8}</Application>
     <TypeSystem>{823d03dd-66e7-4e21-af06-c553d5b65b93}</TypeSystem>
     <Implicit_Task_Info>{b1ea4d1b-1959-487f-8343-2fac7b65114c}</Implicit_Task_Info>
@@ -16,6 +16,10 @@
     <Implicit_Jitter_Distribution>{fb556167-7f85-4d3d-b891-e716599fce58}</Implicit_Jitter_Distribution>
     <LibraryReferences>{c6174425-46a4-4153-bbb1-57a25a5985c3}</LibraryReferences>
     <CompilerDefines>DEBUG</CompilerDefines>
+    <Released>false</Released>
+    <AllowChecksForLibrary>false</AllowChecksForLibrary>
+    <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
+    <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GVLs\GVL.TcGVL">
@@ -62,16 +66,6 @@
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="Log4TC">
-      <DefaultResolution>Log4TC, * (mbc engineering GmbH)</DefaultResolution>
-      <Namespace>Log4TC</Namespace>
-      <Parameters>
-        <Parameter>
-          <Key>NBUFFERLEN</Key>
-          <Value>32768</Value>
-        </Parameter>
-      </Parameters>
-    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -88,6 +82,10 @@
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="[log4TC]">
+      <DefaultResolution>[log4TC], * (mbc engineering)</DefaultResolution>
+      <Namespace>log4tc</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="log4Tc_Tester.tmc">
@@ -102,26 +100,24 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
-        <v>{535658C0-5AF5-460d-99A4-BFFB984A829A}</v>
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
         <o>
-          <v n="Name">"{535658C0-5AF5-460d-99A4-BFFB984A829A}"</v>
-          <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" ckt="String" cvt="ExactVersionConstraintToSave">
-            <v>VersionConstraint</v>
-            <o>
-              <v n="TheVersion">"3.1.4022.0"</v>
-            </o>
-          </d>
-        </o>
-        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
-        <o>
-          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
+        </o>
+        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
+        <o>
+          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>GlobalVisuImageFilePath</v>
+            <v>%APPLICATIONPATH%</v>
+          </d>
         </o>
         <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
         <o>
@@ -134,33 +130,6 @@
                 <v>167</v>
                 <o>
                   <v n="Name">"167"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>4</v>
-                <o>
-                  <v n="Name">"4"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>33</v>
-                <o>
-                  <v n="Name">"33"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>6</v>
-                <o>
-                  <v n="Name">"6"</v>
                   <d n="SubKeys" t="Hashtable" />
                   <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
                     <v>bActive</v>
@@ -185,6 +154,33 @@
                     <v>False</v>
                   </d>
                 </o>
+                <v>33</v>
+                <o>
+                  <v n="Name">"33"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>4</v>
+                <o>
+                  <v n="Name">"4"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>6</v>
+                <o>
+                  <v n="Name">"6"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
               </d>
               <d n="Values" t="Hashtable" />
             </o>
@@ -200,9 +196,29 @@
             <v>IR0whWr8bwfwBwAAhiaVXgAAAABVAgAAWdTSaQAAAAABAAAAAAAAAAEaUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwACTHsAZgA5ADUAYgBiADQAMgA2AC0ANQA1ADIANAAtADQAYgA0ADUALQA5ADQAMAAwAC0AZgBiADAAZgAyAGUANwA3AGUANQAxAGIAfQADCE4AYQBtAGUABDBUAHcAaQBuAEMAQQBUACAAMwAuADEAIABCAHUAaQBsAGQAIAA0ADAAMgA0AC4AMAAFFlAAcgBvAGYAaQBsAGUARABhAHQAYQAGTHsAMQA2AGUANQA1AGIANgAwAC0ANwAwADQAMwAtADQAYQA2ADMALQBiADYANQBiAC0ANgAxADQANwAxADMAOAA3ADgAZAA0ADIAfQAHEkwAaQBiAHIAYQByAGkAZQBzAAhMewAzAGIAZgBkADUANAA1ADkALQBiADAANwBmAC0ANABkADYAZQAtAGEAZQAxAGEALQBhADgAMwAzADUANgBhADUANQAxADQAMgB9AAlMewA5AGMAOQA1ADgAOQA2ADgALQAyAGMAOAA1AC0ANAAxAGIAYgAtADgAOAA3ADEALQA4ADkANQBmAGYAMQBmAGUAZABlADEAYQB9AAoOVgBlAHIAcwBpAG8AbgALBmkAbgB0AAwKVQBzAGEAZwBlAA0KVABpAHQAbABlAA4aVgBpAHMAdQBFAGwAZQBtAE0AZQB0AGUAcgAPDkMAbwBtAHAAYQBuAHkAEAxTAHkAcwB0AGUAbQARElYAaQBzAHUARQBsAGUAbQBzABIwVgBpAHMAdQBFAGwAZQBtAHMAUwBwAGUAYwBpAGEAbABDAG8AbgB0AHIAbwBsAHMAEyhWAGkAcwB1AEUAbABlAG0AcwBXAGkAbgBDAG8AbgB0AHIAbwBsAHMAFCRWAGkAcwB1AEUAbABlAG0AVABlAHgAdABFAGQAaQB0AG8AcgAVIlYAaQBzAHUATgBhAHQAaQB2AGUAQwBvAG4AdAByAG8AbAAWFHYAaQBzAHUAaQBuAHAAdQB0AHMAFwxzAHkAcwB0AGUAbQAYGFYAaQBzAHUARQBsAGUAbQBCAGEAcwBlABkmRABlAHYAUABsAGEAYwBlAGgAbwBsAGQAZQByAHMAVQBzAGUAZAAaCGIAbwBvAGwAGyJQAGwAdQBnAGkAbgBDAG8AbgBzAHQAcgBhAGkAbgB0AHMAHEx7ADQAMwBkADUAMgBiAGMAZQAtADkANAAyAGMALQA0ADQAZAA3AC0AOQBlADkANAAtADEAYgBmAGQAZgAzADEAMABlADYAMwBjAH0AHRxBAHQATABlAGEAcwB0AFYAZQByAHMAaQBvAG4AHhRQAGwAdQBnAGkAbgBHAHUAaQBkAB8WUwB5AHMAdABlAG0ALgBHAHUAaQBkACBIYQBmAGMAZAA1ADQANAA2AC0ANAA5ADEANAAtADQAZgBlADcALQBiAGIANwA4AC0AOQBiAGYAZgBlAGIANwAwAGYAZAAxADcAIRRVAHAAZABhAHQAZQBJAG4AZgBvACJMewBiADAAMwAzADYANgBhADgALQBiADUAYwAwAC0ANABiADkAYQAtAGEAMAAwAGUALQBlAGIAOAA2ADAAMQAxADEAMAA0AGMAMwB9ACMOVQBwAGQAYQB0AGUAcwAkTHsAMQA4ADYAOABmAGYAYwA5AC0AZQA0AGYAYwAtADQANQAzADIALQBhAGMAMAA2AC0AMQBlADMAOQBiAGIANQA1ADcAYgA2ADkAfQAlTHsAYQA1AGIAZAA0ADgAYwAzAC0AMABkADEANwAtADQAMQBiADUALQBiADEANgA0AC0ANQBmAGMANgBhAGQAMgBiADkANgBiADcAfQAmFk8AYgBqAGUAYwB0AHMAVAB5AHAAZQAnVFUAcABkAGEAdABlAEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwARgBvAHIAQwBvAG4AdgBlAHIAdABpAGIAbABlAEwAaQBiAHIAYQByAGkAZQBzACgQTABpAGIAVABpAHQAbABlACkUTABpAGIAQwBvAG0AcABhAG4AeQAqHlUAcABkAGEAdABlAFAAcgBvAHYAaQBkAGUAcgBzACs4UwB5AHMAdABlAG0ALgBDAG8AbABsAGUAYwB0AGkAbwBuAHMALgBIAGEAcwBoAHQAYQBiAGwAZQAsEnYAaQBzAHUAZQBsAGUAbQBzAC1INgBjAGIAMQBjAGQAZQAxAC0AZAA1AGQAYwAtADQAYQAzAGIALQA5ADAANQA0AC0AMgAxAGYAYQA3ADUANgBhADMAZgBhADQALihJAG4AdABlAHIAZgBhAGMAZQBWAGUAcgBzAGkAbwBuAEkAbgBmAG8AL0x7AGMANgAxADEAZQA0ADAAMAAtADcAZgBiADkALQA0AGMAMwA1AC0AYgA5AGEAYwAtADQAZQAzADEANABiADUAOQA5ADYANAAzAH0AMBhNAGEAagBvAHIAVgBlAHIAcwBpAG8AbgAxGE0AaQBuAG8AcgBWAGUAcgBzAGkAbwBuADIMTABlAGcAYQBjAHkAMzBMAGEAbgBnAHUAYQBnAGUATQBvAGQAZQBsAFYAZQByAHMAaQBvAG4ASQBuAGYAbwA0MEwAbwBhAGQATABpAGIAcgBhAHIAaQBlAHMASQBuAHQAbwBQAHIAbwBqAGUAYwB0ADUaQwBvAG0AcABhAHQAaQBiAGkAbABpAHQAeQDQAAIaA9ADAS0E0AUGGgfQBwgaAUUHCQjQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtDtAPAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAFQAAANAMC60BAAAA0A0BLRHQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0S0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAUAAAA0AwLrQIAAADQDQEtE9APAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAAAAAANAMC60CAAAA0A0BLRTQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0V0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtFtAPAS0X0AAJGgRFCgsEAwAAAAUAAAANAAAAFQAAANAMC60EAAAA0A0BLRjQDwEtENAZGq0BRRscAdAAHBoCRR0LBAMAAAAFAAAADQAAAAAAAADQHh8tINAhIhoCRSMkAtAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAAAAANADAS0n0CgBLRHQKQEtENAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAQAAANADAS0n0CgBLRHQKQEtEJoqKwFFAAEC0AABLSzQAAEtF9AAHy0t0C4vGgPQMAutAQAAANAxC60XAAAA0DIarQDQMy8aA9AwC60CAAAA0DELrQMAAADQMhqtANA0Gq0A0DUarQA=</v>
           </d>
         </o>
-        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <v>{535658C0-5AF5-460d-99A4-BFFB984A829A}</v>
         <o>
-          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <v n="Name">"{535658C0-5AF5-460d-99A4-BFFB984A829A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="ExactVersionConstraintToSave">
+            <v>VersionConstraint</v>
+            <o>
+              <v n="TheVersion">"3.1.4022.0"</v>
+            </o>
+          </d>
+        </o>
+        <v>{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}</v>
+        <o>
+          <v n="Name">"{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>WriteLineIDs</v>
+            <v>True</v>
+          </d>
+        </o>
+        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
+        <o>
+          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
         </o>
@@ -212,27 +228,18 @@
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
         </o>
-        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
-        <o>
-          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
-          <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" ckt="String" cvt="String">
-            <v>GlobalVisuImageFilePath</v>
-            <v>%APPLICATIONPATH%</v>
-          </d>
-        </o>
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Boolean">System.Boolean</Type>
-          <Type n="ExactVersionConstraintToSave">{f9079115-a4ba-4f30-bf7c-9e76613146fc}</Type>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Boolean">System.Boolean</Type>
+    <Type n="ExactVersionConstraintToSave">{f9079115-a4ba-4f30-bf7c-9e76613146fc}</Type>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>

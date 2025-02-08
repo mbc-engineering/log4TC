@@ -8,7 +8,7 @@
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>log4Tc_SmokeTest</Name>
-    <ProgramVersion>3.1.4023.0</ProgramVersion>
+    <ProgramVersion>3.1.4026.12</ProgramVersion>
     <Application>{405644b8-216e-4a39-84c4-1fc3c33adce5}</Application>
     <TypeSystem>{0e0fa1c1-5a81-409d-a9ea-e388aa656fef}</TypeSystem>
     <Implicit_Task_Info>{687142c7-8451-44cf-9087-d549fb23ace1}</Implicit_Task_Info>
@@ -31,10 +31,6 @@
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
-    <PlaceholderReference Include="log4TC">
-      <DefaultResolution>log4TC, * (mbc engineering GmbH)</DefaultResolution>
-      <Namespace>log4tc</Namespace>
-    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>
@@ -46,6 +42,10 @@
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="[log4TC]">
+      <DefaultResolution>[log4TC], * (mbc engineering)</DefaultResolution>
+      <Namespace>log4tc</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
@@ -66,11 +66,14 @@
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
         </o>
-        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
+        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
         <o>
-          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
+          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
           <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>GlobalVisuImageFilePath</v>
+            <v>%APPLICATIONPATH%</v>
+          </d>
         </o>
         <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
         <o>
@@ -89,9 +92,18 @@
                     <v>False</v>
                   </d>
                 </o>
-                <v>4</v>
+                <v>27</v>
                 <o>
-                  <v n="Name">"4"</v>
+                  <v n="Name">"27"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>28</v>
+                <o>
+                  <v n="Name">"28"</v>
                   <d n="SubKeys" t="Hashtable" />
                   <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
                     <v>bActive</v>
@@ -107,27 +119,18 @@
                     <v>False</v>
                   </d>
                 </o>
+                <v>4</v>
+                <o>
+                  <v n="Name">"4"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
                 <v>6</v>
                 <o>
                   <v n="Name">"6"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>27</v>
-                <o>
-                  <v n="Name">"27"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>28</v>
-                <o>
-                  <v n="Name">"28"</v>
                   <d n="SubKeys" t="Hashtable" />
                   <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
                     <v>bActive</v>
@@ -160,20 +163,26 @@
             </o>
           </d>
         </o>
+        <v>{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}</v>
+        <o>
+          <v n="Name">"{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>WriteLineIDs</v>
+            <v>True</v>
+          </d>
+        </o>
+        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
+        <o>
+          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" />
+        </o>
         <v>{F66C7017-BDD8-4114-926C-81D6D687E35F}</v>
         <o>
           <v n="Name">"{F66C7017-BDD8-4114-926C-81D6D687E35F}"</v>
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
-        </o>
-        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
-        <o>
-          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
-          <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" ckt="String" cvt="String">
-            <v>GlobalVisuImageFilePath</v>
-            <v>%APPLICATIONPATH%</v>
-          </d>
         </o>
       </d>
       <d n="Values" t="Hashtable" />

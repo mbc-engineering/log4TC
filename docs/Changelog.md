@@ -2,11 +2,14 @@
 
 ## [25.02.07]
 ### Fixed
-- Fixed System.MethodAccessException in Log4JXmlEventLayoutRenderer
+- Fixed System.MethodAccessException in Log4JXmlEventLayoutRenderer bei Verwendung des NLog Target Layout mbclog4jxmlevent: `layout="${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}">`
 
 ### Changed
 - Neuste Beckhoff ADS Library 6.2.244 wird verwendet
 - Dependency Updates
+
+### SPS-Library 0.3.0
+- Bibliothek wurde mit TwinCAT v3.1.4026 erstellt. Lasst uns sehen ob die Kompatibilität gegeben ist. Der Funktionsumfang ist noch gleich wie in der Version 0.2.1.
 
 ## [24.12.08]
 ### Added

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.6">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.8">
   <POU Name="MAIN" Id="{8e76aa5e-29ea-465d-a10c-8a373442d35f}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -8,7 +8,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[IF TwinCAT_SystemInfoVarList._TaskInfo[GETCURTASKINDEXEX()].FirstCycle THEN
 	// For Remote Log4TC Server change the AMS net ID and configure a route
-	PRG_TaskLog.Init('127.0.0.1.1.1');
+	PRG_TaskLog.Init('172.21.208.1.1.1');
 	F_Log(E_LogLevel.eInfo, 'F_Log');
 END_IF
 

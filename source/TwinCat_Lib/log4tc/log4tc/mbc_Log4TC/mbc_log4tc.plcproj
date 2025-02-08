@@ -8,21 +8,22 @@
     <WriteProductVersion>true</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>mbc_Log4TC</Name>
-    <ProgramVersion>3.1.4023.0</ProgramVersion>
+    <ProgramVersion>3.1.4026.12</ProgramVersion>
     <Application>{27d1f106-c41a-4b9a-a7ee-188b391db3f7}</Application>
     <TypeSystem>{e596c1dd-8124-4a1a-bf40-bb2ad03cf4cb}</TypeSystem>
     <Implicit_Task_Info>{137bf246-6a75-4baf-ac45-03c4a11fd411}</Implicit_Task_Info>
     <Implicit_KindOfTask>{d1a215c7-737a-4fba-bed2-2b0568fb69e5}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{84071a80-9789-41db-b27e-27e3ab204fa1}</Implicit_Jitter_Distribution>
     <LibraryReferences>{b74f17a3-49cb-46e0-b639-d8e1c2b0c59a}</LibraryReferences>
-    <Company>mbc engineering GmbH</Company>
-    <Released>false</Released>
+    <Company>mbc engineering</Company>
+    <Released>true</Released>
     <Title>log4TC</Title>
-    <ProjectVersion>0.2.1</ProjectVersion>
+    <ProjectVersion>0.3.0</ProjectVersion>
     <CompilerDefines>DEBUG</CompilerDefines>
     <DocFormat>reStructuredText</DocFormat>
     <Author>mbc engineering GmbH</Author>
-    <Description>A library for logging in PLC code.</Description>
+    <Description>A library for logging in PLC code.
+Created with TwinCAT v3.1.4026</Description>
     <LibraryCategories>
       <LibraryCategory xmlns="">
         <Id>{74d110c6-7213-4765-be2b-3ff0f1e344fb}</Id>
@@ -230,6 +231,10 @@
     <CompilerVersion>3.1.4022.0</CompilerVersion>
     <Licenses>
     </Licenses>
+    <AllowChecksForLibrary>false</AllowChecksForLibrary>
+    <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
+    <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
+    <VirtualLibrary>true</VirtualLibrary>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="API" />
@@ -244,7 +249,6 @@
     <Folder Include="Test" />
     <Folder Include="POUs" />
     <Folder Include="POUs\Utils" />
-    <Folder Include="Version" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\Context\FB_ScopedContext.TcPOU">
@@ -482,9 +486,6 @@
       <SubType>Code</SubType>
       <CompilerDefines>DEBUG</CompilerDefines>
     </Compile>
-    <Compile Include="Version\Global_Version.TcGVL">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -539,26 +540,24 @@
   <ProjectExtensions>
     <PlcProjectOptions>
       <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="OptionKey">
+  <Data>
+    <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
       <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
-        <v>{535658C0-5AF5-460d-99A4-BFFB984A829A}</v>
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
         <o>
-          <v n="Name">"{535658C0-5AF5-460d-99A4-BFFB984A829A}"</v>
-          <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" ckt="String" cvt="ExactVersionConstraintToSave">
-            <v>VersionConstraint</v>
-            <o>
-              <v n="TheVersion">"3.1.4022.0"</v>
-            </o>
-          </d>
-        </o>
-        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
-        <o>
-          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
+        </o>
+        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
+        <o>
+          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>GlobalVisuImageFilePath</v>
+            <v>%APPLICATIONPATH%</v>
+          </d>
         </o>
         <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
         <o>
@@ -571,33 +570,6 @@
                 <v>167</v>
                 <o>
                   <v n="Name">"167"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>4</v>
-                <o>
-                  <v n="Name">"4"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>33</v>
-                <o>
-                  <v n="Name">"33"</v>
-                  <d n="SubKeys" t="Hashtable" />
-                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
-                    <v>bActive</v>
-                    <v>False</v>
-                  </d>
-                </o>
-                <v>6</v>
-                <o>
-                  <v n="Name">"6"</v>
                   <d n="SubKeys" t="Hashtable" />
                   <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
                     <v>bActive</v>
@@ -622,6 +594,33 @@
                     <v>False</v>
                   </d>
                 </o>
+                <v>33</v>
+                <o>
+                  <v n="Name">"33"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>4</v>
+                <o>
+                  <v n="Name">"4"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
+                <v>6</v>
+                <o>
+                  <v n="Name">"6"</v>
+                  <d n="SubKeys" t="Hashtable" />
+                  <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+                    <v>bActive</v>
+                    <v>False</v>
+                  </d>
+                </o>
               </d>
               <d n="Values" t="Hashtable" />
             </o>
@@ -637,9 +636,29 @@
             <v>IR0whWr8bwfwBwAAhiaVXgAAAABVAgAAWdTSaQAAAAABAAAAAAAAAAEaUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwACTHsAZgA5ADUAYgBiADQAMgA2AC0ANQA1ADIANAAtADQAYgA0ADUALQA5ADQAMAAwAC0AZgBiADAAZgAyAGUANwA3AGUANQAxAGIAfQADCE4AYQBtAGUABDBUAHcAaQBuAEMAQQBUACAAMwAuADEAIABCAHUAaQBsAGQAIAA0ADAAMgA0AC4AMAAFFlAAcgBvAGYAaQBsAGUARABhAHQAYQAGTHsAMQA2AGUANQA1AGIANgAwAC0ANwAwADQAMwAtADQAYQA2ADMALQBiADYANQBiAC0ANgAxADQANwAxADMAOAA3ADgAZAA0ADIAfQAHEkwAaQBiAHIAYQByAGkAZQBzAAhMewAzAGIAZgBkADUANAA1ADkALQBiADAANwBmAC0ANABkADYAZQAtAGEAZQAxAGEALQBhADgAMwAzADUANgBhADUANQAxADQAMgB9AAlMewA5AGMAOQA1ADgAOQA2ADgALQAyAGMAOAA1AC0ANAAxAGIAYgAtADgAOAA3ADEALQA4ADkANQBmAGYAMQBmAGUAZABlADEAYQB9AAoOVgBlAHIAcwBpAG8AbgALBmkAbgB0AAwKVQBzAGEAZwBlAA0KVABpAHQAbABlAA4aVgBpAHMAdQBFAGwAZQBtAE0AZQB0AGUAcgAPDkMAbwBtAHAAYQBuAHkAEAxTAHkAcwB0AGUAbQARElYAaQBzAHUARQBsAGUAbQBzABIwVgBpAHMAdQBFAGwAZQBtAHMAUwBwAGUAYwBpAGEAbABDAG8AbgB0AHIAbwBsAHMAEyhWAGkAcwB1AEUAbABlAG0AcwBXAGkAbgBDAG8AbgB0AHIAbwBsAHMAFCRWAGkAcwB1AEUAbABlAG0AVABlAHgAdABFAGQAaQB0AG8AcgAVIlYAaQBzAHUATgBhAHQAaQB2AGUAQwBvAG4AdAByAG8AbAAWFHYAaQBzAHUAaQBuAHAAdQB0AHMAFwxzAHkAcwB0AGUAbQAYGFYAaQBzAHUARQBsAGUAbQBCAGEAcwBlABkmRABlAHYAUABsAGEAYwBlAGgAbwBsAGQAZQByAHMAVQBzAGUAZAAaCGIAbwBvAGwAGyJQAGwAdQBnAGkAbgBDAG8AbgBzAHQAcgBhAGkAbgB0AHMAHEx7ADQAMwBkADUAMgBiAGMAZQAtADkANAAyAGMALQA0ADQAZAA3AC0AOQBlADkANAAtADEAYgBmAGQAZgAzADEAMABlADYAMwBjAH0AHRxBAHQATABlAGEAcwB0AFYAZQByAHMAaQBvAG4AHhRQAGwAdQBnAGkAbgBHAHUAaQBkAB8WUwB5AHMAdABlAG0ALgBHAHUAaQBkACBIYQBmAGMAZAA1ADQANAA2AC0ANAA5ADEANAAtADQAZgBlADcALQBiAGIANwA4AC0AOQBiAGYAZgBlAGIANwAwAGYAZAAxADcAIRRVAHAAZABhAHQAZQBJAG4AZgBvACJMewBiADAAMwAzADYANgBhADgALQBiADUAYwAwAC0ANABiADkAYQAtAGEAMAAwAGUALQBlAGIAOAA2ADAAMQAxADEAMAA0AGMAMwB9ACMOVQBwAGQAYQB0AGUAcwAkTHsAMQA4ADYAOABmAGYAYwA5AC0AZQA0AGYAYwAtADQANQAzADIALQBhAGMAMAA2AC0AMQBlADMAOQBiAGIANQA1ADcAYgA2ADkAfQAlTHsAYQA1AGIAZAA0ADgAYwAzAC0AMABkADEANwAtADQAMQBiADUALQBiADEANgA0AC0ANQBmAGMANgBhAGQAMgBiADkANgBiADcAfQAmFk8AYgBqAGUAYwB0AHMAVAB5AHAAZQAnVFUAcABkAGEAdABlAEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwARgBvAHIAQwBvAG4AdgBlAHIAdABpAGIAbABlAEwAaQBiAHIAYQByAGkAZQBzACgQTABpAGIAVABpAHQAbABlACkUTABpAGIAQwBvAG0AcABhAG4AeQAqHlUAcABkAGEAdABlAFAAcgBvAHYAaQBkAGUAcgBzACs4UwB5AHMAdABlAG0ALgBDAG8AbABsAGUAYwB0AGkAbwBuAHMALgBIAGEAcwBoAHQAYQBiAGwAZQAsEnYAaQBzAHUAZQBsAGUAbQBzAC1INgBjAGIAMQBjAGQAZQAxAC0AZAA1AGQAYwAtADQAYQAzAGIALQA5ADAANQA0AC0AMgAxAGYAYQA3ADUANgBhADMAZgBhADQALihJAG4AdABlAHIAZgBhAGMAZQBWAGUAcgBzAGkAbwBuAEkAbgBmAG8AL0x7AGMANgAxADEAZQA0ADAAMAAtADcAZgBiADkALQA0AGMAMwA1AC0AYgA5AGEAYwAtADQAZQAzADEANABiADUAOQA5ADYANAAzAH0AMBhNAGEAagBvAHIAVgBlAHIAcwBpAG8AbgAxGE0AaQBuAG8AcgBWAGUAcgBzAGkAbwBuADIMTABlAGcAYQBjAHkAMzBMAGEAbgBnAHUAYQBnAGUATQBvAGQAZQBsAFYAZQByAHMAaQBvAG4ASQBuAGYAbwA0MEwAbwBhAGQATABpAGIAcgBhAHIAaQBlAHMASQBuAHQAbwBQAHIAbwBqAGUAYwB0ADUaQwBvAG0AcABhAHQAaQBiAGkAbABpAHQAeQDQAAIaA9ADAS0E0AUGGgfQBwgaAUUHCQjQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtDtAPAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAFQAAANAMC60BAAAA0A0BLRHQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0S0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAUAAAA0AwLrQIAAADQDQEtE9APAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAAAAAANAMC60CAAAA0A0BLRTQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0V0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtFtAPAS0X0AAJGgRFCgsEAwAAAAUAAAANAAAAFQAAANAMC60EAAAA0A0BLRjQDwEtENAZGq0BRRscAdAAHBoCRR0LBAMAAAAFAAAADQAAAAAAAADQHh8tINAhIhoCRSMkAtAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAAAAANADAS0n0CgBLRHQKQEtENAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAQAAANADAS0n0CgBLRHQKQEtEJoqKwFFAAEC0AABLSzQAAEtF9AAHy0t0C4vGgPQMAutAQAAANAxC60XAAAA0DIarQDQMy8aA9AwC60CAAAA0DELrQMAAADQMhqtANA0Gq0A0DUarQA=</v>
           </d>
         </o>
-        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <v>{535658C0-5AF5-460d-99A4-BFFB984A829A}</v>
         <o>
-          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <v n="Name">"{535658C0-5AF5-460d-99A4-BFFB984A829A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="ExactVersionConstraintToSave">
+            <v>VersionConstraint</v>
+            <o>
+              <v n="TheVersion">"3.1.4022.0"</v>
+            </o>
+          </d>
+        </o>
+        <v>{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}</v>
+        <o>
+          <v n="Name">"{8A0FB252-96EB-4DCC-A5B4-B4804D05E2D6}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="Boolean">
+            <v>WriteLineIDs</v>
+            <v>True</v>
+          </d>
+        </o>
+        <v>{8F99A816-E488-41E4-9FA3-846536012284}</v>
+        <o>
+          <v n="Name">"{8F99A816-E488-41E4-9FA3-846536012284}"</v>
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
         </o>
@@ -649,27 +668,18 @@
           <d n="SubKeys" t="Hashtable" />
           <d n="Values" t="Hashtable" />
         </o>
-        <v>{246001F4-279D-43AC-B241-948EB31120E1}</v>
-        <o>
-          <v n="Name">"{246001F4-279D-43AC-B241-948EB31120E1}"</v>
-          <d n="SubKeys" t="Hashtable" />
-          <d n="Values" t="Hashtable" ckt="String" cvt="String">
-            <v>GlobalVisuImageFilePath</v>
-            <v>%APPLICATIONPATH%</v>
-          </d>
-        </o>
       </d>
       <d n="Values" t="Hashtable" />
     </o>
-        </Data>
-        <TypeList>
-          <Type n="Boolean">System.Boolean</Type>
-          <Type n="ExactVersionConstraintToSave">{f9079115-a4ba-4f30-bf7c-9e76613146fc}</Type>
-          <Type n="Hashtable">System.Collections.Hashtable</Type>
-          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
-          <Type n="String">System.String</Type>
-        </TypeList>
-      </XmlArchive>
+  </Data>
+  <TypeList>
+    <Type n="Boolean">System.Boolean</Type>
+    <Type n="ExactVersionConstraintToSave">{f9079115-a4ba-4f30-bf7c-9e76613146fc}</Type>
+    <Type n="Hashtable">System.Collections.Hashtable</Type>
+    <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+    <Type n="String">System.String</Type>
+  </TypeList>
+</XmlArchive>
     </PlcProjectOptions>
   </ProjectExtensions>
 </Project>
