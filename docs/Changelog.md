@@ -1,3 +1,5 @@
+ <div id="google_translate_element"></div>
+
 # Changelog
 
 ## [25.02.07]

@@ -12,17 +12,17 @@ Folgende Voraussetzungen haben die beiden Komponenten:
 
 **log4TC TwinCat 3 Bibliothek**
 
-* [TwinCat 3 (min. 4022.00)](https://www.beckhoff.de/default.asp?download/tc3-download-xae.htm)
+* [TwinCat 3 (min. 4022.00)](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=725136885)
 
 **log4TC Service**
 
 * min Windows 7 SP1 / Windows Embedded Standard 2009
-* [Microsoft .NET Framework (Mindestends 4.6.1, empfohlen 4.8)](https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer)
-* [ADS Router - TC1000 | TC3 ADS](https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm)
+* [ADS Router - TC1000 | TC3 ADSF](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369)
+* [Verwendet Microsoft .NET 8 (muss nicht installiert werden)](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md)
 
 Beim [Installieren](../reference/installation.md) von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, dass diese Konfiguration aktiv ist.
 
-Für diese Einführung wird ausserdem vorrausgesetzt, dass die SPS und der log4TC auf dem *gleichen* Rechner laufen (Testlizenz ist ausreichend). Dies ist keine Einschränkung von log4TC sondern eine Vereinfachung.
+Für diese Einführung wird ausserdem vorausgesetzt, dass die SPS und der log4TC auf dem *gleichen* Rechner laufen (TwinCAT Testlizenz ist ausreichend). Dies ist keine Einschränkung von log4TC sondern eine Vereinfachung.
 
 ## Übersicht
 

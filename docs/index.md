@@ -1,3 +1,5 @@
+ <div id="google_translate_element"></div>
+
  # mbc log4TC
 
 Log4TC ist eine Erweiterung für TwinCAT3 von Beckhoff, um direkt aus der SPS Logmeldungen
