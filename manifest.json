@@ -360,6 +360,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "reference/assets/stup_log4View_networkstream.png",
+      "output": {
+        "resource": {
+          "relative_path": "reference/assets/stup_log4View_networkstream.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "reference/assets/vscode_log_viewer.png",
       "output": {
         "resource": {

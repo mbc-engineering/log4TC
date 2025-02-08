@@ -2,127 +2,127 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/Changelog.html</loc>
-    <lastmod>2024-12-08T07:11:44+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/add_log4tc_lib.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/argument_logging.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/context_usage.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/create_twincat_project.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/intro.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/logger_usage.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/simple_logging.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/tools_log4view.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/gettingstarted/write_structured_values.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/index.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/graylog_output.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/index.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/influx_output.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/installation.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/loglevel.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/nlog_output.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/placeholder.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/service_config.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/sql_output.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://mbc-engineering.github.io/log4TC/reference/tools.html</loc>
-    <lastmod>2024-12-08T07:11:45+00:00</lastmod>
+    <lastmod>2025-02-08T08:59:05+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>

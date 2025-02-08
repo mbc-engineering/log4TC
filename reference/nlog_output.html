@@ -143,7 +143,7 @@
 <li>Das Ausgabeformat ist: <code>&lt;PLC-Zeitstempel&gt;|&lt;Level&gt;|&lt;Logger&gt;|&lt;Log-Message&gt;|[&lt;Context-Attribute&gt;]</code>.</li>
 <li>Es werden alle Meldungen ab Level <code>Debug</code> und höher geloggt.</li>
 </ul>
-<h3 id="ausgabe-für-log4view">Ausgabe für Log4View</h3>
+<h3 id="ausgabe-für-log4view-xml-logging">Ausgabe für Log4View (XML-Logging)</h3>
 <p>Diese Konfiguration schreibt die Log-Meldungen in ein XML-Format, dass von <a href="https://www.log4view.com/">Log4View</a> gelesen werden kann.</p>
 <pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;nlog
@@ -195,6 +195,48 @@
 <li>Im Meldungstext werden noch zusätzlich alle Context-Properties eingefügt, sofern welche vorhanden sind.</li>
 <li>Es werden alle Meldungen ab Level <code>Debug</code> und höher geloggt.</li>
 </ul>
+<h3 id="ausgabe-für-log4view-network-stream">Ausgabe für Log4View (Network-Stream)</h3>
+<p>Diese Konfiguration schreibt die Log-Meldungen in einen UDP stream im XML-Format, dass von <a href="https://www.log4view.com/">Log4View</a> gelesen werden kann.</p>
+<pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;nlog
+	xmlns=&quot;http://www.nlog-project.org/schemas/NLog.xsd&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	throwConfigExceptions=&quot;true&quot;
+	autoReload=&quot;true&quot;
+	internalLogLevel=&quot;Info&quot;
+	throwExceptions=&quot;true&quot;&gt;
+
+  &lt;!--
+	See https://github.com/nlog/nlog/wiki/Configuration-file
+	for information on customizing logging rules and outputs.
+
+  See also for targets: https://nlog-project.org/config/?tab=targets
+  See also for placeholders: https://nlog-project.org/config/?tab=layout-renderers
+	--&gt;
+
+  &lt;extensions&gt;
+    &lt;add assembly=&quot;Mbc.Log4Tc.Output.NLog&quot;/&gt;
+  &lt;/extensions&gt;
+
+  &lt;targets&gt;
+    &lt;target name=&quot;network&quot; 
+        xsi:type=&quot;Network&quot; 
+        address=&quot;udp://127.0.0.2:878&quot; 
+        newLine=&quot;false&quot; 
+        maxMessageSize=&quot;65000&quot; 
+        encoding=&quot;utf-8&quot;
+        layout=&quot;${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}&quot; /&gt;    
+    &lt;/target&gt;
+  &lt;/targets&gt;
+
+  &lt;rules&gt;
+    &lt;!--Levels: Trace, Debug, Info, Warn, Error, Fatal, Off--&gt;
+    &lt;logger name=&quot;*&quot; minlevel=&quot;Debug&quot; writeTo=&quot;network&quot; /&gt;
+  &lt;/rules&gt;
+&lt;/nlog&gt;
+</code></pre>
+<p>Log4View muss wie folgt konfiguriert werden:</p>
+<p><img src="assets/stup_log4View_networkstream.png" alt=""></p>
 <h3 id="ausgabe-für-azure-applicationinsight">Ausgabe für Azure ApplicationInsight</h3>
 <p>Damit NLog die Ausgabe für <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/app/ilogger">Azure ApplicationInsight</a> unterstütz, muss ein <code>ApplicationInsightsTargetLog4Tc</code> target wie folgt konfiguriert werden.</p>
 <pre><code class="lang-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
