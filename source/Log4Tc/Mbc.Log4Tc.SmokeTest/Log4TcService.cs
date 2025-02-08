@@ -18,12 +18,10 @@ namespace Mbc.Log4Tc.SmokeTest
 
         public Log4TcService()
         {
-            var adsLogReceiverlogger = A.Fake<ILogger<AdsLogReceiver>>();
-            var logDispatcherServiceLogger = A.Fake<ILogger<LogDispatcherService>>();
+            var adsLogReceiverlogger = new NullLoggerFactory();
             var adsHostnameService = new AdsHostnameService(new NullLogger<AdsHostnameService>());
             _adsLogReceiver = new AdsLogReceiver(adsLogReceiverlogger, adsHostnameService);
             _output = new TestRecordingOutput();
-            //_logDispatcher = new LogDispatcherService(logDispatcherServiceLogger, Enumerables.Yield(_adsLogReceiver), Enumerables.Yield(_output), Enumerables.Yield(new DispatchAllLogsToOutput("TestOutput")));
         }
 
         public List<LogEntry> LoggedEntries => _output.LoggedEntries;

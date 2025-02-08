@@ -6,6 +6,7 @@ using NLog.MessageTemplates;
 using NLog.Targets;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 using Log4TcLevel = Mbc.Log4Tc.Model.LogLevel;
 using NLogLevel = NLog.LogLevel;
@@ -36,7 +37,7 @@ namespace Mbc.Log4Tc.Output.NLog.Test
         }
 
         [Fact]
-        public void ProcessLogEntry_SmokeTest()
+        public async Task ProcessLogEntry_SmokeTest()
         {
             // Arrange
             var logEntry = new LogEntry
@@ -58,7 +59,7 @@ namespace Mbc.Log4Tc.Output.NLog.Test
             logEntry.Context.Add("foo", "baz");
 
             // Act
-            _output.ProcesLogEntriesAsync(new List<LogEntry> { logEntry }).GetAwaiter().GetResult();
+            await _output.ProcesLogEntriesAsync(new List<LogEntry> { logEntry });
 
             // Assert
             LogManager.Flush();

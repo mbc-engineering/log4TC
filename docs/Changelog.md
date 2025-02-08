@@ -4,6 +4,10 @@
 ### Fixed
 - Fixed System.MethodAccessException in Log4JXmlEventLayoutRenderer
 
+### Changed
+- Neuste Beckhoff ADS Library 6.2.244 wird verwendet
+- Dependency Updates
+
 ## [24.12.08]
 ### Added
 - Dokumentation steht nun auch als PDF zur Verfügung

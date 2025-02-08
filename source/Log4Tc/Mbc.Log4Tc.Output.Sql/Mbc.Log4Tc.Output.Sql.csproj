@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="9.1.0" />
-    <PackageReference Include="Npgsql" Version="9.0.2" />
+    <PackageReference Include="MySql.Data" Version="8.*" />
+    <PackageReference Include="Npgsql" Version="9.0.*" />
     <PackageReference Include="Optional" Version="4.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-    <PackageReference Include="System.IO.Pipelines" Version="9.0.0" />
+    <PackageReference Include="System.IO.Pipelines" Version="8.*" />
     <PackageReference Include="System.Text.Json" Version="8.*" />
   </ItemGroup>
 
