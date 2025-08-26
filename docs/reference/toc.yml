@@ -1,4 +1,6 @@
-﻿- name: Werkzeuge
+﻿- name: Installation
+  href: installation.md
+- name: Werkzeuge
   href: tools.md
 - name: Formatierung
   href: placeholder.md
@@ -12,8 +14,5 @@
   href: influx_output.md
 - name: SQL-Ausgabeplugin
   href: sql_output.md
-- name: Installation
-  href: installation.md
 - name: log4TC Servicekonfiguration
   href: service_config.md
-  

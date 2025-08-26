@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3EBBCF4C-829A-4152-BA5B-25FC54CBB029}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		build.cake = build.cake
 		Directory.Build.props = Directory.Build.props
 		Mbc.CodeAnalysis.ruleset = Mbc.CodeAnalysis.ruleset
 		stylecop.json = stylecop.json

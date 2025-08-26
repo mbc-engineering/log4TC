@@ -1,5 +1,7 @@
 ﻿# AdsRouterConsoleApp
 
+> UPDATE: Es gibt ein Beispiel von Beckhoff mit Dockerfile vom 11.03.2025: https://github.com/Beckhoff/TF6000_ADS_DOTNET_V5_Samples/blob/main/Sources/RouterSamples/AdsRouterConsoleApp/Dockerfile
+
 Dies ist eine Kopie vom 08.11.2024 von Beckhoff github Repo: https://github.com/Beckhoff/TF6000_ADS_DOTNET_V5_Samples/tree/main/Sources/RouterSamples/AdsRouterConsoleApp
 
 ## Description of the **AdsRouterConsoleApp** Sample application

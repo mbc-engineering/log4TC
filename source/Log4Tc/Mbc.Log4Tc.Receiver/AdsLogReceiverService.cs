@@ -11,10 +11,10 @@ namespace Mbc.Log4Tc.Receiver
         private readonly ILogger _logger;
         private readonly AdsLogReceiver _adsLogReceiver;
 
-        public AdsLogReceiverService(ILogger<AdsLogReceiver> logger, AdsLogReceiver adsLogReceiver)
+        public AdsLogReceiverService(AdsLogReceiver adsLogReceiver, ILogger<AdsLogReceiver> logger)
         {
-            _logger = logger;
             _adsLogReceiver = adsLogReceiver;
+            _logger = logger;
         }
 
         public override void Dispose()
@@ -44,9 +44,13 @@ namespace Mbc.Log4Tc.Receiver
                 try
                 {
                     _logger.LogInformation("Log receiver connected.");
-                    await _adsLogReceiver.ConnectServerAndWaitAsync(ct);
-                    _logger.LogInformation("Log receiver shutdown.");
-                    return;
+                    var result = await _adsLogReceiver.ConnectServerAndWaitAsync(ct);
+                    _logger.LogInformation("Log receiver shutdown with AdsErrorCode={adsError}.", result);
+
+                    if (ct.IsCancellationRequested)
+                    {
+                        return;
+                    }
                 }
                 catch (Exception e)
                 {

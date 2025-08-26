@@ -6,23 +6,23 @@ Den aktuellen Release von Log4TC kann [hier](https://github.com/mbc-engineering/
 
 ## Voraussetzungen
 
-* [TwinCat 3.1 (min. 4022.00)](https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm)
+* [TwinCat 3.1 (min. 4024.00)](https://www.beckhoff.com/de-de/suchergebnisse/?q=TE1000+%7C+TwinCAT+3+Engineering)
 * Administrationsrechte für die Installation
 
 **Nur Service:**
 
-* min Windows 7 SP1 / Windows Embedded Standard 2009
-* [Microsoft .NET Framework (mindestends 4.6.1, empfohlen 4.8)](https://dotnet.microsoft.com/download/dotnet-framework/thank-you/net48-offline-installer)
-* [ADS Router - TC1000 | TC3 ADS](https://www.beckhoff.de/default.asp?download/tc3-download-xar.htm)
+* min Windows 10 - 1607
+* [ADS Router - TC1000 | TC3 ADS](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369)
+* [Verwendet Microsoft .NET 8 (muss nicht installiert werden)](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md)
 
 ## Beispiel Installation
 
 Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 und einer x64 Architektur.
 
 1. Stellen Sie sicher das alle Anwendungen geschlossen sind.
-2. Kopieren des MSI [Mbc.Log4Tc.Setup(x64)v20.5.6.0](https://github.com/mbc-engineering/log4TC/releases) auf den Zielrechner. Führen Sie das MSI setup aus.
+2. Kopieren des MSI [Mbc.Log4Tc.Setup.Wix.x64.vxx.xx.xx.msi](https://github.com/mbc-engineering/log4TC/releases) auf den Zielrechner. Führen Sie das MSI setup aus.
 3. Akzeptieren Sie den `log4TC Software-Lizenzvertrag`.
-4. Wählen sie die gewünschten Features. (Nähere Beschreibeung [hier](#features)
+4. Wählen sie die gewünschten Features. Nähere Beschreibeung [hier](#features)
 4. Durch Klicken auf `Install` werden alle notwendigen Dateien auf das System kopiert und der log4TC Windows Service mit dem Namen `mbc log4TC Service` gestartet.
 
 ![](assets/setup_successfull.png)
@@ -44,7 +44,7 @@ Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 un
 ### log4TC TwinCat 3 Bibliothek
 
 > [!NOTE]
-> Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4022.00 installiert haben.
+> Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4024.00 installiert haben.
 
 **Beinhaltet**
 
