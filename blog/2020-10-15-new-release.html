@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Installationsanleitung von log4TC | Dokumentation mbc Log4Tc </title>
+      <title>Neuer Release log4TC: 20.10.21 | Dokumentation mbc Log4Tc </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Installationsanleitung von log4TC | Dokumentation mbc Log4Tc ">
+      <meta name="title" content="Neuer Release log4TC: 20.10.21 | Dokumentation mbc Log4Tc ">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -85,60 +85,23 @@
         </div>
 
         <article data-uid="">
-<h1 id="installationsanleitung-von-log4tc">Installationsanleitung von log4TC</h1>
+<h1 id="neuer-release-log4tc-201021">Neuer Release log4TC: 20.10.21</h1>
 
-<h2 id="setup">Setup</h2>
-<p>Den aktuellen Release von Log4TC kann <a href="https://github.com/mbc-engineering/log4TC/releases">hier</a> geladen werden. Achten sie auf die Ziel Architektur x86 bzw x64!</p>
-<h2 id="voraussetzungen">Voraussetzungen</h2>
+<h2 id="ausgabe-der-log-meldungen-in-sql-datenbanken">Ausgabe der Log-Meldungen in SQL-Datenbanken</h2>
+<p>Dieses Release erweitert die log4TC Ausgaben um ein weiteres Plugin: Neu können Log-Meldungen in SQL-Datenbanken geschrieben werden. Log4TC wird dazu mit drei Treibern ausgeliefert: MySql/MariaDB, Postgres, MS-SQlServer. Für die Meldungen stehen zwei verschiedene Formate zur Verfügung.</p>
+<p>Die Dokumentation der SQL-Ausgabe befindet sich <a href="https://mbc-engineering.github.io/log4TC/reference/sql_output.html">Hier</a>.</p>
+<p>Brauchen Sie Treiber für anderen Datenbanken? Wollen Sie ein anderes Schema? Zögern Sie nicht und fragen Sie uns!</p>
+<p>Sie finden das log4TC Setup hier: <a href="https://github.com/mbc-engineering/log4TC/releases">log4TC Release</a></p>
+<h2 id="fehlerbehebungen">Fehlerbehebungen</h2>
+<p>Der Release beseitigt folgende Fehler:</p>
 <ul>
-<li><a href="https://www.beckhoff.com/de-de/suchergebnisse/?q=TE1000+%7C+TwinCAT+3+Engineering">TwinCat 3.1 (min. 4024.00)</a></li>
-<li>Administrationsrechte für die Installation</li>
+<li>NLog-Ausgabe wird nicht mehr initialisiert, wenn die Ausgabe nicht konfiguriert wird.</li>
+<li>Fehler bei der Ausgabe werden jetzt in jeden Fall in das interne log4TC-Logfile geschrieben.</li>
 </ul>
-<p><strong>Nur Service:</strong></p>
+<h2 id="sonstige-anpassungen">Sonstige Anpassungen</h2>
 <ul>
-<li>min Windows 10 - 1607</li>
-<li><a href="https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369">ADS Router - TC1000 | TC3 ADS</a></li>
-<li><a href="https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md">Verwendet Microsoft .NET 8 (muss nicht installiert werden)</a></li>
+<li>Lizenzierung für Windows-CE möglich.</li>
 </ul>
-<h2 id="beispiel-installation">Beispiel Installation</h2>
-<p>Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 und einer x64 Architektur.</p>
-<ol>
-<li>Stellen Sie sicher das alle Anwendungen geschlossen sind.</li>
-<li>Kopieren des MSI <a href="https://github.com/mbc-engineering/log4TC/releases">Mbc.Log4Tc.Setup.Wix.x64.vxx.xx.xx.msi</a> auf den Zielrechner. Führen Sie das MSI setup aus.</li>
-<li>Akzeptieren Sie den <code>log4TC Software-Lizenzvertrag</code>.</li>
-<li>Wählen sie die gewünschten Features. Nähere Beschreibeung <a href="#features">hier</a></li>
-<li>Durch Klicken auf <code>Install</code> werden alle notwendigen Dateien auf das System kopiert und der log4TC Windows Service mit dem Namen <code>mbc log4TC Service</code> gestartet.</li>
-</ol>
-<p><img src="assets/setup_successfull.png" alt=""></p>
-<h2 id="features">Features</h2>
-<h3 id="log4tc-service">log4TC Service</h3>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Dieses Feature erscheint nur wenn sie ein ADS Router - TC1000 | TC3 ADS installiert haben.</p>
-</div>
-<p><strong>Beinhaltet</strong></p>
-<ul>
-<li>Windows Service zum schreiben der generierten Logmeldungen aus TwinCat</li>
-<li>Konfiguration Links im Startmenü</li>
-</ul>
-<p><img src="assets/setup_service_links.png" alt="links"></p>
-<h3 id="log4tc-twincat-3-bibliothek">log4TC TwinCat 3 Bibliothek</h3>
-<div class="NOTE">
-<h5>Note</h5>
-<p>Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4024.00 installiert haben.</p>
-</div>
-<p><strong>Beinhaltet</strong></p>
-<ul>
-<li>Installiert die log4TC Twincat 3 Bibliothek lokal</li>
-<li>Bereitet die OEM Lizenz zur Registrierung für die Produktive Benutzung vor</li>
-<li>Kopiert das getting starded Projekt unter <code>C:\ProgramData\log4TC\gettingstarded</code></li>
-<li>Hilfe Links im Startmenü</li>
-</ul>
-<h2 id="bekannte-fehler">Bekannte Fehler</h2>
-<h2 id="setup-endet-mit-dem-fehler--setup-wizard-endet-prematurely-because-of-an-error-your-system-has-not-been-modified-">Setup endet mit dem Fehler: <code>... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...</code></h2>
-<p>In diesem Fall ist ein Fehler aufgetreten.</p>
-<p><img src="assets/setup_endwitherror.png" alt="setup end with error"></p>
-<p>Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ortner mit dem MSI Setup per <code>cd [folder]</code>. Geben Sie folgendes ein: <code>msiexec.exe /i &quot;[setup].msi&quot; /l*v install.log</code>. Wenden Sie sich anschliessend mit dem <code>install.log</code> an uns.</p>
 
 </article>
 

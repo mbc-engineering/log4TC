@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Neuer Release log4TC: 20.07.28 | Dokumentation mbc Log4Tc </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Neuer Release log4TC: 20.07.28 | Dokumentation mbc Log4Tc ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="neuer-release-log4tc-200728">Neuer Release log4TC: 20.07.28</h1>
+
+<h2 id="neue-ausgaben-für-log-meldungen-und-bugfixing">Neue Ausgaben für Log-Meldungen und Bugfixing</h2>
+<p>Dieses Release bringt die angekündigten Ausgaben für Influx und Graylog mit. Ausserdem kann der log4TC-Service jetzt über eine Datei konfiguriert werden.</p>
+<p>Die neue Version steht auf <a href="https://github.com/mbc-engineering/log4TC/releases">Hier</a> zum Download zur Verfügung.</p>
+<h3 id="neue-sps-library">Neue SPS-Library</h3>
+<p>Die neue Library hat die Versionsnummer 0.0.5. Neben diversen Fehlerbereinigungen wurde die SPS-API um einen neuen Baustein ergänzt: <code>FB_LoggerLAC</code>.</p>
+<p>Mit diesen Baustein können Log-Meldungen in einem <em>FB</em> oder <em>PRG</em> abgesetzt werden, ohne das jedesmal der Loggername mitgegeben werden muss.
+Bei der Instanzierung hat man die Möglichkeit den Loggernamen automatisch ermitteln zu lassen (funktioniert nur bei <em>FB</em>s und <em>PRG</em>s) wenn man als Loggernamen die Konstante <code>Const.sLoggerFromInstance</code> angibt:</p>
+<pre><code>fbLog : FB_LoggerLAC(Const.sLoggerFromInstance);
+</code></pre>
+<p>Context-Eigenschaften können über die Eigenschaft <code>LoggerContext</code> einmalig hinzugefügt werden. Sie werden dann bei jeder Log-Messages dieses Instanz mitgeschrieben:</p>
+<pre><code>fbLog.LoggerContext.AddInt('orderno', 42);
+</code></pre>
+<p>Die eigentliche Ausgabe einer Meldung erfolgt über den direkten Aufruf:</p>
+<pre><code>fbLog(
+    eLogLevel := E_LogLevel.eInfo,
+    sMessage  := 'barbaz {bLog}',
+    aArg1     := bLog,
+);
+</code></pre>
+<p>Um eine bedingte Log-Meldung zu generieren, kann das Input-Argument <code>bExecute</code> benutzt werden. Nur wenn der Wert <code>TRUE</code> ist, wird eine Log-Meldung generiert.</p>
+<pre><code>fbLog(
+    bExecute  := bError,
+    eLogLevel := E_LogLevel.eError,
+    sMessage  := 'Fehler aufgetreten',
+);
+</code></pre>
+<h3 id="ausgabe-nach-influx">Ausgabe nach Influx</h3>
+<p><a href="https://www.influxdata.com/">InfluxDB</a> ist eine Open-Source Datenbank, spezialisiert auf die Verwaltung von Zeitreihendaten. Kurz gesagt, lassen sich damit verschiedene Daten (Nummerische Werte, Strings, etc.) mit einem Zeitstempel zeitlich geordnet speichern. Eine einfache Zeitreihe könnte z.B. eine Temperaturaufzeichnung sein:</p>
+<ul>
+<li>09:00:00 -&gt; 16°C</li>
+<li>09:30:00 -&gt; 18°C</li>
+<li>11:00:00 -&gt; 23°C</li>
+</ul>
+<p>Die Abstände der Messung müssen dabei nicht regelmässig sein. Ebenso kann ein Zeitstempel auch mehrere Messwerte zugewiesen werden. Zusammengehörige Werte werden in einer Messung (<em>Measurement</em>) gespeichert.</p>
+<p>Existieren mehrere Instanzen eines Messwerts - im Beispiel in etwas mehrere Sensoren, so können diese mit Tags gekennzeichnet werden. Ein umfangreiches Beispiel könnte damit so aussehen:</p>
+<p>Klima:</p>
+<ul>
+<li>09:00:00 -&gt; Temperatur=16°C (Sensor=Aussen), Temperatur=21°C (Sensor=Innen)</li>
+<li>09:30:00 -&gt; Temperatur=18°C (Sensor=Aussen), Feuchtigkeit=30% (Sensor=Aussen)</li>
+<li>11:00:00 -&gt; Temperatur=23°C (Sensor=Innen)</li>
+</ul>
+<p>Die gespeicherten Daten können mit einer SQL ähnlichen Abfragesprache selektiert werden. Um z.B. die maximale Aussentemperatur der letzten 24h abzufragen lautet die Abfrage:</p>
+<pre><code>SELECT MAX(&quot;Temperatur&quot;) FROM &quot;Klima&quot; WHERE &quot;Sensor&quot;=&quot;Aussen&quot; AND timestamp &gt;= now() - 24h
+</code></pre>
+<p>Mit der <code>influxdb</code>-Ausgabe können jetzt solche Daten direkt aus log4TC geschrieben werden. Wichtig dabei ist es, dass die zu schreibenden Daten als strukturierte Argumente in einer Log-Meldung vorliegen.</p>
+<p><a href="https://mbc-engineering.github.io/log4TC/reference/influx_output.html">Influx-DB Ausgabe</a></p>
+<h3 id="ausgabe-nach-graylog">Ausgabe nach Graylog</h3>
+<p>Für viele Anwendungen dürfte log4TC mit der NLog-Ausgabe, die lokale Dateien schreibt ausreichend sein. Sind aber mehrere Rechner mit TwinCAT im Einsatz wird das dezentrale Logging aber sehr schnell unübersichtlich und ineffizient bei der Überwachung und Fehlersuche. Für genau diesen Fall können jetzt Log-Meldungen an einen Graylog-Server zentralisiert weitergeleitet werden.</p>
+<p><a href="https://www.graylog.org/">Graylog</a> ist ein Log-Managementsystem, das Log-Meldungen - nicht nur von log4TC - empfängt, speichert und für Analysen bereitstellt. Durch die Indexierung können auch grosse Logdaten in kürzester Zeit durchsucht werden.</p>
+<p>Da Graylog intern eine Log-Meldung strukturiert speichert, passt dieses System nahtlos zu log4TC.</p>
+<p><a href="https://mbc-engineering.github.io/log4TC/reference/graylog_output.html">Graylog Ausgabe</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <div style="display: flex; align-items: center; gap: 20px;"> <div id="google_translate_element"></div> <script type="text/javascript">  function googleTranslateElementInit() {    new google.translate.TranslateElement({      pageLanguage: 'de',       includedLanguages: 'en,de,fr,es',      layout: google.translate.TranslateElement.InlineLayout.SIMPLE    }, 'google_translate_element');  }</script><script type="text/javascript" src="https://translate.google.com/translate_a/element.js?hl=en&cb=googleTranslateElementInit"></script>   <div><span>Help us on <a href="https://github.com/mbc-engineering/log4TC"><strong>github</strong></a></span></div> </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

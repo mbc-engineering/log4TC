@@ -66,6 +66,49 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "blog/2020-07-28-new-release.md",
+      "output": {
+        ".html": {
+          "relative_path": "blog/2020-07-28-new-release.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "blog/2020-10-15-new-release.md",
+      "output": {
+        ".html": {
+          "relative_path": "blog/2020-10-15-new-release.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "blog/2020-10-26-getting_started_video.md",
+      "output": {
+        ".html": {
+          "relative_path": "blog/2020-10-26-getting_started_video.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "blog/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "blog/toc.html"
+        },
+        ".json": {
+          "relative_path": "blog/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Resource",
       "source_relative_path": "favicon.ico",
       "output": {

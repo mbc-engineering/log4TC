@@ -74,12 +74,30 @@
 
  <div id="google_translate_element"></div>
 <h1 id="changelog">Changelog</h1>
-<h2 id="250207">[25.02.07]</h2>
+<h2 id="250826">[25.08.26]</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li>Stefans blogs hinzugefügt inklusive <a href="https://www.youtube.com/embed/aXccFd3cIY0">Getting Started Video</a></li>
+</ul>
 <h3 id="fixed">Fixed</h3>
+<ul>
+<li>Service Startup error <code>(Mbc.Log4Tc.Receiver.AdsLogReceiver) Log receiver shutdown.</code> wurde behoben.</li>
+<li>fixed Nlog.config template</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>Setup OS Requirement auf Windows 10 erhöht wegen .NET 8.0 Anforderung,</li>
+<li>Setup TwinCAT Lib installation nur für 2024.</li>
+<li>Neuste Beckhoff ADS Library 6.2.485 wird verwendet</li>
+<li>Neuste Microsoft.ApplicationInsights.WorkerService Library 2.23.0 wird verwendet</li>
+<li>SPS Library umbenannt für um klar die TC Version zu kennzeichnen.</li>
+</ul>
+<h2 id="250207">[25.02.07]</h2>
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li>Fixed System.MethodAccessException in Log4JXmlEventLayoutRenderer bei Verwendung des NLog Target Layout mbclog4jxmlevent: <code>layout=&quot;${mbclog4jxmlevent:includeAllProperties=true:message=${message} [${mbc-all-event-properties}]}&quot;&gt;</code></li>
 </ul>
-<h3 id="changed">Changed</h3>
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li>Neuste Beckhoff ADS Library 6.2.244 wird verwendet</li>
 <li>Dependency Updates</li>
@@ -89,17 +107,17 @@
 <li>Bibliothek wurde mit TwinCAT v3.1.4026 erstellt. Lasst uns sehen ob die Kompatibilität gegeben ist. Der Funktionsumfang ist noch gleich wie in der Version 0.2.1.</li>
 </ul>
 <h2 id="241208">[24.12.08]</h2>
-<h3 id="added">Added</h3>
+<h3 id="added-1">Added</h3>
 <ul>
 <li>Dokumentation steht nun auch als PDF zur Verfügung</li>
 </ul>
-<h3 id="changed-1">Changed</h3>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li>Es wird nun .NET 8.0 verwendet und es ist keine Abhängigkeiten mehr zum .NET Full Framework notwendig. Die unterstützten Windows Versionen sind ab Windows 10 1607. Siehe Microsoft <a href="https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#windows">Dokumentation</a></li>
 <li>Neuste Beckhoff ADS Library 6.1.304 wird verwendet</li>
 <li>Für das Windows MSI wird neu WIX 5 verwendet</li>
 </ul>
-<h3 id="fixed-1">Fixed</h3>
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li>#15 - Links in Dokumentation korrigiert</li>
 </ul>
@@ -118,7 +136,7 @@
 <li>Das MSI Setup unterstütz TwinCAT 4026 nicht.</li>
 </ul>
 <h2 id="240118">[24.01.18]</h2>
-<h3 id="added-1">Added</h3>
+<h3 id="added-2">Added</h3>
 <ul>
 <li>NLog unterstützt nun auch die Ausgabe für Azure ApplicationInsight über das neue nlog Target <code>ApplicationInsightsTargetLog4Tc</code>.</li>
 </ul>
@@ -127,16 +145,16 @@
 <li>Update SQLClient</li>
 </ul>
 <h2 id="210417">[21.04.17]</h2>
-<h3 id="added-2">Added</h3>
+<h3 id="added-3">Added</h3>
 <ul>
 <li>Neue ANY-Datentypen fürs Logging: TIME, LTIME, DATE, DATE_AND_TIME, TIME_OF_DAY, ENUM (numerisch), WSTRING</li>
 </ul>
-<h3 id="fixed-2">Fixed</h3>
+<h3 id="fixed-3">Fixed</h3>
 <ul>
 <li>Einige Startup Probleme behoben</li>
 <li>Setup of the library works now with TwinCat 4024 shell</li>
 </ul>
-<h3 id="changed-2">Changed</h3>
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Einige Logeinträge</li>
 </ul>
@@ -163,41 +181,41 @@
 <li>Lizenzierung Bugfix für Lizenzierungsklemme</li>
 </ul>
 <h2 id="201015">[20.10.15]</h2>
-<h3 id="added-3">Added</h3>
+<h3 id="added-4">Added</h3>
 <ul>
 <li>Neuer Output für SQL-Datenbanken</li>
 </ul>
-<h3 id="changed-3">Changed</h3>
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li><code>LogEntry</code> können jetzt als Collection im Output statt einzeln verarbeitet werden</li>
 <li>Influx-DB Output wurde angepasst, dass mehr als eine LogEntry gesendet wird</li>
 </ul>
-<h3 id="fixed-3">Fixed</h3>
+<h3 id="fixed-4">Fixed</h3>
 <ul>
 <li>Fehler im async-Handling beim Verarbeiten der Meldungen behoben; der Bug führte dazu, das im Fehlerfall Exceptions nicht geloggt wurden</li>
 <li>NLog wurde initialisiert, auch wenn das Output-Plugin nicht konfiguriert wurde</li>
 </ul>
 <h2 id="200728">[20.07.28]</h2>
-<h3 id="added-4">Added</h3>
+<h3 id="added-5">Added</h3>
 <ul>
 <li>Logging für Service aktiviert (<code>%ProgramData%/log4Tc/internal/service-*.log</code>)</li>
 <li>Konfiguration des log4TC Dispatcher (Ausgabe-Plugins)</li>
 <li>Neue Ausgabe für Influx-DB (&gt;= 1.8)</li>
 <li>Neue Ausgabe für Graylog</li>
 </ul>
-<h3 id="changed-4">Changed</h3>
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li>Setup angepasst, es ist nun eine Auswahl von Features möglich für die Szenarien PLC, PLC+Dev, Host</li>
 <li>Neue PLC-Library mit der Version 0.0.5</li>
 </ul>
-<h3 id="fixed-4">Fixed</h3>
+<h3 id="fixed-5">Fixed</h3>
 <ul>
 <li>Bugfix PLC: Context.AddString verwendet jetzt dir korrekt Stringlänge</li>
 <li>Bugfix PLC: Log-Argumente wurden nicht korrekt übergeben (ab Argumente 3)</li>
 <li>Im Context überschreiben jetzt gleiche Namen den vorherigen Wert</li>
 </ul>
 <h2 id="200506">[20.05.06]</h2>
-<h3 id="added-5">Added</h3>
+<h3 id="added-6">Added</h3>
 <ul>
 <li>Log4Tc Initial Version</li>
 </ul>
