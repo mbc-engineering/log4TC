@@ -1,6 +1,17 @@
  <div id="google_translate_element"></div>
 
 # Changelog
+## [25.08.26]
+### Fixed
+- Service Startup error `(Mbc.Log4Tc.Receiver.AdsLogReceiver) Log receiver shutdown.` wurde behoben.
+- fixed Nlog.config template 
+  
+### Changed
+- Setup OS Requirement auf Windows 10 erhöht wegen .NET 8.0 Anforderung,
+- Setup TwinCAT Lib installation nur für 2024.
+- Neuste Beckhoff ADS Library 6.2.485 wird verwendet
+- Neuste Microsoft.ApplicationInsights.WorkerService Library 2.23.0 wird verwendet
+- SPS Library umbenannt für um klar die TC Version zu kennzeichnen.
 
 ## [25.02.07]
 ### Fixed
