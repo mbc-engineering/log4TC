@@ -12,11 +12,12 @@ Folgende Voraussetzungen haben die beiden Komponenten:
 
 **log4TC TwinCat 3 Bibliothek**
 
-* [TwinCat 3 (min. 4022.00)](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=725136885)
+* [TwinCat 3 (min. 4024.00)](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=725136885)
+* Verwende die korrekte Bibliohtek-Version passend zu deiner TwinCAT Version (4024 oder 4026).
 
 **log4TC Service**
 
-* min Windows 7 SP1 / Windows Embedded Standard 2009
+* min Windows 10 - 1607
 * [ADS Router - TC1000 | TC3 ADSF](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369)
 * [Verwendet Microsoft .NET 8 (muss nicht installiert werden)](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md)
 
