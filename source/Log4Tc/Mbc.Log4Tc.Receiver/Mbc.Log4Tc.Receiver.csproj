@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.2.244" />
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.2.485" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.*" />
     <PackageReference Include="Optional" Version="4.0.0" />
     <PackageReference Include="System.IO.Pipelines" Version="8.*" />

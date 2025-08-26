@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.2.244" />
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.2.485" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.*" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.*" />
