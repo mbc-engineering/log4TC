@@ -27,7 +27,7 @@ The log4TC service is typically installed on the same computer as the PLC, but f
 
 ## Outputs
 
-![Outputs](docs/assets/showcase.png)
+<img src="assets/showcase.png" alt="Outputs" style="width:25%;" />
 
 Log4TC implements outputs through a plugin system. By default, NLog output is active upon delivery. Output plugins are continuously expanded, with upcoming plugins for Graylog and InfluxDB.
 

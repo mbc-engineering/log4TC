@@ -2,6 +2,9 @@
 
 # Changelog
 ## [25.08.26]
+### Added
+- Stefans blogs hinzugefügt inklusive [Getting Started Video](https://www.youtube.com/embed/aXccFd3cIY0)
+
 ### Fixed
 - Service Startup error `(Mbc.Log4Tc.Receiver.AdsLogReceiver) Log receiver shutdown.` wurde behoben.
 - fixed Nlog.config template 

@@ -18,7 +18,7 @@ Folgende Voraussetzungen haben die beiden Komponenten:
 **log4TC Service**
 
 * min Windows 10 - 1607
-* [ADS Router - TC1000 | TC3 ADSF](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369)
+* [ADS Router - TC1000 | TC3 ADS](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369)
 * [Verwendet Microsoft .NET 8 (muss nicht installiert werden)](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md)
 
 Beim [Installieren](../reference/installation.md) von log4TC wird eine Default-Konfigurationsdatei mit installiert. Für die nachfolgenden Beispiele wird davon ausgegangen, dass diese Konfiguration aktiv ist.

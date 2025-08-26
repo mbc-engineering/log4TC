@@ -23,11 +23,20 @@ Log4TC besteht aus zwei Teilen, einer SPS-Bibliothek und einen Windows-Service.
 
 ## Ausgaben
 
-![Outputs](assets/showcase.png)
+<img src="assets/showcase.png" alt="Outputs" style="width:25%;" />
 
 Log4TC implementiert Ausgaben über ein Plugin-System. Standardmässig bei der Auslieferung ist die NLog-Ausgabe aktiv. Die Ausgabeplugins werden laufend erweitert, die nächsten Plugins sind Ausgaben für Graylog und InfluxDB.
 
 Bei Bedarf können wir auch kundenspezifische Ausgaben erstellen.
+
+## Einführungsvideo
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aXccFd3cIY0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br>
+
+## Installation
+
+Beim **[Installieren](reference/installation.md)** von log4TC wird eine Default-Konfigurationsdatei mit installiert und ist sofort zur Verwendung bereit. Folgen Sie der **[Installationsanleitung](reference/installation.md)**.
 
 ## Typische Anwendungsfälle für log4TC
 
