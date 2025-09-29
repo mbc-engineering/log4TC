@@ -43,8 +43,8 @@ We can also create custom outputs upon request.
 ## Next Steps
 
 * [Download](https://github.com/mbc-engineering/log4TC/releases/latest)
-* [Getting Started](gettingstarted/intro.md)
-* [Reference](reference/index.md)
+* [Getting Started](docs/gettingstarted/intro.md)
+* [Reference](docs/reference/index.md)
 
 
 ## build
