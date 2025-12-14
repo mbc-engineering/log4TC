@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <Prefer32Bit>false</Prefer32Bit>
     <SelfContained>true</SelfContained>
     <!-- Only supported for .net core app-->
@@ -31,10 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.2.485" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.*" />
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.2.521" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.*" />
     <PackageReference Include="NLog" Version="5.4.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />

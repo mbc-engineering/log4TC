@@ -13,7 +13,7 @@ parameters:
   default: 'Log4Tc.sln'
 - name: dotnet_framework
   type: string
-  default: 'net8.0'
+  default: 'net10.0'
 - name: dotnet_configuration
   type: string
   default: 'Release'

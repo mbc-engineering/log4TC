@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Description>Simple TCP/IP ADS Router Console Application for use on systems without TwinCAT installation / setup.</Description>
     <Product>TCP/IP ADS Router Console Application</Product>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
