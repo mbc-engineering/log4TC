@@ -184,3 +184,65 @@ stages:
               git push
             displayName: 'Push changes to origin gh-pages branch'
             workingDirectory: '$(Build.SourcesDirectory)'
+
+
+- stage: 'PublishDebOnGitHubPages'
+  displayName: 'Publish deb repository to github pages'
+  dependsOn: PublishGitHubPages
+  condition:  succeeded()
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'ubuntu-24.04'
+    environment: publish-github-pages
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: log4TC-deb
+          - script: |
+              git config user.email "AutomatedDeploy@bot.com"
+              git config user.name "AutomatedDeploy"
+              git fetch
+              git status
+              git branch -a
+              git remote -v
+              git checkout deb-repo
+            displayName: 'checkout debs git repo'
+            workingDirectory: '$(Build.SourcesDirectory)'
+          - script: |
+              # Install aptly
+              sudo apt-get install -qq -y aptly gnupg
+
+              # add deb packages to the repository
+              aptly repo add -config=aptly.conf log4tc $(Pipeline.Workspace)/log4TC-deb/*.deb
+
+              # publish the repository to a local directory
+              aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
+
+              # The contents of the public directory can then be copied to the staging area
+              cp -r repo/public/* $(Build.ArtifactStagingDirectory)/deb/
+          - script: |
+              git add .
+              git status
+              git commit -m "Update deb repository from Release-$(Build.SourceBranchName)"
+              git push
+            displayName: 'Push changes to origin deb-repo branch'
+            workingDirectory: '$(Build.SourcesDirectory)'
+
+          - script: |
+              git checkout gh-pages
+            displayName: 'checkout gh-pages git repo'
+            workingDirectory: '$(Build.SourcesDirectory)'
+
+          - script: |
+              # The contents of the public directory can then be copied to the gh-pages branch of the github repository
+              cp -r $(Build.ArtifactStagingDirectory)/deb/* $(Build.SourcesDirectory)/deb/
+          - script: |
+              git add .
+              git status
+              git commit -m "Update deb files from Release-$(Build.SourceBranchName)"
+              git push
+            displayName: 'Push changes to origin gh-pages branch'
+            workingDirectory: '$(Build.SourcesDirectory)'

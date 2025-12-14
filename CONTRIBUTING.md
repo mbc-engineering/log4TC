@@ -43,12 +43,25 @@ By contributing, you agree that your contributions will be licensed under its Ap
 ## References
 This document was adapted from briandk's excellent [contribution guidelines template](https://gist.github.com/briandk/3d2e8b3ec8daf5a27a62).
 
-## Build
+## publish deb packages
 
-**Requirements**
-- VS2019
+with aptly is it possible to create a deb repository to host the deb packages. This can then be published to the static website of github pages.
 
-```powershell
-cd .\source\Log4Tc\
-.\build.cake
+```bash
+cd source/aptly/
+
+# Create a local aptly repository (only needs to be done once)
+aptly repo create -config=aptly.conf -component=stable -distribution=trixie log4tc
+
+# add deb packages to the repository
+aptly repo add -config=aptly.conf log4tc *.deb
+
+# publish the repository to a local directory
+aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
+
+# The contents of the public directory can then be copied to the gh-pages branch of the github repository
+cp -r /root/.aptly/public/* /tmp/deb/
+
+# Now you can add following line to apt sources:
+# deb https://mbc-engineering.github.io/log4TC/deb/ trixie stable
 ```
