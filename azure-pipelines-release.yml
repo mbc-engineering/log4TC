@@ -53,8 +53,8 @@ stages:
 - stage: 'PublishRelease'
   displayName: 'Publish to github Tag'
   dependsOn: Build
-  #condition:  succeeded()
-  condition: false
+  condition:  succeeded()
+  #condition: false
   jobs:
   - deployment: Deploy
     pool:
@@ -125,8 +125,8 @@ stages:
 - stage: 'PublishGitHubPages'
   displayName: 'Publish to github pages'
   dependsOn: PublishRelease
-  # condition:  succeeded()
-  condition: false
+  condition:  succeeded()
+  #condition: false
   jobs:
   - deployment: Deploy
     pool:
@@ -195,8 +195,8 @@ stages:
 
 - stage: 'PublishDebOnGitHubPages'
   displayName: 'Publish deb repository to github pages'
-  # dependsOn: PublishGitHubPages
-  dependsOn: Build
+  dependsOn: PublishGitHubPages
+  #dependsOn: Build
   condition:  succeeded()
   jobs:
   - deployment: Deploy

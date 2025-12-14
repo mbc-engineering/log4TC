@@ -96,7 +96,7 @@ sudo apt update
 
 3. Installation des log4TC Service:
 ```bash
-sudo apt install mbc-log4tc-service
+sudo apt install Mbc.Log4Tc.Service
 ```
 
 4. Anpassen der Konfigurationsdateien nach Wunsch 
@@ -105,10 +105,10 @@ sudo apt install mbc-log4tc-service
 
 5. Überprüfen des log4TC Service status:
 ```bash
-sudo systemctl status mbc-log4tc-service
+sudo systemctl status Mbc.Log4Tc.Service.service
 ```
 6. Bei Fehler internal logs prüfen:
 ```bash
-sudo journalctl -u mbc-log4tc-service
+sudo journalctl -u Mbc.Log4Tc.Service.service
 ls /var/log/log4tc
 ```
