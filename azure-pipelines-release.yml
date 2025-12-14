@@ -26,6 +26,11 @@ resources:
     endpoint: github.com_bqstony
     name: mbc-engineering/log4TC
     ref: gh-pages
+  - repository: deb-repo-repo
+    type: github
+    endpoint: github.com_bqstony
+    name: mbc-engineering/log4TC
+    ref: deb-repo
   # self is the trigger repo + branch
 
 stages:
@@ -48,7 +53,8 @@ stages:
 - stage: 'PublishRelease'
   displayName: 'Publish to github Tag'
   dependsOn: Build
-  condition:  succeeded()
+  #condition:  succeeded()
+  condition: false
   jobs:
   - deployment: Deploy
     pool:
@@ -119,7 +125,8 @@ stages:
 - stage: 'PublishGitHubPages'
   displayName: 'Publish to github pages'
   dependsOn: PublishRelease
-  condition:  succeeded()
+  # condition:  succeeded()
+  condition: false
   jobs:
   - deployment: Deploy
     pool:
@@ -188,7 +195,8 @@ stages:
 
 - stage: 'PublishDebOnGitHubPages'
   displayName: 'Publish deb repository to github pages'
-  dependsOn: PublishGitHubPages
+  # dependsOn: PublishGitHubPages
+  dependsOn: Build
   condition:  succeeded()
   jobs:
   - deployment: Deploy
@@ -201,6 +209,9 @@ stages:
           steps:
           - download: current
             artifact: log4TC-deb
+          - checkout: deb-repo-repo
+            submodules: recursive
+            persistCredentials: true
           - script: |
               git config user.email "AutomatedDeploy@bot.com"
               git config user.name "AutomatedDeploy"
@@ -209,20 +220,22 @@ stages:
               git branch -a
               git remote -v
               git checkout deb-repo
-            displayName: 'checkout debs git repo'
+            displayName: 'checkout deb-repo git repo'
             workingDirectory: '$(Build.SourcesDirectory)'
           - script: |
-              # Install aptly
+              echo 'Install aptly'
               sudo apt-get install -qq -y aptly gnupg
 
-              # add deb packages to the repository
+              echo 'add deb packages to the repository'
               aptly repo add -config=aptly.conf log4tc $(Pipeline.Workspace)/log4TC-deb/*.deb
 
-              # publish the repository to a local directory
+              echo 'publish the repository to a local directory'
               aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
 
-              # The contents of the public directory can then be copied to the staging area
-              cp -r repo/public/* $(Build.ArtifactStagingDirectory)/deb/
+              echo 'The contents of the public directory can then be copied to the staging area'
+              cp -r repo/public/ $(Build.ArtifactStagingDirectory)/deb/
+            displayName: 'update deb repository with aptly to staging area'
+            workingDirectory: '$(Build.SourcesDirectory)/source/aptly'
           - script: |
               git add .
               git status
@@ -237,8 +250,12 @@ stages:
             workingDirectory: '$(Build.SourcesDirectory)'
 
           - script: |
-              # The contents of the public directory can then be copied to the gh-pages branch of the github repository
-              cp -r $(Build.ArtifactStagingDirectory)/deb/* $(Build.SourcesDirectory)/deb/
+              echo 'clear old deb files in gh-pages branch'
+              rm -r $(Build.SourcesDirectory)/deb/
+              echo 'The contents of the public directory can then be copied to the gh-pages branch of the github repository'
+              cp -r $(Build.ArtifactStagingDirectory)/deb/ $(Build.SourcesDirectory)/deb/
+            displayName: 'copy deb repository to gh-pages git repo'
+            workingDirectory: '$(Build.SourcesDirectory)'
           - script: |
               git add .
               git status

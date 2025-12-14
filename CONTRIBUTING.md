@@ -60,7 +60,7 @@ aptly repo add -config=aptly.conf log4tc *.deb
 aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
 
 # The contents of the public directory can then be copied to the gh-pages branch of the github repository
-cp -r /root/.aptly/public/* /tmp/deb/
+cp -r repo/public/ /tmp/deb/
 
 # Now you can add following line to apt sources:
 # deb https://mbc-engineering.github.io/log4TC/deb/ trixie stable
