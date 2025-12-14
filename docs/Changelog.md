@@ -2,6 +2,9 @@
 
 # Changelog
 ## [14.12.26]
+### Added
+- Verbesserter Linux Support durch Bereitstellung Debian **.deb** Paket
+
 ### Changed
 - Aktualisiert auf .NET 10.0 (Siehe [unterstütze Betriebsysteme](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md)))
 - Neuste Beckhoff ADS Library 6.2.521 wird verwendet

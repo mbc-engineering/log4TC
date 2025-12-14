@@ -53,6 +53,10 @@
     <ProjectReference Include="..\Mbc.Log4Tc.Output.Sql\Mbc.Log4Tc.Output.Sql.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output\Mbc.Log4Tc.Output.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Receiver\Mbc.Log4Tc.Receiver.csproj" />
+    <PackageReference Update="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -64,10 +68,37 @@
     </None>
   </ItemGroup>
 
+  <!-- Build target to build dep file with: dotnet publish Mbc.Log4Tc.Service\Mbc.Log4Tc.Service.csproj -framework net10.0 - -configuration Release - -self-contained true - -runtime linux-x64 -t:CreateDeb -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
+    <PackageReference Include="Packaging.Targets" Version="0.1.232-*">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <!--<Target Name="SetDebPackageProperties" BeforeTargets="CreateDeb">-->
+  <ItemGroup>
+    <Content Include="appsettingsSample.json" CopyToPublishDirectory="PreserveNewest">
+      <LinuxPath>/etc/log4tc/config/appsettings.json</LinuxPath>
+    </Content>
+    <Content Include="../Mbc.Log4Tc.Output.NLog/NLogLinux.config" CopyToPublishDirectory="PreserveNewest">
+      <LinuxPath>/etc/log4tc/config/NLog.config</LinuxPath>
+    </Content>
+    <Content Include="Mbc.Log4Tc.Service.service" CopyToPublishDirectory="PreserveNewest" LinuxFileMode="1755">
+      <LinuxPath>/etc/systemd/system/Mbc.Log4Tc.Service.service</LinuxPath>
+    </Content>
+  </ItemGroup>
+  <!--
+    <PropertyGroup>
+      <PreInstallScript>
+        <![CDATA[
+        echo -e '\033[0;36mStarting installation of Mbc.Log4Tc.Service \e[0m'
+        ]]>
+      </PreInstallScript>
+      <PostInstallScript>
+        <![CDATA[
+        echo -e '\033[0;36mFinishing installation of Mbc.Log4Tc.Service \e[0m'
+        ]]>
+      </PostInstallScript>
+    </PropertyGroup>
+    -->
+  <!--</Target>-->
 </Project>

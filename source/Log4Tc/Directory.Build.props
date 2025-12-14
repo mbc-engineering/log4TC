@@ -7,7 +7,7 @@
   <PropertyGroup>
     <Title>Log4Tc</Title>
     <Product>mbc Log4Tc</Product>
-    <Description>Logging ADS Master für Beckhoff TwinCat 3 mit mehreren Ausgabe Plugins</Description>
+    <Description>Log4TC is an extension for TwinCAT3 by Beckhoff, allowing the generation of log messages directly from the PLC (Programmable Logic Controller). The messages can be transferred, filtered, evaluated, and forwarded to various outputs.</Description>
     <Authors>stegm;bqstony</Authors>
     <Company>mbc-engineering</Company>
     <Copyright>Copyright © mbc-engineering</Copyright>
