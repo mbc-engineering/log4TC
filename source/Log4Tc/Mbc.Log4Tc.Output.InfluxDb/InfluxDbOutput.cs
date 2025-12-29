@@ -67,13 +67,16 @@ namespace Mbc.Log4Tc.Output.InfluxDb
             {
                 if (_client == null)
                 {
-                    char[] password = string.IsNullOrWhiteSpace(_settings.Password) ? null : _settings.Password.ToCharArray();
-                    _client = InfluxDBClientFactory.CreateV1(_settings.Url, _settings.Username, password, _settings.Database, _settings.RetentionPolicy);
+                    _client = new InfluxDBClient(_settings.Url, _settings.Username, _settings.Password, _settings.Database, _settings.RetentionPolicy);
                 }
 
                 if (_writeApi == null)
                 {
-                    _writeApi = _client.GetWriteApi(new WriteOptions.Builder().BatchSize(_settings.WriteBatchSize).FlushInterval(_settings.WriteFlushIntervalMillis).Build());
+                    _writeApi = _client.GetWriteApi(new WriteOptions
+                    {
+                        BatchSize = _settings.WriteBatchSize,
+                        FlushInterval = _settings.WriteFlushIntervalMillis
+                    });
                     _writeApi.EventHandler += OnWriteApiEvent;
                 }
             }
