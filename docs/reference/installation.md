@@ -70,7 +70,7 @@ Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator
 
 > [!NOTE]
 > Aktuell wird nur die Installation des log4TC Service auf Debian Distributionen unterstützt.
-> Somit auch auf für die Beckhoff RT Linux® distribution
+> Somit auch für die Beckhoff RT Linux® distribution
 
 1. Hinzufügen des log4TC sources in apt sources listen:
 
