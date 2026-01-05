@@ -226,12 +226,39 @@ stages:
               echo 'Install aptly'
               sudo apt-get install -qq -y aptly gnupg
 
+              echo 'Generate GPG key for signing the repository'
+              cat >gpg-batch <<EOF
+              %echo Generating GPG key for log4TC repository
+              Key-Type: RSA
+              Key-Length: 4096
+              Subkey-Type: RSA
+              Subkey-Length: 4096
+              Name-Real: log4TC Package Repository
+              Name-Email: packages@log4tc.mbc-engineering.com
+              Expire-Date: 0
+              %no-protection
+              %commit
+              %echo done
+              EOF
+              
+              gpg --batch --generate-key gpg-batch
+              
+              echo 'Export public key for distribution'
+              gpg --armor --export packages@log4tc.mbc-engineering.com > repo/public/log4tc-archive-keyring.gpg
+              
+              echo 'Configure GPG key for aptly'
+              export GPG_KEY_ID=$(gpg --list-keys --with-colons packages@log4tc.mbc-engineering.com | grep '^pub' | cut -d':' -f5)
+              echo "Using GPG Key ID: $GPG_KEY_ID"
+
               echo 'add deb packages to the repository'
               aptly repo add -config=aptly.conf log4tc $(Pipeline.Workspace)/log4TC-deb/*.deb
 
-              echo 'publish the repository to a local directory'
-              aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
+              echo 'publish the repository to a local directory with GPG signing'
+              aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
 
+              echo 'Ensure public key is in the published directory'
+              cp repo/public/log4tc-archive-keyring.gpg repo/public/dists/stable/
+              
               echo 'The contents of the public directory can then be copied to the staging area'
               cp -r repo/public/ $(Build.ArtifactStagingDirectory)/deb/
             displayName: 'update deb repository with aptly to staging area'

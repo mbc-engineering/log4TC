@@ -57,19 +57,44 @@ aptly repo create -config=aptly.conf -component=main -distribution=stable log4tc
 # add deb packages to the repository
 aptly repo add -config=aptly.conf log4tc *.deb
 
-# publish the repository to a local directory
-aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
+# Generate GPG key for signing (one-time setup)
+cat >gpg-batch <<EOF
+%echo Generating GPG key for log4TC repository
+Key-Type: RSA
+Key-Length: 4096
+Subkey-Type: RSA
+Subkey-Length: 4096
+Name-Real: log4TC Package Repository
+Name-Email: packages@log4tc.mbc-engineering.com
+Expire-Date: 0
+%no-protection
+%commit
+%echo done
+EOF
+gpg --batch --generate-key gpg-batch
+
+# Export the public key
+gpg --armor --export packages@log4tc.mbc-engineering.com > /root/.aptly/public/log4tc-archive-keyring.gpg
+
+# Get the GPG key ID
+export GPG_KEY_ID=$(gpg --list-keys --with-colons packages@log4tc.mbc-engineering.com | grep '^pub' | cut -d':' -f5)
+
+# publish the repository to a local directory with GPG signing
+aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
 
 # The contents of the public directory can then be copied to the gh-pages branch of the github repository
 cp -r /root/.aptly/public/* /tmp/deb/
 
-# Now you can add following line to apt /etc/apt/sources.list.d/log4tc.list:
-# deb https://mbc-engineering.github.io/log4TC/deb/ stable main
+# To use the repository, first download and install the GPG key:
+# wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg > /dev/null
+
+# Then add the repository to apt /etc/apt/sources.list.d/log4tc.list:
+# deb [signed-by=/etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb/ stable main
 
 # or in the new format /etc/apt/sources.list.d/log4tc.sources:
 # Types: deb
 # URIs: https://mbc-engineering.github.io/log4TC/deb
 # Suites: stable
 # Components: main
-# Trusted: yes
+# Signed-By: /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg
 ```
