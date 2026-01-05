@@ -25,3 +25,16 @@ stages:
   - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/docs/build-job.yaml
   # tclibrary
   - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/tclibrary/build-job.yaml
+
+- stage: 'test_debian'
+  displayName: 'Test Debian Package Installation'
+  dependsOn: 'build'
+  condition: succeeded()
+  jobs:
+  - job: 'test_deb_installation'
+    displayName: 'Test Debian Package with InfluxDB'
+    pool:
+      vmImage: 'ubuntu-24.04'
+    steps:
+    - checkout: self
+    - template: ${{ variables.Pipeline.Workspace }}/.azure-pipelines/templates/log4tc/test-deb-installation.yaml

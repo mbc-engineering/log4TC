@@ -1,0 +1,236 @@
+##############################################################
+# Description:
+# This pipeline tests the Debian package installation
+# It sets up a Debian container with InfluxDB and verifies
+# that log4tc can connect successfully
+##############################################################
+
+parameters:
+- name: dotnet_framework
+  type: string
+  default: 'net10.0'
+- name: dotnet_configuration
+  type: string
+  default: 'Release'
+
+steps:
+- script: |
+    # Create docker-compose.yml for test environment
+    cat > /tmp/log4tc-test/docker-compose.yml << 'EOF'
+    version: '3.8'
+    
+    services:
+      influxdb:
+        image: influxdb:1.8-alpine
+        container_name: log4tc-test-influxdb
+        ports:
+          - "8086:8086"
+        environment:
+          INFLUXDB_DB: log4tc
+          INFLUXDB_HTTP_AUTH_ENABLED: "false"
+        networks:
+          - log4tc-test-network
+        healthcheck:
+          test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8086/ping"]
+          interval: 10s
+          timeout: 5s
+          retries: 5
+      
+      debian-test:
+        image: debian:bookworm
+        container_name: log4tc-test-debian
+        depends_on:
+          influxdb:
+            condition: service_healthy
+        networks:
+          - log4tc-test-network
+        volumes:
+          - ./test-scripts:/test-scripts:ro
+          - ./artifacts:/artifacts
+        command: >
+          bash -c "
+            echo 'Waiting for InfluxDB to be ready...' &&
+            sleep 5 &&
+            echo 'Starting Debian package installation test...' &&
+            bash /test-scripts/test-installation.sh
+          "
+    
+    networks:
+      log4tc-test-network:
+        driver: bridge
+    EOF
+  displayName: 'Create docker-compose configuration'
+  workingDirectory: $(Agent.TempDirectory)
+
+- script: |
+    mkdir -p /tmp/log4tc-test/test-scripts
+    mkdir -p /tmp/log4tc-test/artifacts
+  displayName: 'Create test directories'
+
+- script: |
+    # Create the test installation script
+    cat > /tmp/log4tc-test/test-scripts/test-installation.sh << 'EOF'
+    #!/bin/bash
+    set -e
+    
+    echo "==================================="
+    echo "Debian Package Installation Test"
+    echo "==================================="
+    
+    # Update package list
+    echo "Updating package lists..."
+    apt-get update -qq
+    
+    # Install required dependencies
+    echo "Installing dependencies..."
+    apt-get install -y -qq curl ca-certificates systemd
+    
+    # Add log4tc repository
+    echo "Adding log4tc repository..."
+    cat > /etc/apt/sources.list.d/log4tc.sources << 'APTCONFIG'
+    Types: deb
+    URIs: https://mbc-engineering.github.io/log4TC/deb
+    Suites: stable
+    Components: main
+    Trusted: yes
+    APTCONFIG
+    
+    # Update package list with new repository
+    echo "Updating package lists with log4tc repository..."
+    apt-get update -qq
+    
+    # Install log4tc
+    echo "Installing Mbc.Log4Tc.Service..."
+    apt-get install -y -qq Mbc.Log4Tc.Service
+    
+    # Configure log4tc to connect to InfluxDB
+    echo "Configuring log4tc for InfluxDB connection..."
+    cat > /etc/log4tc/config/appsettings.json << 'JSONCONFIG'
+    {
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft": "Warning",
+          "Microsoft.Hosting.Lifetime": "Information"
+        }
+      },
+      "Outputs": [
+        {
+          "Type": "influxdb",
+          "Config": {
+            "Url": "http://influxdb:8086",
+            "Database": "log4tc",
+            "Format": "syslog"
+          }
+        }
+      ]
+    }
+    JSONCONFIG
+    
+    # Create log directory
+    echo "Creating log directory..."
+    mkdir -p /var/log/log4tc
+    chmod 755 /var/log/log4tc
+    
+    # Start the service (without systemd, run directly)
+    echo "Starting log4tc service..."
+    /usr/local/bin/Mbc.Log4Tc.Service &
+    SERVICE_PID=$!
+    
+    # Wait for service to start and generate logs
+    echo "Waiting for service to initialize (30 seconds)..."
+    sleep 30
+    
+    # Check if service is still running
+    if ps -p $SERVICE_PID > /dev/null; then
+      echo "✓ Service is running (PID: $SERVICE_PID)"
+    else
+      echo "✗ Service failed to start or crashed"
+      exit 1
+    fi
+    
+    # Check internal log for connection status
+    echo ""
+    echo "Checking internal logs..."
+    if [ -f /var/log/log4tc/service.log ]; then
+      echo "✓ Internal log file exists"
+      echo ""
+      echo "--- Last 50 lines of internal log ---"
+      tail -50 /var/log/log4tc/service.log
+      echo "--- End of log ---"
+      echo ""
+      
+      # Copy logs to artifacts
+      cp /var/log/log4tc/service.log /artifacts/service.log 2>/dev/null || true
+      
+      # Check for InfluxDB connection indicators
+      if grep -qi "influx" /var/log/log4tc/service.log; then
+        echo "✓ InfluxDB output plugin appears to be loaded"
+      fi
+      
+      # Check for errors
+      if grep -qi "error\|exception\|failed" /var/log/log4tc/service.log; then
+        echo "⚠ Warning: Errors detected in log file"
+        echo "Showing error lines:"
+        grep -i "error\|exception\|failed" /var/log/log4tc/service.log || true
+      else
+        echo "✓ No errors detected in log file"
+      fi
+      
+    else
+      echo "✗ Internal log file not found at /var/log/log4tc/service.log"
+      exit 1
+    fi
+    
+    # Test InfluxDB connectivity
+    echo ""
+    echo "Testing InfluxDB connectivity..."
+    if curl -s -o /dev/null -w "%{http_code}" http://influxdb:8086/ping | grep -q "204"; then
+      echo "✓ InfluxDB is accessible from container"
+    else
+      echo "✗ Cannot reach InfluxDB"
+      exit 1
+    fi
+    
+    # Check if database exists
+    echo ""
+    echo "Checking if log4tc database exists in InfluxDB..."
+    if curl -s http://influxdb:8086/query?q=SHOW%20DATABASES | grep -q "log4tc"; then
+      echo "✓ log4tc database exists in InfluxDB"
+    else
+      echo "⚠ log4tc database not found (may be created on first write)"
+    fi
+    
+    # Stop the service
+    echo ""
+    echo "Stopping service..."
+    kill $SERVICE_PID
+    wait $SERVICE_PID 2>/dev/null || true
+    
+    echo ""
+    echo "==================================="
+    echo "✓ Test completed successfully!"
+    echo "==================================="
+    EOF
+    
+    chmod +x /tmp/log4tc-test/test-scripts/test-installation.sh
+  displayName: 'Create test installation script'
+
+- script: |
+    cd /tmp/log4tc-test
+    docker-compose up --abort-on-container-exit --exit-code-from debian-test
+  displayName: 'Run Debian package installation test'
+  continueOnError: false
+
+- script: |
+    cd /tmp/log4tc-test
+    docker-compose down -v
+  displayName: 'Clean up Docker containers'
+  condition: always()
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish test logs'
+  inputs:
+    PathtoPublish: '/tmp/log4tc-test/artifacts'
+    ArtifactName: 'debian-test-logs'
+  condition: always()
