@@ -35,7 +35,7 @@ WORKDIR /src
 COPY src/. .
 RUN dotnet publish --framework net10.0 --configuration Release --self-contained false --runtime linux-x64 --output /app/publish
 
-# Stage for pack the binary to deploymnd container
+# Stage for pack the binary to deployment container
 ########################
 FROM base AS final
 WORKDIR /app
