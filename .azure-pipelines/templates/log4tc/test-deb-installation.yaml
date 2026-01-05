@@ -15,6 +15,11 @@ parameters:
 
 steps:
 - script: |
+    mkdir -p /tmp/log4tc-test/test-scripts
+    mkdir -p /tmp/log4tc-test/artifacts
+  displayName: 'Create test directories'
+
+- script: |
     # Create docker-compose.yml for test environment
     cat > /tmp/log4tc-test/docker-compose.yml << 'EOF'
     version: '3.8'
@@ -63,11 +68,6 @@ steps:
   workingDirectory: $(Agent.TempDirectory)
 
 - script: |
-    mkdir -p /tmp/log4tc-test/test-scripts
-    mkdir -p /tmp/log4tc-test/artifacts
-  displayName: 'Create test directories'
-
-- script: |
     # Create the test installation script
     cat > /tmp/log4tc-test/test-scripts/test-installation.sh << 'EOF'
     #!/bin/bash
@@ -83,7 +83,7 @@ steps:
     
     # Install required dependencies
     echo "Installing dependencies..."
-    apt-get install -y -qq curl ca-certificates systemd
+    apt-get install -y -qq curl ca-certificates
     
     # Add log4tc repository
     echo "Adding log4tc repository..."
