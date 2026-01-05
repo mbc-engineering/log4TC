@@ -243,9 +243,6 @@ stages:
               
               gpg --batch --generate-key gpg-batch
               
-              echo 'Export public key for distribution'
-              gpg --armor --export packages@log4tc.mbc-engineering.com > repo/public/log4tc-archive-keyring.gpg
-              
               echo 'Configure GPG key for aptly'
               export GPG_KEY_ID=$(gpg --list-keys --with-colons packages@log4tc.mbc-engineering.com | grep '^pub' | cut -d':' -f5)
               echo "Using GPG Key ID: $GPG_KEY_ID"
@@ -256,7 +253,11 @@ stages:
               echo 'publish the repository to a local directory with GPG signing'
               aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
 
-              echo 'Ensure public key is in the published directory'
+              echo 'Export public key for distribution'
+              mkdir -p repo/public
+              gpg --armor --export packages@log4tc.mbc-engineering.com > repo/public/log4tc-archive-keyring.gpg
+              
+              echo 'Copy public key to the published directory for easy access'
               cp repo/public/log4tc-archive-keyring.gpg repo/public/dists/stable/
               
               echo 'The contents of the public directory can then be copied to the staging area'
