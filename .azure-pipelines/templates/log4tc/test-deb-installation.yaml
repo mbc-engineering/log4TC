@@ -168,13 +168,15 @@ steps:
         echo "✓ InfluxDB output plugin appears to be loaded"
       fi
       
-      # Check for errors
+      # Check for errors (note: this is informational only, not a test failure)
+      # Shows any lines containing common error indicators for troubleshooting
       if grep -qi "error\|exception\|failed" /var/log/log4tc/service.log; then
-        echo "⚠ Warning: Errors detected in log file"
-        echo "Showing error lines:"
+        echo "⚠ Warning: Potential errors detected in log file"
+        echo "Showing lines with error indicators:"
         grep -i "error\|exception\|failed" /var/log/log4tc/service.log || true
+        echo "(Note: Some matches may be false positives - review context above)"
       else
-        echo "✓ No errors detected in log file"
+        echo "✓ No common error indicators detected in log file"
       fi
       
     else
