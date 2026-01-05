@@ -53,7 +53,7 @@ Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 un
 
 - Installiert die log4TC Twincat 3 Bibliothek lokal
 - Bereitet die OEM Lizenz zur Registrierung für die Produktive Benutzung vor
-- Kopiert das getting starded Projekt unter `C:\ProgramData\log4TC\gettingstarded`
+- Kopiert das getting started Projekt unter `C:\ProgramData\log4TC\gettingstarted`
 - Hilfe Links im Startmenü
 
 ### Bekannte Fehler
