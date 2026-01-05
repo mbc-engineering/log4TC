@@ -25,7 +25,7 @@ This pipeline template tests the installation and functionality of the log4tc De
 ## Requirements
 
 - Docker and Docker Compose must be available on the build agent
-- The log4tc Debian repository must be accessible at https://mbc-engineering.github.io/log4tc/deb
+- The log4tc Debian repository must be accessible at https://mbc-engineering.github.io/log4TC/deb
 
 ## Test Results
 
