@@ -79,12 +79,15 @@ export GPG_KEY_ID=$(gpg --list-keys --with-colons packages@log4tc.mbc-engineerin
 # publish the repository to a local directory with GPG signing
 aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
 
-# Export the public key after publishing
-mkdir -p /root/.aptly/public
-gpg --armor --export packages@log4tc.mbc-engineering.com > /root/.aptly/public/log4tc-archive-keyring.gpg
+# Export the public key for distribution
+mkdir -p repo/public
+gpg --armor --export packages@log4tc.mbc-engineering.com > repo/public/log4tc-archive-keyring.gpg
+
+# Copy public key to the published directory for easy access
+cp repo/public/log4tc-archive-keyring.gpg repo/public/dists/stable/
 
 # The contents of the public directory can then be copied to the gh-pages branch of the github repository
-cp -r /root/.aptly/public/* /tmp/deb/
+cp -r repo/public/* /tmp/deb/
 
 # To use the repository, first download and install the GPG key:
 # wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg > /dev/null
