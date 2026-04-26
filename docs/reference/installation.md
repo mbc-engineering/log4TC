@@ -74,14 +74,23 @@ Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator
 
 1. Hinzufügen des log4TC sources in apt sources listen:
 
-Zuerst den GPG-Schlüssel herunterladen und installieren:
+Zuerst den GPG-Schlüssel herunterladen und als keyring installieren:
 ```bash
-wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg > /dev/null
+sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/keyrings/log4tc-archive-keyring.gpg > /dev/null
+sudo chmod 0644 /etc/apt/keyrings/log4tc-archive-keyring.gpg
+```
+
+> ASCII-kodierten Format (.asc) Schlüssel kann auch heruntergeladen werden unter: https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.asc
+
+Optional: Fingerprint prüfen (muss mit `D3042271F3CDB50E` enden):
+```bash
+gpg --show-keys --with-fingerprint /etc/apt/keyrings/log4tc-archive-keyring.gpg
 ```
 
 **Legacy list format** `/etc/apt/sources.list.d/log4tc.list`:
 ```bash
-deb [signed-by=/etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb stable main
+deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb stable main
 ```
 
 **New format** `/etc/apt/sources.list.d/log4tc.sources`:
@@ -90,29 +99,30 @@ Types: deb
 URIs: https://mbc-engineering.github.io/log4TC/deb
 Suites: stable
 Components: main
-Signed-By: /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg
+Architectures: amd64 arm64
+Signed-By: /etc/apt/keyrings/log4tc-archive-keyring.gpg
 ```
-> Ohne Signatur Prüfung verwende `Trusted: yes` anstatt `Signed-By: ...`
+> Ohne Signaturprüfung kann `Trusted: yes` verwendet werden. Dies wird nicht empfohlen.
 
-2. Aktualisieren der apt package listen:
+1. Aktualisieren der apt package listen:
 ```bash
 sudo apt update
 ```
 
-3. Installation des log4TC Service:
+1. Installation des log4TC Service:
 ```bash
 sudo apt install Mbc.Log4Tc.Service
 ```
 
-4. Anpassen der Konfigurationsdateien nach Wunsch 
+1. Anpassen der Konfigurationsdateien nach Wunsch 
    1. `/etc/log4tc/config/appsettings.json`
    2. `/etc/log4tc/config/NLog.config`
 
-5. Überprüfen des log4TC Service status:
+2. Überprüfen des log4TC Service status:
 ```bash
 sudo systemctl status Mbc.Log4Tc.Service.service
 ```
-6. Bei Fehler internal logs prüfen:
+1. Bei Fehler internal logs prüfen:
 ```bash
 sudo journalctl -u Mbc.Log4Tc.Service.service
 ls /var/log/log4tc

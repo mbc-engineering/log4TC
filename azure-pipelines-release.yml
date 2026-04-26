@@ -255,6 +255,7 @@ stages:
 
               echo 'Copy he GPG public key to the staging area'
               cp log4tc-archive-keyring.gpg $(Build.ArtifactStagingDirectory)/deb/
+              cp log4tc-archive-keyring.asc $(Build.ArtifactStagingDirectory)/deb/
             displayName: 'update deb repository with aptly to staging area'
             workingDirectory: '$(Build.SourcesDirectory)/source/aptly'
           - script: |
