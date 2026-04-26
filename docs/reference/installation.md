@@ -64,7 +64,7 @@ In diesem Fall ist ein Fehler aufgetreten.
 
 ![setup end with error](assets/setup_endwitherror.png)
 
-Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ortner mit dem MSI Setup per `cd [folder]`. Geben Sie folgendes ein: `msiexec.exe /i "[setup].msi" /l*v install.log`. Wenden Sie sich anschliessend mit dem `install.log` an uns.
+Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ordner mit dem MSI Setup per `cd [folder]`. Geben Sie folgendes ein: `msiexec.exe /i "[setup].msi" /l*v install.log`. Wenden Sie sich anschliessend mit dem `install.log` an uns.
 
 ## Linux Installation
 
