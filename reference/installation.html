@@ -150,33 +150,42 @@ Somit auch für die Beckhoff RT Linux® distribution</p>
 <ol>
 <li>Hinzufügen des log4TC sources in apt sources listen:</li>
 </ol>
-<p>Zuerst den GPG-Schlüssel herunterladen und installieren:</p>
-<pre><code class="lang-bash">wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg &gt; /dev/null
+<p>Zuerst den GPG-Schlüssel herunterladen und als keyring installieren:</p>
+<pre><code class="lang-bash">sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/keyrings/log4tc-archive-keyring.gpg &gt; /dev/null
+sudo chmod 0644 /etc/apt/keyrings/log4tc-archive-keyring.gpg
+</code></pre>
+<blockquote>
+<p>ASCII-kodierten Format (.asc) Schlüssel kann auch heruntergeladen werden unter: <a href="https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.asc">https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.asc</a></p>
+</blockquote>
+<p>Optional: Fingerprint prüfen (muss mit <code>D3042271F3CDB50E</code> enden):</p>
+<pre><code class="lang-bash">gpg --show-keys --with-fingerprint /etc/apt/keyrings/log4tc-archive-keyring.gpg
 </code></pre>
 <p><strong>Legacy list format</strong> <code>/etc/apt/sources.list.d/log4tc.list</code>:</p>
-<pre><code class="lang-bash">deb [signed-by=/etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb stable main
+<pre><code class="lang-bash">deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb stable main
 </code></pre>
 <p><strong>New format</strong> <code>/etc/apt/sources.list.d/log4tc.sources</code>:</p>
 <pre><code class="lang-bash">Types: deb
 URIs: https://mbc-engineering.github.io/log4TC/deb
 Suites: stable
 Components: main
-Signed-By: /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg
+Architectures: amd64 arm64
+Signed-By: /etc/apt/keyrings/log4tc-archive-keyring.gpg
 </code></pre>
 <blockquote>
-<p>Ohne Signatur Prüfung verwende <code>Trusted: yes</code> anstatt <code>Signed-By: ...</code></p>
+<p>Ohne Signaturprüfung kann <code>Trusted: yes</code> verwendet werden. Dies wird nicht empfohlen.</p>
 </blockquote>
-<ol start="2">
+<ol>
 <li>Aktualisieren der apt package listen:</li>
 </ol>
 <pre><code class="lang-bash">sudo apt update
 </code></pre>
-<ol start="3">
+<ol>
 <li>Installation des log4TC Service:</li>
 </ol>
 <pre><code class="lang-bash">sudo apt install Mbc.Log4Tc.Service
 </code></pre>
-<ol start="4">
+<ol>
 <li><p>Anpassen der Konfigurationsdateien nach Wunsch</p>
 <ol>
 <li><code>/etc/log4tc/config/appsettings.json</code></li>
@@ -188,7 +197,7 @@ Signed-By: /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg
 </ol>
 <pre><code class="lang-bash">sudo systemctl status Mbc.Log4Tc.Service.service
 </code></pre>
-<ol start="6">
+<ol>
 <li>Bei Fehler internal logs prüfen:</li>
 </ol>
 <pre><code class="lang-bash">sudo journalctl -u Mbc.Log4Tc.Service.service
