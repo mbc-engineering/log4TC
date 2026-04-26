@@ -1,0 +1,15 @@
+Package: Mbc.Log4Tc.Service
+Priority: extra
+Section: misc
+Installed-Size: 102131
+Maintainer: stegm;bqstony
+Architecture: amd64
+Version: 26.04.26
+Filename: pool/main/M/Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.26.04.26.linux-x64.deb
+Size: 32524608
+MD5sum: a8c70f6f653dd1b7a1138dd06e96106a
+SHA1: f39959628130cfd435ee79e76b45ece5a0668215
+SHA256: c6bdc2ea0b9f4cb39ac66df2f581352e62105aa41e2ac77d8f207e72e215f446
+SHA512: 3b36abaa18bb67d1ff68df8174c22cfa2d2c785065e856bef59350a13196786de605eada5e5a61c11e609b1b2d76f7bd3d1a667ebece9134fa191d0ef5cc2c1f
+Description: Log4TC is an extension for TwinCAT3 by Beckhoff, allowing the generation of log messages directly from the PLC (Programmable Logic Controller). The messages can be transferred, filtered, evaluated, and forwarded to various outputs.
+
