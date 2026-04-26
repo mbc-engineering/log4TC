@@ -1,6 +1,7 @@
-﻿<Project Sdk="WixToolset.Sdk/5.0.2">
+﻿<Project Sdk="WixToolset.Sdk/7.0.0">
   <PropertyGroup>
     <SignOutput>true</SignOutput>
+    <AcceptEula>wix7</AcceptEula>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="EULA.rtf" />
@@ -12,10 +13,10 @@
     <Content Include="Resources\mbcBanner.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="WixToolset.Netfx.wixext" Version="5.0.2" />
-    <PackageReference Include="WixToolset.Util.wixext" Version="5.0.2" />
-    <PackageReference Include="WixToolset.UI.wixext" Version="5.0.2" />
-    <PackageReference Include="WixToolset.Heat" Version="5.0.2" />
+    <PackageReference Include="WixToolset.Netfx.wixext" Version="7.0.0" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="7.0.0" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="7.0.0" />
+    <PackageReference Include="WixToolset.Heat" Version="6.0.2" />
   </ItemGroup>
   <PropertyGroup>
     <!-- Define constant for using in wix-->
