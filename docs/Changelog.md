@@ -1,13 +1,18 @@
  <div id="google_translate_element"></div>
 
 # Changelog
-## [14.12.26]
+## [26.04.26]
 ### Added
-- Verbesserter Linux Support durch Bereitstellung Debian **.deb** Paket
+- Verbesserter Linux Support durch Bereitstellung Debian **.deb** Paket. Siehe Anleitung [Linux Installation](https://mbc-engineering.github.io/log4TC/reference/installation.html#linux-installation)
+
+### Fixed
+- docs links korrigiert
 
 ### Changed
 - Aktualisiert auf .NET 10.0 (Siehe [unterstütze Betriebsysteme](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md)))
 - Neuste Beckhoff ADS Library 6.2.521 wird verwendet
+- wix setup v7
+- update dependencies
 
 ## [25.08.26]
 ### Added
