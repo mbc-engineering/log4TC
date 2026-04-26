@@ -89,7 +89,9 @@
 
 <h2 id="setup">Setup</h2>
 <p>Den aktuellen Release von Log4TC kann <a href="https://github.com/mbc-engineering/log4TC/releases">hier</a> geladen werden. Achten sie auf die Ziel Architektur x86 bzw x64!</p>
-<h2 id="voraussetzungen">Voraussetzungen</h2>
+<p>Es wird <a href="#windows-installation">Windows</a> und <a href="#linux-installation">Linux</a> unterstützt.</p>
+<h2 id="windows-installation">Windows Installation</h2>
+<h3 id="voraussetzungen">Voraussetzungen</h3>
 <ul>
 <li><a href="https://www.beckhoff.com/de-de/suchergebnisse/?q=TE1000+%7C+TwinCAT+3+Engineering">TwinCat 3.1 (min. 4024.00)</a></li>
 <li>Administrationsrechte für die Installation</li>
@@ -100,7 +102,7 @@
 <li><a href="https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369">ADS Router - TC1000 | TC3 ADS</a></li>
 <li><a href="https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md">Verwendet Microsoft .NET 8 (muss nicht installiert werden)</a></li>
 </ul>
-<h2 id="beispiel-installation">Beispiel Installation</h2>
+<h3 id="beispiel-installation">Beispiel Installation</h3>
 <p>Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 und einer x64 Architektur.</p>
 <ol>
 <li>Stellen Sie sicher das alle Anwendungen geschlossen sind.</li>
@@ -110,8 +112,8 @@
 <li>Durch Klicken auf <code>Install</code> werden alle notwendigen Dateien auf das System kopiert und der log4TC Windows Service mit dem Namen <code>mbc log4TC Service</code> gestartet.</li>
 </ol>
 <p><img src="assets/setup_successfull.png" alt=""></p>
-<h2 id="features">Features</h2>
-<h3 id="log4tc-service">log4TC Service</h3>
+<h3 id="setup-features">Setup Features</h3>
+<h4 id="log4tc-service">log4TC Service</h4>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Dieses Feature erscheint nur wenn sie ein ADS Router - TC1000 | TC3 ADS installiert haben.</p>
@@ -122,7 +124,7 @@
 <li>Konfiguration Links im Startmenü</li>
 </ul>
 <p><img src="assets/setup_service_links.png" alt="links"></p>
-<h3 id="log4tc-twincat-3-bibliothek">log4TC TwinCat 3 Bibliothek</h3>
+<h4 id="log4tc-twincat-3-bibliothek">log4TC TwinCat 3 Bibliothek</h4>
 <div class="NOTE">
 <h5>Note</h5>
 <p>Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4024.00 installiert haben.</p>
@@ -131,14 +133,67 @@
 <ul>
 <li>Installiert die log4TC Twincat 3 Bibliothek lokal</li>
 <li>Bereitet die OEM Lizenz zur Registrierung für die Produktive Benutzung vor</li>
-<li>Kopiert das getting starded Projekt unter <code>C:\ProgramData\log4TC\gettingstarded</code></li>
+<li>Kopiert das getting started Projekt unter <code>C:\ProgramData\log4TC\gettingstarted</code></li>
 <li>Hilfe Links im Startmenü</li>
 </ul>
-<h2 id="bekannte-fehler">Bekannte Fehler</h2>
-<h2 id="setup-endet-mit-dem-fehler--setup-wizard-endet-prematurely-because-of-an-error-your-system-has-not-been-modified-">Setup endet mit dem Fehler: <code>... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...</code></h2>
+<h3 id="bekannte-fehler">Bekannte Fehler</h3>
+<h4 id="setup-endet-mit-dem-fehler--setup-wizard-endet-prematurely-because-of-an-error-your-system-has-not-been-modified-">Setup endet mit dem Fehler: <code>... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...</code></h4>
 <p>In diesem Fall ist ein Fehler aufgetreten.</p>
 <p><img src="assets/setup_endwitherror.png" alt="setup end with error"></p>
-<p>Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ortner mit dem MSI Setup per <code>cd [folder]</code>. Geben Sie folgendes ein: <code>msiexec.exe /i &quot;[setup].msi&quot; /l*v install.log</code>. Wenden Sie sich anschliessend mit dem <code>install.log</code> an uns.</p>
+<p>Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ordner mit dem MSI Setup per <code>cd [folder]</code>. Geben Sie folgendes ein: <code>msiexec.exe /i &quot;[setup].msi&quot; /l*v install.log</code>. Wenden Sie sich anschliessend mit dem <code>install.log</code> an uns.</p>
+<h2 id="linux-installation">Linux Installation</h2>
+<div class="NOTE">
+<h5>Note</h5>
+<p>Aktuell wird nur die Installation des log4TC Service auf Debian Distributionen unterstützt.
+Somit auch für die Beckhoff RT Linux® distribution</p>
+</div>
+<ol>
+<li>Hinzufügen des log4TC sources in apt sources listen:</li>
+</ol>
+<p>Zuerst den GPG-Schlüssel herunterladen und installieren:</p>
+<pre><code class="lang-bash">wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg &gt; /dev/null
+</code></pre>
+<p><strong>Legacy list format</strong> <code>/etc/apt/sources.list.d/log4tc.list</code>:</p>
+<pre><code class="lang-bash">deb [signed-by=/etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb stable main
+</code></pre>
+<p><strong>New format</strong> <code>/etc/apt/sources.list.d/log4tc.sources</code>:</p>
+<pre><code class="lang-bash">Types: deb
+URIs: https://mbc-engineering.github.io/log4TC/deb
+Suites: stable
+Components: main
+Signed-By: /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg
+</code></pre>
+<blockquote>
+<p>Ohne Signatur Prüfung verwende <code>Trusted: yes</code> anstatt <code>Signed-By: ...</code></p>
+</blockquote>
+<ol start="2">
+<li>Aktualisieren der apt package listen:</li>
+</ol>
+<pre><code class="lang-bash">sudo apt update
+</code></pre>
+<ol start="3">
+<li>Installation des log4TC Service:</li>
+</ol>
+<pre><code class="lang-bash">sudo apt install Mbc.Log4Tc.Service
+</code></pre>
+<ol start="4">
+<li><p>Anpassen der Konfigurationsdateien nach Wunsch</p>
+<ol>
+<li><code>/etc/log4tc/config/appsettings.json</code></li>
+<li><code>/etc/log4tc/config/NLog.config</code></li>
+</ol>
+</li>
+<li><p>Überprüfen des log4TC Service status:</p>
+</li>
+</ol>
+<pre><code class="lang-bash">sudo systemctl status Mbc.Log4Tc.Service.service
+</code></pre>
+<ol start="6">
+<li>Bei Fehler internal logs prüfen:</li>
+</ol>
+<pre><code class="lang-bash">sudo journalctl -u Mbc.Log4Tc.Service.service
+ls /var/log/log4tc
+</code></pre>
 
 </article>
 
