@@ -232,17 +232,26 @@ stages:
               sudo apt-get install -qq -y aptly gnupg
 
               echo 'Import GPG key for signing deb repository'
-              gpg --import $(gpgKey.secureFilePath)
+              gpg --batch --import $(gpgKey.secureFilePath)
               export GPG_KEY_ID=D3042271F3CDB50E
 
               echo 'add deb packages to the repository'
               aptly repo add -config=aptly.conf log4tc $(Pipeline.Workspace)/log4TC-deb/*.deb
 
-              echo 'publish the repository to a local directory with GPG signing'
-              aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
+              echo 'publish or update the repository with GPG signing'
+              if aptly publish list -config=aptly.conf | grep -q '^\s*\*\s*\.\s*stable'; then
+                aptly publish update -config=aptly.conf -batch -gpg-key="$GPG_KEY_ID" stable
+              else
+                aptly publish repo -config=aptly.conf -batch -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
+              fi
 
               echo 'The contents of the public directory can then be copied to the staging area'
-              cp -r repo/public/ $(Build.ArtifactStagingDirectory)/deb/
+              mkdir -p $(Build.ArtifactStagingDirectory)/deb
+              cp -r repo/public/* $(Build.ArtifactStagingDirectory)/deb/
+
+              echo 'Validate signed apt metadata exists'
+              test -f $(Build.ArtifactStagingDirectory)/deb/dists/stable/Release.gpg
+              test -f $(Build.ArtifactStagingDirectory)/deb/dists/stable/InRelease
 
               echo 'Copy he GPG public key to the staging area'
               cp log4tc-archive-keyring.gpg $(Build.ArtifactStagingDirectory)/deb/
@@ -263,7 +272,7 @@ stages:
 
           - script: |
               echo 'clear old deb files in gh-pages branch'
-              rm -r $(Build.SourcesDirectory)/deb/
+              rm -rf $(Build.SourcesDirectory)/deb/
               echo 'The contents of the public directory can then be copied to the gh-pages branch of the github repository'
               cp -r $(Build.ArtifactStagingDirectory)/deb/ $(Build.SourcesDirectory)/deb/
             displayName: 'copy deb repository to gh-pages git repo'
