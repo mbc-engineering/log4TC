@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using Xunit;
 
 namespace Mbc.Log4Tc.Output.Graylog.Test

@@ -1,9 +1,6 @@
-﻿using FluentAssertions;
-using FluentAssertions.Common;
+﻿using AwesomeAssertions;
 using Mbc.Log4Tc.Model.Message;
 using Optional;
-using Optional.Collections;
-using Optional.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

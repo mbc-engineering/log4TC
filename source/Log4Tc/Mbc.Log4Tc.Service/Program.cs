@@ -25,11 +25,11 @@ namespace Mbc.Log4Tc.Service
 
         public static async Task Main(string[] args)
         {
-            var logPath = Path.Combine(OsPaths.GetInternalLogBasePath(), "service.log");
+            var logPath = Path.Combine(OsPaths.GetInternalLogBasePath(), "service-.log");
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
-                .WriteTo.RollingFile(logPath, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] ({SourceContext}) {Message}{NewLine}{Exception}", fileSizeLimitBytes: 1024 * 1024 * 10, retainedFileCountLimit: 5)
+                .WriteTo.File(logPath, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] ({SourceContext}) {Message}{NewLine}{Exception}", fileSizeLimitBytes: 1024 * 1024 * 10, retainedFileCountLimit: 5, rollingInterval: RollingInterval.Month)
                 .CreateLogger();
 
             try

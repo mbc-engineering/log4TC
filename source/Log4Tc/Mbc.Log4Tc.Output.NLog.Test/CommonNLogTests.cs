@@ -1,4 +1,4 @@
-using FluentAssertions;
+using AwesomeAssertions;
 using NLog;
 using NLog.Config;
 using NLog.Targets;

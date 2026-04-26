@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using Mbc.Log4Tc.Dispatcher.Filter;
 using Microsoft.Extensions.Configuration;
 using Optional;
