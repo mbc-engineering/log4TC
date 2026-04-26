@@ -74,9 +74,14 @@ Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator
 
 1. Hinzufügen des log4TC sources in apt sources listen:
 
+Zuerst den GPG-Schlüssel herunterladen und installieren:
+```bash
+wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg > /dev/null
+```
+
 **Legacy list format** `/etc/apt/sources.list.d/log4tc.list`:
 ```bash
-deb https://mbc-engineering.github.io/log4TC/deb stable main
+deb [signed-by=/etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb stable main
 ```
 
 **New format** `/etc/apt/sources.list.d/log4tc.sources`:
@@ -85,9 +90,9 @@ Types: deb
 URIs: https://mbc-engineering.github.io/log4TC/deb
 Suites: stable
 Components: main
-# there is no GPG key available, so we mark the repository as trusted
-Trusted: yes
+Signed-By: /etc/apt/trusted.gpg.d/log4tc-archive-keyring.gpg
 ```
+> Ohne Signatur Prüfung verwende `Trusted: yes` anstatt `Signed-By: ...`
 
 2. Aktualisieren der apt package listen:
 ```bash

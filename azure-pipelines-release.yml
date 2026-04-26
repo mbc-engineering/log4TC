@@ -222,18 +222,30 @@ stages:
               git checkout deb-repo
             displayName: 'checkout deb-repo git repo'
             workingDirectory: '$(Build.SourcesDirectory)'
+          - task: DownloadSecureFile@1
+            name: gpgKey
+            displayName: 'Download GPG key for signing deb repository'
+            inputs:
+              secureFile: 'log4tc-archive-keyring-privatekey.asc'
           - script: |
               echo 'Install aptly'
               sudo apt-get install -qq -y aptly gnupg
 
+              echo 'Import GPG key for signing deb repository'
+              gpg --import $(gpgKey.secureFilePath)
+              export GPG_KEY_ID=D3042271F3CDB50E
+
               echo 'add deb packages to the repository'
               aptly repo add -config=aptly.conf log4tc $(Pipeline.Workspace)/log4TC-deb/*.deb
 
-              echo 'publish the repository to a local directory'
-              aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
+              echo 'publish the repository to a local directory with GPG signing'
+              aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
 
               echo 'The contents of the public directory can then be copied to the staging area'
               cp -r repo/public/ $(Build.ArtifactStagingDirectory)/deb/
+
+              echo 'Copy he GPG public key to the staging area'
+              cp log4tc-archive-keyring.gpg $(Build.ArtifactStagingDirectory)/deb/
             displayName: 'update deb repository with aptly to staging area'
             workingDirectory: '$(Build.SourcesDirectory)/source/aptly'
           - script: |

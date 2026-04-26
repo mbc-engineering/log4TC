@@ -57,8 +57,11 @@ aptly repo create -config=aptly.conf -component=main -distribution=stable log4tc
 # add deb packages to the repository
 aptly repo add -config=aptly.conf log4tc *.deb
 
-# publish the repository to a local directory
-aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -skip-signing log4tc
+# Generate GPG key for signing (one-time setup) and publish 
+export GPG_KEY_ID=D3042271F3CDB50E
+
+# publish the repository to a local directory with GPG signing
+aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
 
 # The contents of the public directory can then be copied to the gh-pages branch of the github repository
 cp -r /root/.aptly/public/* /tmp/deb/
