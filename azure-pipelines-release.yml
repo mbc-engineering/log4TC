@@ -240,9 +240,9 @@ stages:
 
               echo 'publish or update the repository with GPG signing'
               if aptly publish list -config=aptly.conf | grep -q '^\s*\*\s*\.\s*stable'; then
-                aptly publish update -config=aptly.conf -batch -gpg-key="$GPG_KEY_ID" stable
+                aptly publish update -config=aptly.conf -batch -gpg-key="$GPG_KEY_ID" -passphrase="$(GPG_PASSPHRASE)" stable
               else
-                aptly publish repo -config=aptly.conf -batch -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
+                aptly publish repo -config=aptly.conf -batch -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" -passphrase="$(GPG_PASSPHRASE)" log4tc
               fi
 
               echo 'The contents of the public directory can then be copied to the staging area'

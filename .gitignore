@@ -331,3 +331,7 @@ ASALocalRun/
 .mfractor/
 
 .mono
+
+# GPG private keys - must never be committed
+*-privatekey.asc
+*.gpg.key
