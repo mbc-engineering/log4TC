@@ -1,0 +1,146 @@
+services:
+  influxdb:
+    image: influxdb:1.8-alpine
+    volumes:
+      - ./data/log4tc-influxdb-storage:/var/lib/influxdb
+      - ./initdb.iql:/docker-entrypoint-initdb.d/initdb.iql
+    ports:
+      - 8086:8086
+    networks:
+      - twincatads
+
+  chronograf:
+    image: chronograf:1.8-alpine
+    depends_on:
+      - influxdb
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+    ports:
+      - 8888:8888
+    volumes:
+      - ./data/log4TC-chronograf-storage:/var/lib/chronograf
+    networks:
+      - twincatads
+
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    hostname: mosquitto
+    ports:
+      - "1883:1883"
+    restart: unless-stopped
+    volumes:
+      - ./data/log4TC-mosquitto-storage/config/simple-mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    networks:
+      - twincatads
+
+  log4tc:
+    #image: log4tc:26.06.06-beta
+    image: ghcr.io/bqstony/log4tc:26.06.06-beta
+    container_name: log4tc
+    depends_on:
+      - mosquitto
+      - influxdb
+    volumes:
+      - ./appsettings.json:/etc/log4tc/config/appsettings.json
+    environment:
+      - DOTNET_AmsRouter__Active=true
+      - DOTNET_AmsRouter__Name=Log4TcContainer
+      - DOTNET_AmsRouter__NetId=1.1.1.100.1.1
+      # Non Secure Port 48898
+      - DOTNET_AmsRouter__TcpPort=48898
+      # Allowed values: "Loopback", "UnixSocket"
+      - DOTNET_AmsRouter__ChannelPortType=Loopback
+      # Allowed values: "Ads" (use Loopback), "AdsOverMqtt" (Forces use of MQTT), "All" (First Loopback, then MQTT)
+      - DOTNET_AmsRouter__ChannelProtocol=AdsOverMqtt
+      # IP and TCP socket on which the ADS-Router should listen on for incoming (internal) client connections
+      # Changed IP/Port here to use a dedicated Ip Port for internal Router communication
+      - DOTNET_AmsRouter__LoopbackIP=192.168.20.100
+      - DOTNET_AmsRouter__LoopbackPort=48900
+      # Setting to accept incoming ADS-Client connections from the private container subnetwork
+      - DOTNET_AmsRouter__LoopbackExternalSubnet=192.168.20.0/24
+      - DOTNET_AmsRouter__Mqtt__0__NoRetain=false
+      - DOTNET_AmsRouter__Mqtt__0__Unidirectional=false
+      - DOTNET_AmsRouter__Mqtt__0__Port=1883
+      - DOTNET_AmsRouter__Mqtt__0__Address=127.0.0.1
+      - DOTNET_AmsRouter__Mqtt__0__Topic=AdsOverMqtt
+      - DOTNET_AmsRouter__Mqtt__1__NoRetain=false
+      - DOTNET_AmsRouter__Mqtt__1__Unidirectional=false
+      - DOTNET_AmsRouter__Mqtt__1__Port=1883
+      - DOTNET_AmsRouter__Mqtt__1__Address=10.10.1.111
+      - DOTNET_AmsRouter__Mqtt__1__Topic=AdsOverMqtt
+      # Example for a remote connection to a TwinCAT system with log4TC library integrated.
+      #- DOTNET_AmsRouter__RemoteConnections__0__Name=TwinCAT-Host
+      #- DOTNET_AmsRouter__RemoteConnections__0__Address=10.10.1.149
+      #- DOTNET_AmsRouter__RemoteConnections__0__NetId=5.23.232.30.1.1
+      # The rest comes from the default appsettings.json, which can be overridden by mounting a custom one via volumes or with environment variables
+    ports:
+      # The Log4TC custom ADS server port for this server.
+      - 16150:16150
+      # The Default ADS Port
+      - 48898:48898
+    restart: unless-stopped
+    networks:
+       twincatads:
+          # The router address is defined fixed in the Environment Variables (config-routerconsole.env)
+         ipv4_address: 192.168.20.100
+
+  tc31-xar-base-opc:
+    image: ghcr.io/bqstony/tc31-xar-base-opc:2026.05.27
+    container_name: tc31-xar-base-opc
+    hostname: tc31-xar-base-opc
+    restart: unless-stopped
+    depends_on:
+      - mosquitto
+    privileged: true
+    ulimits:
+      memlock: -1
+      rtprio: 99
+    #devices:
+      #- /dev/mem:/dev/mem
+      #- /dev/bbapi:/dev/bbapi
+    volumes:
+      # IN WSL %UserProfile%\.wslconfig Enable:
+      # The empty sample and soft-RT dev workloads run without any hugepages reserved. Only real PLC projects with a non-zero LockedMemSize (EtherCAT master, large router memory) need hugetlbfs-backed memory in the WSL kernel — in that case make the allocation persistent across Docker Desktop / host restarts by adding the kernel boot parameters to
+      #[wsl2]
+      #memory=10GB
+      #guiApplications=true
+      #kernelCommandLine=default_hugepagesz=2M hugepagesz=2M hugepages=1024
+      #
+      # HugePages provide physically contiguous memory regions for DMA mapping.
+      # Verify : cat /proc/meminfo | grep HugePages_Tota
+      # HugePages_Total:    1024
+      - /dev/hugepages:/dev/hugepages:rw
+    networks:
+      - twincatads
+
+    # Use PCI_DEVICES as environment variables to specify the Ethernet
+    # controllers which can be used by the TwinCAT runtime for real-time
+    # ethernet communication.
+    # If PCI_DEVICES is not provided at all, TwinCAT will probe all
+    # available Ethernet controllers of the host for real-time ethernet communication.
+    # If PCI_DEVICES is set to NONE, the TwinCAT runtime won't use probe
+    # any PCI Ethernet controller for real-time ethernet communicaion.
+    # Set PCI_DEVICES to a space seperated list of PCI slot address
+    # to explicitly set Ethernet controllers for real-time ethernet communication.
+    # Run `sudo TcRteInstall -l` on the host to get a list of available
+    # Ethernet controllers and their PCI slot address
+    # Examples:
+    #  #- PCI_DEVICES=NONE
+    #  - PCI_DEVICES=NONE
+    #  - PCI_DEVICES=0000:02:00.0
+    #  - PCI_DEVICES=0000:04:00.0 0000:03:00.0
+    environment:
+      - PCI_DEVICES=NONE
+      - AMS_NETID=15.15.15.15.1.1
+      # Mode -> FAST_AS_POSSIBLE is regular proces / REALTIME is uses realtime capabilities of the host /  Test is for testing purposes
+      - TC_RUN_MODE=FAST_AS_POSSIBLE
+
+networks:
+  twincatads:
+    name: twincatads
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.20.0/24
+          gateway: 192.168.20.1

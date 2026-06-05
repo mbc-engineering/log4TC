@@ -23,14 +23,16 @@ EXPOSE 16150
 EXPOSE 48898
 
 # The OCI Spec Labels https://github.com/opencontainers/image-spec/blob/main/annotations.md
-LABEL org.opencontainers.image.version=$BUILD_VERSION \
-      org.opencontainers.image.created=$BUILD_DATE \
-      org.opencontainers.image.title="log4TC" \
-      org.opencontainers.image.authors="stegm;bqstony" \
-      org.opencontainers.image.source="https://github.com/mbc-engineering/log4TC" \
-      org.opencontainers.image.revision=$SOURCECOMMITID \
-      org.opencontainers.image.base.name="mcr.microsoft.com/dotnet/runtime:10.0" \
-      org.opencontainers.image.vendor="mbc-engineering"
+LABEL org.opencontainers.image.version=$BUILD_VERSION
+LABEL org.opencontainers.image.created=$BUILD_DATE
+LABEL org.opencontainers.image.title="log4TC"
+LABEL org.opencontainers.image.description="log4TC is a logging and telemetry collection service for TwinCAT systems, providing a unified interface for collecting, processing, and forwarding log data from TwinCAT environments to various logging backends."
+LABEL org.opencontainers.image.authors="stegm;bqstony"
+LABEL org.opencontainers.image.source="https://github.com/mbc-engineering/log4TC"
+LABEL org.opencontainers.image.revision=$SOURCECOMMITID
+LABEL org.opencontainers.image.base.name="mcr.microsoft.com/dotnet/runtime:10.0"
+LABEL org.opencontainers.image.vendor="mbc-engineering"
+LABEL org.opencontainers.image.source="https://github.com/mbc-engineering/log4TC"
 
 # Default configuration for the log4TC service
 RUN mkdir -p /var/log/log4tc /etc/log4tc/config

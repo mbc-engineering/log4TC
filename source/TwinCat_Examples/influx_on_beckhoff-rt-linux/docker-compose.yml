@@ -23,7 +23,9 @@ services:
       - twincatads
 
   log4tc:
-    image: log4tc:26.06.05.1-beta
+    #image: log4tc:26.06.06-beta
+    image: ghcr.io/bqstony/log4tc:26.06.06-beta
+    container_name: log4tc
     depends_on:
       - influxdb
     volumes:
