@@ -32,6 +32,8 @@
 
   <ItemGroup>
     <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="7.0.172" />
+    <!-- Activate MQTT with plugin system -->
+    <PackageReference Include="Beckhoff.TwinCAT.Ads.AdsOverMqtt" Version="7.0.172" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.*" />
