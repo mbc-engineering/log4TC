@@ -22,7 +22,6 @@ The log4TC service is typically installed on the same computer as the PLC, but f
 * Support for context properties at various levels
 * Efficient and modular
 * Free trial version available
-* Licensing through Beckhoff mechanism in dongle, terminal, or PC
 * Unlimited output possibilities (text file, database, cloud, etc.)
 
 ## Outputs
@@ -43,13 +42,14 @@ We can also create custom outputs upon request.
 ## Next Steps
 
 * [Download](https://github.com/mbc-engineering/log4TC/releases/latest)
-* [Getting Started](docs/gettingstarted/intro.md)
-* [Reference](docs/reference/index.md)
+* [Getting Started](https://mbc-engineering.github.io/log4TC/gettingstarted/intro.html)
+* [Reference Nlog (Logfile) output](https://mbc-engineering.github.io/log4TC/reference/nlog_output.html)
+* [Reference InfluxDB output](https://mbc-engineering.github.io/log4TC/reference/influx_output.html)
 
 
 ## build
 
-see: setup: https://wixtoolset.org/docs/releasenotes/#v4
+see: setup: https://wixtoolset.org/docs/releasenotes/#wix-v7
 
 dotnet msbuild -p:Configuration=Release -p:Platform=x64 -Restore
 
