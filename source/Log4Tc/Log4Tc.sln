@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.34330.188
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11806.211 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{3EBBCF4C-829A-4152-BA5B-25FC54CBB029}"
 	ProjectSection(SolutionItems) = preProject
@@ -46,6 +46,8 @@ EndProject
 Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "Mbc.Log4Tc.Setup.Wix", "Mbc.Log4Tc.Setup.Wix\Mbc.Log4Tc.Setup.Wix.wixproj", "{E5D8C7E7-8CBB-461A-9B52-1D13294FC876}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mbc.Log4Tc.Service", "Mbc.Log4Tc.Service\Mbc.Log4Tc.Service.csproj", "{802A6A39-9E0E-4118-8D2D-6CDE83C85508}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mbc.Log4Tc.AdsRouter", "Mbc.Log4Tc.AdsRouter\Mbc.Log4Tc.AdsRouter.csproj", "{DB97F4B9-EA14-4213-9693-5B430D1B741B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -328,6 +330,24 @@ Global
 		{802A6A39-9E0E-4118-8D2D-6CDE83C85508}.wix|Any CPU.ActiveCfg = wix-x64|Any CPU
 		{802A6A39-9E0E-4118-8D2D-6CDE83C85508}.wix|x64.ActiveCfg = Release|Any CPU
 		{802A6A39-9E0E-4118-8D2D-6CDE83C85508}.wix|x86.ActiveCfg = Release|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Debug|x64.Build.0 = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Debug|x86.Build.0 = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Release|x64.ActiveCfg = Release|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Release|x64.Build.0 = Release|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Release|x86.ActiveCfg = Release|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.Release|x86.Build.0 = Release|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.wix|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.wix|Any CPU.Build.0 = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.wix|x64.ActiveCfg = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.wix|x64.Build.0 = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.wix|x86.ActiveCfg = Debug|Any CPU
+		{DB97F4B9-EA14-4213-9693-5B430D1B741B}.wix|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

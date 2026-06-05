@@ -1,8 +1,7 @@
-﻿using FakeItEasy;
-using Mbc.Log4Tc.Dispatcher;
+﻿using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Receiver;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,8 @@ namespace Mbc.Log4Tc.SmokeTest
         {
             var adsLogReceiverlogger = new NullLoggerFactory();
             var adsHostnameService = new AdsHostnameService(new NullLogger<AdsHostnameService>());
-            _adsLogReceiver = new AdsLogReceiver(adsLogReceiverlogger, adsHostnameService);
+            var configuration = new ConfigurationBuilder().Build();
+            _adsLogReceiver = new AdsLogReceiver(configuration, adsLogReceiverlogger, adsHostnameService);
             _output = new TestRecordingOutput();
         }
 

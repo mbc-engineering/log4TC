@@ -1,4 +1,5 @@
-﻿using Mbc.Log4Tc.Dispatcher;
+﻿using Mbc.Log4Tc.AdsRouter;
+using Mbc.Log4Tc.Dispatcher;
 using Mbc.Log4Tc.Model;
 using Mbc.Log4Tc.Output.Graylog;
 using Mbc.Log4Tc.Output.InfluxDb;
@@ -21,14 +22,14 @@ namespace Mbc.Log4Tc.Service
 {
     public static class Program
     {
-        private static string[] CmdArgs;
+        private static string[] _cmdArgs;
 
         public static async Task Main(string[] args)
         {
             var logPath = Path.Combine(OsPaths.GetInternalLogBasePath(), "service-.log");
             var logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] <{SourceContext}> {Message:lj}{NewLine}{Exception}")
                 .WriteTo.File(logPath, outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] ({SourceContext}) {Message}{NewLine}{Exception}", fileSizeLimitBytes: 1024 * 1024 * 10, retainedFileCountLimit: 5, rollingInterval: RollingInterval.Month)
                 .CreateLogger();
 
@@ -49,7 +50,7 @@ namespace Mbc.Log4Tc.Service
 
         public static IHostBuilder CreateHostBuilder(string[] args, Logger logger)
         {
-            CmdArgs = args;
+            _cmdArgs = args;
             var hostBuilder = Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(configure =>
                 {
@@ -86,6 +87,7 @@ namespace Mbc.Log4Tc.Service
                     //    .AddOutputs(hostContext.Configuration);
 
                     services
+                        .AddLog4TcAdsRouter()
                         .AddLog4TcAdsLogReceiver()
                         .AddLog4TcDispatcher();
                 });
@@ -99,12 +101,6 @@ namespace Mbc.Log4Tc.Service
                 else
                 {
                     throw new PlatformNotSupportedException("Service only in windows system supported.");
-                    /* For systemd install first package Microsoft.Extensions.Hosting.Systemd and switch to >= netcoreapp3.0
-                     * https://devblogs.microsoft.com/dotnet/net-core-and-systemd/
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux){
-                        hostBuilder.UseSystemd();
-                    }
-                    */
                 }
             }
 
@@ -132,7 +128,7 @@ namespace Mbc.Log4Tc.Service
 
         private static bool IsLocalConfig()
         {
-            return CmdArgs.Contains("--localconfig", StringComparer.InvariantCultureIgnoreCase);
+            return _cmdArgs.Contains("--localconfig", StringComparer.InvariantCultureIgnoreCase);
         }
     }
 }
