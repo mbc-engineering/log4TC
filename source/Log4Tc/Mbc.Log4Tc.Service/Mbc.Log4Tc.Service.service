@@ -1,0 +1,17 @@
+[Unit]
+Description=Log4TC is an extension for TwinCAT3 by Beckhoff, allowing the generation of log messages directly from the PLC (Programmable Logic Controller). The messages can be transferred, filtered, evaluated, and forwarded to various outputs.
+After=network.target
+# For setups with remote endpoints, enable the following lines to wait for a fully configured network.
+# Wants=network-online.target
+# After=network-online.target
+
+[Service]
+Type=simple
+LogsDirectory=log4tc
+LogsDirectoryMode=0755
+ExecStart=/usr/local/bin/Mbc.Log4Tc.Service
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.*" />
-    <PackageReference Include="Npgsql" Version="9.0.*" />
+    <PackageReference Include="MySql.Data" Version="9.*" />
+    <PackageReference Include="Npgsql" Version="10.*" />
     <PackageReference Include="Optional" Version="4.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-    <PackageReference Include="System.IO.Pipelines" Version="8.*" />
-    <PackageReference Include="System.Text.Json" Version="8.*" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
+    <PackageReference Include="System.IO.Pipelines" Version="10.*" />
+    <PackageReference Include="System.Text.Json" Version="10.*" />
   </ItemGroup>
 
   <ItemGroup>

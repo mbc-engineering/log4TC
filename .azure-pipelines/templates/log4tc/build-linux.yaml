@@ -13,7 +13,7 @@ parameters:
   default: 'Log4Tc.sln'
 - name: dotnet_framework
   type: string
-  default: 'net8.0'
+  default: 'net10.0'
 - name: dotnet_configuration
   type: string
   default: 'Release'
@@ -33,9 +33,27 @@ steps:
   displayName: 'publish linux-x64 files'
   artifact: 'log4TC-linux-x64'
 
+- script: dotnet publish ${{ parameters.solution_path }}Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --self-contained true --runtime linux-x64 -t:CreateDeb
+  displayName: "publish log4TC linux-x64 deb"
+
 - script: dotnet publish ${{ parameters.solution_path }}Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --self-contained true --runtime linux-arm64 --output $(Build.ArtifactStagingDirectory)/log4TC/linux-arm64
   displayName: "publish log4TC linux-arm64 self-contained"
 
 - publish: $(Build.ArtifactStagingDirectory)/log4TC/linux-arm64
   displayName: 'publish linux-arm64 files'
   artifact: 'log4TC-linux-arm64'
+
+- script: dotnet publish ${{ parameters.solution_path }}Mbc.Log4Tc.Service/Mbc.Log4Tc.Service.csproj --framework ${{ parameters.dotnet_framework }} --configuration ${{ parameters.dotnet_configuration }} --self-contained true --runtime linux-arm64  -t:CreateDeb
+  displayName: "publish log4TC linux-arm64 deb"
+
+- task: CopyFiles@2
+  displayName: 'Copy deb Setup files'
+  inputs:
+    Contents: '**/bin/${{ parameters.dotnet_configuration }}/**/*.deb'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/log4TC/deb'
+    CleanTargetFolder: false
+    flattenFolders: true
+
+- publish: $(Build.ArtifactStagingDirectory)/log4TC/deb
+  displayName: 'publish deb files'
+  artifact: 'log4TC-deb'

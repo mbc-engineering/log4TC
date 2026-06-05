@@ -43,12 +43,36 @@ By contributing, you agree that your contributions will be licensed under its Ap
 ## References
 This document was adapted from briandk's excellent [contribution guidelines template](https://gist.github.com/briandk/3d2e8b3ec8daf5a27a62).
 
-## Build
+## publish deb packages
 
-**Requirements**
-- VS2019
+with aptly is it possible to create a deb repository to host the deb packages. This can then be published to the static website of github pages.
 
-```powershell
-cd .\source\Log4Tc\
-.\build.cake
+```bash
+# navigate to the aptly configuration directory
+cd source/aptly/
+
+# Create a local aptly repository (only needs to be done once)
+aptly repo create -config=aptly.conf -component=main -distribution=stable log4tc
+
+# add deb packages to the repository
+aptly repo add -config=aptly.conf log4tc *.deb
+
+# Generate GPG key for signing (one-time setup) and publish 
+export GPG_KEY_ID=D3042271F3CDB50E
+
+# publish the repository to a local directory with GPG signing
+aptly publish repo -config=aptly.conf -architectures="amd64,arm64" -gpg-key="$GPG_KEY_ID" log4tc
+
+# The contents of the public directory can then be copied to the gh-pages branch of the github repository
+cp -r /root/.aptly/public/* /tmp/deb/
+
+# Now you can add following line to apt /etc/apt/sources.list.d/log4tc.list:
+# deb https://mbc-engineering.github.io/log4TC/deb/ stable main
+
+# or in the new format /etc/apt/sources.list.d/log4tc.sources:
+# Types: deb
+# URIs: https://mbc-engineering.github.io/log4TC/deb
+# Suites: stable
+# Components: main
+# Trusted: yes
 ```

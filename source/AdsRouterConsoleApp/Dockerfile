@@ -33,9 +33,9 @@ LABEL org.opencontainers.image.vendor="mbc-engineering"
 FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS publish
 WORKDIR /src
 COPY src/. .
-RUN dotnet publish --framework net8.0 --configuration Release --self-contained false --runtime linux-x64 --output /app/publish
+RUN dotnet publish --framework net10.0 --configuration Release --self-contained false --runtime linux-x64 --output /app/publish
 
-# Stage for pack the binary to deploymnd container
+# Stage for pack the binary to deployment container
 ########################
 FROM base AS final
 WORKDIR /app

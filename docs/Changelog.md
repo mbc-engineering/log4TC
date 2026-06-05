@@ -1,6 +1,19 @@
  <div id="google_translate_element"></div>
 
 # Changelog
+## [26.04.26]
+### Added
+- Verbesserter Linux Support durch Bereitstellung Debian **.deb** Paket. Siehe Anleitung [Linux Installation](https://mbc-engineering.github.io/log4TC/reference/installation.html#linux-installation)
+
+### Fixed
+- docs links korrigiert
+
+### Changed
+- Aktualisiert auf .NET 10.0 (Siehe [unterstütze Betriebsysteme](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md)))
+- Neuste Beckhoff ADS Library 6.2.521 wird verwendet
+- wix setup v7
+- update dependencies
+
 ## [25.08.26]
 ### Added
 - Stefans blogs hinzugefügt inklusive [Getting Started Video](https://www.youtube.com/embed/aXccFd3cIY0)
@@ -14,7 +27,7 @@
 - Setup TwinCAT Lib installation nur für 2024.
 - Neuste Beckhoff ADS Library 6.2.485 wird verwendet
 - Neuste Microsoft.ApplicationInsights.WorkerService Library 2.23.0 wird verwendet
-- SPS Library umbenannt für um klar die TC Version zu kennzeichnen.
+- SPS Library umbenannt um klar die TC Version zu kennzeichnen.
 
 ## [25.02.07]
 ### Fixed

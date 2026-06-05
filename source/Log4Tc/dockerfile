@@ -38,13 +38,13 @@ COPY Mbc.Log4Tc.Output.NLog/NLogLinux.config /etc/log4tc/config/NLog.config
 FROM mcr.microsoft.com/dotnet/sdk:8.0-bookworm-slim AS test-stage
 WORKDIR /src
 COPY . .
-RUN dotnet test --framework net8.0 --configuration Release --logger trx --results-directory /app/testresults
+RUN dotnet test --framework net10.0 --configuration Release --logger trx --results-directory /app/testresults
 
 FROM test-stage AS publish-stage
 WORKDIR /src/Mbc.Log4Tc.Service
-RUN dotnet publish --framework net8.0 --configuration Release --self-contained false --runtime linux-x64 --output /app/publish
+RUN dotnet publish --framework net10.0 --configuration Release --self-contained false --runtime linux-x64 --output /app/publish
 
-# Stage for pack the binary to deploymnd container
+# Stage for pack the binary to deployment container
 ########################
 FROM base AS final
 WORKDIR /app

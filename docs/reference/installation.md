@@ -4,7 +4,10 @@
 
 Den aktuellen Release von Log4TC kann [hier](https://github.com/mbc-engineering/log4TC/releases) geladen werden. Achten sie auf die Ziel Architektur x86 bzw x64!
 
-## Voraussetzungen
+Es wird [Windows](#windows-installation) und [Linux](#linux-installation) unterstützt.
+
+## Windows Installation
+### Voraussetzungen
 
 * [TwinCat 3.1 (min. 4024.00)](https://www.beckhoff.com/de-de/suchergebnisse/?q=TE1000+%7C+TwinCAT+3+Engineering)
 * Administrationsrechte für die Installation
@@ -15,7 +18,7 @@ Den aktuellen Release von Log4TC kann [hier](https://github.com/mbc-engineering/
 * [ADS Router - TC1000 | TC3 ADS](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=97028369)
 * [Verwendet Microsoft .NET 8 (muss nicht installiert werden)](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md)
 
-## Beispiel Installation
+### Beispiel Installation
 
 Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 und einer x64 Architektur.
 
@@ -27,9 +30,9 @@ Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 un
 
 ![](assets/setup_successfull.png)
 
-## Features
+### Setup Features
 
-### log4TC Service
+#### log4TC Service
 
 > [!NOTE]
 > Dieses Feature erscheint nur wenn sie ein ADS Router - TC1000 | TC3 ADS installiert haben.
@@ -41,7 +44,7 @@ Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 un
 
 ![links](assets/setup_service_links.png)
 
-### log4TC TwinCat 3 Bibliothek
+#### log4TC TwinCat 3 Bibliothek
 
 > [!NOTE]
 > Dieses Feature erscheint nur wenn sie TwinCat 3.1 Engineering (XAE) min. 4024.00 installiert haben.
@@ -50,15 +53,77 @@ Vorgehen zur Installation auf einem Zielsystem wie einem C6015 mit Windows 10 un
 
 - Installiert die log4TC Twincat 3 Bibliothek lokal
 - Bereitet die OEM Lizenz zur Registrierung für die Produktive Benutzung vor
-- Kopiert das getting starded Projekt unter `C:\ProgramData\log4TC\gettingstarded`
+- Kopiert das getting started Projekt unter `C:\ProgramData\log4TC\gettingstarted`
 - Hilfe Links im Startmenü
 
-## Bekannte Fehler
+### Bekannte Fehler
 
-## Setup endet mit dem Fehler: `... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...`
+#### Setup endet mit dem Fehler: `... Setup Wizard endet prematurely because of an error. Your system has not been modified. ...`
 
 In diesem Fall ist ein Fehler aufgetreten.
 
 ![setup end with error](assets/setup_endwitherror.png)
 
-Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ortner mit dem MSI Setup per `cd [folder]`. Geben Sie folgendes ein: `msiexec.exe /i "[setup].msi" /l*v install.log`. Wenden Sie sich anschliessend mit dem `install.log` an uns.
+Starten sie das setup erneut mit der Kommandozeile ausgeführt als Administrator. Navigieren Sie in den Ordner mit dem MSI Setup per `cd [folder]`. Geben Sie folgendes ein: `msiexec.exe /i "[setup].msi" /l*v install.log`. Wenden Sie sich anschliessend mit dem `install.log` an uns.
+
+## Linux Installation
+
+> [!NOTE]
+> Aktuell wird nur die Installation des log4TC Service auf Debian Distributionen unterstützt.
+> Somit auch für die Beckhoff RT Linux® distribution
+
+1. Hinzufügen des log4TC sources in apt sources listen:
+
+Zuerst den GPG-Schlüssel herunterladen und als keyring installieren:
+```bash
+sudo install -d -m 0755 /etc/apt/keyrings
+wget -qO- https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.gpg | sudo tee /etc/apt/keyrings/log4tc-archive-keyring.gpg > /dev/null
+sudo chmod 0644 /etc/apt/keyrings/log4tc-archive-keyring.gpg
+```
+
+> ASCII-kodierten Format (.asc) Schlüssel kann auch heruntergeladen werden unter: https://mbc-engineering.github.io/log4TC/deb/log4tc-archive-keyring.asc
+
+Optional: Fingerprint prüfen (muss mit `D3042271F3CDB50E` enden):
+```bash
+gpg --show-keys --with-fingerprint /etc/apt/keyrings/log4tc-archive-keyring.gpg
+```
+
+**Legacy list format** `/etc/apt/sources.list.d/log4tc.list`:
+```bash
+deb [arch=amd64,arm64 signed-by=/etc/apt/keyrings/log4tc-archive-keyring.gpg] https://mbc-engineering.github.io/log4TC/deb stable main
+```
+
+**New format** `/etc/apt/sources.list.d/log4tc.sources`:
+```bash
+Types: deb
+URIs: https://mbc-engineering.github.io/log4TC/deb
+Suites: stable
+Components: main
+Architectures: amd64 arm64
+Signed-By: /etc/apt/keyrings/log4tc-archive-keyring.gpg
+```
+> Ohne Signaturprüfung kann `Trusted: yes` verwendet werden. Dies wird nicht empfohlen.
+
+1. Aktualisieren der apt package listen:
+```bash
+sudo apt update
+```
+
+1. Installation des log4TC Service:
+```bash
+sudo apt install Mbc.Log4Tc.Service
+```
+
+1. Anpassen der Konfigurationsdateien nach Wunsch 
+   1. `/etc/log4tc/config/appsettings.json`
+   2. `/etc/log4tc/config/NLog.config`
+
+2. Überprüfen des log4TC Service status:
+```bash
+sudo systemctl status Mbc.Log4Tc.Service.service
+```
+1. Bei Fehler internal logs prüfen:
+```bash
+sudo journalctl -u Mbc.Log4Tc.Service.service
+ls /var/log/log4tc
+```

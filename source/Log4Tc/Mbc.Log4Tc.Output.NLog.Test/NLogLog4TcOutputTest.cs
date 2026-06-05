@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+﻿using AwesomeAssertions;
 using Mbc.Log4Tc.Model;
 using NLog;
 using NLog.Config;
