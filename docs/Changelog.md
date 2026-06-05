@@ -1,6 +1,12 @@
  <div id="google_translate_element"></div>
 
 # Changelog
+## [Vnext]
+### Changed
+- Neuste Minor Beckhoff ADS Library 7.0.172 wird verwendet (mit der Hoffnung bessere Kompatibilität unter Linux ohne TwinCAT Installation zu erreichen)
+  - [Beckhoff:](https://infosys.beckhoff.com/content/1033/tc3_ads.net/21454100235.html) Added support for unix domain sockets for local communication (TwinCAT 4026 and above)
+  - [Beckhoff:](https://infosys.beckhoff.com/content/1033/tc3_ads.net/21454100235.html) Integrated support for implementing customized AdsServers (AdsServer and AdsSymbolicServer)
+
 ## [26.04.26]
 ### Added
 - Verbesserter Linux Support durch Bereitstellung Debian **.deb** Paket. Siehe Anleitung [Linux Installation](https://mbc-engineering.github.io/log4TC/reference/installation.html#linux-installation)
