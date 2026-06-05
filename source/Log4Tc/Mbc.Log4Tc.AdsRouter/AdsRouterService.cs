@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using TwinCAT.Ads.Configuration;
 using TwinCAT.Ads.TcpRouter;
 
 namespace Mbc.Log4Tc.AdsRouter;

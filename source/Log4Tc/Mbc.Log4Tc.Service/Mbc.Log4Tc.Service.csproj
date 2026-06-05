@@ -73,7 +73,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <!--<Target Name="SetDebPackageProperties" BeforeTargets="CreateDeb">-->
   <ItemGroup>
     <Content Include="appsettingsSample.json" CopyToPublishDirectory="PreserveNewest">
       <LinuxPath>/etc/log4tc/config/appsettings.json</LinuxPath>
@@ -85,19 +84,4 @@
       <LinuxPath>/etc/systemd/system/Mbc.Log4Tc.Service.service</LinuxPath>
     </Content>
   </ItemGroup>
-  <!--
-    <PropertyGroup>
-      <PreInstallScript>
-        <![CDATA[
-        echo -e '\033[0;36mStarting installation of Mbc.Log4Tc.Service \e[0m'
-        ]]>
-      </PreInstallScript>
-      <PostInstallScript>
-        <![CDATA[
-        echo -e '\033[0;36mFinishing installation of Mbc.Log4Tc.Service \e[0m'
-        ]]>
-      </PostInstallScript>
-    </PropertyGroup>
-    -->
-  <!--</Target>-->
 </Project>

@@ -1,0 +1,69 @@
+services:
+  influxdb:
+    image: influxdb:1.8-alpine
+    volumes:
+      - ./data/log4tc-influxdb-storage:/var/lib/influxdb
+      - ./initdb.iql:/docker-entrypoint-initdb.d/initdb.iql
+    ports:
+      - 8086:8086
+    networks:
+      - twincatads
+
+  chronograf:
+    image: chronograf:1.8-alpine
+    depends_on:
+      - influxdb
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+    ports:
+      - 8888:8888
+    volumes:
+      - ./data/log4TC-chronograf-storage:/var/lib/chronograf
+    networks:
+      - twincatads
+
+  log4tc:
+    image: log4tc:26.06.05.1-beta
+    depends_on:
+      - influxdb
+    volumes:
+      - ./appsettings.json:/etc/log4tc/config/appsettings.json
+    environment:
+      - DOTNET_AmsRouter__Active=true
+      - DOTNET_AmsRouter__Name=Log4TcContainer
+      - DOTNET_AmsRouter__NetId=1.1.1.100.1.1
+      # Non Secure Port 48898
+      - DOTNET_AmsRouter__TcpPort=48898
+      # Allowed values: "Loopback", "UnixSocket"
+      - DOTNET_AmsRouter__ChannelPortType=Loopback
+      # Allowed values: "Ads" (use Loopback), "AdsOverMqtt" (Forces use of MQTT), "All" (First Loopback, then MQTT)
+      - DOTNET_AmsRouter__ChannelProtocol=All
+      # IP and TCP socket on which the ADS-Router should listen on for incoming (internal) client connections
+      # Changed IP/Port here to use a dedicated Ip Port for internal Router communication
+      - DOTNET_AmsRouter__LoopbackIP=192.168.20.100
+      - DOTNET_AmsRouter__LoopbackPort=48900
+      # Setting to accept incoming ADS-Client connections from the private container subnetwork
+      - DOTNET_AmsRouter__LoopbackExternalSubnet=192.168.20.0/24
+      # Example for a remote connection to a TwinCAT system with log4TC library integrated.
+      - DOTNET_AmsRouter__RemoteConnections__0__Name=TwinCAT-Host
+      - DOTNET_AmsRouter__RemoteConnections__0__Address=10.10.1.149
+      - DOTNET_AmsRouter__RemoteConnections__0__NetId=10.10.1.149.1.1
+      # The rest comes from the default appsettings.json, which can be overridden by mounting a custom one via volumes or with environment variables
+    ports:
+      # The Log4TC custom ADS server port for this server.
+      - 16150:16150
+      # The Default ADS Port
+      - 48898:48898
+    networks:
+       twincatads:
+          # The router address is defined fixed in the Environment Variables (config-routerconsole.env)
+         ipv4_address: 192.168.20.100
+
+networks:
+  twincatads:
+    name: twincatads
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.20.0/24
+          gateway: 192.168.20.1
