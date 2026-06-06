@@ -13,7 +13,7 @@ Folgende Voraussetzungen haben die beiden Komponenten:
 **log4TC TwinCat 3 Bibliothek**
 
 * [TwinCat 3 (min. 4024.00)](https://www.beckhoff.com/de-de/support/downloadfinder/suchergebnis/?download_group=725136885)
-* Verwende die korrekte Bibliohtek-Version passend zu deiner TwinCAT Version (4024 oder 4026).
+* Verwende die korrekte [Bibliothek](https://github.com/mbc-engineering/log4TC/releases/latest)-Version passend zu deiner TwinCAT Version (4024 oder 4026).
 
 **log4TC Service**
 

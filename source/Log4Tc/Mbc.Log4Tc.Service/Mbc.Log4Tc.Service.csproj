@@ -31,7 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="6.2.521" />
+    <PackageReference Include="Beckhoff.TwinCAT.Ads" Version="7.0.172" />
+    <!-- Activate MQTT with plugin system -->
+    <PackageReference Include="Beckhoff.TwinCAT.Ads.AdsOverMqtt" Version="7.0.172" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="10.*" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.*" />
@@ -39,12 +41,11 @@
     <PackageReference Include="Serilog.Extensions.Logging" Version="10.*" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mbc.Log4Tc.AdsRouter\Mbc.Log4Tc.AdsRouter.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Dispatcher\Mbc.Log4Tc.Dispatcher.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.Graylog\Mbc.Log4Tc.Output.Graylog.csproj" />
     <ProjectReference Include="..\Mbc.Log4Tc.Output.InfluxDb\Mbc.Log4Tc.Output.InfluxDb.csproj" />
@@ -74,7 +75,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <!--<Target Name="SetDebPackageProperties" BeforeTargets="CreateDeb">-->
   <ItemGroup>
     <Content Include="appsettingsSample.json" CopyToPublishDirectory="PreserveNewest">
       <LinuxPath>/etc/log4tc/config/appsettings.json</LinuxPath>
@@ -86,19 +86,4 @@
       <LinuxPath>/etc/systemd/system/Mbc.Log4Tc.Service.service</LinuxPath>
     </Content>
   </ItemGroup>
-  <!--
-    <PropertyGroup>
-      <PreInstallScript>
-        <![CDATA[
-        echo -e '\033[0;36mStarting installation of Mbc.Log4Tc.Service \e[0m'
-        ]]>
-      </PreInstallScript>
-      <PostInstallScript>
-        <![CDATA[
-        echo -e '\033[0;36mFinishing installation of Mbc.Log4Tc.Service \e[0m'
-        ]]>
-      </PostInstallScript>
-    </PropertyGroup>
-    -->
-  <!--</Target>-->
 </Project>

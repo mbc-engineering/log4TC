@@ -264,3 +264,5 @@ __pycache__/
 # Cake Build tools folder and cake version pinned file
 /tools/
 !/tools/packages.config
+
+log4TC-linux-x64/

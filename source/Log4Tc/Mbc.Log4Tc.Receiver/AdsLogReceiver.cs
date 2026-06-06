@@ -1,4 +1,5 @@
 ﻿using Mbc.Log4Tc.Model;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using TwinCAT.Ads.Server;
 
 using LogLevel = Mbc.Log4Tc.Model.LogLevel;
 
+// For Execution without installed TwinCAT Router see: https://github.com/Beckhoff/TF6000_ADS_DOTNET_V5_Samples/blob/main/Sources/RouterSamples/ReadMe.md
 namespace Mbc.Log4Tc.Receiver
 {
     public class AdsLogReceiver : AdsServer, ILogReceiver
@@ -22,8 +24,8 @@ namespace Mbc.Log4Tc.Receiver
 
         // Der Port sollte zwischen TwinCAT.Ads.AmsPortRange.CUSTOMERPRIVATE_FIRST and TwinCAT.Ads.AmsPortRange.CUSTOMERPRIVATE_LAST
         // also First usable port for private networks (0x6590) and Last usable port for private networks (0x6977)
-        public AdsLogReceiver(ILoggerFactory loggerFactory, AdsHostnameService adsHostnameService)
-            : base(16150, "Log4Tc", loggerFactory)
+        public AdsLogReceiver(IConfiguration configuration, ILoggerFactory loggerFactory, AdsHostnameService adsHostnameService)
+            : base(16150, "Log4Tc", configuration, loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<AdsLogReceiver>();
             _adsHostnameService = adsHostnameService;

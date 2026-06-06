@@ -13,8 +13,10 @@
     <Copyright>Copyright © mbc-engineering</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 
-    <Version>26.04.26</Version>
+    <Version>26.06.06</Version>
 
+    <!-- To Prevent problem with ICU load on linux: see https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md -->
+    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <!-- Build configuration Settings

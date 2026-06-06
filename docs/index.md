@@ -18,7 +18,6 @@ Log4TC besteht aus zwei Teilen, einer SPS-Bibliothek und einen Windows-Service.
  * Unterstützung von Context-Eigenschaften auf verschiedenen Ebenen
  * Performant und Modular
  * Kostenlose Testversion verfügbar
- * Lizenzierung über Beckhoff-Mechanismus in Dongle, Klemme oder PC
  * Unbegrenzte Ausgabemöglichkeiten (Textdatei, Datenbank, Cloud, usw.)
 
 ## Ausgaben
